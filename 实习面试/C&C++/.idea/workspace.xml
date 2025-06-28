@@ -27,14 +27,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f0396db-c099-4fad-be09-731d764314c8" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Cpp.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/数据结构.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/数据结构.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GO/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GO/.idea/GO.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GO/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GO/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../GO/test.go" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/dongtaiguihua.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stack.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/动态规划1.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Cpp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cpp.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/数据结构.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/数据结构.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../面试要求.md" beforeDir="false" afterPath="$PROJECT_DIR$/../面试要求.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +49,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/数据结构.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -62,43 +67,68 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;C/C++ 文件.Cpp.cpp.executor&quot;: &quot;Run&quot;,
-    &quot;C/C++ 文件.test.cpp.executor&quot;: &quot;Run&quot;,
-    &quot;C/C++ 文件.testC.c.executor&quot;: &quot;Run&quot;,
-    &quot;CMake 应用程序.C_C__.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
-    &quot;cf.advertisement.text.overridden&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/86180/Desktop/MyCodeResource/实习面试/C&amp;C++&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/86180/Desktop/MyCodeResource/实习面试/C&amp;C++/main.cpp&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Cpp.EditorId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "C/C++ 文件.Cpp.cpp.executor": "Run",
+    "C/C++ 文件.test.cpp.executor": "Run",
+    "C/C++ 文件.testC.c.executor": "Run",
+    "C/C++ 文件.动态规划1.c.executor": "Run",
+    "CMake 应用程序.C_C__.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.west.config.association.type.startup.service": "true",
+    "cf.advertisement.text.overridden": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/86180/Desktop/MyCodeResource/实习面试/C&C++",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/86180/Desktop/MyCodeResource/实习面试/C&C++/main.cpp",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="C/C++ 文件.Cpp.cpp">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+}]]></component>
+  <component name="RunManager" selected="C/C++ 文件.动态规划1.c">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="动态规划1.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="动态规划1.c" CONFIG_NAME="动态规划1.c">
+      <option name="sourceFile" value="动态规划1.c" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="动态规划1.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="动态规划1.c" CONFIG_NAME="动态规划1.c">
+      <option name="sourceFile" value="动态规划1.c" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Cpp.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="Cpp.cpp" CONFIG_NAME="Cpp.cpp">
       <option name="sourceFile" value="Cpp.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cpp.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="Cpp.cpp" CONFIG_NAME="Cpp.cpp">
+      <option name="sourceFile" value="Cpp.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="testC.c" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="testC.c" CONFIG_NAME="testC.c">
+      <option name="sourceFile" value="testC.c" />
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
@@ -115,8 +145,15 @@
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="C&amp;C++" TARGET_NAME="test.cpp" CONFIG_NAME="test.cpp">
+      <option name="sourceFile" value="test.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="C/C++ 文件.动态规划1.c" />
         <item itemvalue="C/C++ 文件.Cpp.cpp" />
         <item itemvalue="C/C++ 文件.testC.c" />
         <item itemvalue="C/C++ 文件.test.cpp" />
@@ -134,7 +171,10 @@
       <workItem from="1750416467164" duration="40000" />
       <workItem from="1750416510165" duration="3000" />
       <workItem from="1750416527165" duration="2077000" />
-      <workItem from="1750434022046" duration="1330000" />
+      <workItem from="1750434022046" duration="3429000" />
+      <workItem from="1750476184655" duration="314000" />
+      <workItem from="1750484834448" duration="49000" />
+      <workItem from="1750484892321" duration="802000" />
     </task>
     <servers />
   </component>

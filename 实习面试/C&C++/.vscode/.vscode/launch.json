@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "C:/Users/86180/Desktop/MyCodeResource/实习面试/C&C++",
-      "program": "C:/Users/86180/Desktop/MyCodeResource/实习面试/C&C++/build/Debug/outDebug",
+      "cwd": "c:/Users/86180/Desktop/nzz-lzz_ForStudy/lzzCode",
+      "program": "c:/Users/86180/Desktop/nzz-lzz_ForStudy/lzzCode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

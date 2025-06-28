@@ -22,5 +22,10 @@ int main(){
     }
     int* parry=&array[0];
     cout<<parry<<endl;*/
+    //定义别名
+    typedef int Otherint;
+    using Otherint2 = int;
+    //标准库类型
+    
     return 0;
 }
