@@ -1,0 +1,215 @@
+            - 名称：缓存
+  用途：actions/cache@v4.2.3
+  和：
+    # 要缓存和恢复的文件、目录和通配符模式的列表
+    小路：
+    # 用于恢复和保存缓存的显式密钥
+    钥匙：
+    # 一个有序的多行字符串，列出了前缀匹配的键，用于在键未发生缓存命中时恢复过时的缓存。注意，在这种情况下，“cache-hit”将返回 false。
+    恢复键：#可选
+    # 上传过程中用于分割大文件的块大小，以字节为单位
+    上传块大小：#可选
+    # 启用时可选布尔值，允许 Windows 运行器保存或恢复可以在其他平台上分别恢复或保存的缓存
+    enableCrossOsArchive: # 可选，默认为 false
+    # 如果未找到缓存条目，则工作流失败
+    fail-on-cache-miss: #可选，默认为false
+    # 检查给定输入（key、restore-keys）的缓存条目是否存在，无需下载缓存
+    lookup-only: # 可选，默认为 false
+    # 即使之前的步骤失败，也要运行后续步骤来保存缓存
+    save-always: # 可选，默认为 false
+
+
+            - 名称：C/C++ Linter
+  # 您可以固定到确切的提交或版本。
+  # 使用：cpp-linter/cpp-linter-action@f91c446a32ae3eb9f98fef8c9ed4c7cb613a4f8a
+  用途：cpp-linter/cpp-linter-action@v2.15.0
+  和：
+    # 要使用的样式规则。
+
+- 将其设置为“文件”以使 clang-format 使用最接近的相关 .clang-format 文件。
+- 将其设置为空字符串（“'''”）以完全禁用 clang-format。
+- 指定版本的 clang-format 支持的任何代码风格。
+
+    样式：#可选，默认为llvm
+    # 要对其运行操作的文件扩展名。这是一个以逗号分隔的字符串。
+    扩展：#可选，默认为 c、h、C、H、cpp、hpp、cc、hh、c++、h++、cxx、hxx
+    # 带有可选“-”前缀的 glob 的逗号分隔列表。
+Glob 按照列表中出现的顺序进行处理。
+不带 `-` 前缀的 Glob 会将匹配名称的检查添加到集合中，
+带有 `-` 前缀的 glob 将从启用的检查集合中删除具有匹配名称的检查。
+此选项的值附加到 .clang-tidy 文件中“检查”选项的值（如果有）。
+
+- 可以通过将此选项设置为“-*”来完全禁用 clang-tidy。
+- 也可以通过将此选项指定为空字符串（“'''”）来仅依赖 .clang-tidy 配置文件。
+
+    tidy-checks: # 可选，默认为 boost-*、bugprone-*、performance-*、readability-*、portability-*、modernize-*、clang-analyzer-*、cppcoreguidelines-*
+    # 仓库根目录的相对路径。此路径相对于运行器的 `GITHUB_WORKSPACE` 环境变量指定的路径。
+
+    repo-root: #可选，默认为。
+    # 所需使用的 [clang-tools](https://github.com/cpp-linter/clang-tools-pip) 版本。
+接受的选项是字符串，可以是 20、19、18、17、16、15、14、13、12、11、10、9 或 8。
+
+- 将此选项设置为空字符串（`''`）以使用平台的默认安装版本。
+- 该值也可以是安装 clang 工具的路径（如果使用自定义安装位置）。
+
+    版本：#可选，默认为16
+    # 这控制了工作流日志中操作的详细程度。
+支持的选项是“info”或“debug”。
+此选项不会影响生成的线程评论或文件注释的详细程度。
+
+也可以通过启用调试日志来启用详细程度
+重新运行作业或工作流。
+
+    verbosity: # 可选，默认为 info
+    # 控制要分析文件的哪一部分。接受以下值：
+
+- `false`: 分析文件中的所有行。
+- `true`：仅分析差异中包含添加内容的行。
+- `diff`：分析 diff 中的所有行（包括未更改的行，但不包括减法）。
+
+!!! 信息“重要”
+    此功能需要特殊权限才能成功执行。
+    请参阅我们的[记录的权限]（permissions.md）
+
+    仅更改行：#可选
+    # 将此选项设置为 false 以分析 repo 中的任何源文件。
+如果启用了 [`lines-changed-only`](#lines-changed-only)，则会自动启用此功能。
+
+!!! 信息“重要”
+    此功能需要特殊权限才能成功执行。
+    请参阅我们的[记录的权限]（permissions.md）
+
+    files-changed-only: # 可选，默认为 true
+    # 使用要忽略的路径字符串设置此选项。
+
+- 如果有多个路径，可以使用管道符（`|`）
+  分隔多个路径。此选项禁止输入多行；
+  它必须是单个字符串。
+- 这也可以有文件，但必须指定文件的相对路径
+  也一样。
+- 没有必要对每个条目使用 `./`；空白字符串 (`''`) 表示
+  [`repo-root`](#repo-root) 路径。
+- 子模块将被自动忽略。隐藏目录（以 `.` 开头）也将被忽略。
+  自动地。
+- 在路径前添加感叹号（“！”），以明确表示路径不会被忽略。
+  多条路径不优先。“！”前缀可以应用于
+  子模块的路径（如果需要）但不是隐藏目录。
+- **从 v2.12 开始**，这里支持 glob 模式。
+  所有星号字符（`*`）以前都是文字。
+
+    忽略：#可选，默认为.github
+    # 使用此选项允许 clang-tidy 忽略某些路径/文件。
+有关可能值的详细信息，请参阅 [`ignore`](#ignore)。
+    ignore-tidy: # 可选，默认为 .github
+    # 使用此选项允许 clang-format 忽略某些路径/文件。
+有关可能值的详细信息，请参阅 [`ignore`](#ignore)。
+    忽略格式：#可选，默认为.github
+    # 此项控制已发布的线程评论作为反馈的行为。支持以下选项：
+
+- `true`：启用线程评论。这将始终删除过期的线程评论并发布新的评论（每条评论都会触发通知）。
+- `update`：如果已有帖子评论，则更新现有帖子评论。此选项不会在每次帖子评论更新时触发新的通知。
+- `false`: 禁用线程评论。
+
+!!! 信息“重要”
+    此功能需要特殊权限才能成功执行。
+    请参阅我们的[记录的权限]（permissions.md）
+
+> [!注意]
+> 如果在私有存储库上运行，则此功能将被禁用，因为 GitHub REST API 对私有存储库上的线程评论的行为不同。
+
+    thread-comments: # 可选，默认为 false
+    # 将此选项设置为 true 或 false 以启用或禁用
+线程评论或拉取请求审查基本上说“看起来不错”（当所有检查通过时）。
+默认值“true”表示未发布 LGTM 评论。
+
+参见[`thread-comments`](#thread-comments)、[`tidy-review`](#tidy-review)、
+以及 [`format-review`](#format-review) 选项以了解更多详细信息。
+
+    no-lgtm: # 可选，默认为 true
+    # 将此选项设置为 true 以将内容附加为工作流作业摘要的一部分。
+
+请参阅 GitHub 文档中的实现细节
+添加作业摘要
+此选项与 [`thread-comments`](#thread-comments) 选项无关，
+相反，此选项使用与
+[`thread-comments`](#thread-comments) 选项将会使用。
+
+> [!注意]
+> [`no-lgtm`](#no-lgtm) 选项不适用于步骤摘要。
+
+    步骤摘要：#可选
+    # 将此选项设置为 false 以禁用文件注释作为反馈。
+
+    file-annotations: # 可选，默认为 true
+    # 包含编译数据库（如 compile_commands.json）文件的目录。
+    数据库：#可选，默认为
+    # 传递给 clang-tidy 以用作编译器参数的额外参数字符串。
+多个参数用空格分隔，因此参数名称和值应该
+使用“=”符号代替空格。
+
+！！！ 例子
+
+    ``` yaml
+    额外参数：'-std=c++17 -Wall'
+    ```
+    这将作为多个 `--extra-arg` 选项传递给 clang-tidy：
+    ```
+    clang-tidy --extra-arg=-std=c++17 --extra-arg=-Wall
+    ```
+
+    extra-args: # 可选，默认为
+    # 将此选项设置为“true”以启用来自 clang-tidy 的 Pull Request 审查。
+
+!!! 信息“重要”
+    此功能需要特殊权限才能成功执行。
+    请参阅我们的[记录的权限]（permissions.md）。
+
+    另请参阅[PR 审查功能注意事项](pr-review-caveats.md)。
+
+> [!注意]
+> [`no-lgtm`](#no-lgtm) 选项适用于 Pull Request 审查。
+
+    tidy-review: # 可选
+    # 将此选项设置为“true”以启用来自 clang-format 的 Pull Request 审查。
+
+!!! 信息“重要”
+    此功能需要特殊权限才能成功执行。
+    请参阅我们的[记录的权限]（permissions.md）。
+
+    另请参阅[PR 审查功能注意事项](pr-review-caveats.md)。
+
+> [!注意]
+> [`no-lgtm`](#no-lgtm) 选项适用于 Pull Request 审查。
+
+    格式审查：#可选
+    # 将此选项设置为“true”以防止 Pull Request 审查批准或请求更改。
+
+    被动评论：#可选
+    # 并行运行的作业数量。
+如果小于或等于 0，则作业数量设置为
+使用所有可用 CPU 核心的数量。
+
+    jobs: # 可选，默认为 0
+          
+
+
+            - 名称：下载构建工件
+  用途：actions/download-artifact@v4.3.0
+  和：
+    # 要下载的工件的名称。如果未指定，则下载本次运行的所有工件。
+    名称：#可选
+    # 需要下载的工件的 ID，以逗号分隔。“artifact-ids”或“name”可以同时使用，但不能同时使用。
+    artifact-ids: # 可选
+    # 目标路径。支持基本波浪号扩展。默认为 $GITHUB_WORKSPACE
+    路径：#可选
+    # 匹配需要下载的工件的 glob 模式。如果指定了 name，则忽略。
+    模式：#可选
+    # 当多个工件匹配时，这将更改目标目录的行为。如果为 true，则下载的工件将位于 path 指定的同一目录中。如果为 false，则下载的工件将被提取到指定路径内的各个命名目录中。
+    合并多个：#可选，默认为false
+    # 用于向 GitHub API 进行身份验证的 GitHub 令牌。从其他仓库或其他工作流程运行下载工件时，需要此令牌。如果未指定，操作将尝试从当前仓库和当前工作流程运行下载工件。
+    github-token: # 可选
+    # 仓库所有者和仓库名称以“/”连接。如果指定了 github-token，则表示从该仓库下载工件。
+    存储库：#可选，默认为${{ github.repository }}
+    # 所需下载工件上传至哪个工作流运行的 ID。如果指定了 github-token，则表示工件将从该运行下载。
+    run-id: # 可选，默认为 ${{ github.run_id }}
+          
