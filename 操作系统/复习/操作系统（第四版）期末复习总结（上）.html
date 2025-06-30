@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/qq_41261490/article/details/80872072"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#">  
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>操作系统（第四版）期末复习总结（上）_操作系统总结pdf-CSDN博客</title>  
+  <meta name="keywords" content="操作系统总结pdf"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;操作系统总结pdf&quot;}"> 
+  <meta name="description" content="文章浏览阅读7.5w次，点赞646次，收藏3.8k次。本文介绍了操作系统的定义、作用和发展历程，以及操作系统的基本特性。详细解释了进程的概念、进程与程序的区别、进程的状态转换等内容，并探讨了进程间的同步与通信机制。"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-72afa20676.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-blackboard/skin-blackboard-3adcc2c475.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>      
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">操作系统（第四版）期末复习总结（上）</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a class="follow-nickName " href="https://blog.csdn.net/qq_41261490" target="_blank" rel="noopener" title="DiuDiu_yang">DiuDiu_yang</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2023-07-20 14:28:29&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量7.5w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 3.8k </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 646 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/qq_41261490/category_7769956.html" target="_blank" rel="noopener">计算机操作系统</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">操作系统</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E8%BF%9B%E7%A8%8B&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">进程</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;PCB&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;PCB\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;PCB&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;PCB\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=PCB&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">PCB</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;线程&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;线程\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;线程&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;线程\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E7%BA%BF%E7%A8%8B&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">线程</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;信号量机制&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;信号量机制\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;信号量机制&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;信号量机制\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">信号量机制</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2018-07-01 16:26:38&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/qq_41261490/article/details/80872072" target="_blank">https://blog.csdn.net/qq_41261490/article/details/80872072</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert" class=""></div> 
+      <div id="blogColumnPayAdvert" class=""> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/qq_41261490/category_7769956.html" target="_blank" title="计算机操作系统" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">计算机操作系统</span> <span class="dec">专栏收录该内容</span> </span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>7 篇文章</span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-bt articleColumnFreeBt" data-id="7769956">订阅专栏</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="ai-abstract-box"> 
+       <div class="ai-abstract"> 
+        <div class="abstract-content"> 
+         <img class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png" alt=""> 本文介绍了操作系统的定义、作用和发展历程，以及操作系统的基本特性。详细解释了进程的概念、进程与程序的区别、进程的状态转换等内容，并探讨了进程间的同步与通信机制。 
+        </div> 
+        <p> 摘要生成于 <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-view="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;}}" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;C知道&quot;}}" target="_blank"> C知道</a> ，由 DeepSeek-R1 满血版支持， <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;前往体验&quot;}}" target="_blank"> 前往体验 &gt;</a></p> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views atom-one-dark"> 
+         <p>很多小伙伴私信要word下载，我就整理出来了一份pdf，是和线上的完全一样，建议大家看线上的，因为pdf下载需要收费，但是下载有好处就是可以打印出来复习，各位伙伴自行选择吧。现在这里给出pdf完整下载：&nbsp;<a href="https://download.csdn.net/download/qq_41261490/16011342" title="操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载">操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载</a></p> 
+         <p></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80875252" title="操作系统（第四版）期末复习总结（中）">操作系统（第四版）期末复习总结（中）</a></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80886482" title="操作系统（第四版）期末复习总结（下）">操作系统（第四版）期末复习总结（下）</a></p> 
+         <p><em>第一章&nbsp;操作系统引论</em></p> 
+         <p><strong>1、操作系统是什么？</strong></p> 
+         <p>操作系统为用户完成所有“<span style="color:#ff0000;">硬件相关，应用无关</span>“的工作，以给用户<span style="color:#ff0000;">方便、高效、安全</span>的使用环境</p> 
+         <p><strong>1.1、定义：</strong></p> 
+         <p>&nbsp; &nbsp;操作系统是一个大型的<span style="color:#ff0000;">程序系统</span>，它负责计算机的<span style="color:#ff0000;">全部软、硬件资源的分配、调度</span>工作，<span style="color:#ff0000;">控制并协调多个任务的活动</span>，实现<span style="color:#ff0000;">信息的存取和保护</span>。它提供<span style="color:#ff0000;">用户接口</span>，使用户获得良好的工作环境。</p> 
+         <p><strong>1.2、目标</strong></p> 
+         <p>（1）、<span style="color:#ff0000;">方便性</span>：配置OS后计算机系统更容易使用</p> 
+         <p>（2）、<span style="color:#ff0000;">有效性</span>：改善资源利用率；提高系统 吞吐量</p> 
+         <p>（3）、<span style="color:#ff0000;">可扩充性</span>：OSde结构（如层次化的结构：无结构发展-&gt;模快化结构-&gt;层次化结构-&gt;微内核结构）</p> 
+         <p>（4）、<span style="color:#ff0000;">开放性</span>：OS遵循世界标准范围。</p> 
+         <p><strong>1.3、作用：</strong></p> 
+         <p>（1）、<span style="color:#ff0000;">OS作为用户与计算机硬件系统之间的接口</span>（API／CUI／GUI）</p> 
+         <p>即：OS处于用户与计算机硬件系统之间，用户通过OS来使用计算机系统。</p> 
+         <p>（２）、<span style="color:#ff0000;">OS是计算机系统资源的管理者</span>（处理机、存储器、I/O设备、文件）</p> 
+         <p>&nbsp; &nbsp;处理机管理是用于分配和控制处理机</p> 
+         <p>&nbsp; &nbsp;存储器管理是负责内存的分配与回收</p> 
+         <p>&nbsp; &nbsp;I/O设备管理是负责I/O设备的分配（回收）与操纵</p> 
+         <p>&nbsp; &nbsp;文件管理是用于实现文件的存取、共享和保护</p> 
+         <p>（3）、<span style="color:#ff0000;">OS实现了对计算机资源的抽象</span>（OS是扩充机/虚拟机）</p> 
+         <p><strong>2、操作系统的发展过程</strong></p> 
+         <p><strong>2.1、未配置操作系统的计算机系统（40年代&nbsp;手工操作阶段）</strong></p> 
+         <p>（1）、人工操作方式：用户独占全机，资源空闲浪费。</p> 
+         <p>缺点：</p> 
+         <ul>
+          <li>手工装卸、人工判断、手工修改与调试内存指令等造成CPU空闲；</li>
+          <li>提前完成造成剩余预约时间内的CPU完全空闲；</li>
+          <li>I/O设备的慢速与CPU的速度不匹配造成的CPU空闲等待时间</li>
+         </ul> 
+         <p>（2）、脱机输入输出（Off-Line&nbsp;I/O）方式。</p> 
+         <p>优点：</p> 
+         <ul>
+          <li>减少了CPU的空闲时间</li>
+          <li>&nbsp;提高了I/O速度</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">2.2、单道批处理系统（50年代）</span></strong></p> 
+         <p>（1）、解决问题：</p> 
+         <p>&nbsp; &nbsp; &nbsp;单道批处理系统是在解决人机矛盾和CPU与I/O设备速度不匹配矛盾的过程中形成的。批处理系统旨在提高系统资源的利用率和系统的吞吐量。（但单道批处理系统仍不能充分利用资源，故现在已很少用）</p> 
+         <p>单道批处理分为：联机批处理、脱机批处理<br> &nbsp; &nbsp; &nbsp;联机批处理：CPU直接控制作业输入输出<br> &nbsp; &nbsp; &nbsp;脱机批处理：由外围机控制作业输入输出</p> 
+         <p>（2）、缺点：</p> 
+         <ul>
+          <li>系统资源利用率低（因为内存中只存在一道程序，I/O请求成功前CPU都处于空闲状态）</li>
+         </ul> 
+         <p>（3）、特征</p> 
+         <ul>
+          <li>自动性。正常情况下，一批作业能自动依次运行，无需人工干预。</li>
+          <li>顺序性。各道作业是顺序进入内存，FCFS</li>
+          <li>单道性。内存中任何时候只能有一道作业。</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">2.3、多道批处理系统（60年代初）</span></strong></p> 
+         <p>目的：为了进一步提高资源利用率和系统吞吐量</p> 
+         <p>&nbsp; &nbsp;该系统中，用户提交的作业都先存在外存中，在作业A在执行I/O请求时，CPU空闲，此时调用作业B，防止CPU空闲。同理按一定的算法调用作业，防止CPU空闲</p> 
+         <p><span style="color:#3333ff;">PS:推动多道批处理系统形成和发展的动力是提高资源利用率和系统吞吐量。</span></p> 
+         <p><span style="color:#ff0000;">优点：</span></p> 
+         <ul>
+          <li>资源利用率高（资源指CPU、存储器、设备、数据）</li>
+          <li>系统吞吐量大（系统吞吐量指系统在单位时间完成的总工作量（作业数量））</li>
+         </ul> 
+         <p><span style="color:#ff0000;">缺点：</span></p> 
+         <ul>
+          <li>平均周转时间长（作业的周转时间是指从作业进入系统开始，直至其完成并退出系统为止所经历的时间。）</li>
+          <li>无交互能力</li>
+         </ul> 
+         <p><span style="color:#ff0000;">特点：</span></p> 
+         <ul>
+          <li>多道：内存同时存在多个作业</li>
+          <li>宏观上并行：同时有多道程序在内存运行，某一时间段上，各道程序不同程度地向前推进。</li>
+          <li>微观上串行：任一时刻最多只有一道作业占用CPU，多道程序交替使用CPU&nbsp;</li>
+         </ul> 
+         <p><span style="color:#ff0000;">还需解决的问题：</span></p> 
+         <ul>
+          <li>处理机管理问题</li>
+          <li>内存管理问题（内存分配和保护）</li>
+          <li>I/O设备管理问题</li>
+          <li>文件管理问题（文件的组织和管理）</li>
+          <li>作业管理问题</li>
+          <li>用户与系统的接口（OS还应提供用户与OS的接口，方便用户操作）</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">2.4、分时系统（60年代中）</span></strong></p> 
+         <p>分时系统是指在一台主机上连接多个带有显示器和键盘的终端，同时允许多个用户通过自己的键盘，以交互的方式使用计算机，共享主机中的资源。</p> 
+         <p><span style="color:#6600cc;">PS:推动分时系统形成和发展的主要动力是用户的需要：交互、共享主机、方便上机</span>。</p> 
+         <p>关键问题：</p> 
+         <ul>
+          <li>及时接收（多路卡和缓冲区）：作业直接进入内存、不允许一个作业长期占用处理机</li>
+          <li>即时处理（划分时间片）：多个用户分时使用主机，每一用户分得一个时间片，用完这个时间片后操作系统将处理机分给另一用户，如此循环，每一用户可以周期性地获得CPU使用权，这样每一用户都有一种独占CPU的感觉。</li>
+         </ul> 
+         <p>特征：</p> 
+         <ul>
+          <li>多路性：允许同一主机联接多台终端。</li>
+          <li>独立性：每一用户独占一个终端；每个用户感觉不到其他用户的存在。</li>
+          <li>及时性：用户请求能及时响应。</li>
+          <li>交互性：&nbsp; 可进行广泛的人机对话。</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">2.5、实时操作系统（60年代中）</span></strong></p> 
+         <p>&nbsp; 实时系统（Real－Time System）是指系统能及时响应外部事件的请求，在规定的时间内完成对该事件的处理，并控制所有实时任务协调一致地运行。</p> 
+         <p>特征：</p> 
+         <ul>
+          <li>多路性</li>
+         </ul> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 对实时处理系统，系统按分时原则为多个终端服务；<br> &nbsp; &nbsp; &nbsp; &nbsp; 对实时控制系统，系统经常对多路现场信息进行采集；以及对多个对象或多个执行机构进行控制。</p> 
+         <ul>
+          <li>独立性</li>
+         </ul> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;实时处理系统，每个终端用户向实时系统提出服务请求时，彼此独立；<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实时控制系统，对信息的采集和对对象的控制彼此不干扰。</p> 
+         <ul>
+          <li>及时性（开始截止时间/完成截止时间）</li>
+          <li>交互性（仅限于访问专用服务程序）</li>
+          <li>可靠性（多级容错措施保障系统和数据安全）</li>
+         </ul> 
+         <p><strong>2.6、微机操作系统</strong></p> 
+         <ul>
+          <li>单用户单任务操作系统：CP/M（75年）、MS-DOS（81年）。</li>
+          <li>单用户多任务操作系统：OS/2（87年）、MS WINDOWS（90年windows 3.0)。</li>
+          <li>多用户多任务操作系统：UNIX（70年）</li>
+         </ul> 
+         <p><strong>2.7、多处理机操作系统</strong></p> 
+         <p><strong>2.8、网络操作系统</strong></p> 
+         <p><strong>2.9、分布式操作系统</strong></p> 
+         <p><strong>2.10、嵌入式操作系统</strong></p> 
+         <p><strong>3、操作系统的基本特性</strong></p> 
+         <p><strong><span style="color:#ff0000;">3.1、并发</span></strong></p> 
+         <p>并发是指在内存中放多道作业， 在一个<span style="color:#ff0000;">时间段</span>上来看，每一道作业都能<span style="color:#ff0000;">不同程度地</span>向前推进。但在<span style="color:#ff0000;">任何一个时间点上只能有一道</span>占用CPU。</p> 
+         <p>两个概念：</p> 
+         <ul>
+          <li>串行：在内存中每次只能放一道作业，只有它完 全执行完后别的作业才能进入内存执行。</li>
+          <li>并行： 存在于<span style="color:#ff0000;">有多个CPU的</span>环境中， 在内存中放多道作业，在任一时间点上都可能有多道作业在<span style="color:#ff0000;">不同的CPU</span>上<span style="color:#ff0000;">同时执行</span>。&nbsp;</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">3.2、共享</span></strong></p> 
+         <p>系统中的资源可供多个并发的进程共同使用。</p> 
+         <p>根据资源属性的不同，有两种资源共享方式：</p> 
+         <ul>
+          <li>&nbsp;互斥共享方式（临界/独占资源）</li>
+          <li>&nbsp;同时访问方式</li>
+         </ul> 
+         <p><span style="color:#993399;">PS：并发和共享是OS的两个最基本的特性，二者互为条件！</span></p> 
+         <p><strong><span style="color:#ff0000;">3.3、虚拟</span></strong></p> 
+         <p>&nbsp; &nbsp;通过某种技术将一个物理实体映射为若干个逻辑上对应物（如CPU；一个屏幕可看成多个屏幕-窗口）。或将多个物理实体映射为一个逻辑实体（如虚拟存储是内存和外存的虚拟）。</p> 
+         <p>虚拟是操作系统管理系统资源的重要手段，可提高资源利用率。</p> 
+         <ul>
+          <li>CPU——多道程序设计技术/每个用户（进程）的“虚拟处理机"</li>
+          <li>存储器——每个进程都占有的地址空间（指令＋数据＋堆栈）</li>
+          <li>I/O设备——打印机、多窗口或虚拟终端</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">3.4、异步</span></strong></p> 
+         <p>不确定性：什么时候开始，执行多久时间，终止时间</p> 
+         <p><strong>4、操作系统的主要功能</strong></p> 
+         <p>4.1、处理机管理功能：进程控制、进程同步、进程通信、调度（作业调度、进程调度）</p> 
+         <p>4.2、存储器管理功能：内存分配、内存保护、存储扩充、地址映射</p> 
+         <p>4.3、设备管理功能：缓冲管理、设备分配、设备处理</p> 
+         <p>4.4、文件管理功能：文件存储空间的管理、目录管理、文件的读 /写管理和保护</p> 
+         <p>4.5、操作系统与用户之间的接口：命令接口、程序接口、图形接口</p> 
+         <p>4.6、现代OS的新功能：</p> 
+         <ul>
+          <li>系统安全：为保障数据的保密性、完整性和可用性，常使用的技术：认证技术、密码技术、访问控制技术、反病毒技术</li>
+          <li>网络功能和服务：网络通信、资源管理、应用互操作</li>
+          <li>支持多媒体</li>
+         </ul> 
+         <p><strong>5、操作系统的结构设计</strong></p> 
+         <p>传统的操作系统结构</p> 
+         <ul>
+          <li>无结构OS</li>
+          <li>模块化OS结构</li>
+          <li>分层式OS结构</li>
+         </ul> 
+         <p>现代OS结构——微内核结构</p> 
+         <p><strong><em>第二章：进程的描述与控制</em></strong></p> 
+         <p><strong>1、进程的定义和特征</strong></p> 
+         <p>进程有很多各式各样的定义，如：&nbsp;</p> 
+         <ul>
+          <li>&nbsp;行为的一个规则叫做程序，程序在处理机上执行时所发生的活动称为进程。</li>
+          <li>具有一定功能的程序在某个数据集合上的一次活动。</li>
+          <li>进程是一个程序与其数据一道通过处理机的执行所发生的活动。</li>
+          <li>进程是指进程实体的运行过程，是系统进行资源分配和调度的独立单位。</li>
+          <li>程序的执行过程，从开始到&nbsp;结束</li>
+         </ul> 
+         <p><span style="color:#ff0000;">进程实体（简称进程）：程序块、相关的数据、进程控制块PCB</span></p> 
+         <p>进程的特征：</p> 
+         <ul>
+          <li>结构性：由程序（段）、数据（段）、进程控制块（PCB）三部分组成；</li>
+          <li>动态性：进程是程序的执行过程；</li>
+          <li>并发性：多个进程可同存于内存中，能在一段时间内同时运行；</li>
+          <li>独立性：独立运行的基本单位，独立获得资源和调度的基本单位；</li>
+          <li>异步性：各进程按各自独立的不可预知的速度向前推进。</li>
+         </ul> 
+         <p><strong>2、进程与程序的区别：</strong></p> 
+         <ul>
+          <li>程序是指令的有序集合，其本身没有任何运行的含义，是一个静态的概念。而进程是程序在处理机上的一次执行过程，它是一个动态的概念。<span style="color:#ff0000;">程序是静态的，进程是动态的；</span></li>
+          <li>程序可以作为一种软件资料长期存在，而进程是有一定生命期的。<span style="color:#ff0000;">程序是永久的，进程是暂时的</span>；</li>
+          <li><span style="color:#ff0000;">进程更能真实地描述并发，而程序不能；</span></li>
+          <li><span style="color:#ff0000;">进程是由程序和数据、进程控制块PCB三部分组成的；</span></li>
+          <li><span style="color:#ff0000;">进程具有创建其他进程的功能，而程序没有</span></li>
+          <li>同一程序同时运行于若干个数据集合上，它将属于若干个不同的进程。<span style="color:#ff0000;">也就是说同一程序可以对应多个进程&nbsp;</span></li>
+         </ul> 
+         <p><strong>3、进程的3种状态及转换</strong></p> 
+         <ul>
+          <li>就绪状态（Ready&nbsp; R态）：存在于处理机调度队列中的所有进程，它们已经准备就绪，一旦得到CPU，就立即可以运行。这些进程所处的状态为就绪状态。</li>
+         </ul> 
+         <p>&nbsp; &nbsp;就绪队列：处于就绪状态的进程按一定的策略排队，同一时刻可有多个就绪队列。</p> 
+         <ul>
+          <li>运行状态（Running&nbsp; E态）：正在运行的进程所处的状态为运行状态。</li>
+          <li>等待/阻塞/睡眠状态（Wait/Blocked&nbsp; &nbsp;B态）：若一进程正在等待某一事件发生（如等待输入输出工作完成），这时，即使给它CPU，它也无法运行，称该进程处于等待状态（阻塞、 睡眠、封锁状态）。<br> 阻塞队列：根据阻塞原因可以设置多个队列。</li>
+         </ul> 
+         <p>进程的状态变迁图：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/dfab98b01a7966956db13a8203470563.png"></p> 
+         <p>状态进程模型：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/2bb500acc77492c69b92ebfd39c13821.png"></p> 
+         <p></p> 
+         <p>思考题：</p> 
+         <p>1、如果系统中有N个进程，运行的进程最多几个，最少几个；就绪进程最多几个最少几个；等待进程最多几个，最少几个？</p> 
+         <p>运行：1&nbsp; &nbsp; 0</p> 
+         <p>就绪：N-1 0</p> 
+         <p>等待：N&nbsp; &nbsp;0</p> 
+         <p><strong>4、进程控制块PCB</strong></p> 
+         <p>PCB是OS中最重要的<span style="color:#ff0000;">记录型数据结构</span></p> 
+         <p></p> 
+         <ul>
+          <li>PCB是OS<span style="color:#ff0000;">感知进程存在的唯一标志</span>。</li>
+          <li>进程与PCB是一一对应的。</li>
+          <li>PCB随进程创建而建立，随进程结束而回收</li>
+          <li>PCB应常驻内存</li>
+         </ul> 
+         <p><span style="color:#ff0000;">作用：</span></p> 
+         <p>将一个不能独立运行的程序变成一个可以独立运行的基本单位，一个能与其他进程并发执行的进程。</p> 
+         <p>进程描述信息：</p> 
+         <p></p> 
+         <ul>
+          <li>进程标识符(process ID)：唯一，通常是一个整数</li>
+          <li>进程名：通常基于可执行文件名（不唯一）</li>
+          <li>用户标识符(user ID)：进程组关系</li>
+         </ul> 
+         <p><strong>５、进程同步</strong></p> 
+         <p>5.1、两种制约关系</p> 
+         <p>间接相互制约关系：系统资源竞争，进程间彼此无关</p> 
+         <p>直接相互制约关系：进程间合作，彼此相关</p> 
+         <p>5.2、临界资源(Critical Resource/CR)：一次仅允许一个进程访问的资源。</p> 
+         <p>5.3、临界区(Critical Section/CS)：临界段，在每个程序中，访问临界资源的那段程序。&nbsp;</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/7cea12bd5a5705d22ce3def9666b66dc.png">如程序段A、B有关于变量X的临界区，而C、D有关于变量Y的临界区，那么，A、B之间需要互斥执行，C、D之间也要互斥执行，而A与C、B与D之间不用互斥执行。</p> 
+         <p>5.4、同步机制应遵循的规则</p> 
+         <p></p> 
+         <ul>
+          <li>空闲让进</li>
+          <li>忙则等待</li>
+          <li>有限等待（有限时间等待，以免“死等”）</li>
+          <li>让权等待（不能进入自己的临界区时，应及时释放处理机，以免进程陷入“忙等”）</li>
+         </ul> 
+         <p>5.6、信号量机制</p> 
+         <p></p> 
+         <ul>
+          <li>整型信号量：定义为一个整型量，由两个标准原子操作wait(S)（P操作）和signal(S)（V操作）来访问。</li>
+         </ul> 
+         <p>P(S) 或 wait(S):&nbsp; &nbsp; &nbsp; &nbsp; while S≤0 do no-op;<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;S:=S-1;</p> 
+         <p>V(S) 或 signal(S):&nbsp; &nbsp; &nbsp; S:=S+1;</p> 
+         <p>两种操作皆为原语操作。</p> 
+         <p>进程同步练习题：</p> 
+         <p>思考题：</p> 
+         <p>&nbsp; &nbsp;1、桌上有一空盘，最多允许存放一只水果。爸爸可向盘中放一个苹果或放一个桔子，儿子专等吃盘中的桔子，女儿专等吃苹果。<br> 试用P、V操作实现爸爸、儿子、女儿三个并发进程的同步。<br> &nbsp;</p> 
+         <p>提示：设置一个信号量表示可否向盘中放水果，一个信号量表示可否取桔子，一个信号量表示可否取苹果。</p> 
+         <p>解：</p> 
+         <p>设置三个信号量S,So,Sa 。<br> S：表示可否向盘中放水果，初值为1。<br> So：表示可否取桔子，初值为0。</p> 
+         <p>Sa：表示可否取苹果，初值为0。</p> 
+         <p><img alt="" height="200" src="https://i-blog.csdnimg.cn/blog_migrate/301aafb71515fd00a573b8dac9fe829c.png" width="400"></p> 
+         <p>2、有一个仓库，可以存放A和B两种产品。存储空间充分大，但要求：<br> （1） 每次只能存入一种产品（A或B）<br> （2） －N＜A产品数量－B产品数量＜M。<br> 其中，N和M是正整数。试用P、V操作描述产品A与B的入库过程。<br> 提示：设两个信号量Sa、Sb<br> &nbsp; &nbsp; &nbsp; Sa：表示允许A产品比B产品多入库的数量</p> 
+         <p>&nbsp; &nbsp; &nbsp; Sb：表示允许B产品比A产品多入库的数量</p> 
+         <p>解：</p> 
+         <p>设:<br> &nbsp; 互斥信号量mutex，初值为1。<br> &nbsp; Sa：表示允许A产品比B产品多入库的数量，初值为M-1; 即B的数量为0，A最多为M-1</p> 
+         <p>&nbsp; Sb：表示允许B产品比A产品多入库的数量，初值为N-1;即A的数量为0，B最多为N-1</p> 
+         <p><img alt="" height="200" src="https://i-blog.csdnimg.cn/blog_migrate/f816ab965fb13ce0d917153993e8a4c8.png" width="400"></p> 
+         <p>3、问题描述：假定阅览室最多容纳100人阅读，读者进入时，必须在门口的登记表上登记，内容包括：姓名、座号等；离开时要撤销登记内容。用P、V操作描述读者进程的同步算法。</p> 
+         <p><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/c28d4fc940439f8c36cccc39cf544c1d.png" width="200"></p> 
+         <p>4、问题描述：理发店由一个有几张凳子的等待室和一个放有一张理发椅的理发室组成。若没有理发的人员，理发师睡觉；若顾客到来，且所有的椅子占满，则该顾客离开理发店；若理发师正在理发，则该顾客就找一张椅子坐下等待；若理发师在睡觉，则该顾客唤醒理发师。设计一个理发师和顾客的协调程序。</p> 
+         <p><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/902f9c225feec3669afb3a18f242c60b.png" width="600"></p> 
+         <p>5、问题描述：设公共汽车上，司机和售票员的活动分别为：</p> 
+         <p>司机：启动汽车；&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 售票员：上下乘客；<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 正常行车；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关车门；&nbsp;</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;到站停车；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;售票；</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;开车门；</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 上下乘客；</p> 
+         <p>用P、V原语描述：在汽车不断到站，停车，行驶的过程中。两个人的同步活动</p> 
+         <p><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/373abe7d1e1f8b74222ab156c5b611da.png" width="600"></p> 
+         <p><strong>6、进程通信</strong></p> 
+         <p>所谓进程通信是指进程之间信息交换。</p> 
+         <p>高级通信：用户可直接利用OS提供的一组通信命令高效传送大量数据。分为：</p> 
+         <p></p> 
+         <ul>
+          <li>共享存储器系统(Shared-Memory System) ：进程间通过共享某些数据结构或共享存储区进行通信。</li>
+          <li>消息传递系统&nbsp;(Message Passing System)</li>
+         </ul> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;直接通信：发送进程直接把消息发送给接收者，并将它挂在接收进程的消息缓冲队列上。接收进程从消息缓冲队列中取得消息。也称为消息缓冲通信</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;间接通信：发送进程将消息发送到某种中间实体中（信箱），接收进程从（信箱）中取得消息。也称信箱通信。在网络中称为电子邮件系统。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<span style="color:#ff0000;">思考：直接通信与间接通信方式的主要区别？</span></p> 
+         <p><span style="color:#ff0000;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 前者需要两进程都存在，后者不需要。</span></p> 
+         <p></p> 
+         <ul>
+          <li>管道(Pipe)通信 (共享文件方式)</li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp; &nbsp;习题： 进程A1、A2，…An1通过m个缓冲区向进程B1、B2、…Bn2不断发送消息。发送和接收工作遵循下列规则：<br> （1）每个发送进程一次发送一个消息，写入一个缓冲区， 缓冲区大小等于消息长度<br> （2）对每个消息，B1，B2，…，Bn2都须各接收一次，读 入各自的数据区内<br> （3）m个缓冲区都满时，发送进程等待，没有可读消息 时，接收进程等待。<br> 试用P、V操作组织正确的发送和接收工作。&nbsp;</p> 
+         <p>提示：每个缓冲区只需写一次但要读n2次，因此，可以看成n2组缓冲区，每个发送者要同时写n2组缓冲区中相应的n2个缓冲区，而每个接收者只要读它自己对应的那组缓冲区的对应单元。<br> Sin[n2]=m，表示每组缓冲区中可放的（空的）缓冲区的数目，初值为m;<br> Sout[n2]=0，表示每组缓冲区中可取的（已用的）缓冲区的数目，初值为0;</p> 
+         <p>先将问题简化：<br> 设缓冲区的大小为1<br> 有一个发送进程A1<br> 有二个接收进程B1、B2<br> 设有信号量Sin[1] 、Sin[2]&nbsp; 初值为1</p> 
+         <p>设有信号量Sout[1] 、Sout[2]&nbsp; 初值为0</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/752812334ecf7bbea0d370796510ba10.png" width="600"></p> 
+         <p>向目标前进一步</p> 
+         <p>解：</p> 
+         <p>设缓冲区的大小为m<br> 有一个发送进程A1<br> 有二个接收进程B1、B2<br> 设有信号量Sin[1] 、Sin[2]&nbsp; 初值为m</p> 
+         <p>设有信号量Sout[1] 、Sout[2]&nbsp; 初值为0</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/a2294502e6218ae07d19d686fa4cb7e2.png" width="600"></p> 
+         <p>到达目标：</p> 
+         <p>解：</p> 
+         <p>设缓冲区的大小为m<br> 有n1个发送进程A1….An1<br> 有n2个接收进程B1…Bn2<br> 设有n2个信号量Sin[n2] 初值均为m</p> 
+         <p>设有n2个信号量Sout[n2] 初值均为0</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/e02e3cdb4001aa4564067d0e0fe835eb.png" width="600"></p> 
+         <p><strong>7、线程：是进程中的一个实体，是被系统独立调度的基本单位。</strong></p> 
+         <p>7.1、线程的引入</p> 
+         <p></p> 
+         <ul>
+          <li>引入<span style="color:#ff0000;">进程</span>的目的是为了使<span style="color:#ff0000;">多个程序更好的并发执行</span>，改善<span style="color:#ff0000;">资源利用率</span>、提高<span style="color:#ff0000;">系统效率</span>。</li>
+          <li>引入<span style="color:#ff0000;">线程</span>则是为了<span style="color:#ff0000;">减少并发执行时所付出的时空开销</span>，使<span style="color:#ff0000;">并发粒度更细、并发性更好</span>。</li>
+         </ul> 
+         <p>7.2、进程的两个基本属性</p> 
+         <p></p> 
+         <ul>
+          <li>进程是一个<span style="color:#ff0000;">资源分配</span>的基本单位。</li>
+          <li>进程是一个<span style="color:#ff0000;">可独立调度和分派</span>的基本单位</li>
+         </ul> 
+         <p>7.3、引入线程的好处</p> 
+         <p></p> 
+         <ul>
+          <li>创建一个新线程花费<span style="color:#ff0000;">时间少</span></li>
+          <li>线程的<span style="color:#ff0000;">终止时间</span>比进程短；</li>
+          <li>同进程内的线程<span style="color:#ff0000;">切换时间</span>比进程短；</li>
+          <li>因为同一进程内的<span style="color:#ff0000;">线程共享内存和文件</span>，因此它们之间相互通信无须调用内核</li>
+          <li>适合多处理机系统</li>
+         </ul> 
+         <p>7.4、线程的属性</p> 
+         <p></p> 
+         <ul>
+          <li>轻型实体:基本<span style="color:#ff0000;">不拥有</span>资源</li>
+          <li><span style="color:#ff0000;">独立调度</span>的基本单位</li>
+          <li>可以并发执行</li>
+          <li>共享进程资源</li>
+         </ul> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/d1d0fe7b2e2d4ca27474401a86b2819f.png" width="600"></p> 
+         <p>这就先总结到第二章，后面的内容在下一篇博文中。</p> 
+         <p><strong>总结重点：</strong></p> 
+         <p>第一章&nbsp; 操作系统引论<br> 1.操作系统的作用<br> 2.操作系统的发展过程<br> （包括解决的问题和优缺点）<br> 3.操作系统的基本特征<br> 第二章 进程的描述与控制<br> 1.进程的定义和特征<br> 2.进程和程序的比较<br> 3.进程的三种基本状态及转换<br> 4.PCB是什么及其作用<br> 5.进程间的两种制约关系<br> 6.临界资源&nbsp; 临界区的概念<br> 7.同步机制应遵循的规则<br> 8.信号量机制-整型信号量<br> （Ps:书上的经典同步问题不会考你）<br> 9.进程通信的类型<br> 10.线程</p> 
+        </div> 
+       </div> 
+      </article>   
+      <img src="https://img-home.csdnimg.cn/images/20211209110851.png" alt="pdf_watermark" width="0" height="0" style="display: none"> 
+      <div class="print_watermark"></div> 
+      <div class="print_watermark_info"> 
+       <p>内容来源：csdn.net</p> 
+       <p>作者昵称：DiuDiu_yang</p> 
+       <p>原文链接：https://blog.csdn.net/qq_41261490/article/details/80872072</p> 
+       <p>作者主页：https://blog.csdn.net/qq_41261490</p> 
+      </div> 
+      <style>
+    .print_watermark, .print_watermark_info {
+      display: none
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        color-adjust: exact; /* Firefox */
+        background-image: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact;
+      }
+      .blog-content-box {
+        padding: 0;
+      }
+      .blog-content-box .article-header .article-info-box > div:not(.article-bar-top){
+        display: none !important;
+      }
+      .blog-content-box .article-header .article-info-box  .article-bar-top img{
+          display:none
+      }
+      .blog-content-box .article-header .article-info-box > .article-bar-top .bar-content > *:not(.follow-nickName):not(.time){
+          display: none !important;
+      }
+      .print_watermark {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        background-image: url('https://img-home.csdnimg.cn/images/20211209110851.png');
+        background-size: 180px auto;
+        background-repeat: repeat;
+      }
+      .print_watermark_info {
+        display: block;
+        position: fixed;
+        bottom: 16px;
+        right: 0;
+        z-index: 1000;
+        color: #e8e8ed;
+        font-size: 12px;
+        ocapity: .5
+      }
+      @page {
+        margin: 0 10mm 10mm;
+        size: landscape;
+      }
+      body, article {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #csdn-toolbar,.main_father > *:not(#mainBox), .csdn-side-toolbar, .main_father aside {
+        display: none !important;
+      }
+      .main_father > #mainBox {
+        width: unset
+      }
+      .main_father > #mainBox > main > *:not(.blog-content-box){
+        display: none !important;
+      }
+    }
+  </style> 
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/qq_41261490"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/e5cdb908be774a9f9be3ad72656c8e63_qq_41261490.jpg!1"> <span class="profile-name"> DiuDiu_yang </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">已关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 646 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="3866" id="get-collection"> 3866 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 38 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-downloadpdf" id="tool-downloadpdf"> <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> </a> 
+          <div class="tool-hover-tip">
+           <span class="text">导出PDF</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="rewardBtNewHide" data-report-click="{&quot;spm&quot;:&quot;3001.4237&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault reward-bt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+            <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> <span class="count">导出PDF</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="7769956" data-free="true" data-description="" data-subscribe="false" data-title="计算机操作系统" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/qq_41261490/category_7769956.html" data-sum="7" data-people="75" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>    
+     <a id="commentBox" name="commentBox"></a> 
+    </main> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                  
+ </body>
+</html>

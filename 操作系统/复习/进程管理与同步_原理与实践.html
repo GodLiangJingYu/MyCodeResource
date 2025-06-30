@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/hebtu666/article/details/115091251"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#">  
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>进程管理与同步：原理与实践-CSDN博客</title>  
+  <meta name="keywords" content="操作系统学霸笔记"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;操作系统学霸笔记&quot;}"> 
+  <meta name="description" content="文章浏览阅读3.3w次，点赞1.8k次，收藏2.2k次。之后会发布基于基础知识的大部分算法的模拟代码合集，敬请已关注。_操作系统学霸笔记"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-72afa20676.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-ink/skin-ink-a11cfdaac3.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>      
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">十万字操作系统笔记</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <span class="c-gray">置顶</span> 
+           <a class="follow-nickName vip-name" href="https://fantianzuo.blog.csdn.net" target="_blank" rel="noopener" title="兔老大RabbitMQ">兔老大RabbitMQ</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2024-11-29 16:11:29&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量3.3w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 2.2k </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 1.8k </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/hebtu666/category_8446479.html" target="_blank" rel="noopener">os/设计模式/耳机/测试/导图/资源 杂记</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;笔记&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;笔记\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;笔记&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;笔记\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E7%AC%94%E8%AE%B0&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">笔记</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;面试&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;面试\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;面试&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;面试\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E9%9D%A2%E8%AF%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">面试</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;服务器&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;服务器\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;服务器&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;服务器\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E6%9C%8D%E5%8A%A1%E5%99%A8&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">服务器</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2021-03-22 18:44:01&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/hebtu666/article/details/115091251" target="_blank">https://blog.csdn.net/hebtu666/article/details/115091251</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert" class=""></div> 
+      <div id="blogColumnPayAdvert" class=""> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/hebtu666/category_8446479.html" target="_blank" title="os/设计模式/耳机/测试/导图/资源 杂记" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">os/设计模式/耳机/测试/导图/资源 杂记</span> <span class="dec">专栏收录该内容</span> </span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>81 篇文章</span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-bt articleColumnFreeBt" data-id="8446479">订阅专栏</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views kimbie-light"> 
+         <blockquote> 
+          <p>之后会发布基于基础知识的大部分算法的模拟代码合集，敬请已关注。</p> 
+         </blockquote> 
+         <h2>进程基础</h2> 
+         <h4>进程的基本概念</h4> 
+         <ul>
+          <li> <p><strong>程序顺序执行的特征：</strong></p> <p>1）顺序性：处理机严格按照程序所规定的顺序执行，每一步操作必须在下一步操作开始前执行</p> <p>2）封闭性：程序在封闭的环境下运行，程序独占资源，资源的状态由程序决定，程序一旦开始执行，外界环境不会影响程序的执行结果。</p> <p>3）可再现性：只要程序的初始条件和环境相同，程序的执行结果就相同。</p> </li>
+          <li> <p><strong>程序的并发执行的特征：</strong>（顺序执行会浪费资源）</p> <p>1）间断性：程序共享系统的资源，以及为完成同一个任务共同合作，并发执行的程序之间相互制约，（不是运行完一个在运行另一个）</p> <p>2）失去封闭性：各程序共享系统资源，资源的状态由各程序所决定。</p> <p>3）不可再现性：由于失去了封闭性，（即初始的环境状态和条件相同，程序的执行结果却可能不同），该特征超级垃圾，必须想办法避免。</p> </li>
+          <li> <p><strong>进程的概念：</strong></p> <p>具有独立功能的程序在某一个数据集合上的执行过程，它是系统进行资源分配和调度的一个独立单位。</p> </li>
+          <li> <p><strong>进程的特征：</strong></p> 
+           <ul>
+            <li> <p>结构特征：</p> 
+             <table>
+              <thead>
+               <tr>
+                <th>PCB（进程控制块），与进程共存亡，用于记录进程的基本情况和活动过程，一般常驻内存</th>
+               </tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td>程序段（一般为需要的时候动态调入内存），描述要完成的功能</td>
+               </tr>
+               <tr>
+                <td>数据段（一般为需要的时候动态调入内存），操作的对象即工作区</td>
+               </tr>
+              </tbody>
+             </table></li>
+            <li> <p>动态性：进程最基本的特征，进程不是静态的，而是动态的，它由创建而产生，由调度（这里主要指<strong>进程调度</strong>，而不是作业调度）而执行，由撤销而消亡</p> </li>
+            <li> <p>并发性：指多个进程实体存于内存中，且能在同一时间段内执行，（这里同操作系统的并发性）</p> </li>
+            <li> <p>独立性：进程实体是一个能独立运行，独立获得资源和独立接收调度的基本单位</p> </li>
+            <li> <p>异步性：同操作系统的异步性</p> </li>
+           </ul></li>
+          <li> <p><strong>进程的三种基本状态：</strong></p> 
+           <ul>
+            <li>就绪状态：进程已经分配到除了CPU之外的所有资源，只要获得CPU便可以立刻执行，处于就绪状态的进程维持一个就绪队列。</li>
+            <li>执行状态：已经获得CPU，正在执行的进程。（单处理机系统中，同一时刻只能有一个进程处于执行状态，多处理机系统中，可以同时有多个进程处于执行态）</li>
+            <li>阻塞状态/等待状态：在执行的过程中由于发生某些事件（I/O请求，申请缓存等），暂时无法执行的进程，是由于进程<strong>本身引起</strong>的阻塞。处于阻塞状态的进程可以维持一个阻塞队列。</li>
+            <li>进程是自己阻塞自己的，但是阻塞的进程需要其他进程将其唤醒</li>
+           </ul></li>
+          <li> <p><strong>三种基本状态的转换：</strong></p> </li>
+         </ul> 
+         <p></p> 
+         <p>​ 就绪—&gt;执行：进程调度，获得CPU资源</p> 
+         <p>​ 执行—&gt;就绪：在分时操作系统中时间片花完</p> 
+         <p>​ 执行—&gt;阻塞：I/O请求，申请缓存等，自己被迫进入阻塞状态</p> 
+         <p>​ 阻塞—&gt;就绪：I/O完成，造成阻塞的原因得到解决（又变成只差CPU的状态）</p> 
+         <ul>
+          <li> <p><strong>进程的创建状态和终止状态</strong></p> <p>创建状态：进程成为就绪状态之前的状态</p> <p>终止状态：当一个进程到达了自然结束点，或者遇到无法客服的困难，或者被操作系统所终结等的时候，就进入了终止状态。</p> </li>
+          <li> <p><strong>挂起操作及引入的原因：</strong></p> <p>1）进程被挂起之后处于静止状态。</p> <p>2）引入的原因：</p> 
+           <ul>
+            <li>终端用户的需要：当终端用户想要暂停自己程序的运行的时候</li>
+            <li>父进程请求：当父进程想要挂起某个子进程的时候</li>
+            <li>负荷调节的需要：当实时系统中的工作负荷较重，系统可以将某些不重要的进程挂起，保证程序的正常运行。</li>
+            <li>操作系统的需要：操作系统有事需要将某些进程挂起，已检查运行过程中资源的使用情况</li>
+           </ul><p>3）引入挂起操作后，进程的状态转换：</p> <p></p> <p>（1）阻塞态可以通过释放变为就绪态。活动阻塞释放变为活动就绪，静止阻塞释放变为静止就绪。</p> <p>（2）活动态和静止态可以进行相互转换，活动到静止称为挂起，静止到活动可以称为激活。<strong>活动态和静止态最本质的区别为活动态在内存中，静止态暂时调出内存，进入外存</strong></p> <p>（3由执行态可以直接变为静止就绪态，即时间片用完，直接调离内存</p> <p>（4）静止态（外存）必须通过激活变为非静止态（调入内存）才能够参与进程的三台转换。</p> <p>4）进程挂起之后不是原封不动的将进程移出内存，而是会先将一些必要的信息写入外存。再释放PCB</p> </li>
+          <li> <p><strong>进程管理中的数据结构</strong></p> 
+           <ul>
+            <li> <p>操作系统中用于管理控制的数据结构：内存表，设备表，文件表，进程表（程序控制快PCB）</p> </li>
+            <li> <p><strong>进程控制块PCB的作用：</strong></p> <p>1）作为独立运行基本单位的标志</p> <p>2）能实现间断性的运行方式</p> <p>3）提供进程管理所需要的全部信息</p> <p>4）提供进程调度所需要的全部信息</p> <p>5）实现与其他进程的同步和通信</p> </li>
+            <li> <p><strong>进程控制块中的信息：</strong></p> <p><strong>进程标识符</strong>：唯一表示一个进程，有两种：</p> <p>1）外部标识符：方便用户对进程的访问，通常有数字和字母组成</p> <p>2）内部标识符：方便系统对进程的访问，每一个进程有一个唯一的数字标识符。</p> <p><strong>处理机状态</strong>：（主要指的是处理机中寄存器的状态）</p> <p>1）通用寄存器：又称为用户寄存器，用户的程序可以访问，用于暂存信息，一般为8~32个</p> <p>2）指令计数器：存放了将要访问的下一条指令的地址。</p> <p>3）程序状态字（PSW​）：含有状态信息，条件码，执行方式（指在系统还是用户状态下执行），中断屏蔽标志（允不允许在执行的过程中被打断）</p> <p>4）用户栈指针：每个用户进程都有系统栈，用于存放过程和系统调用参数及调用地址。</p> <p><strong>进程调度信息</strong></p> <p>1）进程状态：指明了进程的当前状态</p> <p>2）进程优先级：即一个整数，用于描述进程使用CPU的优先级，数字越大，优先级越高</p> <p>3）其他信息：与采用的进程调度算法有关</p> <p>4）事件：指进程由执行状态变为阻塞状态所等待发生的事件。</p> <p><strong>进程控制信息</strong></p> <p>1）程序和数据的地址：由于程序段和数据段并不是常驻内存的，而是使用的时候才调入，因此需要保存其地址</p> <p>2）进程同步和通信机制：</p> <p>3）资源清单：一张清单列出了该进程在运行期间所需的全部资源（除了CPU资源），另一张列出了分配到该进程的资源的清单。</p> <p>4）链接指针：给出了本进程（PCB）所在队列中的下一个进程的PCB的首地址。</p> </li>
+            <li> <p>进程控制块的组织方式：</p> <p>线性方式：不重要</p> <p>链接方式：类似静态链表，把具有同一状态的PCB用其中的链接字链接成一个队列</p> </li>
+           </ul><p></p> <p></p> 
+           <blockquote> 
+            <p>注：进程资源的分配并不是在该进程执行之前将该进程所需的资源全部分配给他，而是在其执行的过程中进行动态的分配。</p> 
+           </blockquote> </li>
+         </ul> 
+         <h4>进程与程序的区别与关系</h4> 
+         <ul>
+          <li>进程与程序的区别： 
+           <ul>
+            <li>进程是一个动态的概念（有 “ 生命 ” ），程序是静态的概念。</li>
+            <li>进程可以具有并行性（在多处理器的系统中），但是程序没有</li>
+            <li>进程是竞争系统资源的基本单位</li>
+           </ul></li>
+          <li>进程与程序的关系： 
+           <ul>
+            <li>一个程序对应多个进程，一个进程又可以为多个程序服务。</li>
+           </ul></li>
+         </ul> 
+         <h4>进程控制</h4> 
+         <p>1.基本知识</p> 
+         <ul>
+          <li>进程控制是进程管理中最基本的功能，主要包括进程的创建，进程的终止和运行中的进程的状态转换等功能。进程控制一般是由<strong>OS的内核中的原语</strong>来实现的。</li>
+         </ul> 
+         <p>2.进程的创建</p> 
+         <ul>
+          <li> <p>进程的层次结构</p> </li>
+          <li> <p>进程图</p> </li>
+          <li> <p><strong>引起进程创建的事件</strong></p> <p>1）用户登录：在分时系统中，用户成功登录，系统将为该用户分配新的进程</p> <p>2）作业调度：在多道批处理系统中，作业调度程序将某些作业调度内存，并且为他们创建进程</p> <p>3）提供服务：运行中的用户程序提出某种请求</p> <p>4）应用请求：由用户进程自己创建，帮助自己完成特定的任务</p> </li>
+          <li> <p>==进程的创建过程：==OS调用进程创建原语Create创建一个新进程</p> <p>1）申请空白PCB：新进程获得一个唯一的<strong>数字标识符（对于操作系统）</strong></p> <p>2）为新进程分配器运行所需的资源：包括<strong>物理资源和逻辑资源</strong></p> <p><strong>3）初始化进程控制块PCB：</strong></p> <p>（1）初始化标识符信息：系统分配的标识符信息装入PCB</p> <p>（2）初始化处理机状态信息：主要为一些寄存器</p> <p>（3）初始化处理机控制信息：一般初始化为就绪状态</p> <p>（4）如果进程就绪队列允许，将进程插入就绪队列</p> </li>
+         </ul> 
+         <p>3.进程的终止</p> 
+         <ul>
+          <li> <p>引起进程终止的事件：</p> <p>1）正常结束</p> <p>2）异常结束：1）越界错误（访问自己范围外的），2）保护错误（访问自己无权利访问的）3）非法指令：试图运行不存在的指令，4）特权指令；5）运行超时；6）等待超时；7）算术运算错；8）I/O故障</p> <p>3）外界的干预：1）操作员或者操作系统干预；2）父进程的请求（父进程的权利大于子进程）3）父进程的终止：当父进程终止时，其所有子进程也应当终止。</p> </li>
+          <li> <p>==进程终止的过程：==OS调用进程终止原语</p> <p>1）根据要终止的进程的标识符，搜索出该进程的PCB，从中获得该进程所处的状态</p> <p>2）如果该进程正处于执行状态，立刻终止该进程，并且置调度标志为真，表示在该进程结束后应该进行重新调度（即不要让CPU空闲）</p> <p>3）若该进程有子孙进程，让其所有子孙进程都终止。</p> <p>4）被终止进程所拥有的所有资源归还给父进程或者操作系统</p> <p>5）将终止进程的PCB从所在队列中移除，等待其他程序来收集信息。</p> </li>
+         </ul> 
+         <p>4.进程的阻塞与唤醒</p> 
+         <ul>
+          <li> <p>引起进程阻塞和唤醒的事件：阻塞和唤醒是相对应的</p> <p>1）向系统请求共享资源失败</p> <p>2）等待某种操作的完成</p> <p>3）新数据尚未到达</p> <p>4）等待新任务的到达</p> </li>
+          <li> <p>进程阻塞的过程：<strong>进程</strong>通过调用阻塞原语block==将自己==阻塞</p> <p>1）进入block后立即停止执行</p> <p>2）保存现场</p> <p>3）将进程控制块中的现行状态改为阻塞，并将PCB插入阻塞队列</p> <p>4）转调度程序，进行重新调度</p> </li>
+          <li> <p>进程唤醒的过程：当阻塞的进程所期待的事件发生时，<strong>有关进程</strong>（不是本身）调用唤醒原语wakeup，将等待该事件的进程唤醒。唤醒之后进入就绪队列。</p> <p>1）将被阻塞的进程从等待该事件的阻塞队列中移除</p> <p>2）将PCB的现行状态由阻塞改为就绪</p> <p>3）然后再将该PCB插入就绪队列中</p> <p>4）转进程调度或者返回</p> </li>
+          <li> <p>block原语和wakeup原语是一对作用刚好相反的原语，必须成对使用。</p> </li>
+         </ul> 
+         <p>5.进程的挂起与激活</p> 
+         <ul>
+          <li> <p>进程的挂起过程：当出现了引起进程挂起的事件之后，OS利用挂起原语将指定的进程挂起（即调出内存）</p> <p>首先检查进程的状态（不同的状态采取不同的处理方式），若该进程正处于活动就绪状态，将其改为静止就绪态；若该进程处于活动阻塞状态，将该进程改为静止阻塞状态；若该进程处于执行状态，将其改为静止就绪状态，调度程序重新进行调度。</p> </li>
+          <li> <p>进程的激活过程：</p> <p>1）首先将进程从外存调入内存，</p> <p>2）检查进程所处的状态，如果进程处于静止就绪，将其改为活动就绪，如果处于静止阻塞，将其改为活动阻塞</p> <p>3）检查进程的优先级，如果优先级高，可以进行抢占当前运行进程的资源</p> </li>
+         </ul> 
+         <h4>4.进程同步</h4> 
+         <p>1.进程同步的基本概念</p> 
+         <ul>
+          <li> <p>进程同步的目的：1）按照一定的规则共享系统资源；2）对多个相关进程在执行次序上进行协调，是程序具有可再现性。</p> </li>
+          <li> <p>两种形式的制约关系：</p> <p>1）间接相互制约关系：多个进程在并发执行时，由于<strong>共享系统的临界资源</strong>而相互制约，如磁带机，打印机，表格等。（互斥）</p> <p>2）直接相互制约关系：多个进程为完成同一任务而<strong>相互合作</strong>（同步）</p> </li>
+          <li> <p>**临界资源：**一次仅允许一个进程使用的共享资源。例如打印机，磁带机，表格等。</p> </li>
+          <li> <p>互斥和同步的概念：</p> <p>1）互斥：并发的多个进程由于竞争同一资源而产生的相互排斥的关系</p> <p>2）同步：进程间共同完成一项任务时直接发生相互作用的关系</p> </li>
+          <li> <p><strong>临界区：<strong>每个进程中访问临界资源的那段</strong>代码</strong></p> </li>
+         </ul> 
+         <pre class="has"><code class="language-cpp">/*一个访问临界资源的循环进程*/
+while(true)
+{
+    进入区：//对欲访问的临界资源进行检查，查看其是否正被访问，如果此刻临界资源未被访问，进程便可以进入临界区对临界资源进行访问，并设置它正被访问的标志，如果此刻临界资源正被访问，则不能进入临界区。即后边的wait（）操作
+    临界区：//执行临界资源的那段代码
+    退出区：//将临界区正被访问的标志恢复为未被访问的标志，signal（）操作
+    剩余区：//除上述三个区之外的代码叫做剩余区
+}</code ></pre> 
+         <ul>
+          <li> <p>同步机制应遵循的原则：</p> <p>1）空闲让进</p> <p>2）忙则等待</p> <p>3）有限等待：不能一直等</p> <p>4）让权等待：进程不能进入临界区，就应当释放==处理机==，让权指让出处理机</p> </li>
+         </ul> 
+         <p>2.硬件同步机制</p> 
+         <p>3.信号量机制：Dijkstra提出</p> 
+         <ul>
+          <li> <p>信号量：</p> 
+           <ul>
+            <li>是一种数据结构</li>
+            <li>值与相应资源的使用情况有关</li>
+            <li>仅与P，V操作有关，<strong>P，V</strong>代表两种<strong>原子操作</strong>，P为等候原语wait（S）,V为释放原语signal（S）。</li>
+            <li>wait操作即在申请资源，signal操作是释放资源</li>
+            <li>wait操作其实就是进入临界区之前的进入区，signal操作是从临界区出来之后的退出区</li>
+            <li>原子操作的特点，操作一开始执行，半中间不可以打断，原语即为原子操作。</li>
+           </ul></li>
+          <li> <p>整型信号量</p> 
+           <ul>
+            <li>概念：Dijkstra把整型信号量定义为一个用于表示资源数目的整型量S。</li>
+           </ul><pre class="has"><code class="language-cpp">/*等候原语*/
+wait(S){
+    while(S &lt;= 0);  //当S&lt;=0的时候便一直处于等待状态，直到获得相应的资源，不符合让权等待的原则      
+    S--;     //获得资源后，资源的数目减一，S表示该类资源可用的数目      
+}
+
+/*释放原语*/
+signal(S){
+    S++;      //释放资源后，资源的数目加一     
+}</code ></pre> 
+           <ul>
+            <li> <p>优缺点：</p> <p>优点：实现简单</p> <p>缺点：<strong>违背了同步机制中的让权等待原则</strong>，浪费资源（只要S&lt;=0，就会等待）</p> </li>
+           </ul></li>
+          <li> <p>**记录型信号量：**当前用的最多的</p> 
+           <ul>
+            <li>特点：采用了记录型的数据结构</li>
+           </ul><pre class="has"><code  style="height: 50vh;" class="language-cpp">/*记录型数据结构*/
+typedef struct{
+    int value;      //&gt;=0的时候，表示系统中可用资源的数量，&lt;0的时候其绝对值表示因为该资源而阻塞的进程的数目
+    struct process_control_block *list;    //维持阻塞队列的指针
+}semaphore;
+
+/*等待原语*/
+wait(semaphopre *S){
+    S-&gt;value--;    //一个进程过来，首先将S-&gt;value--；
+    if(S-&gt;value &lt; 0){     //&lt;0表示资源已经用光，将该进程加入阻塞队列
+        block(S-&gt;list);
+    }
+}
+
+/*释放原语*/
+signal(semaphore *S){
+    S-&gt;value++;      //释放资源，S-&gt;value++；
+    if(S-&gt;value &lt;= 0){      //S-&gt;value++之后，还&lt;=0，直接唤醒一个阻塞的进程，唤醒的进程拥有了该资源的使用权（不需要再次执行P操作），然后进入就绪队列。如果&gt;0，直接将资源释放即可
+        wakeup(S-&gt;list);
+    }
+}</code ></pre> 
+           <ul>
+            <li> <p>wait操作：每次都相当于进程请求一个单位的该类资源</p> <p>signal操作：每次都相当于释放一个单位资源</p> </li>
+            <li> <p>当S-&gt;value的初值为1的时候，表示只允许一个进程访问临界资源，信号量转化为互斥型信号量</p> </li>
+            <li> <p><strong>优点：<strong>通过维持阻塞队列的指针，使得</strong>满足了让权等待的原则</strong>，弥补了整型信号量的缺点</p> </li>
+            <li> <p>**缺点：**只适用于对单一资源的管理，如果一个进程需要请求多类资源的时候，很容易产生死锁。</p> </li>
+           </ul></li>
+          <li> <p>AND型信号量：解决记录型信号量会发生的死锁的问题</p> 
+           <ul>
+            <li>当一个进程需要两个或者更多的共享资源来完成一个目标的时候，多个进程之间可能会发生阻塞（刚开始前半部分资源占有了，但是后半部分资源无法获得，自己再阻塞自己，即发生了死锁）</li>
+            <li>AND的解决思想：<strong>将一个进程运行过程中所需要的全部资源一次性都分给他，待进程使用完之后，在一起进行释放。</strong>（即一起申请，一起释放）</li>
+           </ul><pre class="has"><code  style="height: 50vh;" class="language-cpp">/*等候原语：全分配*/
+Swait(S1, S2, …, Sn)
+ {
+    While(TRUE)
+    {
+        //多类资源同时满足的时候才进行分配，先判断再分配。
+    	if (S1 &gt;=1 and … and Sn&gt;=1 ){
+          	for( i=1 ;i&lt;=n; i++) Si - -;
+			break;
+		}
+        else{
+            Place the process in the waiting queue associated with the first Si found with Si &lt;1,and set the progress count of this process to the beginning of Swait operation	（将即将阻塞的进程挂到第一个不能满足他的资源的阻塞队列，然后设置该进程的起始地址为Swait操作的开始）
+        }
+    }
+}
+
+/*释放原语：全释放*/
+Ssignal(S1, S2, …, Sn){
+	while(TRUE){    
+		for (i=1; i&lt;=n; i++) {
+            Si++ ;
+            Remove all the process waiting in the queue associated with Si into the ready queue（将因为该资源得不到满足而阻塞的所有进程都从阻塞队列释放进入就绪队列，重新进行排队）
+  		 }
+	}
+}</code ></pre> <p><strong>注意：</strong></p> <p>1）在分配资源的时候首先判断是否所有资源均全部满足相应的条件，满足才进行分配。</p> <p>2）释放的时候是将因为该资源得不到满足而阻塞的<strong>所有进程都从阻塞队列释放进入就绪队列</strong>，重新进行排队，因为OS需要根据调度算法重新选取新的进程占据CPU</p> </li>
+          <li> <p><strong>信号量集</strong></p> </li>
+         </ul> 
+         <pre class="has"><code class="language-cpp">Swait(S1, t1, d1; …; Sn, tn, dn)
+    if (S1&gt;= t1 and … and Sn&gt;= tn) then
+        for i:=1 to n do
+           Si:= Si - di ;
+        endfor
+    else
+       Place the executing process in the waiting queue of the first Si with Si &lt; ti and set its program counter to the beginning of the Swait Operation
+    endif</code ></pre> 
+         <p><strong>注意：</strong></p> 
+         <p>1）继承了AND型信号量的思想，先判断是否所有所需资源均满足条件。满足才进行分配。</p> 
+         <p>2）<strong>引入了下限值</strong>的概念。Si表示可用的资源的数量；ti表示想要分配资源成功至少需要的该资源的数目（ti（下限值）包括两部分，一部分是系统执行该进程所需，另一部分是该进程所请求的，因此一般大于di）；di表示该进程所请求的该类资源的数目。</p> 
+         <p>4.信号量的应用</p> 
+         <p>1、利用信号量实现<strong>进程互斥</strong></p> 
+         <pre class="has"><code  style="height: 50vh;">semaphore  mutex =1;
+    begin
+    parbegin
+        process 1: begin
+                        repeat
+                            wait(mutex);
+                            critical section
+                            signal(mutex);
+                            remainder section
+                        until false;
+                    end
+        process 2: begin
+                        repeat
+                            wait(mutex);
+                            critical section
+                            signal(mutex);
+                            remainder section
+                        until false; 
+                    end
+    parend        
+    end</code ></pre> 
+         <p><strong>注意：</strong></p> 
+         <p>1）利用信号量实现进程互斥地访问某种资源。首先应将mutex设为1</p> 
+         <p>2）wait操作和signal操作必须成对地出现，如果缺少wait操作可能会造成系统的混乱；如果缺少signal操作，那么该资源永远不会得到释放，因该资源而被阻塞的进程也将永远不会被唤醒。</p> 
+         <p>2、利用信号量<strong>实现前驱关系图</strong>（进程同步）</p> 
+         <p><strong>如下图：</strong></p> 
+         <p><img alt="" class="has" height="231" src="https://i-blog.csdnimg.cn/blog_migrate/22cab1f014d8f05b9e41b62abf2ca013.png" width="446"></p> 
+         <pre><code class="language-html">semaphore  a, b, c, d, e, f, g = 0, 0, 0, 0, 0, 0, 0;
+    begin
+        parbegin
+            begin  S1; signal(a); signal(b); end;
+            begin  wait(a); S2; signal(c); signal(d); end;
+            begin  wait(b); S3; signal(e); end;
+            begin  wait(c); S4; signal(f); end;
+            begin  wait(d); S5; signal(g); end;
+            begin  wait(e); wait(f); wait(g); S6; end;
+        parend
+    end</code ></pre> 
+         <p><strong>注意：</strong></p> 
+         <p>1）信号量的初值必须被设置为0，必须等某个进程之前的进程完之后，释放资源，后边的进程才能够执行。</p> 
+         <p></p> 
+         <h2>经典的进程同步问题</h2> 
+         <blockquote> 
+          <p>普通版：一类进程作为生产者，生产产品，生产的产品放入一个缓冲区，消费者从缓冲区中取出产品，需要保证生产者不可以向满的缓冲区中添加产品，消费者不可以从空的缓冲区中取出产品。同一时刻只可以有一个生产者生产产品或者消费者消费产品。</p> 
+          <p>升级版可以实现同一个时刻既有生产者生产产品，又有消费者消费产品。但是绝对不可以同一时刻多个生产者生产产品或者多个消费者消费产品。同时使用count记录缓冲区中产品的数量。</p> 
+         </blockquote> 
+         <ul>
+          <li> <p><strong>生产者消费者问题</strong></p> <p>1）生产者进程和消费者进程都以异步方式运行， 但它们之间必须保持同步。</p> <p>2）可利用<strong>互斥信号量</strong>$mutex$实现诸进程对缓冲池的互斥使用（不可以同时既向缓冲区中放入数据，又从缓冲区中拿出数据）；利用<strong>资源信号量</strong>empty和full分别表示缓冲池中空缓冲池和满缓冲池的数量。 假定这些生产者和消费者相互等效</p> <pre class="has"><code  style="height: 50vh;">/*
+in表示放入数据的地址，out表示取出数据的地址
+buffer[n]：表示大小为n的缓冲池（由多个缓冲区组成） 
+mutex，mutex1，mutex2：互斥型信号量，初值为1
+empty，full：资源型信号量，empty表示空缓冲区的数量，full表示满缓冲区的数量
+item：表示一个数据项
+*/
+Int in=0,out=0;  
+Item buffer[n];   
+Semaphore mutex1=1,mutex2 = 1,empty=n,full=0;  
+
+//生产者
+Void producer(){ 
+ 	do{
+		生产一个产品放入nextp;
+        
+        /*
+         * 进入区
+         * 先申请资源信号量，在申请互斥信号量
+         * mutex1控制同一个时间段内只能有一个生产者生产产品
+         */
+		wait(empty);
+		wait(mutex1);
+        
+        /*临界区*/
+		buffer[in]=nextp;
+		in=(in+1) % n;
+        
+        /*退出区*/
+		signal(mutex1);
+		signal(full);
+        
+        /*对计数器count的互斥访问*/
+        wait(mutex);
+        count++;
+        signal(mutex);
+	}while(TRUE)
+}
+
+//消费者
+Void consumer(){ 
+    do{
+       /*进入区*/
+	   wait(full);
+	   wait(mutex2);     //消费者对缓冲区的互斥访问
+       
+       /*临界区*/
+	   nextc =buffer[out];          //只有一份
+	   out =(out+1) mod n;
+        
+       /*退出区*/
+	   signal(mutex2);
+	   signal(empty);
+        
+        /*对计数器count的互斥访问*/
+        wait(mutex);
+        count--;
+        signal(mutex);
+	   消费 nextc中的产品;                        
+	}while(TRUE)
+}
+
+
+Void main(){
+	cobegin
+	    proceducer();
+ 	    consumer();
+	coend
+}</code ></pre> <p><strong>注意：</strong></p> <p>1）每个程序的互斥操作wait（）和signal（）必须成对的出现。</p> <p>2）输入进程不可以向满的缓冲池中输入数据，计算进程不可以从空的缓冲池中取数据</p> <p>3）在每个程序中的多个wait操作顺序不能颠倒，必须<strong>先执行对资源信号量</strong>的wait操作，<strong>在进行对互斥信号量</strong>的wait操作，否则可能引起进程死锁。</p> <p>4）可以使用三个互斥信号量mutex、mutex1、mutex2实现同一时刻既有生产者生产，又有消费者消费。</p> </li>
+          <li> <p><strong>读者—写着问题</strong></p> 
+           <blockquote> 
+            <p>该问题涉计两类进程，第一类进程是读进程Reader，另一类进程是写进程Writer，多个读进程可以同时读一个文件（共享资源），多个写的进程不可以同时写一个文件（对写互斥），并且读的时候不能写，写的时候不能读（对读互斥）。</p> 
+           </blockquote> <p>1）<strong>问题核心</strong>：保证一个<strong>Writer</strong>进程必须与其他进程<strong>互斥地</strong>访问共享对象的同步问题。</p> <p>2）只要求读文件的进程称为“Reader进程”，其它进程则称为“Writer进程”。</p> <p>3）允许多个进程同时读一个共享对象，但不允许一个Writer进程和其他Reader进程或Writer进程同时访问共享对象（共享对象并不是临界资源，因为他允许多个进程对其访问）</p> <pre class="has"><code  style="height: 50vh;">/*
+记录型信号量解决读者—写者问题
+
+rmutex：读进程对Readcount的互斥
+wmutex：writer对reader和writer的互斥
+readcount：表示正在读的进程数目，只有当readcount=0的时候才需要申请wmutex权限，大于0的时候不需要
+*/
+
+semaphore rmutex=1, wmutex =1;
+int readcount =0;
+Void Reader(){
+	do{
+		wait(rmutex);          //防止多个reader进程对readcount的访问
+		if (Readcount==0){    //如果readcount不等于0，表示有进程正在进行读操作，绝对没有写操作
+			wait(wmutex);
+		}
+		Readcount ++;
+		signal(rmutex);
+		…
+		读;
+		…
+		wait(rmutex);
+		Readcount - -;
+		if (Readcount==0){      //只有等于0的时候才需要释放资源，使得写进程可以工作
+			signal(wmutex);
+		}
+		signal(rmutex);
+	}while(TRUE);
+}
+Void writer(){
+    do{
+        wait(wmutex);      //申请写权限的资源
+        写;
+        signal(wmutex);
+    }while(TRUE);
+}
+
+Void main(){
+    cobegin
+       reader();  writer();
+	Coend
+}</code ></pre> <p><strong>利用信号量集的机制实现读者-写者问题</strong></p> <pre class="has"><code  style="height: 50vh;" class="language-cpp">int RN;
+semaphore L = RN;             //表示读者的数量
+mx = 1；						//对写者进行互斥的访问
+
+void Reader(){
+    while(true){
+        Swait(L, 1, 1);         //申请一个读者进程
+        Swait(mx, 1, 0);       //判断当前是否有写者进程在写，该出相当于一个开关
+        
+        operation...
+            
+        Ssignal(L, 1);
+    }
+}
+
+void Writer(){
+    while(true){
+        //此处首先申请一个mx，如果当前系统中无写者进程，则该语句必定执行成功，Reader进程中的
+        //Swait（mx, 1, 0）便处于关闭状态，只需要等系统中的读进程执行完毕，(L, RN，0)执行成
+        //功，打开开关即可。
+        Swait(mx, 1, 1; L, RN, 0);
+        
+        operation...；
+        
+        //释放一个写进程
+        Ssignal(mx, 1);
+    }
+}
+
+void main(){
+    cobegin
+        Reader();
+    	Writer();
+    coend;
+}</code ></pre> <p></p> </li>
+          <li> <p><strong>哲学家的进餐问题</strong></p> 
+           <blockquote> 
+            <p>五个哲学家共用一张圆桌，分别坐在周围的五张椅子上，在桌子上有五只碗和五只筷子，他们的生活方式是交替地进行思考和进餐。平时，一个哲学家进行思考，饥饿时便试图取用其左右最靠近他的筷子，只有在他拿到两只筷子时才能进餐。进餐毕，放下筷子继续思考。</p> 
+           </blockquote> <pre class="has"><code  style="height: 50vh;" class="language-cpp">/*
+记录型信号量解决问题
+*/
+//每一只筷子均为临界资源
+semaphore chopstick[5]={1,1,1,1,1};
+//所有的信号量均被初始化为1，第i位哲学家的活动可描述为：
+do{
+	wait(chopstick[i]);          //拿左手的筷子
+	wait(chopstick[(i+1) mod 5] );      //拿右手的筷子
+	…
+	eat;
+	…
+	signal(chopstick[i]);    //放左手
+	signal(chopstick[(i +1)mod 5]);       //放右手
+	…
+	think;
+}while(TRUE);</code ></pre> 
+           <blockquote> 
+            <p>存在的问题：假如五位哲学家同时饥饿而各自拿起左边的筷子时，就会使五个信号量chopstick均为0，当他们再试图去拿右边的筷子时，都将因无筷子可拿而无限等待。进入死锁状态。</p> 
+           </blockquote> <p><strong>解决办法：</strong></p> <p>**1）**至多只允许有四位哲学家同时去拿左边的筷子，最终能保证至少有一位哲学家能够进餐，并在用毕后释放出他用过的两只筷子，从而使更多的哲学家能够进餐。</p> <pre class="has"><code  style="height: 50vh;" class="language-cpp">semaphore chopstick[5]={1，1，1，1，1};
+semaphore count=4;
+void philosopher(int i)
+{
+    while(true)
+    {
+        think();
+        wait(count); //请求进入房间进餐
+        wait(chopstick[i]); //请求左手边的筷子
+        wait(chopstick[(i+1)%5]); //请求右手边的筷子
+        eat();
+        signal(chopstick[(i+1)%5]); //释放右手边的筷子
+        signal(chopstick[i]); //释放左手边的筷子
+        signal(count); //退出房间释放信号量
+    }
+}</code ></pre> <p>**2）**仅当哲学家的左右两只筷子均可用时，才允许他拿起筷子进餐。</p> <pre class="has"><code class="language-cpp">/*
+使用AND型信号量解决，本质当同时拥有两只筷子的时候才允许拿起筷子进餐
+*/
+semaphore chopstick[5]={1,1,1,1,1};
+Philosopher i
+do{
+	think;
+	Swait(chopstick[(i+1)mod 5],chopstick[i ]);     //同时分配两只筷子
+	eat;
+	Ssignal(chopstick[(i+1)mod 5], chopstick[i ] );     //同时放下两只筷子  
+}while(TRUE)</code ></pre> <p>**3）**规定奇数号哲学家先拿他左边的筷子，然后再去拿右边的筷子；偶数号哲学家则相反。</p> <pre class="has"><code  style="height: 50vh;" class="language-cpp">semaphore chopstick[5]={1,1,1,1,1};
+//第i 位哲学家的活动可描述为：
+do{
+    //奇数位哲学家先拿左手的筷子
+	if  i mod 2=1 {
+		wait(chopstick[ i ]);
+		wait(chopstick[ ( i +1) mod 5] )
+	}
+    //偶数位哲学家先拿右手边的筷子
+	else
+	{
+		wait(chopstick[ ( i +1) mod 5] );
+		wait(chopstick[ i ])
+	}
+	eat;
+	signal(chopstick[ i ]);
+	signal(chopstick[(i +1)mod 5]);
+	…
+	think;
+}while(TRUE)</code ></pre> </li>
+         </ul> 
+         <h2>处理机调度</h2> 
+         <ol>
+          <li>调度层次 
+           <ol>
+            <li>高级调度（作业调度）</li>
+            <li>中级调度（进程调度）</li>
+            <li>低级调度</li>
+           </ol></li>
+          <li>作业调度 
+           <ol>
+            <li>FCSF先来先服务，作业等待时间得长短。比较有利于长作业（进程），而不利于短作业（进程）。</li>
+            <li>SJF短作业优先，作业的运行时间。 
+             <ol>
+              <li>优点：能有效的降低作业的平均等待事件，提高系统吞吐量。</li>
+              <li>缺点：对长作业不利；该算法完全未考虑作业的紧迫程度，因而不能保证紧迫性作业（进程）会被及时处理；由于作业（进程）的长短含主观因素，不一定能真正做到短作业优先。</li>
+             </ol></li>
+           </ol></li>
+         </ol> 
+         <p><img alt="" class="has" height="271" src="https://i-blog.csdnimg.cn/blog_migrate/e652da66d205ccae825e5a25401ea21d.png" width="530"></p> 
+         <ol>
+          <li> 
+           <ol>
+            <li>高响应比优先&nbsp;&nbsp;</li>
+           </ol></li>
+         </ol> 
+         <p>优先权=等待时间+要求服务时间/要求服务时间</p> 
+         <ol>
+          <li> 
+           <ol>
+            <li>RR轮转调度算法，时间片的确定要适中</li>
+            <li>多级反馈队列</li>
+            <li>EDF最早截至时间优先</li>
+           </ol></li>
+         </ol> 
+         <p>下图中有两个周期性任务，任务A的周期时间为20ms，每个周期的处理时间为10ms；任务B的周期时间为50ms，每个周期的处理时间为25ms</p> 
+         <p><img alt="" class="has" height="442" src="https://i-blog.csdnimg.cn/blog_migrate/f97f53b27aa553e902c78f81919bbe61.png" width="820"></p> 
+         <ol>
+          <li> 
+           <ol>
+            <li>LLF最低松弛度优先</li>
+           </ol></li>
+         </ol> 
+         <p>松弛度=必须完成时间-其本身的运行时间-当前时间</p> 
+         <p>进程切换条件：有任务完成；有任务松弛度降到0。</p> 
+         <ol>
+          <li>死锁 
+           <ol>
+            <li>定义：是指多个进程在运行过程中因为争夺资源而造成的一种僵局，当进程处于这种状态时，若无外力作用，他们都将无法再向前推进</li>
+            <li>原因：竞争资源（不可抢占资源，可消耗资源），进程间推进顺序非法。</li>
+            <li>产生死锁得必要条件：互斥条件、请求和保持条件、不可抢占（不可剥夺）条件、环路等待条件</li>
+            <li>处理死锁的基本方法： 
+             <ol>
+              <li>预防死锁：破坏产生死锁得必要条件，其中破坏互斥条件是最不实际的 
+               <ol>
+                <li>破坏“请求和保持”条件：系统规定所有进程在开始运行之前，都必须一次性的申请其在整个运行过程所需的全部资源</li>
+                <li>破坏“不剥夺”条件</li>
+                <li>破坏“环路等待”条件：所有进程对资源的请求必须严格按照资源序号递增的次序提出</li>
+               </ol></li>
+              <li>预防死锁：银行家算法、安全性算法</li>
+              <li>检测死锁：资源分配图，死锁定理</li>
+              <li>解除死锁：剥夺资源（从其他进程剥夺足够数量的资源给死锁进程以解除死锁状态。），撤销进程（最简单的是让全部进程都死掉；温和一点的是按照某种顺序逐个撤销进程，直至有足够的资源可用，使死锁状态消除为止。）</li>
+             </ol></li>
+           </ol></li>
+          <li>银行家算法 
+           <ol>
+            <li>安全状态</li>
+           </ol></li>
+         </ol> 
+         <p><img alt="" class="has" height="100" src="https://i-blog.csdnimg.cn/blog_migrate/2f2f7154e3ce237cff32fe517d17eda6.png" width="450"></p> 
+         <ol>
+          <li> 
+           <ol>
+            <li>银行家算法</li>
+           </ol></li>
+         </ol> 
+         <p><img alt="" class="has" height="191" src="https://i-blog.csdnimg.cn/blog_migrate/eb8e83bde37b1d89bace149d49b265c7.png" width="537"></p> 
+         <p>T0时刻的安全性：用安全性算法对T0时刻的资源分配情况进行分析，存在着一个安全序列{P1,P3,P4,P2,P0}，故系统是安全的</p> 
+         <p>P1发出资源请求向量Request1(1,0,2)，系统按银行家算法检查:</p> 
+         <p>（1）Request1(1,0,2)&lt;=Need1(1,2,2)</p> 
+         <p>（2）Request1(1,0,2)&lt;=Available1(3,3,2)</p> 
+         <p>（3）系统先假定可为P1分配资源，并修改向量Available，Allocation1，Need1</p> 
+         <p>（4）再利用安全性算法检查此时系统是否安全。如下表:</p> 
+         <p><img alt="" class="has" height="199" src="https://i-blog.csdnimg.cn/blog_migrate/1380b81f4b551b554a992ea6d8ec771a.png" width="533"></p> 
+         <p>由安全性检查得知，能找到一个安全序列{P1,P3,P4,P0,P2}，因此，系统是安全的，可以立即将P1所申请的资源分配给它。</p> 
+         <p>死锁定理：S状态为死锁状态的充分条件是当且仅当S状态的资源分配图是不可完全简化的。&lt;死锁定理&gt;</p> 
+         <p></p> 
+         <h2>存储器</h2> 
+         <h3>重定位</h3> 
+         <h4>程序的装入</h4> 
+         <ol>
+          <li>绝对装入方式</li>
+          <li>可重定位的装入方式（静态）</li>
+          <li>动态运行时装入方式（动态）重定位寄存器</li>
+         </ol> 
+         <h4>内存的分配方式</h4> 
+         <ol>
+          <li>连续的分配方式</li>
+          <li>离散的分配方式</li>
+         </ol> 
+         <h3>连续的分配方式</h3> 
+         <ol>
+          <li>单一连续分配：一道程序在内存中，内存浪费严重</li>
+          <li>固定分区分配：程序变多缺点：会产生内碎片</li>
+          <li>动态分区分配（重点）不能消除外碎片&nbsp; 思想：按需分配</li>
+          <li>可重定位的分区分配 
+           <ol>
+            <li>在动态分区分配方式上增加一个紧凑（拼接碎片）功能</li>
+            <li>以动态运行时装入方式为前提</li>
+           </ol></li>
+         </ol> 
+         <h3>动态分区分配算法​</h3> 
+         <h4>首次适应算法FF</h4> 
+         <p>&nbsp;&nbsp;&nbsp; FF算法要求空闲分区表以地址递增的次序排列。在分配内存时，从表首开始顺序查找，直至找到一个大小能满足要求的空闲分区为止；然后按照作业的大小，从该分区中划出一块内存空间分配给请求者，余下的空闲分区仍留在空闲分区表中。若从头到尾不存在满足要求的分区，则分配失败。</p> 
+         <p>优点：优先利用内存低址部分的内存空间</p> 
+         <p>缺点：低址部分不断划分，产生小碎片（内存碎块、内&nbsp;&nbsp;&nbsp; &nbsp; 存碎片、零头）；每次查找从低址部分开始，增&nbsp;&nbsp;&nbsp; &nbsp; 加了查找的开销</p> 
+         <h4>循环首次适应算法NF</h4> 
+         <p>在分配内存空间时，从上次找到的空闲分区的下一个空闲分区开始查找，直到找到一个能满足要求的空闲分区，从中划出一块与请求大小相等的内存空间分配给作业。</p> 
+         <p>优点：使内存空闲分区分布均匀，减少查找的开销</p> 
+         <p>缺点：缺乏大的空闲分区</p> 
+         <h4>最佳适应算法BF</h4> 
+         <p>所谓“最佳”是指每次为作业分配内存时，总是把能满足要求、又是最小的空闲分区分配给作业，避免“大材小用”。要求将所有的空闲分区按其容量以从小到大的顺序形成一空闲分区链。</p> 
+         <p>&nbsp;&nbsp;&nbsp; 缺点：产生许多难以利用的小空闲区</p> 
+         <h3>离散的分配方式</h3> 
+         <h4><strong>分页存储管理方式</strong></h4> 
+         <p>（可能在最后一页产生内碎片）进程分页，内存分块（页和块等大小）&nbsp;</p> 
+         <p>页表</p> 
+         <p><img alt="" class="has" height="275" src="https://i-blog.csdnimg.cn/blog_migrate/905b27e291af09163d3e38ca0f722eea.png" width="345"></p> 
+         <p></p> 
+         <p></p> 
+         <p></p> 
+         <p>页式地址映射</p> 
+         <p>（逻辑地址转换城物理地址）</p> 
+         <p></p> 
+         <p></p> 
+         <p></p> 
+         <p></p> 
+         <p>地址转换机构（页表在内存，页表寄存器快表。页表很庞大时采取两级或多级页表）</p> 
+         <p><img alt="" class="has" height="354" src="https://i-blog.csdnimg.cn/blog_migrate/efa64fde34580ff7b62635d542ef2301.png" width="540"></p> 
+         <p>有快表有页表，先查快表；没有快表查页表</p> 
+         <p><img alt="" class="has" height="399" src="https://i-blog.csdnimg.cn/blog_migrate/0795aaa3ae17962466d52e5c4b98c722.png" width="575"></p> 
+         <p><img alt="" class="has" height="273" src="https://i-blog.csdnimg.cn/blog_migrate/f0930d939d51712d244d510286c13ffd.png" width="418"><img alt="" class="has" height="272" src="https://i-blog.csdnimg.cn/blog_migrate/8ace020e30383ced7c26bc48e53284bc.png" width="392"></p> 
+         <p><img alt="" class="has" height="200" src="https://i-blog.csdnimg.cn/blog_migrate/7714ae9d6f3167b72cf5bf4dfd26ae10.png" width="422"></p> 
+         <p><img alt="" class="has" height="322" src="https://i-blog.csdnimg.cn/blog_migrate/db02fbe7c585312828e1db73309a2296.png" width="461"></p> 
+         <p></p> 
+         <p></p> 
+         <p></p> 
+         <h4>分段存储管理方式</h4> 
+         <p>（不可能有内碎片产生，外碎片不可避免）进程分段，各段在内存。段与段之间离散分配，某一段在内存中连续分配<br> 计算：给定逻辑地址合成物理地址段表</p> 
+         <p><img alt="" class="has" height="270" src="https://i-blog.csdnimg.cn/blog_migrate/884efb958498207ddddd16f4fee5cd48.png" width="433"></p> 
+         <p></p> 
+         <h4>段页式存储管理方式</h4> 
+         <p>进程分段，段内分页，内存分块</p> 
+         <ol>
+          <li> 
+           <ol>
+            <li>分页和分段的主要区别</li>
+           </ol></li>
+         </ol> 
+         <p>相似点：采用离散分配方式，通过地址映射机构实现地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 址变换</p> 
+         <p>不同点：页是信息的物理单位，分页是为了满足系统的&nbsp;&nbsp;&nbsp; 需要；段是信息的逻辑单位，含有一组意义相对完&nbsp;&nbsp;&nbsp; 整的信息，分段是为了满足用户的需要。</p> 
+         <p>页的大小固定且由系统确定，由系统把逻辑地址分为页号和页内地址，由机器硬件实现；段的长度不固定，取决于用户程序，编译程序对源程序编译时根据信息的性质划分。</p> 
+         <p>分页的作业地址空间是一维的；分段的作业地址空间是二维的。</p> 
+         <h2>输入输出系统</h2> 
+         <p>I/O设备：输入输出和存储功能的设备</p> 
+         <p></p> 
+         <h3>I/O设备的分类</h3> 
+         <p><strong>按传输的速度：</strong></p> 
+         <p>低速设备（如键盘、鼠标、语音输入输出设备）&nbsp; 中速设备（如行式打印机、激光打印机等）</p> 
+         <p>高速设备（如磁带机、磁盘机、光盘机等）。</p> 
+         <p></p> 
+         <p><strong>设备按信息交换的单位分类</strong></p> 
+         <p>块设备：用于存储信息。对于信息的存取总是以数据块为单位。典型例子是磁盘。该类设备基本特征是传输速率较高，另一特征是可寻址。</p> 
+         <p>字符设备：用于数据的输入和输出。基本单位是字符。如交互式终端、打印机等。其基本特征是传输速率较低，另一特征是不可寻址。</p> 
+         <p></p> 
+         <p><strong>设备按其共享属性分类</strong></p> 
+         <p>独占设备：指在一段时间内只允许一个用户、进程访问的设备，即临界资源。应互斥的访问之。</p> 
+         <p>共享设备：指在一段时间内允许多个进程同时访问的设备。对每一时刻而言仍然是一个进程访问。如磁盘。</p> 
+         <p>虚拟设备：指通过虚拟技术将一台独占设备变换为若干台逻辑设备，供若干个用户（进程）同时使用。</p> 
+         <p></p> 
+         <p><strong>设备按其使用特性分类：</strong></p> 
+         <p>存储设备、输入＼输出设备</p> 
+         <p></p> 
+         <h3>I/O通道</h3> 
+         <p>其主要目的是为了建立独立的I/O操作，去解放CPU。在设置通道后，CPU只需向通道发送一条I/O指令。通道完成任务后向CPU发中断信号。</p> 
+         <p>控制功能：CPU与设备控制器</p> 
+         <p>数据传输：内存与外设</p> 
+         <h3>I/O控制方式</h3> 
+         <ol>
+          <li>程序I/O方式，使用轮询的可编程I/O方式。CPU浪费</li>
+          <li>终端驱动I/O方式，使用中断的可编程I/O方式。CPU用较短的时间进行中断处理。</li>
+          <li>直接存储器访问方式(MDA),以数据块为单位，高效。缺点：不连续的数据块，不能一次处理</li>
+          <li>I/O通道控制方式，通道时硬件，配合着通道程序</li>
+         </ol> 
+         <h3>设备分配</h3> 
+         <ol>
+          <li>前提：大中型计算机</li>
+          <li>DS：设备控制表、控制器控制表、通道控制表、系统设备表</li>
+          <li>独占设备分配步骤：分配设备、分配控制器、分配通道</li>
+         </ol> 
+         <h3>SPOOLing技术（假脱机）</h3> 
+         <p>定义</p> 
+         <p>为缓和CPU的高速性与I/O设备低速性间的矛盾而引入了脱机输入、脱机输出技术。该技术是利用专门的外围控制机，将低速设备上的数据传送到高速磁盘上；或者相反。这样就可以在主机的直接控制下实现脱机输入输出。此时外围操作与CPU对数据的处理同时进行，我们把这种在联机情况下实现的同时外围操作称为SPOOLing（Simultaneaus Periphernal Operating On—Line），或称为假脱机操作。</p> 
+         <p></p> 
+         <p>组成</p> 
+         <ol>
+          <li>输入井和输出井。是磁盘上开辟的两个大存储空间。输入井模拟脱机输入的磁盘设备，输出井模拟脱机输出时的磁盘。</li>
+          <li>输入缓冲区和输出缓冲区。在内存中开辟两个缓冲区，输入缓冲区暂存由输入设备送来的数据，后送输入井；输出缓冲区暂存从输出井送来的数据，后送输出设备。</li>
+          <li>输入进程和输出进程。利用两个进程模拟脱机I/O时的外围处理机。</li>
+          <li>井管理程序。用于控制作业与磁盘井之间信息的交换。</li>
+         </ol> 
+         <p>特点</p> 
+         <ol>
+          <li>提高了I/O的速度。利用输入输出井模拟成脱机输入输出，缓和了CPU和I/O设备速度不匹配的矛盾。</li>
+          <li>将独占设备改造为共享设备。并没有为进程分配设备，而是为进程分配一存储区和建立一张I/O请求表。</li>
+          <li>实现了虚拟设备功能。多个进程同时使用一台独占设备，虚拟成了多台设备。 
+           <ol>
+            <li>打印机是独占设备，通过虚拟技术实现“共享”的模拟</li>
+           </ol></li>
+         </ol> 
+         <ul>
+          <li>缓冲区管理</li>
+         </ul> 
+         <ol>
+          <li>引入 
+           <ol>
+            <li>缓和CPU与I/O设备间速度不匹配矛盾。</li>
+            <li>减少对CPU的中断频率，放宽对CPU中断响应时间的限制</li>
+            <li>提高CPU和I/O设备之间的并行性。</li>
+           </ol></li>
+         </ol> 
+         <p>方法</p> 
+         <ol>
+          <li>单缓冲（效率低）</li>
+          <li>双缓冲区（效率比较高，当输入输出速度不匹配时效率受影响）</li>
+          <li>循环缓冲区（解决输入和输出速度相差甚远的影响）</li>
+          <li>缓冲池（解决多进程缓冲过程中内存利用率的问题）</li>
+         </ol> 
+         <h3>磁盘管理</h3> 
+         <p>9个进程先后提出读盘请求访问的磁道号为：55；58；39；18；90；160 150 38 184目前磁头停留在100道。</p> 
+         <p></p> 
+         <p>先来先服务（FCFS）</p> 
+         <ol>
+          <li>优点：公平、简单</li>
+          <li>缺点：未对寻道进行优化</li>
+         </ol> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" class="has" height="336" src="https://i-blog.csdnimg.cn/blog_migrate/bad500f99fa6ead9c30ee1b8e7354c26.png" width="297"></p> 
+         <p></p> 
+         <p>最短寻道时间优先（SSTF）</p> 
+         <ol>
+          <li>优点：寻道优化</li>
+          <li>缺点：可能导致某些进程发生“饥饿”。</li>
+         </ol> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" class="has" height="401" src="https://i-blog.csdnimg.cn/blog_migrate/7df6293df3b333b3f08a3dc9a318ecc3.png" width="337"></p> 
+         <p></p> 
+         <p>扫描SCAN算法</p> 
+         <ol>
+          <li>优点：较好的寻道性能</li>
+          <li>缺点：“不巧”的进程严重推迟</li>
+         </ol> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="" class="has" height="407" src="https://i-blog.csdnimg.cn/blog_migrate/f2db2b94fe0342fc721a3b8d878b55b7.png" width="369"></p> 
+         <p></p> 
+         <p>循环扫描算法CSCAN</p> 
+         <ol>
+          <li>优点：进程的延迟变小了</li>
+         </ol> 
+         <p><img alt="" class="has" height="477" src="https://i-blog.csdnimg.cn/blog_migrate/08f0cd09b988c75f6fd038734b26d990.png" width="407"></p> 
+         <p></p> 
+         <p>FSCAN算法本算法是N-Step-SCAN算法的简化。</p> 
+         <p></p> 
+         <h2>文件管理</h2> 
+         <p><img alt="" class="has" height="813" src="https://i-blog.csdnimg.cn/blog_migrate/6ac27ef2d7d326acfc23d490338873e6.png" width="844"></p> 
+        </div> 
+       </div> 
+      </article>   
+      <img src="https://img-home.csdnimg.cn/images/20211209110851.png" alt="pdf_watermark" width="0" height="0" style="display: none"> 
+      <div class="print_watermark"></div> 
+      <div class="print_watermark_info"> 
+       <p>内容来源：csdn.net</p> 
+       <p>作者昵称：兔老大RabbitMQ</p> 
+       <p>原文链接：https://fantianzuo.blog.csdn.net/article/details/115091251</p> 
+       <p>作者主页：https://fantianzuo.blog.csdn.net</p> 
+      </div> 
+      <style>
+    .print_watermark, .print_watermark_info {
+      display: none
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        color-adjust: exact; /* Firefox */
+        background-image: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact;
+      }
+      .blog-content-box {
+        padding: 0;
+      }
+      .blog-content-box .article-header .article-info-box > div:not(.article-bar-top){
+        display: none !important;
+      }
+      .blog-content-box .article-header .article-info-box  .article-bar-top img{
+          display:none
+      }
+      .blog-content-box .article-header .article-info-box > .article-bar-top .bar-content > *:not(.follow-nickName):not(.time){
+          display: none !important;
+      }
+      .print_watermark {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        background-image: url('https://img-home.csdnimg.cn/images/20211209110851.png');
+        background-size: 180px auto;
+        background-repeat: repeat;
+      }
+      .print_watermark_info {
+        display: block;
+        position: fixed;
+        bottom: 16px;
+        right: 0;
+        z-index: 1000;
+        color: #e8e8ed;
+        font-size: 12px;
+        ocapity: .5
+      }
+      @page {
+        margin: 0 10mm 10mm;
+        size: landscape;
+      }
+      body, article {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #csdn-toolbar,.main_father > *:not(#mainBox), .csdn-side-toolbar, .main_father aside {
+        display: none !important;
+      }
+      .main_father > #mainBox {
+        width: unset
+      }
+      .main_father > #mainBox > main > *:not(.blog-content-box){
+        display: none !important;
+      }
+    }
+  </style> 
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://fantianzuo.blog.csdn.net"><img class="profile-img" src="https://i-avatar.csdnimg.cn/35029fa267e2485484fcad662e7cff60_hebtu666.jpg!1"> <span class="profile-name"> 兔老大RabbitMQ </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">已关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 1823 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="2271" id="get-collection"> 2271 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 76 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-downloadpdf" id="tool-downloadpdf"> <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> </a> 
+          <div class="tool-hover-tip">
+           <span class="text">导出PDF</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="rewardBtNewHide" data-report-click="{&quot;spm&quot;:&quot;3001.4237&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault reward-bt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+            <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> <span class="count">导出PDF</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="8446479" data-free="true" data-description="" data-subscribe="false" data-title="os/设计模式/耳机/测试/导图/资源 杂记" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/hebtu666/category_8446479.html" data-sum="81" data-people="30" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>    
+     <a id="commentBox" name="commentBox"></a> 
+    </main> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                  
+ </body>
+</html>
