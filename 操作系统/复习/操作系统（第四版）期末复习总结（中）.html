@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/qq_41261490/article/details/80875252"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#">  
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>操作系统（第四版）期末复习总结（中）_操作系统第四版-CSDN博客</title>  
+  <meta name="keywords" content="操作系统第四版"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;操作系统第四版&quot;}"> 
+  <meta name="description" content="文章浏览阅读3.3w次，点赞255次，收藏1.3k次。本文是操作系统课程复习总结，涵盖处理机调度的三个层次和常见调度算法，如FCFS、SJF、HRRN。深入探讨了死锁的原因、必要条件和处理方法，包括银行家算法。此外，还讨论了存储器管理，如连续分配、动态分区以及分页存储管理。最后，简述了虚拟存储器的交换技术和页面置换算法。
+"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-72afa20676.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-blackboard/skin-blackboard-3adcc2c475.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>      
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">操作系统（第四版）期末复习总结（中）</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a href="https://mall.csdn.net/vip" data-report-query="spm=3001.10404" data-report-click="{&quot;spm&quot;:&quot;3001.10404&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10404&quot;}" class="article-vip-box" target="_blank"><img class="article-vip-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/identityVipNew.png" alt=""></a> 
+           <a class="follow-nickName " href="https://blog.csdn.net/qq_41261490" target="_blank" rel="noopener" title="DiuDiu_yang">DiuDiu_yang</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2022-12-22 16:17:47&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量3.3w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 1.3k </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 255 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/qq_41261490/category_7769956.html" target="_blank" rel="noopener">计算机操作系统</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程调度算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程调度算法\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程调度算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程调度算法\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">进程调度算法</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程死锁&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程死锁\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;进程死锁&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;进程死锁\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E8%BF%9B%E7%A8%8B%E6%AD%BB%E9%94%81&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">进程死锁</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;页面置换算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;页面置换算法\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;页面置换算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;页面置换算法\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">页面置换算法</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;动态分区分配方法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;动态分区分配方法\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;动态分区分配方法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;动态分区分配方法\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E6%96%B9%E6%B3%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">动态分区分配方法</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;银行家算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;银行家算法\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;银行家算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;银行家算法\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">银行家算法</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2018-07-02 15:58:42&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/qq_41261490/article/details/80875252" target="_blank">https://blog.csdn.net/qq_41261490/article/details/80875252</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert" class=""></div> 
+      <div class="ai-abstract-box"> 
+       <div class="ai-abstract"> 
+        <div class="abstract-content"> 
+         <img class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png" alt=""> 本文是操作系统课程复习总结，涵盖处理机调度的三个层次和常见调度算法，如FCFS、SJF、HRRN。深入探讨了死锁的原因、必要条件和处理方法，包括银行家算法。此外，还讨论了存储器管理，如连续分配、动态分区以及分页存储管理。最后，简述了虚拟存储器的交换技术和页面置换算法。 
+        </div> 
+        <p> 摘要生成于 <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-view="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;}}" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;C知道&quot;}}" target="_blank"> C知道</a> ，由 DeepSeek-R1 满血版支持， <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;前往体验&quot;}}" target="_blank"> 前往体验 &gt;</a></p> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views atom-one-dark"> 
+         <p>很多小伙伴私信要word下载，我就整理出来了一份pdf，是和线上的完全一样，建议大家看线上的，因为pdf下载需要收费，但是下载有好处就是可以打印出来复习，各位伙伴自行选择吧。现在这里给出pdf完整下载：&nbsp;<a href="https://download.csdn.net/download/qq_41261490/16011342" title="操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载">操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载</a></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80872072" title="操作系统（第四版）期末复习总结（上）">操作系统（第四版）期末复习总结（上）</a></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80886482" title="操作系统（第四版）期末复习总结（下）">操作系统（第四版）期末复习总结（下）</a></p> 
+         <p>衔接我的上一篇博文，这片从第三章开始</p> 
+         <p><strong>第三章：处理机调度与死锁</strong></p> 
+         <p><strong>1、处理机调度的三个层次</strong></p> 
+         <ul>
+          <li>高级调度（也称为<span style="color:#6666cc;">作业调度</span>、<span style="color:#6666cc;">宏观调度</span>、<span style="color:#6666cc;">长程调度</span>）：用于决定外存上处于<span style="color:#ff0000;">后备队列</span>中的<span style="color:#ff0000;">哪些作业调入内存</span>，并为他们创建进程、分配必要的资源，再将新创建的进程排在就绪队列上，准备执行。</li>
+         </ul> 
+         <p>&nbsp; &nbsp; 作业调度应解决的两个问题：</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<span style="color:#3366ff;"> 接纳多少作业？&nbsp; </span>&nbsp;取决于多道程序度</p> 
+         <p>&nbsp; &nbsp; &nbsp; <span style="color:#3333ff;">&nbsp;</span><span style="color:#3366ff;">接纳哪些作业？</span>&nbsp; &nbsp; 取决于所采用的调度算法，如先来先服务调度算法、短作业有限调度算法等</p> 
+         <ul>
+          <li>中级调度（又称<span style="color:#6633ff;">中程调度</span>）：涉及进程在内、外存间的交换，从存储器资源管理的角度来看，把进程的部分或全部换出到外存上，可为当前运行进程的执行提供所需内存空间。</li>
+          <li>低级调度（也称<span style="color:#6666cc;">进程调度</span>、<span style="color:#6666cc;">微观调度</span>、<span style="color:#6666cc;">短程调度</span>）：用来决定<span style="color:#ff0000;">就绪队列</span>中<span style="color:#ff0000;">哪个进程应获得处理机</span>，再有分派程序执行把处理机分配给改进程</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6633ff;">进程调度的两种方式：</span></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#3366ff;">非抢占式</span>：不允许某进程抢占已经分配出去的处理机</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6666cc;">&nbsp;抢占方式</span>：允许调度程序根据某种原则，暂停正在执行的进程，将处理机重新分配给另一进程</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 抢占原则：优先权原则、短作业（进程）优先原则、时间片原则</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<span style="color:#6633ff;"> 进程调度要解决的问题：</span></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 按什么原则分配CPU ——调度算法</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 何时分配CPU——调度的时机</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 如何分配CPU——CPU调度过程</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6633ff;">进程调度的时机</span><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; a、一个进程运行完毕，或因某种错误而终止运行<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; b、当一个进程在运行时变为等待状态（等待I/O）<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; c、分时系统中时间片到<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; d、当有一个优先级更高的进程就绪（抢占式）<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例：新创建一个进程；一个等待进程变成就绪</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; e、在进程通信中，执行中的进程执行了某种原语操作（P操作，阻塞原语）</p> 
+         <p><strong>2、调度算法——</strong>调度算法是指根据系统的资源分配策略所规定的资源分配算法。&nbsp; &nbsp;</p> 
+         <p>提交时间Si（并不是开始执行时间）；运行结束时间Ei；</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;周转时间：Ti=Ei-Si</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;则作业平均周转时间T：<img alt="" height="50" src="https://i-blog.csdnimg.cn/blog_migrate/fdb32bad331de8f60eb175dc5975bbf1.png" width="100"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;平均带权周转时间W：<img alt="" height="50" src="https://i-blog.csdnimg.cn/blog_migrate/77ccfbb4cff7ac40ce658ecadcbe7d70.png" width="100">（Ts：服务时间）</p> 
+         <p></p> 
+         <ul>
+          <li>先来先服务调度算法（FCFS）——</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;应用范围与含义<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作业调度：完成选择一个或多个最先进入后备队列的作业，将它们调入内存，为它们分配资源、创建进程，并放入就绪队列。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进程调度：按照进程就绪的先后次序来调度进程，为之分配处理机</p> 
+         <p>优缺点<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FCFS调度算法比较有利于长作业（进程），而不利于短作业（进程）。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FCFS调度算法有利于CPU繁忙型的作业，不利于I/O繁忙型的作业。</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/1970732a1d5b73d4c27d9f0d1ea5e01a.png"></p> 
+         <p></p> 
+         <ul>
+          <li>短作业优先调度算法（SJF）——</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;SJ(P)F调度算法的优缺点<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优点：能有效地降低作业的平均等待时间，提高系统吞吐量。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺点：<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对长作业不利<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未考虑作业的紧迫程度</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作业的估计运行时间不准确</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/90ac16b73cbe30784cd6a4d2c395b92f.png"></p> 
+         <ul>
+          <li>高响应比调度算法（HRRN）——响应比Rp = 1 +（作业等待时间 / 作业处理时间）</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如作业等待时间相同，则处理时间越短，响应比越高，有利于短作业。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于长作业，随等待时间增加，响应比增高，最后同样可获得处理机。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如处理时间相同，等待时间越长，响应比越高，实现的是先来先服务。</p> 
+         <p>几种调度算法实例：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/25851276795d4c5c75c5ce7125f7afa8.png"></p> 
+         <p>FCFS算法：JOB1-JOB2-JOB3-JOB4</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/eccaa63c845796e3163463d8997574bb.png"></p> 
+         <p>SJF算法：JOB1-JOB3-JOB4-JOB2</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/131c4e3fca36ff402c013a5e20fe53b5.png"></p> 
+         <p>HRRN算法：JOB1-JOB3-JOB2-JOB4</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/0793ff62beed5bb100a2aabe316ac11a.png"></p> 
+         <p><strong>3、死锁</strong></p> 
+         <p><strong>&nbsp;&nbsp;</strong>一组进程中，每个进程都<span style="color:#ff0000;">无限等待</span>被该组进程中另一进程<span style="color:#ff0000;">所占有的资源</span>，因而永远<span style="color:#ff0000;">无法得到该资源</span>，这种现象称为<span style="color:#3366ff;">进程死锁(Deadlock)</span>，这一组进程就称为<span style="color:#3366ff;">死锁进程</span>。</p> 
+         <p>3.1、死锁产生的原因</p> 
+         <p></p> 
+         <ul>
+          <li>竞争资源引起进程死锁（资源分配策略）（可剥夺和非剥夺资源）</li>
+          <li>进程推进顺序不当引起死锁</li>
+         </ul> 
+         <p><span style="color:#ff0000;">PS：关于死锁的一些结论：</span></p> 
+         <p></p> 
+         <ul>
+          <li>参与死锁的进程最少是两个（两个以上进程才会出现死锁）</li>
+          <li>参与死锁的进程至少两个已经占有资源</li>
+          <li>参与死锁的所有进程都在等待资源</li>
+          <li>参与死锁的进程是当前系统中所有进程的子集</li>
+          <li>如果死锁发生，会浪费大量的系统资源，甚至导致系统崩溃</li>
+         </ul> 
+         <p>3.2、死锁的四个必要条件</p> 
+         <p></p> 
+         <ul>
+          <li>互斥条件：设计的资源是非共享的</li>
+          <li>不可抢占条件：不能强行剥夺进程拥有的资源</li>
+          <li>请求和保持条件：进程在等待一新资源时继续占有已分配的资源</li>
+          <li>环路条件：存在一种进程的循环链，链中的每一个进程已获得的资源同时被下一个进程所请求</li>
+         </ul> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/5f4794c21cb3f9be8abeb6876b4c995f.png"></p> 
+         <p>3.3、处理死锁的方法</p> 
+         <p></p> 
+         <ul>
+          <li><span style="color:#ff0000;">预防死锁</span>：通过设置某些限制条件，去破坏死锁四个必要条件中的一个或多个，来防止死锁。</li>
+          <li><span style="color:#ff0000;">避免死锁</span>：不事先设置限制条件去破坏产生死锁的条件，而是在资源的动态分配过程中，用某种方法去防止系统进入不安全状态，从而避免死锁的发生。</li>
+          <li><span style="color:#ff0000;">检测死锁</span>：允许死锁发生，但可通过检测机构及时检测出死锁的发生，并精确确定与死锁有关的进程和资源，然后采取适当措施，将系统中已发生的死锁清除掉。</li>
+          <li><span style="color:#ff0000;">解除死锁</span>：与检测死锁相配套，用于将进程从死锁状态解脱出来。常用的方法是撤消或挂起一些进程。以回收一些资源，再将它们分配给处于阻塞状态的进程，使之转为就绪状态</li>
+         </ul> 
+         <p>3.4、避免死锁——银行家算法</p> 
+         <p></p> 
+         <ul>
+          <li>可利用资源向量Available。它是一个含有 m个元素的数组，其中每个元素代表一类 可利用资源的数目。</li>
+          <li>最大需求矩阵Max。n*m矩阵，表示n个进程的每一个对m类资源的最大需求。</li>
+          <li>分配矩阵Allocation 。n*m矩阵，表示每个进程已分配的每类资源的数目。</li>
+          <li>需求矩阵Need 。n*m矩阵，表示每个进程还需要各类资源数。</li>
+         </ul> 
+         <p></p> 
+         <p>银行家算法步骤：</p> 
+         <p>当进程Pi提出资源申请时，执行下列步骤：</p> 
+         <p>（1）若Requesti[j]≤Need[i,j],转（2）；<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 否则错误返回<br> （2）若Requesti[j] ≤Available[j],</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 转（3）；否则进程等待</p> 
+         <p>（3）假设系统分配了资源，则有：<br> &nbsp; &nbsp; &nbsp; &nbsp;Available [j] :=Available [j] -Requesti[j];<br> &nbsp; &nbsp; &nbsp; &nbsp; Allocation[i,j]:=Allocation[i,j]+Requesti[j];<br> &nbsp; &nbsp; &nbsp; &nbsp; Need[i,j]:=Need[i,j]-Requesti[j]<br> （4）执行安全性算法。<br> &nbsp; &nbsp; &nbsp; &nbsp;若系统新状态是安全的，则完成分配；</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;若系统新状态是不安全的，则恢复原状态，进程等待</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/06d024333fcfa1e20a42303a1727b7b7.png"></p> 
+         <p></p> 
+         <p>安全性算法步骤：</p> 
+         <p>(1) Work[j]:=Available[j];</p> 
+         <p>&nbsp; &nbsp; &nbsp; Finish[i]:=false;<br> (2) 寻找满足下列条件的i：<br> &nbsp; &nbsp; &nbsp; a).&nbsp; Finish[i]=false;<br> &nbsp; &nbsp; &nbsp; b).&nbsp; Need[i,j]≤Work[j];</p> 
+         <p>&nbsp; 如果不存在，则转(4)</p> 
+         <p>(3) Work[j] :=Work[j]+Allocation[i,j];<br> &nbsp; &nbsp; &nbsp; Finish[i]:=true;<br> &nbsp; &nbsp; &nbsp; 转(2)</p> 
+         <p>(4) 若对所有i,Finish[i]=true,则系统处于安全状态，否则处于不安全状态</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/176bcff26d61f0275785ad50be128d5a.png"></p> 
+         <p></p> 
+         <p>可得：&nbsp; &nbsp; &nbsp; Need[i,j]= Max[i,j]- Allocation[i,j]</p> 
+         <p>例：</p> 
+         <p>设系统有五个进程和三类资源，每类资源分别有10、5、7。在T0时刻资源分配情况如下：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/d044a6f78c93f63d9520adcca8faa90a.png"></p> 
+         <p>T0时刻可以找到一个安全序列&lt;P1, P3, P4, P2, P0&gt;，系统是安全的。</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/f3a5a187562529d2a95f60cd4c5ca3dd.png"></p> 
+         <p>P1发出请求Request(1,0,2)，执行银行家算法</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/92bba723494195dd34e6203ff8c79322.png"></p> 
+         <p>可以找到一个安全序列{P1,P3,P4,P0,P2}，系统是安全的，可以将P1请求资源分配给它。</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/0da2dd1b91f0608282cd99a82e8aade9.png"></p> 
+         <p>若是：P4发出请求Request(3,3,0), 执行银行家算法<br> Available=（2 3 0）</p> 
+         <p>不能通过算法第2步（ Requesti[j]≤Available[j] ），所以P4等待。</p> 
+         <p>例：如下：若P0发出请求Request(0,2,0)，执行银行家算法</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/7f9e271314641afb90ffa5ea8d0f744f.png"></p> 
+         <p>Available{2,1,0}已不能满足任何进程需要，所以系统进入不安全状态，P0的请求不能分配。</p> 
+         <p>练习题：有三类资源A(17)、B(5)、C(20)。有5个进程P1~P5。T0时刻系统状态如下：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/e216fd5718c3823f0c43286951047720.png"></p> 
+         <p>问:<br> (1)、T0时刻是否为安全状态，给出安全系列。<br> (2)、T0时刻，P2: Request(0,3,4)，能否分配，为什么？<br> (3)、在(2)的基础上P4：Request(2,0,1)，能否分配，为什么？<br> (4)、 在(3)的基础上P1：Request(0,2,0)，能否分配，为什么？&nbsp;&nbsp;</p> 
+         <p>解：(1) T0时刻的出安全系列</p> 
+         <p>先求出Need和Work</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/1c6f20602fd1c10f88470842166ebc30.png"></p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/5fb623a92120e74f0ac223df98055e69.png"></p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/01bc6911878b38649558188f575c323f.png"></p> 
+         <p>(2)&nbsp; P2: Request(0,3,4)</p> 
+         <p>因（Available =2 3 3）&lt; Request(0,3,4) 所以不能分配。</p> 
+         <p>(3)&nbsp; P4：Request(2,0,1)&nbsp; &nbsp; &nbsp; &nbsp;Available =2 3 3</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/227eb0fb1c51fdcc2134323f5e678c30.png"></p> 
+         <p>有安全序列P4 P5 P3 P2 P1 可以分配</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/31711088932de288509ff8299e7d6376.png"></p> 
+         <p>(4)&nbsp; P1：Request(0,2,0)</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/cb04be92dbd5a0cea2da7172a1eb0800.png"></p> 
+         <p>0&nbsp; 1&nbsp; 2 已不能满足任何进程的需要，不能分配</p> 
+         <p><strong>第四章：存储器管理</strong></p> 
+         <p>存储器的层次结构</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/c12f89fd74153f3f86cd15d0b3a3c0a4.png"></p> 
+         <p>1、连续分配存储管理方式</p> 
+         <p></p> 
+         <ul>
+          <li>单一连续分配——最简单，适用于单用户、单任务的OS。<br> 优点：<br> &nbsp; &nbsp; 易于管理。<br> 缺点：<br> &nbsp; &nbsp;对要求内存空间少的程序，造成内存浪费；程序全部装入，很少使用的程序部分也占用内存。</li>
+          <li>固定分区分配——把内存划分为个数固定、大小相等或不等的多个区域。分区的划分由计算机的操作员或者由操作系统给出，并给出分区说明表。</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优点：易于实现，开销小。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺点：<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内存碎片（零头）造成浪费<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分区总数固定，限制了并发执行的程序数目。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以和覆盖、交换技术配合使用。</p> 
+         <ul>
+          <li>动态分区分配——指在系统运行的过程中建立分区，并使分区的大小刚好与作业的大小相等。这种存储管理的方法解决了固定分区严重浪费内存的问题。是一种较为实用的存储管理方法。</li>
+         </ul> 
+         <p><strong><span style="color:#ff0000;">&nbsp; &nbsp; 基于顺序搜索的动态分区分配方法</span></strong></p> 
+         <p><strong><span style="color:#ff0000;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color:#3333ff;">首次适应法（FF）</span><span style="color:#666666;">：要求空闲分区按首址递增的次序组织空闲分区表（队列）。&nbsp;</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;注意：每次分配和回收后空闲分区表或空闲 分区队列都要按首址递增的次序排序。</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color:#3366ff;">下次适应法(NF)（</span><span style="color:#666666;">循环首次适应算法）：按分区的先后次序，从上次分配的分区起查找（到最后分区时再回到开头），找到符合要求的第一个分区。</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color:#3366ff;">最佳适应法(BF) </span><span style="color:#666666;">：要求按空闲区大小递增的次序组成空闲分区表（队列）。</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;注意：分配和回收后要对空闲区表(队列)重新排序</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;优点：<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在系统中若存在一个与申请分区大小相等的空闲区，必定会被选中，而首次适应法则不一定。</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若系统中不存在与申请分区大小相等的空闲区，则选中的空闲区是满足要求的最小空闲区，而不致于毁掉较大的空闲区。</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺点：<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;空闲区的大小一般与申请分区大小不相等，因此将其一分为二，留下来的空闲区一般情况下是很小的，以致无法使用。随着时间的推移，系统中的小空闲区会越来越多，从而造成存储区的大量浪费</span></strong></p> 
+         <p><strong><span style="color:#666666;">&nbsp; &nbsp; &nbsp; </span><span style="color:#3366ff;">&nbsp; 最坏适应法(WF)</span><span style="color:#666666;">：要求空闲区按大小递减的顺序组织空闲区表（或队列）</span></strong></p> 
+         <p><strong><span style="color:#666666;">例：有作业序列：作业A要求18K；作业B要求25K，作业C要求30K。系统中空闲区按三种算法组成的空闲区队列：</span></strong></p> 
+         <p><strong><span style="color:#666666;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/867359dc3d7e752fbf831fcfac3c7a7d.png"></span></strong></p> 
+         <p>经分析：最佳适应法对这个作业序列是合适的，而其它两种对该作业序列是不合适的。</p> 
+         <ul>
+          <li>可重定位分区分配</li>
+         </ul> 
+         <p>2、基本分页存储管理方式——把用户程序按逻辑页划分成大小相等的部分，称为页（page） 。从0开始编页号，页内地址是相对于0编址</p> 
+         <p>2.1、页表</p> 
+         <p>页表包含以下几个表项：<br> &nbsp;&nbsp;&nbsp;&nbsp;页号：登记程序地址空间的页号。<br> &nbsp;&nbsp;&nbsp;&nbsp;块号：登记相应的页所对应的内存块号。<br> &nbsp;&nbsp;&nbsp;&nbsp;其它：登记与存储信息保护有关的信息</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/d44f3a5ce890206a78ce202685b8779d.png"></p> 
+         <p>例：作业1有2页分别装入内存的第5、6块；作业2有3页装入内存的第2、4、7块；作业3有1页装入内存的第8块</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/a8824a578e311cdeabbebe71ac213353.png"></p> 
+         <p>页的大小是2K&nbsp; ， k: 9~16。&nbsp;</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/ef990705e084a5447be4b7b5a0a0ab02.png"></p> 
+         <p><strong>第五章：虚拟存储器-具有请求调入功能和置换功能，能从逻辑上对内存容量加以扩充的一种存储器系统。</strong></p> 
+         <p><strong>1、交换技术</strong></p> 
+         <p>1.1、选择原则</p> 
+         <p>即：将哪个进程换出内存？</p> 
+         <p>1.2、选择时机</p> 
+         <p>&nbsp; 只要不用（或很少再用）就换出；</p> 
+         <p>&nbsp; 只在内存空间不够或有不够的危险时换出；</p> 
+         <p>1.3、交换时需要做哪些工作？</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;换出和换入过程，需要一个磁盘交换区：<br> &nbsp;&nbsp;&nbsp;&nbsp;必须足够大以存放用户程序内存映像的拷贝；</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;必须对这些内存映像直接存取。</p> 
+         <p>1.4、换回内存时位置的确定</p> 
+         <p>2、虚拟存储的实现方法</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;2.1、请求分页系统</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在分页系统的基础上增加请求调页功能和置换功能所形成的页式虚拟存储器系统。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;硬件支持：请求分页的页表机制、缺页中断机构、地址变换机构。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;软件支持</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;2.2、请求分段系统</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请求分段的段表机制、缺段中断机构、地址变换机构</p> 
+         <p>3、请求分业存储管理方式</p> 
+         <p>&nbsp; &nbsp;在进程开始运行之前，不是装入全部页面，而是装入几个或零个页，之后根据进程运行的需要，动态装入其它页；</p> 
+         <p>&nbsp; 在进程开始运行之前，不是装入全部页面，而是装入几个或零个页，之后根据进程运行的需要，动态装入其它页；</p> 
+         <p>3.1、页表机制</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/4874f3ac719aa00c2bbdad661edb3f08.png"></p> 
+         <p>状态位：表示该页是否装入内存；<br> 访问位：此页在一段时间被访问的次数，可用来决定淘汰哪页（由不同的算法决定）；<br> 修改位：查看此页是否在内存中被修改过；<br> 外存地址：该页在外存上的位置。</p> 
+         <p>3.2、缺页中断处理</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在地址映射过程中，在页表中发现所要访问的页不在内存，则产生缺页中断。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作系统接到此中断信号后，就调出缺页中断处理程序，根据页表中给出的外存地址，准备将该页调入内存。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时应将缺页的进程挂起（调页完成唤醒）</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果内存中有空闲块，则分配一个块，将要调入的页装入该块，并修改页表中相应页表项的状态位及相应的内存块号；<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若此时内存中没有空闲块，则要淘汰某页（若被淘汰页在内存期间被修改过，则要将其写回外存）。</p> 
+         <p>4、页面置换算法</p> 
+         <p></p> 
+         <ul>
+          <li><span style="color:#ff0000;">功能</span>：需要<span style="color:#3366ff;">调入页面</span>时，选择内存中哪个物理页面被置换。称为replacement policy。</li>
+          <li><span style="color:#ff0000;">目标</span>：把<span style="color:#3366ff;">未来不再使用</span>的或<span style="color:#3366ff;">短期内较少使用</span>的页面调出，通常只能在<span style="color:#3366ff;">局部性原理指导下</span>依据过去的统计数据进行预测；</li>
+          <li><span style="color:#ff0000;">页面锁定(frame locking)</span>：必须<span style="color:#3366ff;">常驻内存的OS关键部分</span>或<span style="color:#3366ff;">时间关键(time-critical)</span>的应用进程。实现方法为在页表中加上<span style="color:#3333ff;">锁定标志位(lock bit)。</span></li>
+         </ul> 
+         <p></p> 
+         <p>4.1几种算法</p> 
+         <p></p> 
+         <ul>
+          <li><span style="color:#33ff33;">最佳页面算法（OPT）</span>——选择“<span style="color:#3366ff;">未来不再使用的”</span>或“<span style="color:#3366ff;">在离当前最远位置上出现的</span>”页面被置换。</li>
+         </ul> 
+         <p><span style="color:#993399;">PS</span>：是一种理想情况，实际执行中是<span style="color:#6633ff;">无法预知</span>的，因而不能实现。<br> &nbsp; &nbsp; &nbsp; &nbsp;可用作其他算法<span style="color:#cc66cc;">性能评价的依据</span></p> 
+         <p></p> 
+         <ul>
+          <li><span style="color:#33cc00;">先进先出页面置换算法（FIFO）</span>——选择<span style="color:#6633ff;">建立最早</span>的页面被置换。可以通过<span style="color:#6633ff;">链表</span>来表示各页的建立时间先后。</li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff6666;">特点</span>：<span style="color:#6633ff;">性能较差</span>。较早调入的页往往是经常被访问的页，这些页在FIFO算法下被反复调入和调出。并且有Belady现象。</p> 
+         <p>&nbsp; &nbsp; &nbsp;<span style="color:#cc9933;"> &nbsp;Belady现象</span>：采用FIFO算法时，如果对一个进程<span style="color:#ff6600;">未分配它所要求的全部页面</span>，有时就会出现<span style="color:#ff6600;">分配的页面数增多</span>，<span style="color:#ff6600;">缺页率</span>反而提高的异常现象。<br> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#cc9933;">&nbsp;Belady现象的描述</span>：一个进程P要访问M个页，OS分配N个内存页面给进程P；对一个访问序列S，发生缺页次数为PE（S,N）。<span style="color:#ff6600;">当N增大时，PE(S, N)时而增大，时而减小。</span></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#cc9933;">&nbsp;Belady现象的原因</span>：FIFO算法的<span style="color:#ff6600;">置换特征</span>与进程访问内存的动态特征是矛盾的，即被<span style="color:#ff6600;">置换的页面并不是进程不会访问的</span>。</p> 
+         <p>例：有一虚拟存储系统，采用先进先出的页面淘汰算法。在内存中为每个进程分配3块。进程执行时使用页号的顺序为 4 3 2 1 4 3 5 4 3 2 1 5<br> (1) 该进程运行时总共出现几次缺页。<br> (2) 若每个进程在内存有4块，又将产生几次缺页。<br> (3) 如何解释所出现的现象。</p> 
+         <p>（1）m=3</p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/ec5e031227caebde961402e82ffb5268.png" width="600"></p> 
+         <p>（2）、m=4</p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/81bf047e71e8393ebe8f306f2f09c2f2.png" width="600"></p> 
+         <p>m=3时，缺页中断9次</p> 
+         <p>m=4时，缺页中断10次</p> 
+         <p>（3）、FIFO页面淘汰算法会产生异常现象（Belady现象），即：当分配给进程的物理页面数增加时，缺页次数反而增加</p> 
+         <ul>
+          <li><span style="color:#33ff33;">最近最久未使用页面置换算法（LRU）</span>——选择最后一次访问时间距离当前时间最长的一页并淘汰之。即淘汰没有使用的时间最长的页。</li>
+         </ul> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff9900;">&nbsp;特点</span>：局部性原理的合理近似，性能接近最佳置换（OPT）算法。&nbsp;实现代价很高（软件方法或硬件方法）</p> 
+         <ul>
+          <li><span style="color:#33ff33;">轮转算法（clock）（也称最近未使用算法(NRU, Not Recently Used)）</span></li>
+          <li><span style="color:#33ff33;">最不经常使用（LFU）</span>——选择到当前时间为止被访问次数最少的页面被置换；</li>
+         </ul> 
+         <p>例：某程序在内存中分配三个块，访问页的走向为4，3，2，1，4，3，5，4，3，2，1，5，按FIFO、 LRU、OPT算法分别计算缺页次数。<br> &nbsp;</p> 
+         <p>&nbsp; &nbsp;假设开始时所有页均不在内存。</p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/937802b48d794252f24c64c7f9755c89.png" width="600"></p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/772acf92c1656a033bfa5686aa853dd6.png" width="600"></p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/37629c306dec6cc43262515a5bc87b43.png" width="600"></p> 
+         <p>eg:某程序在内存中分配四个块，访问页的走向为4，3，2，1，4，3，5，4，3，2，1，5，按LRU、OPT算法分别计算缺页次数<br> 假设开始时所有页均不在内存</p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/4a21ff85e7d16ddffc850d13f3c4dee1.png" width="600"></p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/90e8fc2136668d4df2e129eef5db8e4f.png" width="600"></p> 
+         <p>章节练习：</p> 
+         <p>1、有一页式系统，其页表存放在主存中。</p> 
+         <p>(1) 如果对主存的一次存取要3us，问实现一次页面访问要多长时间。</p> 
+         <p>(2) 如系统有快表，平均命中率为97%，假设访问快表的时间忽略为0，问此时一次页面访问要多长时间。</p> 
+         <p>（1）、2*3=6us</p> 
+         <p>（2）、0.97*3+0.03*6=3.09us</p> 
+         <p>2、在分页存储管理系统中，有一作业大小为4页，页长为2K，页表如下：</p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/b6890371e9ea3efdbe2d01023a89ac3c.png"></p> 
+         <p>试借助地址变换图（即要求画出地址变换图）求出逻辑地址4635所对应的物理地址。</p> 
+         <p><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/7da78679ba034324c8f77dd99010f5c4.png" width="600"></p> 
+         <p>3、如果内存划分为100KB、500KB、200KB、300KB、600KB首次适应、最佳适应和最差适应算法各自将如何放置大小分别为212KB、417KB、112KB、426KB的进程？哪种算法的内存利用率最高？<br> 答：<br> （1）首次适应：212KB放在500KB分区（剩余288KB）；417KB放在600KB分区；112KB放在剩余的288KB分区；而426KB进程必须等待。<br> （2）最佳适应：212KB放在300KB分区；417KB放在500KB分区；112KB放在200KB分区；426KB放在600KB分区。<br> （3）最差适应：212KB放在600KB分区（剩余388KB）；417KB放在500KB分区；112KB放在剩余388KB分区；而426KB进程必须等待。</p> 
+         <p>综上可以看出，最佳适应算法的内存利用率最高。</p> 
+         <p>5、一个32位地址的计算机使用两级页表，虚地址被分为9位的顶级页表域，11位的二级页表域和偏移，请问，页面长度是多少？在地址空间中，共存在多少页？</p> 
+         <p>答：9位作顶级页表域，11位作二级页表域，所以剩余32-(9+11)=12位作偏移，所以页面长度是212=4K，在地址空间中共存在220个页面。</p> 
+         <p>第三四五章重点：</p> 
+         <p>第三章 处理机调度与死锁<br> 1.处理机调度的层次<br> 2.作业调度及算法<br> (FCFS&nbsp; SJF&nbsp; HRRN)<br> 3.死锁的概念、产生原因、必要条件、预防死锁<br> 4.避免死锁-银行家算法，安全性算法<br> 第四章&nbsp; 存储器管理<br> 1.连续分配的存储管理方式<br> 2.动态分区分配算法<br> （首次适应法、最佳适应法、最坏适应法）<br> 3.分页存储管理方式<br> 第五章&nbsp; 虚拟存储器<br> 1.交换技术<br> 2.请求分页系统<br> 3.页面置换算法（先进先出、最优、最近未使用）</p> 
+         <p></p> 
+         <p></p> 
+        </div> 
+       </div> 
+      </article>  
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/qq_41261490"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/e5cdb908be774a9f9be3ad72656c8e63_qq_41261490.jpg!1"> <span class="profile-name"> DiuDiu_yang </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">已关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 255 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="1350" id="get-collection"> 1350 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 12 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode active" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="rewardBtNewHide" data-report-click="{&quot;spm&quot;:&quot;3001.4237&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault reward-bt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="7769956" data-free="true" data-description="" data-subscribe="false" data-title="计算机操作系统" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/qq_41261490/category_7769956.html" data-sum="7" data-people="75" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>    
+     <a id="commentBox" name="commentBox"></a> 
+    </main> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                  
+ </body>
+</html>

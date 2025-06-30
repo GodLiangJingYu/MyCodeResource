@@ -1,0 +1,39 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "1",
+      "gender": "1"
+    },
+    {
+      "id": "5",
+      "name": "5",
+      "gender": "5"
+    },
+    {
+      "id": "3",
+      "name": "3",
+      "gender": "3"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": "305",
+      "type": "123",
+      "capacity": 9999,
+      "occupied": 0
+    },
+    {
+      "roomNumber": "6666",
+      "type": "1",
+      "capacity": 1,
+      "occupied": 0
+    },
+    {
+      "roomNumber": "3",
+      "type": "3",
+      "capacity": 3,
+      "occupied": 0
+    }
+  ]
+}

@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/qq_41587612/article/details/100110207"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#">  
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>操作系统期末复习【超实用】_冻结扫描算法-CSDN博客</title>  
+  <meta name="keywords" content="冻结扫描算法"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;冻结扫描算法&quot;}"> 
+  <meta name="description" content="文章浏览阅读2.8w次，点赞288次，收藏1.1k次。所用教材：左万历 周长林 彭涛(编著) 打印下来，考前背一背，100分get !!!此处本来是放目录的，终于有一天发现CSDN居然自带能跳转的目录，orz 富文本编辑器最大的缺点就在于“排版太累”第一章概述5’简答一、操作系统的特性   程序并发性：多个程序在宏观上同时向前推进   资源共享性：操作系统和多个用户程序共用系统中的各种资源..._冻结扫描算法"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-72afa20676.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-blogstar2020/skin-blogstar2020-4ff9fc1266.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>      
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">操作系统期末复习【超实用】</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <span class="c-gray">置顶</span> 
+           <a href="https://mall.csdn.net/vip" data-report-query="spm=3001.10404" data-report-click="{&quot;spm&quot;:&quot;3001.10404&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10404&quot;}" class="article-vip-box" target="_blank"><img class="article-vip-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/identityVipNew.png" alt=""></a> 
+           <a class="follow-nickName " href="https://blog.csdn.net/qq_41587612" target="_blank" rel="noopener" title="鸽子不二">鸽子不二</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2023-12-23 00:41:53&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量2.8w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 1.1k </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 288 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/qq_41587612/category_9202584.html" target="_blank" rel="noopener">操作系统</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">操作系统</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;孙钟秀&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;孙钟秀\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;孙钟秀&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;孙钟秀\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%AD%99%E9%92%9F%E7%A7%80&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">孙钟秀</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;费翔林&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;费翔林\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;费翔林&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;费翔林\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E8%B4%B9%E7%BF%94%E6%9E%97&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">费翔林</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;骆斌&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;骆斌\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;骆斌&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;骆斌\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E9%AA%86%E6%96%8C&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">骆斌</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2019-08-28 13:54:00&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/qq_41587612/article/details/100110207" target="_blank">https://blog.csdn.net/qq_41587612/article/details/100110207</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert" class=""></div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views atom-one-dark"> 
+         <p><img alt="" class="has" height="233" src="https://i-blog.csdnimg.cn/blog_migrate/1464956ea8e571c79b2b3d3b1acc36a0.jpeg" width="233">&nbsp; <img alt="" height="232" src="https://i-blog.csdnimg.cn/blog_migrate/208db149cd1ae248eca745f34e70271a.png" width="264">&nbsp; <span style="color:#f33b45;">若对你有帮助，记得点赞、已关注我哦！</span></p> 
+         <p><strong>所用教材：左万历 周长林 彭涛(编著)&nbsp;</strong> <span style="color:#e579b6;">打印下来，考前背一背，100分get !!!</span></p> 
+         <p><span style="color:#fe2c24;">博客总领目录请看这篇，超级干货，不看后悔</span></p> 
+         <p><a class="has-card" href="https://blog.csdn.net/qq_41587612/article/details/104362661" title="软件工程专业大学四年学什么_大学近代史学分是多少-CSDN博客"><span class="link-card-box"><span class="link-title">软件工程专业大学四年学什么_大学近代史学分是多少-CSDN博客</span><span class="link-link"><img class="link-link-icon" src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-default.png?t=N7T8">https://blog.csdn.net/qq_41587612/article/details/104362661</span></span></a><span style="color:#FF0000;">B站同名up猪，欢迎已关注我的账号</span><a class="has-card" href="https://space.bilibili.com/204913846" rel="nofollow" title="鸽子不二的个人空间-鸽子不二个人主页-哔哩哔哩视频"><span class="link-card-box"><span class="link-title">鸽子不二的个人空间-鸽子不二个人主页-哔哩哔哩视频</span><span class="link-desc">哔哩哔哩鸽子不二的个人空间，提供鸽子不二分享的视频、音频、文章、动态、收藏等内容，已关注鸽子不二账号，第一时间了解UP主动态。</span><span class="link-link"><img class="link-link-icon" src="https://i-blog.csdnimg.cn/blog_migrate/003a2ce7eb50c2e24a8c624c260c5930.png" alt="icon-default.png?t=N7T8">https://space.bilibili.com/204913846</span></span></a></p> 
+         <p>复习累了可以点开视频，有惊喜哦！</p> 
+         <p><a href="https://www.bilibili.com/video/BV117411c7DQ" rel="nofollow" title="1990年金曲《第一次的啾はじめてのチュウ初吻》出自哆啦A梦作者藤子不二雄的动画《齐天烈大百科》（キテレツ大百科）由实川俊晴谱写_哔哩哔哩_bilibili">1990年金曲《第一次的啾はじめてのチュウ初吻》出自哆啦A梦作者藤子不二雄的动画《齐天烈大百科》（キテレツ大百科）由实川俊晴谱写_哔哩哔哩_bilibili</a></p> 
+         <p><a href="https://www.bilibili.com/video/BV1Vb411U7BC/" rel="nofollow" title="1995年少女漫丰碑《天是红河岸/赤河恋影》广播剧歌曲合集，富有埃及和土耳其文化色彩，原创剪辑值得珍藏_哔哩哔哩_bilibili">1995年少女漫丰碑《天是红河岸/赤河恋影》广播剧歌曲合集，富有埃及和土耳其文化色彩，原创剪辑值得珍藏_哔哩哔哩_bilibili</a></p> 
+         <p><a href="https://www.bilibili.com/video/BV1Nb411M7J9/" rel="nofollow" title="【太阳之船Sol Bianca】高燃混剪，经典没人看系列_哔哩哔哩_bilibili">【太阳之船Sol Bianca】高燃混剪，经典没人看系列_哔哩哔哩_bilibili</a></p> 
+         <p></p> 
+         <h2 id="%E7%AC%AC%E4%B8%80%E7%AB%A0%C2%A0%C2%A0%E6%A6%82%E8%BF%B05%E2%80%99%E7%AE%80%E7%AD%94"><span style="color:#7c79e5;"><strong><strong><strong>第一章&nbsp;&nbsp;概述5</strong></strong><strong><strong>’</strong></strong><strong><strong>简答</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E6%80%A7"><strong>一、操作系统的特性</strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 程序并发性：</strong></strong>多个程序在宏观上同时向前推进</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 资源共享性：</strong></strong>操作系统和多个用户程序共用系统中的各种资源</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 异步性：</strong></strong>在操作系统之上，宏观上同时运行的多个程序交替执行</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 虚拟性：</strong></strong>利用某种技术把一个物理实体变为若干个逻辑实体</p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83"><strong><strong><strong>二、操作系统的硬件环境</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 定时装置</strong></strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 绝对时钟：记载实际时间，不发生中断。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 间隔时钟：定时发生中断，是实现多道程序的基础——保证操作系统获得控制权</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 系统栈</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 作用：1. 保存中断现场 2. 保存操作系统子程序转移返回点、参数、局部变量、返回值</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 位置：内存中操作系统空间的一个固定区域</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 特权指令和非特权指令</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 特权指令：只有在管态才能执行的指令 （管态：操作系统运行时所处的状态）</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 非特权指令：在管态和目态下均可执行的指令，只与运行程序本身有关，不影响系统状态。(目态：一般用户程序运行时所处的状态)</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 处理器状态和状态转换</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 处理器状态：系统态（管态，核心态）、用户态（目态，常态）</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 状态转换：管态 —&gt; &nbsp;目态（置程序状态字PSW） 目态 —&gt; &nbsp;管态（中断，trap）</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 地址映射机构</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 逻辑地址（虚地址）：程序中产生的地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 物理地址（实地址）：存储器地址</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 存储保护设施</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 防止应用程序：1. 侵犯操作系统空间 2. 侵犯其它用户空间</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 地址检查：1. 越界检查 2. 越权检查（对共享区域）</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 中断装置</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 发现并响应中断的硬件机构</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 通道和DMA控制器</strong></p> 
+         <h4 id="%E4%B8%89%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E7%90%86"><strong><strong><strong>三、操作系统的运行机理</strong></strong></strong></h4> 
+         <p>&nbsp; &nbsp;&nbsp; <img alt="" class="has" height="301" src="https://i-blog.csdnimg.cn/blog_migrate/8b5ad3f3ddee1d1f6d4a94587690d7f7.png" width="457"></p> 
+         <h2 id="%E7%AC%AC%E4%BA%8C%E7%AB%A0%C2%A0%C2%A0%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E4%B8%8E%E4%BD%9C%E4%B8%9A5%E2%80%99%E7%AE%80%E7%AD%94"><span style="color:#7c79e5;"><strong><strong><strong>第二章&nbsp;&nbsp;进程、线程与作业5</strong></strong><strong><strong>’</strong></strong><strong><strong>简答</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><strong><strong><strong>一、进程的概念</strong></strong></strong></h4> 
+         <p>&nbsp; &nbsp; &nbsp;&nbsp; 具有一定独立功能的程序关于一个数据集合的一次运行活动</p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><strong><strong><strong>二、进程的状态</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 运行态</strong></strong>：占有CPU正在向前推进</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 就绪态</strong></strong>：可以运行，但未得到CPU</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 等待态</strong></strong>：等待某一事件的发生</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2">三、<strong><strong><strong>进程的状态转换</strong></strong></strong></h4> 
+         <p><img alt="" class="has" height="174" src="https://i-blog.csdnimg.cn/blog_migrate/e98d46db77ca18873308389fd103ec3e.jpeg" width="299"><img alt="" class="has" height="174" src="https://i-blog.csdnimg.cn/blog_migrate/ba45f35ec3a140b28c91ef3d4f4c3bb1.jpeg" width="547"></p> 
+         <p><img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/e12d02e8701733a9a851aa4f4885c650.jpeg"></p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><strong><strong><strong>四、进程控制块</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 定义</strong></strong>：标志进程存在的数据结构，其中包含系统对进程进行管理所需要的全部信息</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 内容</strong></strong>：进程标识（pid）、进程状态、现场信息、调度参数、所属用户（uid）等</p> 
+         <h4 id="%E4%BA%94%E3%80%81%E8%BF%9B%E7%A8%8B%E9%98%9F%E5%88%97"><strong><strong><strong>五、进程队列</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 就绪队列</strong></strong>：系统一个或若干个（根据调度算法确定）</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 等待队列</strong></strong>：每一个等待事件一个</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 运行队列</strong></strong>：每一个处理机一个</p> 
+         <h4 id="%E5%85%AD%E3%80%81%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%89%B9%E6%80%A7" style="margin-left:0pt;">六、进程的类型和特性</h4> 
+         <p>类型：</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 系统进程</strong></strong>：运行操作系统程序，完成系统管理（服务）功能</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 用户进程</strong></strong>：运行用户程序，为用户服务（在操作系统之上运行的所有应用程序都被称为用户进程）</p> 
+         <p style="margin-left:0pt;">特性:</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 并发性</strong></strong>：可以与其它进程一道向前推进</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 动态性</strong></strong>：动态产生、消亡，生存期内状态动态变化</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 独立性</strong></strong>：一个进程是可以调度的基本单位</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 交互性</strong></strong>：同时运行的进程可能发生相互作用</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 异步性</strong></strong>：进程以各自独立，不可预知的速度向前推进</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 结构性</strong></strong>：每个进程都有一个进程控制块（PCB）</p> 
+         <h4 id="%E4%B8%83%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><strong>七、线程的概念</strong></h4> 
+         <p><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 定义：</strong></strong>进程内一个相对独立的执行流</p> 
+         <h4 id="%E5%85%AB%E3%80%81%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><strong><strong><strong>八、线程控制块</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; 定义（TCB）</strong></strong>：标志线程存在的数据结构，其中包含对线程管理需要的全部信息</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; 内容</strong></strong>：线程标识、线程状态、调度参数、现场</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; 存放位置</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 用户级线程：目态空间（运行系统）</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 核心级线程：系统空间</p> 
+         <h4 id="%E4%B9%9D%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><strong><strong><strong>九、线程的实现</strong></strong></strong></h4> 
+         <p><strong><strong>用户级别线程</strong></strong>：</p> 
+         <p style="margin-left:0pt;">实现方法：1. 基于library函数，系统不可见 2. 线程创建、撤销、状态转换在 目态完成 3. TCB在用户空间，每个进程一个系统栈</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 优点：1. 不依赖于操作系统，调度灵活&nbsp; 2. 切换速度快</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 缺点：同一个进程中多个线程不能真正并行，一个线程进入系统受阻，进程中其它线程不能执行</p> 
+         <p style="margin-left:0pt;"><strong><strong>核心级别线程</strong></strong>：</p> 
+         <p style="margin-left:0pt;">实现方法：1. 基于系统调用&nbsp; 2. 创建、撤销、状态转换由操作系统完成</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 优点：1. 同一个进程内多线程可以并行执行&nbsp; 2. 一个线程进入核心等待，其它线程仍可以执行</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 缺点：1. 系统开销大，同一线程内多线程切换速度慢&nbsp; 2. 调度算法不能灵活控制</p> 
+         <p style="margin-left:0pt;"><strong><strong>混合级别线程</strong></strong></p> 
+         <h2 id="%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E4%B8%AD%E6%96%AD%E4%B8%8E%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A610%E2%80%99"><span style="color:#7c79e5;"><strong>第三章 <strong>中断与处理器调度10’</strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E8%A1%A1%E9%87%8F%E6%8C%87%E6%A0%87"><strong><strong><strong>一、处理器调度算法衡量指标</strong></strong></strong></h4> 
+         <p>&nbsp; &nbsp; &nbsp; 平均周转时间</p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E5%B8%B8%E7%94%A8%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><strong><strong><strong>二、常用处理器调度算法</strong></strong></strong></h4> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>先到先服务算法（FCFS）</strong></strong>：按进入就绪态的次序来调度。</li>
+         </ul> 
+         <p style="margin-left:0pt;">优点：公平，不会出现饿死</p> 
+         <p style="margin-left:0pt;">缺点：短进程(线程)的等待时间长，从而平均等待时间较长</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最短作业优先（SJF）</strong></strong>：按照CPU阵发时间递增的次序调度，易于证明其平均周转时间最短。</li>
+         </ul> 
+         <p style="margin-left:0pt;">优点：最大限度地降低了平均等待时间</p> 
+         <p style="margin-left:0pt;">缺点：不公平；容易产生饥饿，甚至饿死</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最短剩余时间优先算法（SRTN）</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp;&nbsp; （剥夺式算法）当CPU空闲时，选择剩余时间最短的进程或者线程。当一个新进程或线程到达时，比较新进程所需时间与当前运行进程的估计剩余时间。如果新进程所需的运行时间短，则切换运行进程。</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最高响应比优先算法（HRN）</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="59" src="https://i-blog.csdnimg.cn/blog_migrate/fca8e3d74cf2313993cde14f024120e3.png" width="458"></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 对于同时到达的任务处理时间较短的任务将被优先调度，处理时间较长的任务将随着时间的增加而动态提升响应比，因而不会出现饥饿现象。</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最高优先数优先算法（HPF）</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 当需要进行处理器分配时，系统在可运行的进程中选择优先数最高者使其投入运行。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 赋予优先数的方法：</p> 
+         <p>&nbsp; &nbsp; &nbsp;&nbsp; ①静态优先数：进程进入系统时被赋予，在生命周期内固定不变。适合批处理进程</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 优点：较简单；开销较小</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 缺点：公平性差，可能会造成低优先数进程长期等待。</p> 
+         <p>&nbsp; &nbsp; &nbsp;&nbsp; ②动态优先数：进程在创建时被赋予，在生命周期内动态变化。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 优点：资源利用率高，公平性好</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 缺点：开销较大；实现较复杂</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>循环轮转算法（RR）</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 系统为每一个进程规定一个时间片，所有进程按照其时间片的长短轮流地进行。适用于分时系统，公平；响应及时。</p> 
+         <p>&nbsp; &nbsp; &nbsp;&nbsp; ①基本轮转</p> 
+         <p>&nbsp; &nbsp; &nbsp;&nbsp; ②改进轮转</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>分类排队算法（MLQ）</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 以多个就绪进程队列为特征的，这些队列将系统中所有可运行的进程按照某种原则加以分类，以实现所期望的调度目标。</p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>反馈算法（FB）</strong></strong></li>
+         </ul> 
+         <h4 id="%E4%B8%89%E3%80%81%E5%AE%9E%E6%97%B6%E8%B0%83%E5%BA%A6%E5%8F%8A%E5%85%B6%E7%AE%97%E6%B3%95"><strong><strong><strong>三、实时调度及其算法</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong>定义：</strong>满足实时任务各自时间约束条件的调度</p> 
+         <p style="margin-left:0pt;"><strong>算法：</strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最早截至期优先调度</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 定义：优先选择完成截止期最早的实时任务。对于新到达的实时任务，如果其完成截止期先于正在运行任务的完成截至期，则重现分派处理器，即剥夺。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="90" src="https://i-blog.csdnimg.cn/blog_migrate/e90cc1e85f6ae4df6d93ce51cf213b4d.jpeg" width="818"></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>速率单调调度</strong></strong>：</li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 定义：将任务的周期作为调度参数，其发生频度越高，则调度级别越高。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp;<img alt="" class="has" height="83" src="https://i-blog.csdnimg.cn/blog_migrate/f33bfe75c3a0bd5d4006e84d3172df21.jpeg" width="847"></p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E4%BE%8B%E9%A2%98" style="margin-left:0pt;">四、例题</h4> 
+         <p><img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/d0be69442aec1d36d3a5f1628ecd259f.jpeg"></p> 
+         <h2 id="%E7%AC%AC%E5%9B%9B%E7%AB%A0%C2%A0%C2%A0%E4%BA%92%E6%96%A5%E3%80%81%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%80%9A%E4%BF%A120%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第四章&nbsp;&nbsp;互斥、同步与通信20</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E4%B8%8E%E6%97%B6%E9%97%B4%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF">一、与时间有关的错误</h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 进程执行交叉</strong></strong></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 涉及公共变量</strong></strong></p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E5%85%AC%E5%85%B1%E5%8F%98%E9%87%8F%E3%80%81%E4%B8%B4%E7%95%8C%E5%8C%BA%E3%80%81%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90"><strong><strong><strong>二、公共变量、临界区、临界资源</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 共享变量</strong></strong>：多个进程都需要访问的变量（表示：shared&lt;一组变量&gt;）</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 临界区</strong></strong>：访问共享变量的程序段（表示：shared&lt;一组变量&gt;do&lt;语句&gt;）</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 临界资源</strong></strong>：一次只允许一个进程使用的资源</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E8%BF%9B%E7%A8%8B%E4%BA%92%E6%96%A5"><strong><strong><strong>三、进程互斥</strong></strong></strong></h4> 
+         <p><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义</strong></strong>：多个进程不能同时进入关于同一组共享变量的临界区域，否则可能发生与时间有关的错误</p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E4%B8%B4%E7%95%8C%E5%8C%BA%E6%A1%86%E6%9E%B6"><strong><strong><strong>四、临界区框架</strong></strong></strong></h4> 
+         <p><strong><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/0d917b000062c4e44bd25c40ee2c3707.jpeg"></strong></strong></strong></p> 
+         <h4 id="%E4%BA%94%E3%80%81Peterson%E4%BA%92%E6%96%A5%E7%AE%97%E6%B3%95">五、<strong><strong><strong>Peterson互斥算法</strong></strong></strong></h4> 
+         <p><strong><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="436" src="https://i-blog.csdnimg.cn/blog_migrate/83aa86ddfa4ef1b60717e1ba03d9d2d6.jpeg" width="287"></strong></strong></strong></p> 
+         <h4 id="%E5%85%AD%E3%80%81%E5%BF%99%E5%BC%8F%E7%AD%89%E5%BE%85">六、<strong><strong><strong>忙式等待</strong></strong></strong></h4> 
+         <p><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义：</strong></strong>不进入等待状态的等待</p> 
+         <h4 id="%E4%B8%83%E3%80%81%E5%9F%BA%E4%BA%8ETS%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BA%92%E6%96%A5%E7%AE%97%E6%B3%95"><strong><strong><strong>七、基于TS指令的互斥算法</strong></strong></strong></h4> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/e9998c63c5dc637a6aa3bf77a6077b29.jpeg"></p> 
+         <h4 id="%E5%85%AB%E3%80%81%E5%BC%80%E5%85%B3%E4%B8%AD%E6%96%AD%E7%A1%AC%E4%BB%B6%E4%BA%92%E6%96%A5%E6%96%B9%E6%B3%95">八、<strong><strong><strong>开关中断硬件互斥方法</strong></strong></strong></h4> 
+         <p><strong><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="148" src="https://i-blog.csdnimg.cn/blog_migrate/0e0d1002e5face3f93fb8c67ded5a4c9.jpeg" width="249"></strong></strong></strong></p> 
+         <h4 id="%E4%B9%9D%E3%80%81%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5">九、<strong><strong><strong>进程同步</strong></strong></strong></h4> 
+         <p><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义</strong></strong>：一组进程，为协调其推进速度，在某些关键点处需要相互等待与相互唤醒，进程之间这种相互制约的关系称为进程同步。</p> 
+         <h4 id="%E5%8D%81%E4%B8%80%E3%80%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E3%80%81PV%E6%93%8D%E4%BD%9C%E3%80%81PV%E5%8E%9F%E8%AF%AD"><strong><strong><strong>十一、信号量、PV操作、PV原语</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义</strong></strong>：一种称为信号量类型的变量以及对于此种变量所能进行的两个操作，即P操作和V操作</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; PV原语和信号量定义：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; P原语</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="138" src="https://i-blog.csdnimg.cn/blog_migrate/3a85c183d84f34784e149eb1e2f09515.jpeg" width="238"></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; V原语</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="139" src="https://i-blog.csdnimg.cn/blog_migrate/23842e98188ad110a403876116b09e61.jpeg" width="249"></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 信号量</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="121" src="https://i-blog.csdnimg.cn/blog_migrate/5f45a2c0c46b2a0cacc2b9bd591eb9f3.jpeg" width="252"></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>进程同步：司机和售票员问题</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/395f5767f6aeadd6e4ccb52ac381bd14.jpeg"></strong></strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>进程互斥：生产者与消费者问题</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/8fee4e83c05ce130af9662f0c989fad0.jpeg"></strong></strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>进程互斥：读者与写者问题</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp;<img alt="" class="has" height="282" src="https://i-blog.csdnimg.cn/blog_migrate/bc60a0c830fa529041b68841cbced217.jpeg" width="243"><img alt="" class="has" height="282" src="https://i-blog.csdnimg.cn/blog_migrate/c6fe8321d1de26a2b167f6b6a26778f3.jpeg" width="269"><img alt="" class="has" height="282" src="https://i-blog.csdnimg.cn/blog_migrate/dd6dc157b63a53cb744003bb71fde809.jpeg" width="310"></p> 
+         <h4 id="%E5%8D%81%E4%BA%8C%E3%80%81%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">十二、<strong><strong><strong>进程通信模式</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 共享内存模式：相互通信的进程之间要有公共内存，一组向该内存中写，另一组进程由该公共内存中读</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 消息传递模式：操作系统为用户进程之间的通信提供两个基本的系统调用命令，即发送命令和接收命令</p> 
+         <h2 id="%E7%AC%AC%E4%BA%94%E7%AB%A0%C2%A0%C2%A0%E6%AD%BB%E9%94%81%E4%B8%8E%E9%A5%A5%E9%A5%BF5%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第五章&nbsp;&nbsp;死锁与饥饿5</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E6%AD%BB%E9%94%81%E7%9A%84%E7%B1%BB%E5%9E%8B"><strong><strong><strong>一、死锁的类型</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 竞争资源引起的死锁</strong></strong></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 进程通信引起的死锁</strong></strong></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 其他原因引起的死锁</strong></strong></p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E6%AD%BB%E9%94%81%E7%9A%84%E6%9D%A1%E4%BB%B6">二、<strong><strong><strong>死锁的条件</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 资源独占</strong></strong>：一个资源在同一时间只能分给一个进程</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 不可剥夺</strong></strong>：资源只能由其占有者在使用完后资源释放</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 保持申请</strong></strong>：进程在占有部分资源后还可以申请新的资源，而且在申请新资源的时候并不释放它已经占有的资源</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 循环等待</strong></strong>：存在一个循环等待链</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E6%AD%BB%E9%94%81%E7%9A%84%E5%A4%84%E7%90%86">三、<strong><strong><strong>死锁的处理</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp;&nbsp; （静态）死锁预防：</strong></strong>通过破坏死锁产生的必要条件实现，对进程有关资源的活动加限制，所有进程遵循这种限制，即可保证没有死锁发生<strong><strong>。预防分配策略、有序分配策略</strong></strong></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp;&nbsp; （动态）死锁避免：</strong></strong>在进程运行之前，为其分配所需的全部资源（预先分配策略）</p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E9%A5%BF%E6%AD%BB%E4%B8%8E%E6%B4%BB%E9%94%81"><strong><strong><strong>四、饿死与活锁</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 饿死</strong></strong>：当饥饿到一定程度的进程所赋予的任务即使完成也不再具有实际意义时，称该 进程被饿死</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 活锁</strong></strong>：在忙式等待条件下发生的饥饿</p> 
+         <h4 id="%E4%BA%94%E3%80%81%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95"><strong><strong><strong>五、银行家算法</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong>资源分配算法</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/51f4b0406596fa190821801bef1343e6.jpeg"></p> 
+         <p style="margin-left:0pt;"><strong>安全性检测算法</strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/6023540608f87fdab11e9f22c234318a.jpeg"></p> 
+         <h4 id="%E5%85%AD%E3%80%81%E4%BE%8B%E9%A2%98">六、<strong><strong><strong>例题</strong></strong></strong></h4> 
+         <p><strong><strong><strong><img alt="" class="has" height="258" src="https://i-blog.csdnimg.cn/blog_migrate/14a9277ad5c6b3f36895a302142956c1.png" width="431"></strong></strong></strong><img alt="" class="has" height="258" src="https://i-blog.csdnimg.cn/blog_migrate/cb6fdecfc11fb208c948678421f447e6.png" width="406"></p> 
+         <h2 id="%E7%AC%AC%E5%85%AD%E7%AB%A0%C2%A0%C2%A0%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%8625%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第六章&nbsp;&nbsp;存储管理25</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E9%9D%99%E6%80%81%E7%AD%89%E9%95%BF%E5%88%86%E9%85%8D"><strong><strong><strong>一、静态等长分配</strong></strong></strong></h4> 
+         <p>位示图bit map</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="137" src="https://i-blog.csdnimg.cn/blog_migrate/34b04b4bd572a139334034a26ea07cf4.jpeg" width="331"></p> 
+         <p style="margin-left:0pt;">空闲页面表free page list</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;<img alt="" class="has" height="155" src="https://i-blog.csdnimg.cn/blog_migrate/6a4775d51a4e4396dc602e6a82936225.jpeg" width="238"></p> 
+         <p style="margin-left:0pt;">空闲页面链idle page link</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img alt="" class="has" height="268" src="https://i-blog.csdnimg.cn/blog_migrate/c3264d5801602bad66c458831a278524.jpeg" width="202"></p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E5%8A%A8%E6%80%81%E5%BC%82%E9%95%BF%E5%88%86%E9%85%8D">二、<strong><strong><strong>动态异长分配</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 常用于：界地址、段式存储管理方式 &nbsp;【空闲区域表】</p> 
+         <ul>
+          <li style="margin-left:0pt;">最先适应：取第一个可满足区域</li>
+         </ul> 
+         <p style="margin-left:0pt;">优点：尽量使用低地址空间，高区保持大空闲区域</p> 
+         <p style="margin-left:0pt;">缺点：可能分割大空闲区</p> 
+         <ul>
+          <li style="margin-left:0pt;">最佳适应：取最小可满足区域</li>
+         </ul> 
+         <p style="margin-left:0pt;">优点：尽量使用小空闲区，保持大空闲区</p> 
+         <p style="margin-left:0pt;">缺点：可能形成碎片</p> 
+         <ul>
+          <li style="margin-left:0pt;">最坏适应：取最大可满足区域</li>
+         </ul> 
+         <p style="margin-left:0pt;">优点：防止形成碎片</p> 
+         <p style="margin-left:0pt;">缺点：分割大空闲区</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E5%9B%9B%E7%A7%8D%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><strong><strong><strong>三、四种存储管理方式</strong></strong></strong></h4> 
+         <blockquote> 
+          <p style="margin-left:0pt;"><strong><strong>单一连续区存储管理</strong></strong></p> 
+         </blockquote> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 内存空间划分</strong></strong>：采用动态异长分区方法，整个内存被动态划分为若干个长度各异的区域</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 进程空间划分</strong></strong>：由连续的区域构成</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需表目</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 内存分配表：用于记录内存中所有已经被分配的区域</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 空闲区域表：用于记录内存中所有尚未分配的区域</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需寄存器</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 首址寄存器（b）：整个系统有一个，用于保存正在运行进程的起始地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 限长寄存器（l）：整个系统有一个，用于保存正在运行进程的长度</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射</strong></strong>：a -&gt; a+b &nbsp;&nbsp;（a代表逻辑地址，b代表进程起始地址）</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射步骤</strong></strong>：</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.由程序确定逻辑地址a；</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.a与l比较判断是否越界，不满足：0&nbsp;&lt;= a&nbsp;&lt;= l-1，越界；</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.a与b相加得到物理地址。</p> 
+         <blockquote> 
+          <p style="margin-left:0pt;"><strong><strong>页式存储管理</strong></strong></p> 
+         </blockquote> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 内存空间划分</strong></strong>：内存空间静态地划分为若干个等长区域，每个区域称为一个物理页 架，每个页架通常由2i个单元，从0开始一次编址，称为页内地址。</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 进程空间划分</strong></strong>：内存空间静态地划分为若干个等长区域，每个区域称为一个逻辑页 面，每个页架通常由2i个单元，从0开始一次编址，称为页内地址。</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需表目</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 页表：用于记录进程的逻辑页面和内存页框之间的对应关系</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 总页表：用于记录页框的使用情况</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="116" src="https://i-blog.csdnimg.cn/blog_migrate/9bd7e1767b1b7caa8894e540f7ef9af2.jpeg" width="97"></p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需寄存器</strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 页表首址寄存器：用于保存正在运行进程的页表的首址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 页表长度寄存器：用于保存正在运行进程的页表长度</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 快表：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="96" src="https://i-blog.csdnimg.cn/blog_migrate/48409ba496bec9609b44b56b13a1ef50.jpeg" width="167"></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射</strong></strong>：物理地址=页架首址+页内地址=页架号*2i&nbsp;+ 页内地址</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射步骤</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 逻辑地址(p,d) -&gt; 物理地址(f,d)</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (1) 由程序确定逻辑地址(p,d)；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (2) 由p查快表得页架号f；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 如查不到：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (3) 由p与l比较，判别是否越界：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不满足：0 &lt;= p &lt;= l-1，越界；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (4) 由p和b查页表得f;</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (5) parbegin</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; f与d合并得物理地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (p,f)添加到快表，如满淘汰一个;</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; parend</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (3) f与d合并得物理地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/a83e20382c1982caa7e5fe14789bbd0a.jpeg"></p> 
+         <blockquote> 
+          <p style="margin-left:0pt;"><strong><strong>段式存储管理</strong></strong></p> 
+         </blockquote> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 内存空间划分</strong></strong>：内存空间静态地划分为若干个长度各异区域，每个区域称为一个物 理段，每个物理段在内存中有一个起始地址，称为段首址。将物 理段中的所有单元由0开始依次编址，称为段内地址。</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 进程空间划分</strong></strong>：内存空间静态地划分为若干个长度各异区域，每个区域称为一个逻 辑段。将一个逻辑段中的所有单元由0开始依次编址，称为段内地址。 将一个进程的所有逻辑地址由0开始依次编号，称为段号</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需表目</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 段表：该表用于记录段号与段首址之间的关系</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 空闲表：用于记录并管理内存中的空闲区域</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="115" src="https://i-blog.csdnimg.cn/blog_migrate/e959df1197dc19568d53ec084bea37fd.jpeg" width="245"></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需寄存器</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 段表首址寄存器：用于保存正在运行进程的段表的首址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 段表长度寄存器：用于保存正在运行进程的段表的长度</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 快表：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="98" src="https://i-blog.csdnimg.cn/blog_migrate/3459fe59ec777a4b3cb51188ffa1215b.jpeg" width="247"></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射</strong></strong>：逻辑地址(s,d) -&gt; 物理地址(b’+d)</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射步骤</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (1)由程序确定逻辑地址(s,d);</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (2) 由s查快表得b’和l’</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 如查不到：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (3) 由s与l比较判断是否越界</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不满足：0&lt;=s&lt;=l-1，越界；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (4) 由s和b查段表，得b’和l’</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (5) 由d与l’比较，判断是否越界</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不满足：0&lt;=d&lt;=l’-1，越界;</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (6)parbegin</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 由b’+d得物理地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (s,b’,l’)加入快表, 如快表满淘汰一个；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; parend</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (3) 由d与l’比较，判断是否越界</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 不满足：0&lt;=d&lt;=l’-1，越界；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (4) 由b’+d得物理地址。</p> 
+         <blockquote> 
+          <p style="margin-left:0pt;"><strong><strong>段页式存储管理</strong></strong></p> 
+         </blockquote> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 内存空间划分</strong></strong>：与页式相同</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 进程空间划分</strong></strong>：与段式相同</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需表目</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 段表：一个进程一个，用于记录各段的页表长度和页表首址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="96" src="https://i-blog.csdnimg.cn/blog_migrate/b1699d4d67ff39785d84f76fbcdcca8d.jpeg" width="166"></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 页表：每段一个，用于记录一段中各个逻辑页号和页框号之间的对应关系</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="94" src="https://i-blog.csdnimg.cn/blog_migrate/1d03c28617a471cf5096e5a232ec13d5.jpeg" width="86"></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 所需寄存器</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 段表首址寄存器</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 段表长度寄存器</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 快表</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="97" src="https://i-blog.csdnimg.cn/blog_migrate/f0df4619393117448566eb3038ee2a56.jpeg" width="246"></p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射</strong></strong>：逻辑地址(s,p,d) -&gt; 物理地址(f,d)</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 地址映射步骤</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (1) 由程序确定逻辑地址；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (2) 由(s,p)查快表得f；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 如找不到：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (3) 由s与l比较判断是否越界：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不满足：0&lt;=s&lt;=l-1, 越界</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (4) 由s和b查段表得页表(b’,l’)</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (5) 由p与l’比较判断是否越界：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不满足：0&lt;=p&lt;=l’-1, 越界</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (6) 由b’与p查页表得f</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (7) parbegin</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; f与d合并得物理地址</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (s,p,f)添加到快表，若快表已满，淘汰一个</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; parend</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (3) 由f与d合并得物理地址(f,d)</p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F"><strong>四、虚拟存储系统</strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>虚拟页式存储管理</strong></strong></p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 基本原理：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 进程运行前：全部装入外存，部分装入内存。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 进程运行时：&nbsp; 访问页不在内存，发生缺页中断，中断处理程序：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 找到访问页在外存的地址；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;在内存找一空闲页面；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 如没有，按淘汰算法淘汰一个；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 如需要，将淘汰页面写回外存，修改页表和总页表；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 读入所需页面（切换进程）；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 重新启动中断指令。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/603f77a4ec93365a7fa9edac214535eb.jpeg"></p> 
+         <p style="margin-left:0pt;"><strong><strong>虚拟段式存储管理</strong></strong></p> 
+         <p style="margin-left:0pt;"><strong><strong>虚拟段页式存储管理</strong></strong></p> 
+         <h4 id="%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><strong><strong><strong>五、常用页面替换算法</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 最佳算法</strong></strong>：淘汰将来最长时间以后才用到的，效率最高，但是不可实现</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>先进先出算法</strong></strong>：淘汰最先调入的</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>最近最少使用算法</strong></strong>：淘汰最近一次访问距当前时间最长的</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>最近不用的先淘汰</strong></strong>：淘汰最近一段时间未用到的</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>最不经常使用算法</strong></strong>： 淘汰使用次数最少的</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>最频繁使用算法</strong></strong>：淘汰使用次数最多的</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>二次机会算法</strong></strong>：淘汰装入最久且最近未被访问的页面</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>时钟算法：</strong></strong>将页面组织成环形，有一个指针指向当前位置。每次需要淘汰页面时，从 指针所指的页面开始检查。如果当前页面的访问位为0，即从上次检测到 目前，该页没有访问过，则将该页替换。如果当前页面的访问位为1，则 将其清0，并顺时针移动指针到下一个位置。重复上述步骤直至找到一个 访问位为0的页面</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>改进时钟算法</strong></strong>：</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; r=0, m=0：最佳</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; r=0, m=1：次佳，淘汰前回写</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; r=1, m=0：再次</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; r=1, m=1：最后，淘汰前写回</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 步骤1： 由指针当前位置开始扫描，选择最佳淘汰页面，不改变引用位，将第一个遇到的r=0且m=0的页面作为淘汰页面；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 步骤2：如步骤1失败，再次从原位置开始，找r=0且m=1的页面，将第一个满足上述要求的页面作为淘汰页面，同时将扫描过页面的r位清0；</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 步骤3：若步骤2失败，指针再次回到原位置，重新执行步骤1。若还失败再次执行步骤2，此时定能找到。</p> 
+         <h4><strong><strong><strong>六、例题</strong></strong></strong></h4> 
+         <p><strong><strong><strong><img alt="" class="has" height="275" src="https://i-blog.csdnimg.cn/blog_migrate/34e2ab85c76b126db1e00982494c370f.png" width="465"></strong></strong></strong><img alt="" class="has" height="147" src="https://i-blog.csdnimg.cn/blog_migrate/3353b116f0aaa6eb3c6c78aa143125ab.png" width="310"></p> 
+         <p style="margin-left:0pt;"><img alt="" class="has" height="208" src="https://i-blog.csdnimg.cn/blog_migrate/7b0e801059e61497928c047e7b6d5c79.png" width="383"><img alt="" class="has" height="95" src="https://i-blog.csdnimg.cn/blog_migrate/ab83be3b707f387108f69d6fb51653b4.jpeg" width="466"></p> 
+         <hr> 
+         <p style="margin-left:0pt;"><img alt="" class="has" height="273" src="https://i-blog.csdnimg.cn/blog_migrate/84c97a9d8a5928d4e054aeecc1fe690a.png" width="463"><img alt="" class="has" height="273" src="https://i-blog.csdnimg.cn/blog_migrate/d02ce2cfab5b7376eaf7e88faf5fca68.png" width="376"></p> 
+         <h2 id="%E7%AC%AC%E4%B8%83%E7%AB%A0%C2%A0%C2%A0%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F15%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第七章&nbsp;&nbsp;文件系统15</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><strong><strong><strong>一、文件访问</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 顺序访问</strong></strong>：按照从前到后的次序依次存取文件的各个信息项。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 从文件起始位置开始顺序访问</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 从文件中间某处开始顺序访问</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp;&nbsp; 随机访问</strong></strong>：无序存取文件的某些信息项。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 按记录编号随机访问</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 按关键字(key)随机访问</p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%84%E7%BB%87"><strong><strong><strong>二、文件的逻辑组织</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 记录式文件</strong></strong>：基本单位是记录</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <strong><strong>流式文件</strong></strong>：基本单位是字节</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%84%E7%BB%87">三、<strong><strong><strong>文件的物理组织</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 顺序结构：</strong>一个文件占有若干连续的磁盘块</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 优点：速度快，节省空间</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 缺点：长度变化困难</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 链接结构： </strong>一文件可存于不连续块中，块间以指针相连。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 优点：节省空间，长度变化容易。</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 缺点：随机访问速度慢。</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 索引结构：</strong>一文件可存于不连续块中，块号记在索引块中</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 优点：速度快，长度变化容易</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 缺点：索引块占空间</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 散列结构：</strong>适用于定长记录和按键随机查找的访问方式</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp;&nbsp; 倒排结构：</strong>以键值和记录地址构成的索引结构</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 优点：适合不同的查找方式，速度快</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp;&nbsp; 缺点：索引会带来较大开销</p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6%E5%9D%97"><strong><strong><strong>四、文件控制块</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义：</strong></strong>标志文件存在的数据结构，其中包含系统对文件进行管理所需要的全部信息</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 内容：</strong></strong>文件名、文件号、文件类型、文件属性、文件地址、文件长度、共享说明、建立 时间、最后修改时间、最后访问日期、口令、其它。</p> 
+         <h4 id="%E4%BA%94%E3%80%81%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%9A%84%E6%94%B9%E8%BF%9B"><strong><strong><strong>五、文件目录的改进</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 将文件控制块划分为次部和主部：提高查找速度、实现文件连接</p> 
+         <h4 id="%E5%85%AD%E3%80%81%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95"><strong><strong><strong>六、根目录和当前目录</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 根目录</strong></strong>：在树状结构的文件系统中，根节点对应的目录</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 当前目录</strong></strong>：现在文件系统为用户提供一个目前正在使用的工作目录</p> 
+         <h4 id="%E4%B8%83%E3%80%81%E7%9B%AE%E5%BD%95%E6%9F%A5%E6%89%BE"><strong><strong><strong>七、目录查找</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 从根目录查找</strong></strong>：当文件路径名以“/”起始时，表示要求从根目录开始查找</p> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 从当前目录查找</strong></strong>：当文件路径名不以“/”起始时，表示要求从当前目录开始查找</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 查找算法：</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ·<strong>顺序查找</strong></strong>：依次与目录文件中的各个目录项进行比较，直至找到匹配项或者查到 目录文件末尾</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ·<strong>散列查找</strong></strong>：查找速度快，但是要求预先确定目录文件的大小</p> 
+         <p style="margin-left:0pt;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ·<strong>对分查找</strong></strong>：要求目录中的文件名称按字典序存放</p> 
+         <h4 id="%E5%85%AB%E3%80%81%E4%BE%8B%E9%A2%98"><strong><strong><strong>八、例题</strong></strong></strong></h4> 
+         <p><strong><strong><strong><img alt="" class="has" height="211" src="https://i-blog.csdnimg.cn/blog_migrate/6928257095fbfd921b4a970afcb70b7d.png" width="491"></strong></strong></strong><img alt="" class="has" height="211" src="https://i-blog.csdnimg.cn/blog_migrate/1a1540605f5032eac1ab0ebfa9d3a25f.png" width="356"></p> 
+         <h2 id="%E7%AC%AC%E5%85%AB%E7%AB%A0%C2%A0%C2%A0%E8%AE%BE%E5%A4%87%E4%B8%8E%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AE%A1%E7%90%8610%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第八章&nbsp;&nbsp;设备与输入输出管理10</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <h4 id="%E4%B8%80%E3%80%81%E7%A3%81%E7%9B%98%E5%BC%95%E8%87%82%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><strong><strong><strong>一、磁盘引臂调度算法</strong></strong></strong></h4> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>先到先服务算法（FCFS）</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="244" src="https://i-blog.csdnimg.cn/blog_migrate/3b5e071a4e0b806b70fc8d6b69312b0b.png" width="439"></strong></strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>最短查找时间优先算法（SSTF）</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="297" src="https://i-blog.csdnimg.cn/blog_migrate/ea261dfef43a9893b4c658ecf1482f20.png" width="448"></strong></strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>扫描算法和LOOK算法</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <img alt="" class="has" height="298" src="https://i-blog.csdnimg.cn/blog_migrate/3501bb4c0d9203025b65effca27c1440.png" width="444"></strong></strong></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>循环扫描算法和循环LOOK算法</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="228" src="https://i-blog.csdnimg.cn/blog_migrate/6988b2851301ae655025440a3d65dcdb.png" width="441"><img alt="" class="has" height="45" src="https://i-blog.csdnimg.cn/blog_migrate/8378a3796a110215f463faa308def027.jpeg" width="231"></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>N步扫描算法</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="266" src="https://i-blog.csdnimg.cn/blog_migrate/98d2224026c68c96fde3e23aba048923.png" width="438"></p> 
+         <ul>
+          <li style="margin-left:0pt;"><strong><strong>冻结扫描算法</strong></strong></li>
+         </ul> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="230" src="https://i-blog.csdnimg.cn/blog_migrate/46ae016cb0c83541a2b4bf0d61d5f83b.png" width="442"></p> 
+         <h4 id="%E4%BA%8C%E3%80%81%E8%AE%BE%E5%A4%87%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%8F%82%E6%95%B0"><strong><strong><strong>二、设备输入输出参数</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; n为跨越磁道数、m为跨越一个磁道所用的时间、s为启动时间、r为磁盘转速、b为读 写字节数</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 寻道时间（Ts）：Ts=m*n+s</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 旋转延迟（Tr）：Tr=1/(2*r)</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 传输时间（Tt）：Tt=b/(r*N)</p> 
+         <h4 id="%E4%B8%89%E3%80%81%E7%BC%93%E5%86%B2%E6%8A%80%E6%9C%AF"><strong>三、缓冲技术</strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义：</strong></strong>处理数据到达速度与离去速度不一致而采用的技术称为缓冲</p> 
+         <h4 id="%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E8%AE%BE%E5%A4%87"><strong><strong><strong>四、虚拟设备</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><strong><strong>&nbsp; &nbsp; &nbsp; &nbsp; 定义：</strong></strong>利用共享设备实现的数量较多、速度较快的独占型设备称</p> 
+         <h4 id="%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F"><strong>五、<strong><strong>数据传输方式</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 程序控制查询方式</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 中断驱动方式</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; DMA方式</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 通道方式</p> 
+         <h4 id="%E5%85%AD%E3%80%81%E4%B8%80%E7%BB%B4%E5%9C%B0%E5%9D%80%E5%92%8C%E4%B8%89%E7%BB%B4%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><strong><strong><strong>六、一维地址和三维地址转换</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; 盘面数m、扇区数n、柱面号i、盘面号j、扇区号k、块号b</p> 
+         <p style="margin-left:0pt;">&nbsp; &nbsp; &nbsp; &nbsp; <img alt="" class="has" height="159" src="https://i-blog.csdnimg.cn/blog_migrate/4bac9cafa19e8d084103e1f7fe70fe9c.png" width="230"></p> 
+         <h4 id="%E4%B8%83%E3%80%81%E4%BE%8B%E9%A2%98"><strong><strong><strong>七、例题</strong></strong></strong></h4> 
+         <p style="margin-left:0pt;"><img alt="" class="has" height="234" src="https://i-blog.csdnimg.cn/blog_migrate/3e7fbdca1d15c271101235ffc9a7792b.png" width="413"><img alt="" class="has" height="234" src="https://i-blog.csdnimg.cn/blog_migrate/df861fd6bfd9050e0918db43b0b7e827.png" width="413"></p> 
+         <hr> 
+         <p style="margin-left:0pt;"><img alt="" class="has" height="216" src="https://i-blog.csdnimg.cn/blog_migrate/5a21f15924b95fc9f002f58e54173fb4.png" width="447"></p> 
+         <hr> 
+         <p style="margin-left:0pt;"><img alt="" class="has" height="217" src="https://i-blog.csdnimg.cn/blog_migrate/8fb52fc0d59a75fc2d61a9d5a1ae5220.png" width="395"><img alt="" class="has" height="215" src="https://i-blog.csdnimg.cn/blog_migrate/b90c2251f4987fa583d497a3c6565b86.png" width="451"></p> 
+         <h2 id="%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%20Unix%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%905%E2%80%99"><span style="color:#7c79e5;"><strong><strong><strong>第十三章 Unix实例分析5</strong></strong><strong><strong>’</strong></strong></strong></span></h2> 
+         <p><img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/44e6e681f2c92b3d2da7f1760c8a87bf.jpeg"></p> 
+         <p><img alt="" class="has" src="https://i-blog.csdnimg.cn/blog_migrate/1f9f0a7e323767231c99b526c5eda838.jpeg"></p> 
+         <p><img alt="" class="has" height="122" src="https://i-blog.csdnimg.cn/blog_migrate/90fd5d5a6d97c02afb5796fd3453c470.jpeg" width="612"></p> 
+         <p style="margin-left:0pt;"><img alt="" height="267" src="https://i-blog.csdnimg.cn/blog_migrate/63430cb296b9e0023421c9358686cbcd.png" width="304"></p> 
+        </div> 
+       </div> 
+      </article>  
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/qq_41587612"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/79de0958bbc8438c82d04d863402ac61_qq_41587612.jpg!1"> <span class="profile-name"> 鸽子不二 </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">已关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 288 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="1198" id="get-collection"> 1198 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 11 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode active" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="9202584" data-free="true" data-description="" data-subscribe="false" data-title="操作系统" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/qq_41587612/category_9202584.html" data-sum="6" data-people="12" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>    
+     <a id="commentBox" name="commentBox"></a> 
+    </main> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                  
+ </body>
+</html>

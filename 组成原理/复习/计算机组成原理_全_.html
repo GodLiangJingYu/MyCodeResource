@@ -1,0 +1,1840 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/s6664/article/details/132120415"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#"> 
+  <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>计算机组成原理(全)-CSDN博客</title>  
+  <meta name="keywords" content="计算机组成原理"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;计算机组成原理&quot;}"> 
+  <meta name="description" content="文章浏览阅读2.7w次，点赞111次，收藏951次。计算机组成原理, 系统总线, 存储系统, ROM, RAM, 存储器, Cache, 组相连映射, DMA, 原码, 补码, 指令系统, 指令寻址, 机器指令, 中央处理器, 指令周期, 控制器, 指令流水线_计算机组成原理"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-850e130245.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-sea/skin-sea-d3a08c2048.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>    
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">计算机组成原理(全)</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a class="follow-nickName " href="https://blog.csdn.net/s6664" target="_blank" rel="noopener" title="我要的图文并茂">我要的图文并茂</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2024-11-22 10:05:22&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量2.7w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 951 </span> </a> 
+            <div class="read-count-box is-like"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 111 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/s6664/category_12249066.html" target="_blank" rel="noopener">计算机组成原理</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;其他&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;其他\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;其他&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;其他\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%85%B6%E4%BB%96&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">其他</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2023-08-23 12:36:15&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/s6664/article/details/132120415" target="_blank">https://blog.csdn.net/s6664/article/details/132120415</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert"></div> 
+      <div id="blogColumnPayAdvert"> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/s6664/category_12249066.html" target="_blank" title="计算机组成原理" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">计算机组成原理</span> <span class="dec">专栏收录该内容</span> </span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>6 篇文章</span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-bt articleColumnFreeBt" data-id="12249066">订阅专栏</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views"> 
+         <p id="main-toc"></p> 
+         <p></p> 
+         <h2 style="text-align:center;">第一章&nbsp;概述</h2> 
+         <p id="%E4%B8%80%2C%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2"><strong>计算机发展史***:&nbsp;</strong></p> 
+         <ul>
+          <li>第一代：<strong>电子管</strong>计算机（1946-1958）</li>
+          <li>第二代：<strong>晶体管</strong>计算机（1958-1964）</li>
+          <li>第三代：<strong>中小规模集成电路</strong>计算机（1964-1971）</li>
+          <li>第四代：<strong>大、超大规模集成电路</strong>计算机（1971年以后）</li>
+         </ul> 
+         <h3 id="%E4%BA%8C%2C%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%EF%BC%9A"><strong>1.1 计算机系统结构</strong></h3> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一台电子数字计算机：</strong>1946年美国宾夕法尼亚大学的<strong>ENIAC</strong></p> 
+         <p id="2.1%20%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%EF%BC%88%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF%EF%BC%89%E7%BB%93%E6%9E%84%EF%BC%9A"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;冯诺依曼（普林斯顿）结构</strong>:&nbsp;&nbsp;<strong>以运算器为中心 </strong>。最根本特征是采用<strong>存储程序</strong>原理。</p> 
+         <p><strong>原理图:&nbsp;</strong></p> 
+         <p><img alt="" height="448" src="https://i-blog.csdnimg.cn/blog_migrate/e0b304dc898f51b9f6f52d93058e949b.png" width="779"></p> 
+         <p id="2.2%20%E7%8E%B0%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现代计算机</strong>: 以存储器为中心。</p> 
+         <p><strong>原理图:&nbsp;</strong></p> 
+         <p><img alt="" height="397" src="https://i-blog.csdnimg.cn/blog_migrate/e35f1eb3459067f03bcec7480e7e955f.png" width="895"></p> 
+         <p><strong>&nbsp;计算机系统的层次结构图:</strong></p> 
+         <p><img alt="" height="438" src="https://i-blog.csdnimg.cn/blog_migrate/fc6da3378782b571d5d95cbcc0b13520.png" width="643"></p> 
+         <p id="2.3%C2%A0%E7%BF%BB%E8%AF%91%E7%A8%8B%E5%BA%8F%C2%A0"><strong>翻译程序:&nbsp;</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编译程序:&nbsp;</strong>将源程序的全部语句一次全部翻译成机器语言程序,而后在执行。</p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 解释程序:</strong>&nbsp;将源程序的一条语句翻译成对应机器语言的一条语句并立即执行,&nbsp;接着翻译源程序的下一条语句,&nbsp;重复执行的语句也会被重新翻译。</p> 
+         <p><strong>从C语言源程序到可执行文件:</strong></p> 
+         <p><img alt="" height="626" src="https://i-blog.csdnimg.cn/blog_migrate/0fe0cf335edff6590e8c921495419e00.png" width="1200"></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>兼容:&nbsp;</strong>指的是软硬件兼容(时间上向后兼容)&nbsp;</p> 
+         <h3 id="%E5%9B%9B%2C%C2%A0%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E6%8C%87%E6%A0%87">1.2 计算机硬件指标</h3> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机器字长:</strong>&nbsp;<span style="color:#fe2c24;"><span style="background-color:#ffffff;">CPU总线的宽度</span><span style="background-color:#ffffff;">=</span><span style="background-color:#ffffff;">运算器的位数</span><span style="background-color:#ffffff;">=</span><span style="background-color:#ffffff;">通用寄存器的宽度</span><span style="background-color:#ffffff;">=数据总线宽度</span></span></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储字长:&nbsp;</strong>MDR位数</p> 
+         <p>&nbsp; &nbsp; &nbsp; <strong>&nbsp; 数据字长:&nbsp;</strong>数据总线一次能传送信息的位数</p> 
+         <p>&nbsp;<strong> &nbsp; &nbsp; &nbsp; 指令字长:&nbsp;</strong>一般为存储字长的整数倍,&nbsp;若为2倍,&nbsp;需要2次访存取一条指令。与IR寄存器有关</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储容量:&nbsp;</strong>存储单元个数(2*MAR位数次方) x&nbsp;存储字长(MDR)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;CPU主频(时钟频率): </strong>1/CPU时钟周期,&nbsp;单位Hz。<span style="color:#fe2c24;"><strong>不会影响CPI,&nbsp;</strong></span>但可以加快指令执行速度</p> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPI:&nbsp;</strong>执行一条指令所需时钟周期数</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行一条指令耗时:</strong>&nbsp;CPI x CPU时钟周期</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;CPU执行时间: </strong>(指令条数 x&nbsp;CPI ) /&nbsp;主频</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;IPS:&nbsp;</strong>每秒执行多少条指令,&nbsp;主频/平均CPI</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;FLOPS:&nbsp;</strong>每秒执行多少浮点运算 (K &gt; M &gt; G &gt; T &gt; P &gt; E &gt; Z,&nbsp;换算:10^3)</p> 
+         <p><strong>时钟周期图:&nbsp;</strong></p> 
+         <p><img alt="" height="164" src="https://i-blog.csdnimg.cn/blog_migrate/5650d3cb4e481d979f42e35f7d63bbad.png" width="794"></p> 
+         <p><strong>博客参考:</strong> 计算机组成原理(唐朔飞)第三版</p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/c6bbfcb20b1afe99c45b04cd4999ca71.png" width="460"></p> 
+         <h2 id="%E7%AC%AC%E4%BA%8C%E7%AB%A0%C2%A0%E6%80%BB%E7%BA%BF" style="text-align:center;">第二章&nbsp;总线</h2> 
+         <h3 id="2.1%20%E6%80%BB%E7%BA%BF%E5%88%86%E7%B1%BB">2.1 总线概念及性能指标</h3> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>传输周期(总线周期</strong><strong>):&nbsp;</strong>一次总线操作所需时间,&nbsp;包含申请阶段,&nbsp;寻址阶段,&nbsp;传输阶段等</p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 总线时钟周期:&nbsp;</strong>即机器时钟周期</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>总线的工作频率:&nbsp;</strong> 总线周期的倒数</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>总线的时钟频率:&nbsp;&nbsp;</strong>时钟周期的倒数</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总线宽度:&nbsp;</strong>数据总线的根数</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总线带宽:&nbsp;</strong>总线宽度 x&nbsp;总线工作频率</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主设备:&nbsp;</strong>发出总线请求且获得总线控制权的设备</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从设备:</strong>&nbsp;指被主设备访问的设备</p> 
+         <p id="1.1%E7%89%87%E5%86%85%E6%80%BB%E7%BA%BF"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片内总线:&nbsp;</strong>CPU内部各寄存器之间及ALU的连接。</p> 
+         <p id="1.2%C2%A0%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF"><strong>系统总线:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据总线:</strong>&nbsp;<span style="color:#fe2c24;"><strong>双向传输</strong></span>总线,&nbsp;位数与机器字长、存储字长有关。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址总线:&nbsp;</strong>指明CPU访问的存储单元或I/O端口的地址,&nbsp;<span style="color:#fe2c24;"><strong>单向传输</strong></span>,&nbsp;位数与存储单元有关。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制总线:&nbsp;</strong>用来发出各种控制信号的传输线,&nbsp;<strong><span style="color:#fe2c24;">单向传输</span></strong>。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;猝发传送:</strong>&nbsp;传输一次首地址和一组数据</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;I/O总线与通信总线:&nbsp;</strong>CPU和主存通过<strong>I/O总线</strong>与主机相连,&nbsp;I/O接口通过<strong>通信总线</strong>(电缆)与外设相连。</p> 
+         <h3 id="%E4%BA%8C%2C%C2%A0%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84">2.2 总线结构</h3> 
+         <p id="2.1%20%E5%8D%95%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84"><strong>1) 单总线结构</strong></p> 
+         <p><strong>特点:&nbsp;</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 1) 结构简单,&nbsp;成本低,&nbsp;易于接入新的设备。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 2) 带宽低,&nbsp;负载重,&nbsp;多个部件只能争用唯一的总线。</p> 
+         <p><strong>单总线图:</strong></p> 
+         <p><img alt="" height="353" src="https://i-blog.csdnimg.cn/blog_migrate/5ad1d6257b9170fd6bdb8b5aa76fa146.png" width="839"></p> 
+         <p id="2.2%20%E5%8F%8C%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84"><strong>2) 双总线结构</strong></p> 
+         <p><strong>&nbsp;特点:&nbsp;</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 1) 将较低速的I/O设备从单总线上分离出来</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 2)&nbsp;需要增加通道等硬件设备&nbsp;</p> 
+         <p><strong>双总线结构图:&nbsp;</strong></p> 
+         <p><img alt="" height="454" src="https://i-blog.csdnimg.cn/blog_migrate/17a633e89d33ab5d0b3b90e8f4fff756.png" width="793"></p> 
+         <p id="2.3%20%E4%B8%89%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84%C2%A0"><strong>3) 三总线结构&nbsp;</strong></p> 
+         <p><strong>特点:</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 1) 提高了I/O设备的性能,&nbsp;提高系统吞吐量</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 2) 系统工作效率较低</p> 
+         <p><strong>三总线结构图:</strong></p> 
+         <p><img alt="" height="396" src="https://i-blog.csdnimg.cn/blog_migrate/cb1ecf09f1b4780dda2efad05903b974.png" width="707"></p> 
+         <p id="%C2%A02.4%C2%A0%E5%A4%9A%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84"><strong>4) 多总线结构</strong></p> 
+         <p><strong>多层PCI总线图:</strong></p> 
+         <p><img alt="" height="641" src="https://i-blog.csdnimg.cn/blog_migrate/7cb1ddddde1e52176a00ec2c304f194d.png" width="1012"></p> 
+         <h3 id="%E5%9B%9B%2C%20%E6%80%BB%E7%BA%BF%E9%80%9A%E4%BF%A1%E6%8E%A7%E5%88%B6">2.3 总线通信控制</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主要解决通信双方获知传输开始和传输结束,&nbsp;及通信双方协调配合。有<strong>同步通信</strong>、<strong>异步通信</strong>、<strong>半同步通信</strong>、<strong>分离式通信</strong>四种方式。</p> 
+         </blockquote> 
+         <p><strong>总线周期的四个阶段:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;1) 申请分配阶段:&nbsp;</strong>可细分为<strong>传输请求</strong>,&nbsp;<strong>总线仲裁</strong>两个阶段</p> 
+         <p>&nbsp; &nbsp; &nbsp;<strong> &nbsp; 2)&nbsp;寻址阶段:</strong>&nbsp;发出本次要访问从模块的地址及有关命令</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>3)&nbsp;传输阶段:&nbsp;</strong>主从模块进行数据交换</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<strong> 4)&nbsp;结束阶段:</strong>&nbsp;主模块有关信息从系统总线上撤除,&nbsp;让出总线使用权</p> 
+         <p id="4.1%20%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1%3A"><strong>1) 同步通信</strong></p> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通信双方由统一时标控制数据传送,&nbsp;时标通常由CPU的总线控制部件发出。</p> 
+         </blockquote> 
+         <p><strong>示例图:</strong></p> 
+         <p><img alt="" height="480" src="https://i-blog.csdnimg.cn/blog_migrate/3c54a062bf3fa0b18a39671d6ce96a70.png" width="928"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;特点:&nbsp;</strong>规定明确,&nbsp;统一,&nbsp;模块间的配合简单一致,&nbsp;但必须按最慢速度的部件来设计公共时钟,&nbsp;影响总线工作效率。&nbsp;</p> 
+         <p id="4.2%C2%A0%E5%BC%82%E6%AD%A5%E9%80%9A%E4%BF%A1"><strong>2) 异步通信</strong></p> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;采用<strong>应答方式</strong>(握手方式),&nbsp;主模块发出请求信号,&nbsp;从模块反馈响应。<strong>较同步方式慢</strong>,&nbsp; 根据应答方式可分以下三种类型</p> 
+         </blockquote> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不互锁方式:&nbsp;</strong>主模块发出请求信号,&nbsp;不必等接受到从模块的回答信号,&nbsp;而是经过一段时间,&nbsp;便撤销请求信号,&nbsp;从模块收到请求信号后,&nbsp;发出回答信号,&nbsp;经过一段时间撤销回答信号</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;半互锁方式:&nbsp;</strong>主模块必须接受到模块回答信号再撤销请求信号,&nbsp;从模块不等主模块撤销请求信号,&nbsp;而是经过一段时间撤销回答信号。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全互锁方式:&nbsp;</strong>主模块必须等从模块回答再撤销,&nbsp;从模块必须等主模块撤销请求信号,&nbsp;才撤销回答信号。&nbsp;</p> 
+         <p><strong>原理图:</strong></p> 
+         <p><img alt="" height="472" src="https://i-blog.csdnimg.cn/blog_migrate/3f285f351e0cb686f5e53beb5d93839f.png" width="1128"></p> 
+         <p id="4.3%E5%8D%8A%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1"><strong>3) 半同步通信</strong></p> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过增加一条<strong>WAIT</strong>线<strong>,</strong> 保留了<strong>同步通信</strong>的基本特点,&nbsp;又像<strong>异步通信</strong>,&nbsp;允许不同速度的模块和谐工作。与同步通信相比,&nbsp;无需将周期设置为速度最慢的设备,&nbsp;较慢的从设备可以通过WAIT信号增加等待周期。</p> 
+         </blockquote> 
+         <p><strong>&nbsp;原理图:</strong></p> 
+         <p><img alt="" height="473" src="https://i-blog.csdnimg.cn/blog_migrate/2e7eee002f6f8b370f4a2f385a6d3786.png" width="862"></p> 
+         <p id="4.4%C2%A0%E5%88%86%E7%A6%BB%E5%BC%8F%E9%80%9A%E4%BF%A1"><strong>4) 分离式通信</strong></p> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当从设备按照命令进行读数据的必要准备时,&nbsp;总线属于空闲状态。为优化这一点,&nbsp;将一个传输周期分解为两个子周期,&nbsp;第一个子周期,主模块使用总线发送地址和命令后,&nbsp;释放总线使用权;&nbsp;第二个子周期由从设备准备好数据后申请使用总线使用权。</p> 
+         </blockquote> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;特点:&nbsp;</strong>各模块欲占用总线必须提出申请,&nbsp;各模块准备数据过程不占用总线,&nbsp;总线被占用时都在有效工作,&nbsp;但这种控制比较复杂, 普通微信计算机很少采用。</p> 
+         <h2 id="%E7%AC%AC%E4%B8%89%E7%AB%A0%C2%A0%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F" style="text-align:center;">第三章&nbsp;存储系统</h2> 
+         <h3 id="%E4%BA%8C%E3%80%81%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8">3.1&nbsp;主存储器概念及性能指标</h3> 
+         <p id="2.1%C2%A0%E4%B8%BB%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8C%87%E6%A0%87"><strong>主存的技术指标:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储容量:&nbsp;</strong>存储单元个数(MAR) x&nbsp;存储字长(MDR位数) (&nbsp;单位: b ) 。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储器带宽:&nbsp;</strong>即<strong>数据传输率=数据宽度/存储周期,&nbsp;</strong>单位时间内存储器存取的信息量 。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存储时间:</strong>&nbsp;启动一次存储操作(读/写)到完成该操作所需的全部时间。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存取周期:&nbsp;</strong>存储器进行连续两次独立的存储器操作所需最小间隔时间,&nbsp;通常存取周期大于存取时间。</p> 
+         <p><strong>存储周期图:</strong></p> 
+         <p><img alt="" height="248" src="https://i-blog.csdnimg.cn/blog_migrate/015aa77e56f4509892247f841614d05c.png" width="734"></p> 
+         <p id="1.2%C2%A0%E6%8C%89%E5%AD%98%E5%8F%96%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB"><strong>按存取方式分类:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;1) 串行访问存储器:&nbsp;顺序存取器(磁带),&nbsp;直接存取器(磁盘、光盘)</strong>。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp; 2) 随机存储器(Random Access Memory):&nbsp;</strong>存储器的任何一个存储单元的内容都可以<strong>随机存取</strong>,&nbsp;分<strong>静态RAM</strong>(触发器原理)和<strong>动态RAM</strong>(电容充放电原理),&nbsp;存取时间与存储单元物理位置无关。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>3)&nbsp;只读存储器(Read Only Memory):</strong>&nbsp;存储的内容<strong>只能读</strong>,&nbsp;而不能重新写入的存储器,&nbsp;通常存放固定不变的程序。</p> 
+         <p><strong>存储器的层次结构图:</strong></p> 
+         <p><img alt="" height="546" src="https://i-blog.csdnimg.cn/blog_migrate/f3629c5d1fa7c2f754ce803eb9c4020f.png" width="819"></p> 
+         <p><img alt="" height="315" src="https://i-blog.csdnimg.cn/blog_migrate/cf6ff6e86ac48276f8c13959de7bb93a.png" width="1054"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注:&nbsp;</strong>主存和cache之间的数据调动是由<strong>硬件</strong>自动完成的,&nbsp;主存与辅存之间的数据调动是<strong>硬件和操作系统</strong>共同完成的。</p> 
+         <h4 id="2.4%C2%A0%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E5%99%A8">3.1.1&nbsp;RAM与ROM</h4> 
+         <p id="2.4.1%C2%A0%E9%9D%99%E6%80%81RAM"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;静态RAM:&nbsp;</strong>基于触发器工作原理存储信息,&nbsp;电源掉电时,&nbsp;原存信息丢失,&nbsp;属<strong>易失性存储器</strong>。</p> 
+         <p id="2.4.2%C2%A0%E5%8A%A8%E6%80%81RAM">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;动态RAM:&nbsp;</strong>基于电容存储电荷的原理来寄存信息。属<strong>易失性存储器</strong>。电容上的电荷一般只能维持1-2ms,&nbsp;因此必须在2ms内对所有存储单元恢复一次原状态,&nbsp;即刷新。同CPU采用<strong>异步方式</strong>交换数据,&nbsp;SDRAM同CPU采用<strong>同步方式</strong>。<strong>行缓冲器通常用SRAM</strong>实现。</p> 
+         <p id="2.4.3%C2%A0%E9%9D%99%E6%80%81RAM%E4%B8%8E%E5%8A%A8%E6%80%81RAM%E7%9A%84%E6%AF%94%E8%BE%83"><strong>静态RAM与动态RAM的比较:</strong></p> 
+         <p><img alt="" height="625" src="https://i-blog.csdnimg.cn/blog_migrate/19fdc79c4d23f70acdfac366322e0232.png" width="1185"></p> 
+         <p><strong>只读存储器:&nbsp;</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;掩模ROM:</strong>&nbsp;不可重写</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROM:&nbsp;</strong>可以实现<strong>一次性编程</strong>的只读存储器,&nbsp;依靠熔丝断和未断来区别所存信息是 "0"&nbsp;或 "1" 。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EPROM: </strong>一种<strong>可擦除可编程</strong>只读存储器。可进行多次重写</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Flash Memory: </strong>闪速存储器， 如U盘,&nbsp;看进行多次快速擦除重写,&nbsp;但<strong>写比读慢</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SSD:&nbsp;</strong>固态硬盘,&nbsp;集成度高,&nbsp;功耗低,&nbsp;价格贵</p> 
+         <h4 id="2.3%C2%A0%E8%AF%91%E7%A0%81%E9%A9%B1%E5%8A%A8%E6%96%B9%E5%BC%8F">3.1.2&nbsp;译码驱动方式</h4> 
+         <p><strong>线选法:</strong></p> 
+         <p><img alt="" height="789" src="https://i-blog.csdnimg.cn/blog_migrate/c4cc16031c84ac7f2941765a0e347fde.png" width="1082"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;特点:&nbsp;</strong>一根字选择线直接连接一个存储单元,&nbsp;只适用容量不大的存储芯片</p> 
+         <p><strong>行列译码器:</strong></p> 
+         <p><img alt="" height="531" src="https://i-blog.csdnimg.cn/blog_migrate/d49d5b9cbccaf9c2f1d0f2fd3ae55e7b.png" width="1093"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;特点:&nbsp;</strong>对比线选法,&nbsp;可以减少地址线,&nbsp;如32*32根地址线可以连接1024个存储单元。</p> 
+         <p><strong>3/8 译码器:</strong></p> 
+         <p><img alt="" height="224" src="https://i-blog.csdnimg.cn/blog_migrate/a8a79775c9e49454394efabad18591b7.png" width="701"></p> 
+         <p><strong>对比图:</strong></p> 
+         <p><img alt="" height="168" src="https://i-blog.csdnimg.cn/blog_migrate/5809dafb917b58e38419c95db8488696.png" width="926"></p> 
+         <p><strong>芯片引脚题注意事项:</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 1)&nbsp;数据线</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 地址线,&nbsp;DRAM采用地址复用技术,&nbsp;地址线减半。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 3)&nbsp;读写控制线1根 或 2根</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;片选线1根 或 行通选和列通选共两根(复用技术, DRAM采用)</p> 
+         <h4 id="2.4.4%C2%A0%E5%8A%A8%E6%80%81RAM%E5%88%B7%E6%96%B0">3.1.3 动态RAM刷新</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;刷新的过程实质上是将原存信息<strong>先读出</strong>,&nbsp;再由刷新放大器形成原信息<strong>重新写入</strong>的过程。一般取2ms为<strong>刷新周期</strong>或称<strong>再生周期</strong>。通常有三种方式刷新: <strong>集中刷新</strong>,&nbsp;<strong>分散刷新</strong>,&nbsp;<strong>异步刷新</strong>。</p> 
+         </blockquote> 
+         <p><strong>1)&nbsp;集中刷新</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;集中刷新是在规定的一个刷新周期内,&nbsp;对全部存储单元集中一段时间逐行进行刷新,&nbsp;刷新过程必须停止读/写操作。不能进行读/写操作的这段时间称为访存<strong> "死区"</strong>。</p> 
+         <p><strong>集中刷新时间分配示意图:</strong></p> 
+         <p><img alt="" height="615" src="https://i-blog.csdnimg.cn/blog_migrate/222813b84474039e7962d50f1fba4224.png" width="937"></p> 
+         <p><strong>2)&nbsp;分散刷新</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分散刷新是指对每行存储单元的刷新分散到每个存取周期内完成,&nbsp;存取周期分读/写周期+刷新周期。这样不存在 <strong>"死区"</strong> ,&nbsp;但存取周期变长,&nbsp;系统速度下降。</p> 
+         <p><strong>分散刷新时间分配示意图:</strong></p> 
+         <p><img alt="" height="731" src="https://i-blog.csdnimg.cn/blog_migrate/4de5eab4373731a8b21843832c19e91e.png" width="991"></p> 
+         <p><strong>3)&nbsp;异步刷新</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;异步刷新是前两种方式的结合,&nbsp;既可以缩短 <strong>"死区"</strong> ,&nbsp;又充分利用最大刷新间隔2ms的特点。</p> 
+         <p><strong>异步刷新时间分配示意图:</strong></p> 
+         <p><img alt="" height="632" src="https://i-blog.csdnimg.cn/blog_migrate/a1a8c8ad43cc9476ca796fcaae47ded7.png" width="949"></p> 
+         <h3 id="2.6%C2%A0%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E7%9A%84%E8%BF%9E%E6%8E%A5">3.2&nbsp;存储器与CPU的连接</h3> 
+         <p><strong>位扩展示意图:</strong></p> 
+         <p><img alt="" height="556" src="https://i-blog.csdnimg.cn/direct/81e147bba6ad4cae80d02c6e18835a57.png" width="1112"></p> 
+         <p><strong>字扩展示意图:</strong></p> 
+         <p><img alt="" height="699" src="https://i-blog.csdnimg.cn/blog_migrate/dabd7891de06571283ad2dc6362ee527.png" width="1200"></p> 
+         <p><strong>字、位扩展示意图:</strong></p> 
+         <p><img alt="" height="612" src="https://i-blog.csdnimg.cn/direct/85be82e8239948f791ec4e67229a6595.png" width="1004"></p> 
+         <p></p> 
+         <h3 id="2.7%C2%A0%E6%8F%90%E9%AB%98%E8%AE%BF%E5%AD%98%E9%80%9F%E5%BA%A6%E7%9A%84%E6%8E%AA%E6%96%BD">3.3 提高访存速度的措施</h3> 
+         <h4 id="2.7.1%C2%A0%E5%8D%95%E4%BD%93%E5%A4%9A%E5%AD%97%E7%B3%BB%E7%BB%9F">3.3.1&nbsp;单体多字系统&nbsp;</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据<strong>程序和数据</strong>在存储体内是<strong>连续存放</strong>的,&nbsp;因此CPU也是连续访存取出信息的。通过增大存储器的带宽, 在一个周期内,&nbsp;从同一地址取出多条指令,&nbsp;可以提高系统速度。但遇到转移指令,&nbsp;或操作数不能连续存放,&nbsp;则效果不明显。</p> 
+         </blockquote> 
+         <p><strong>原理图:</strong></p> 
+         <p><img alt="" height="495" src="https://i-blog.csdnimg.cn/blog_migrate/f1e8cd4620af19b27413605a4d54e50d.png" width="1056"></p> 
+         <h4 id="2.7.2%C2%A0%E5%A4%9A%E4%BD%93%E5%B9%B6%E8%A1%8C%E7%B3%BB%E7%BB%9F">3.3.2&nbsp;多体并行系统</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;采用多体模块组成的存储器。每个模块都有独立的读写控制电路等,&nbsp;可并行工作。</p> 
+         </blockquote> 
+         <p><strong>高位交叉, 顺序编址示意图:</strong></p> 
+         <p><img alt="" height="575" src="https://i-blog.csdnimg.cn/blog_migrate/0eb4deba5aafab79975d5ca9e5daa82b.png" width="960"></p> 
+         <p><strong>低位交叉编址的四体存储器:&nbsp;</strong></p> 
+         <p><img alt="" height="550" src="https://i-blog.csdnimg.cn/blog_migrate/1bf83d49c61f1b4ae9f24707b5ce2fab.png" width="937"></p> 
+         <h3 id="3.4%C2%A0%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8">3.4&nbsp;高速缓冲存储器</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cache全由硬件实现, 是<strong>硬件</strong>存储器。<strong>TLB缺失可以由软or硬件</strong>完成。页<strong>面缺失由软件处理</strong>。<strong>TLB采用全相联方式</strong></p> 
+         </blockquote> 
+         <p><strong>Cache -&nbsp;主存存储空间的基本结构图:</strong></p> 
+         <p><img alt="" height="493" src="https://i-blog.csdnimg.cn/blog_migrate/aa7769d039429d58cbe634182ccfc529.png" width="831"></p> 
+         <p><strong>Cache的基本结构原理图:</strong></p> 
+         <p><img alt="" height="663" src="https://i-blog.csdnimg.cn/blog_migrate/aa6559cd357fb2eb71b1c509b2a8478a.png" width="1123"></p> 
+         <h4 id="3.2.1%C2%A0%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%84"><strong>3.2.1&nbsp;直接映射</strong></h4> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp;主存在Cache的位置=<strong>主存块号%Cache总快数</strong>。每个主存块只能固定某个对应的缓存块,&nbsp;使缓存的存储空间得不到充分利用。</p> 
+         </blockquote> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="530" src="https://i-blog.csdnimg.cn/blog_migrate/669821c30b6f6cafb980ff1e859fe1d5.png" width="1061"></p> 
+         <p><strong>直接映射的地址结构:</strong></p> 
+         <p class="img-center"><img alt="" height="200" src="https://i-blog.csdnimg.cn/blog_migrate/02ec9c4e188b435639712ba8217508cb.png" width="468"></p> 
+         <h4 id="3.2.2%C2%A0%E5%85%A8%E7%9B%B8%E8%81%94%E6%98%A0%E5%B0%84">3.2.2&nbsp;全相联映射</h4> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp; 允许主存映射到Cache中的任何一块位置上,&nbsp;标记位数增多,&nbsp;命中率最好。 需要<strong>每个Cache行都设置一个比较器</strong>。</p> 
+         </blockquote> 
+         <p><strong>示意图:&nbsp;</strong></p> 
+         <p class="img-center"><img alt="" height="452" src="https://i-blog.csdnimg.cn/blog_migrate/b50549d09539e347cb84e788a6f6d4b8.png" width="604"></p> 
+         <h4 id="3.2.3%C2%A0%E7%BB%84%E7%9B%B8%E8%81%94%E6%98%A0%E5%B0%84">3.2.3&nbsp;组相联映射</h4> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp; 直接映射和全相联映射的一种折中。所属<strong>分组=主存块号%分组数</strong>。<strong>r路需要r个比较器。</strong></p> 
+         </blockquote> 
+         <p><strong>2路组相联示意图:&nbsp;</strong></p> 
+         <p><img alt="" height="543" src="https://i-blog.csdnimg.cn/blog_migrate/0653e4866025ba23a2f5e12277859675.png" width="1055"></p> 
+         <p><strong>组相联映射地址结构:</strong></p> 
+         <p class="img-center"><img alt="" height="150" src="https://i-blog.csdnimg.cn/blog_migrate/2fb35554f9fd6441d6df8b66a10b4eea.png" width="419"></p> 
+         <h4 id="3.2.5%20Cache%E7%9A%84%E5%86%99%E7%AD%96%E7%95%A5%3A%C2%A0">3.2.4 Cache的写策略</h4> 
+         <p><strong>写命中时:&nbsp;</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>全写法</strong><strong>:&nbsp;</strong>写操作时数据既写入Cache又写入主存,&nbsp;但增加了访存次数。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;回写法</strong><strong>:&nbsp;</strong>即写操作时只把数据写入Cache而不写入主存,&nbsp;当<strong>Cache数据被替换出去时才写回主存</strong>。可设置一个脏位, 表示被修改过才需写回主存。多次写操作只需一次写入内存,&nbsp;但增加了Cache的复杂性。</p> 
+         <p><strong>写不命中时:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;写分配法</strong><strong>:</strong>&nbsp;加载主存中的块到Cache中,&nbsp;而后更新这个Cache块,&nbsp;一般配合回写法。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;非写分配法:&nbsp;</strong>只写入主存,&nbsp;不进行调块。通常配合全写法使用&nbsp;。</p> 
+         <p><strong>备注:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;多级Cache:&nbsp;</strong> 现代计算机中, 各级Cache之间使用写非分配法+全写法,&nbsp;Cache和主存中使用写回法+分配法。</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分离Cache结构:&nbsp;</strong>分离<strong>指令Cache</strong>和<strong>数据Cache,</strong>&nbsp;充分利用指令和数据的不同局部性来优化性能。减少指令流水线的冲突。指令Cache比数据Cache的空间局部性更好</p> 
+         <p><strong>多级Cache:</strong></p> 
+         <p><img alt="" height="334" src="https://i-blog.csdnimg.cn/direct/8c946e60b311462d9db6f9883dacaba3.png" width="1151"></p> 
+         <h4 id="3.2.6%20Cache%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95">3.2.5 Cache替换算法</h4> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;随机算法:</strong>&nbsp;不需要算法位</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;先进先出算法:&nbsp;</strong>不需要算法位</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;3)&nbsp;近期最少使用算法(LRU): 2路时有一位LRU位, 4路时用2位LRU位。新装入</strong>的行计数器置为0,&nbsp;其余全+1;&nbsp;<strong>命中时</strong>,&nbsp;命中行清零,&nbsp;比其低的计数器+1;&nbsp;<strong>未命中时</strong>且无空闲行,&nbsp;则淘汰最高的行。</p> 
+         <p id="%E5%9B%9B%E3%80%81%E8%BE%85%E5%8A%A9%E5%AD%98%E5%82%A8%E5%99%A8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;4)&nbsp;最不经常使用算法:(LFU):&nbsp;</strong>为每个Cache块设置一个计数器,&nbsp;Cache满后,&nbsp;替换计数器值最小的。曾经被经常访问的主存块在未来不一定会用到, 实际运行效果不好。</p> 
+         <p><strong>计算cache大小:&nbsp;</strong></p> 
+         <p><img alt="" height="415" src="https://i-blog.csdnimg.cn/direct/b132c12377744ddd836577356b04e22a.png" width="984"></p> 
+         <h2 id="%E7%AC%AC%E5%9B%9B%E7%AB%A0%C2%A0%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F" style="text-align:center;">第四章&nbsp;输入输出系统</h2> 
+         <h3 id="4.1%20I%2FO%E6%8E%A5%E5%8F%A3">4.1 I/O接口 (设备控制器)</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;即I/O控制器, 是主机和外设之间的交接界面,&nbsp;协调主机与外设之间的数据传输。</p> 
+         </blockquote> 
+         <p><strong>示例图:</strong></p> 
+         <p><img alt="" height="340" src="https://i-blog.csdnimg.cn/blog_migrate/1b0efe3b902354683ae49a348115faea.png" width="858"></p> 
+         <p><strong>I/O接口的功能:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;进行地址译码和设备选择</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;实现主机和外设通信联络控制</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) 实现数据缓冲</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;信号格式的转换</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;传送控制命令和状态信息</p> 
+         <p><strong>&nbsp;I/O接口图:</strong></p> 
+         <p><img alt="" height="405" src="https://i-blog.csdnimg.cn/blog_migrate/63d8825af410aba55e2cf808d315a99f.png" width="922"></p> 
+         <p>&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;端口:&nbsp;</strong>接口电路中可以进行读写的存储器,&nbsp;若干端口加上相应的控制逻辑才可以组成接口</p> 
+         <p><strong>接口与端口区别图:</strong></p> 
+         <p class="img-center"><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/494487b12fa07456d316c75d883582a2.png" width="551"></p> 
+         <h3 id="4.2%20%E4%B8%AD%E6%96%AD%E7%B3%BB%E7%BB%9F">4.2 中断系统</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中断请求:&nbsp;</strong>中断系统需对每个中断源设置中断请求标记触发器INTR,&nbsp;当状态为"1"时,&nbsp;表示中断源有请求。通过INTR线发出的是<strong>可屏蔽中断</strong>,&nbsp;通过NMI线发出的是<strong>不可屏蔽中断</strong>。</p> 
+         </blockquote> 
+         <p><strong>示例图:</strong></p> 
+         <p><img alt="" height="218" src="https://i-blog.csdnimg.cn/blog_migrate/4a864c7c3aafadba499761a614cfb94d.png" width="1008"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;中断响应判优:&nbsp;</strong>通常通过硬件排队器实现,&nbsp;<span style="color:#fe2c24;"><strong>响应优先级</strong></span>在硬件线路上是固定的,&nbsp;<span style="color:#fe2c24;"><strong>处理优先级</strong></span>可以利用中断屏蔽技术动态调整。具体优先级如下:</p> 
+         <p><span style="color:#fe2c24;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;不可屏蔽中断 &gt;&nbsp;内部异常 &gt;&nbsp;可屏蔽中断</span></p> 
+         <p><span style="color:#fe2c24;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;内部异常中,&nbsp;在关中断模式下也会被响应。硬件故障 &gt;&nbsp;软件中断</span></p> 
+         <p><span style="color:#fe2c24;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;DMA中断请求 &gt;&nbsp;I/O设备传送的中断请求</span></p> 
+         <p><span style="color:#fe2c24;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;I/O&nbsp;传送类中断里,&nbsp;高速设备 &gt;&nbsp;低速设备</span></p> 
+         <p><span style="color:#fe2c24;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;输入设备 &gt;&nbsp;输出设备,&nbsp;实时设备 &gt;&nbsp;普通设备</span></p> 
+         <p><strong>示例图:</strong></p> 
+         <p><img alt="" height="664" src="https://i-blog.csdnimg.cn/direct/509f3da77eba437eaf4a174eecacc1b6.png" width="1200"></p> 
+         <p><strong>中断屏蔽技术 (优先级: D&gt;A&gt;C&gt;B)&nbsp;图:</strong></p> 
+         <p><img alt="" height="331" src="https://i-blog.csdnimg.cn/blog_migrate/4cceba7e7a80913811c94bcb450c0589.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>中断响应:&nbsp;</strong>由硬件直接实现,&nbsp;称为<strong>中断隐指令</strong>, 并不是一条具体的指令, 本质是硬件一系列自动操作,&nbsp;操作如下:</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;关中断</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;<span style="color:#fe2c24;">保存断点</span>:</strong>&nbsp;如<span style="color:#fe2c24;"><strong>PC,&nbsp;PSW的内容</strong></span>。(保存到栈中),&nbsp;异常的断点是当前指令的地址,&nbsp;中断的断点是下一条指令的地址。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;<strong>引出中断服务程序:</strong>&nbsp;识别中断源,&nbsp;将对应服务程序入口地址送入程序计数器PC中。有硬件向量法和软件查询法。</p> 
+         <p><strong>硬件向量法</strong><strong>示意图:</strong></p> 
+         <p><img alt="" height="564" src="https://i-blog.csdnimg.cn/blog_migrate/c3cce4b129db65900f0df3df47e19271.png" width="1048"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中断向量:&nbsp;</strong>中断服务程序的入口地址</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中断向量表:&nbsp;</strong>系统中全部中断向量集中存放到存储器的某个区域&nbsp;</p> 
+         <p><strong>中断服务程序处理过程:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;保护现场和屏蔽字:&nbsp;<span style="color:#fe2c24;"><strong>保存通用寄存器和状态寄存器的内容</strong></span>。(保存到堆中)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;开中断(可多重中断)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;执行中断服务程序</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;关中断(可多重中断)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;恢复现场和屏蔽字</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6)&nbsp;开中断</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 7)中断返回:&nbsp;中断服务程序的最后一条指令通常是一条中断返回指令(<strong>特权指令</strong>)。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="663" src="https://i-blog.csdnimg.cn/blog_migrate/4a3cb39f7239918fac3b4d0526199c14.png" width="1164"></p> 
+         <p><strong>中断响应条件:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 中断源有中断请求</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) CPU允许中断,&nbsp;即开中断 (异常和不可屏蔽中断不受此限制)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) 对于外中断,&nbsp;CPU在<strong>每条指令执行阶段结束</strong>前向接口发出中断查询信号。 (异常不受此限制)</p> 
+         <p><strong>中断与异常:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中断:&nbsp;</strong>来自CPU外部,&nbsp;与CPU执行指令无关的事件引起的中断。分为可屏蔽中断与不可屏蔽中断。<strong>中断不和任何指令相关联,&nbsp;异常与指令相关</strong>。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;异常:&nbsp;</strong>分为硬件故障和程序性异常,&nbsp;程序性异常也称软件中断,&nbsp;可分为故障,&nbsp;自陷,&nbsp;终止。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;1)&nbsp;故障:&nbsp;</strong>执行结束前被检测到的异常事件</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>2)&nbsp;自陷:&nbsp;</strong>预先安排的一种 "异常"&nbsp;事件,&nbsp;<strong>故障与自陷属于软件中断。</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;3)&nbsp;终止:</strong>&nbsp;发生了使计算机无法继续执行的硬件故障,&nbsp;如控制器出错,&nbsp;存储器校验错。<strong>终止与外中断属于硬件中断</strong>。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<strong>备注:</strong>&nbsp;<span style="color:#fe2c24;"><span style="background-color:#ffffff;">所有异常和中断都是硬件检测发现的</span></span></p> 
+         <p><strong>广义的中断类型:</strong><br><img alt="" height="623" src="https://i-blog.csdnimg.cn/blog_migrate/40ed03b43acebf6f04031904904fdd87.png" width="1200"></p> 
+         <p><span style="color:#fe2c24;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 中断响应时间:&nbsp;</strong>一条指令执行结束。</span></p> 
+         <h3 id="1.1%C2%A0%E6%97%A9%E6%9C%9F%E9%98%B6%E6%AE%B5">4.3&nbsp;DMA方式</h3> 
+         <p><strong>&nbsp;DMA控制器图:</strong><img alt="" height="689" src="https://i-blog.csdnimg.cn/blog_migrate/1ae0324a073692509a1a1dc7d3ec63c9.png" width="1200"></p> 
+         <p><strong>DMA传送图:</strong></p> 
+         <p><img alt="" height="658" src="https://i-blog.csdnimg.cn/blog_migrate/8cdb52890023e5c6aff76639441aec04.png" width="1200"></p> 
+         <p id="3.3.4%C2%A0DMA%E6%8E%A5%E5%8F%A3%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><strong>DMA接口基本组成原理图:</strong></p> 
+         <p><img alt="" height="591" src="https://i-blog.csdnimg.cn/blog_migrate/52fe93eaac1a6c06cd35263507e790ac.png" width="997"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AR:</strong>&nbsp;主存地址寄存器,&nbsp;用于存放主存中需要交换数据的首地址,&nbsp;每交换一次数据,&nbsp;AR+1</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WC:&nbsp;</strong>字计数器,&nbsp;记录传送数据的总字数,&nbsp;通常使用补码形式,&nbsp;计数器为0时,&nbsp;表示数据传送完成。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BR:&nbsp;</strong>数据缓存寄存器,&nbsp;用于暂存每次传送的数据。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DAR:&nbsp;</strong>设备地址寄存器,&nbsp;存放I/O设备的设备码或表示设备信息存储区的寻址信息。如磁盘数据所在的区号、盘面号和柱面号。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;DREQ:</strong>&nbsp;I/O设备向DMA接口提出申请。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;HRQ:&nbsp;</strong>向CPU发出总线使用权的请求信号。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>HLDA:&nbsp;</strong>CPU发出的响应信号。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;DACK:</strong>&nbsp;通知I/O设备。</p> 
+         <p><strong>DMA方式与程序中断方式的比较:</strong></p> 
+         <table align="center" border="1" cellpadding="1" cellspacing="1">
+          <tbody>
+           <tr>
+            <td></td>
+            <td>DMA方式</td>
+            <td>程序中断方式</td>
+           </tr>
+           <tr>
+            <td>传输方式</td>
+            <td>靠<strong>硬件</strong>传送</td>
+            <td>由程序来传送</td>
+           </tr>
+           <tr>
+            <td>保护现场</td>
+            <td>不需要中断现行程序</td>
+            <td>需要保护现场</td>
+           </tr>
+           <tr>
+            <td>响应</td>
+            <td>任意一个<strong>机器周期</strong>结束时(DMA请求)</td>
+            <td>指令执行结束才响应</td>
+           </tr>
+           <tr>
+            <td>软硬件</td>
+            <td>仅靠硬件控制传输数据</td>
+            <td>软硬结合</td>
+           </tr>
+           <tr>
+            <td>优先级</td>
+            <td colspan="2" rowspan="1">DMA方式 &gt;&gt; 中断方式</td>
+           </tr>
+          </tbody>
+         </table> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;备注:&nbsp;</strong>CPU会在每个存储周期(总线周期) 结束后检查是否有DMA请求。DMA请求与DMA中断不同。<strong>DMA请求是外设向DMA发送</strong></p> 
+         <p id="4.3.1%20DMA%E7%9A%84%E4%BC%A0%E9%80%81%E6%96%B9%E5%BC%8F%C2%A0"><strong>DMA的传送方式&nbsp;</strong></p> 
+         <p id="3.3.1%C2%A0%E5%81%9C%E6%AD%A2CPU%E8%AE%BF%E9%97%AE%E4%B8%BB%E5%AD%98"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 1) 停止CPU访问主存:</strong> 由DMA接口向CPU发一个停止信号,&nbsp;让出总线使用权。这种方式控制简单,&nbsp;缺点是CPU基本处于不工作状态或保持原状态。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="387" src="https://i-blog.csdnimg.cn/blog_migrate/01fd458c6f9d27b1ddf85465bb1242d9.png" width="1039"></p> 
+         <p id="3.3.2%C2%A0%E5%91%A8%E6%9C%9F%E6%8C%AA%E7%94%A8">&nbsp; &nbsp; &nbsp; &nbsp;<strong> 2)&nbsp;周期挪用:&nbsp;</strong>DMA与CPU同时访问主存时,&nbsp;CPU总是将总线占有权让给DMA (I/O不立即访问主存可以丢失数据) ,&nbsp;一般为一个存取周期,&nbsp; DMA的这种占有成为<strong>周期挪用</strong>或<strong>周期窃取</strong>。每挪用一个主存周期都需要申请、建立和归还总线控制权。CPU正在访存时,&nbsp;存取周期结束后让出总线。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="344" src="https://i-blog.csdnimg.cn/blog_migrate/e851d60c635fb38e8b1d4f6f8cd362f9.png" width="1200"></p> 
+         <p id="3.3.3%C2%A0DMA%E4%B8%8ECPU%E4%BA%A4%E6%9B%BF%E8%AE%BF%E9%97%AE"><strong>&nbsp; &nbsp; &nbsp; &nbsp; 3) DMA与CPU交替访问:</strong> 适用于CPU的工作周期比主存存取周期长的情况 (如:&nbsp;CPU工作周期是1.2us,&nbsp;主存周期小于0.6us) 。&nbsp;这种情况不需要总线使用权的申请、建立和归还。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="487" src="https://i-blog.csdnimg.cn/blog_migrate/e59b0711f76af5c57c343dc65f5e5420.png" width="1076"></p> 
+         <h2 id="%E7%AC%AC%E4%BA%94%E7%AB%A0%C2%A0%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%BF%90%E7%AE%97" style="text-align:center;">第五章&nbsp;数据的表示和运算</h2> 
+         <p><strong>&nbsp;大小端存储方式:</strong></p> 
+         <p><img alt="" height="289" src="https://i-blog.csdnimg.cn/blog_migrate/f982d24e42f31e2ca68c62cc980afd29.png" width="1200"></p> 
+         <p><strong>边界对齐存储方式:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;边界对齐特点:&nbsp;</strong>浪费了一些存储空间,&nbsp;但提高指令和取数的速度。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;边界不对齐特点:&nbsp;</strong>可以充分利用存储空间,&nbsp;但可能需要多次访存,&nbsp;影响了指令执行效率。</p> 
+         <p><strong>原理图:</strong></p> 
+         <p><img alt="" height="511" src="https://i-blog.csdnimg.cn/blog_migrate/87bc43019e41f5c7157e19366fcf1777.png" width="1200"></p> 
+         <h3 id="5.1%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E7%9A%84%E6%95%B0%E5%80%BC">5.1 计算机中的数值</h3> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp; 有符号数与无符号数 (即没有符号的数) 不同,&nbsp;区分正负；最高位用"0"表示正, "1" 表示负号。&nbsp;</p> 
+         </blockquote> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机器数:</strong>&nbsp;把符号"数字化"的数称为机器数。</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真值:&nbsp;</strong>带 "+" 或 "-" 符号的数称为真值。</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原码:</strong>&nbsp;符号位"0"表示正数, "1"表示负数。数值位即真值的绝对值。&nbsp;</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;反码:&nbsp;</strong>通常用来作为原码求补码,&nbsp;或补码求原码的中间过渡。正数反码是其正数本身。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;补码:&nbsp;</strong>可以将减法操作化作加法操作。正数的补码是其本身, 负数的补码可以看作对其原码<strong>除符号位外,&nbsp;每位求反,&nbsp;末位加1。特别地, [x]补&nbsp;经过<span style="color:#fe2c24;">符号位和数值位按位取反+1</span>&nbsp;得到[-x]补。</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;移码:</strong>&nbsp;针对补码无法直接比较大小而引出的一种表示法,&nbsp;即对补码加上一个<img alt="2^{n}" src="https://latex.csdn.net/eq?2%5E%7Bn%7D">&nbsp;,&nbsp;即将最高位符号位取反。&nbsp;</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<strong> 除0:&nbsp;</strong>故障</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;长字节转短字节:&nbsp;</strong>截断高位</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;短字节转长字节:</strong>&nbsp;符号扩展&nbsp;</p> 
+         <p><strong>各类机器数真值范围图:</strong></p> 
+         <p class="img-center"><img alt="" height="500" src="https://i-blog.csdnimg.cn/blog_migrate/2b3ad875905aca408c19e1fc57ceefe5.png" width="658"></p> 
+         <p><strong>移码与补码对照图:</strong></p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/3a9749cbdcf3bfa117cf658fd6c8b5d1.png" width="439"></p> 
+         <p><strong>备注:&nbsp;</strong></p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; </strong>1)&nbsp;十进制小数不一定都能用二进制表示。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 2)&nbsp;原码,&nbsp;反码的表示在数轴上对称,&nbsp;存在+0和-0；而补码,&nbsp;移码的0是唯一的。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 3)&nbsp;移码和补码的符号位相反,&nbsp;数值位相同</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 4)&nbsp;负数的补码中,&nbsp;数值部分越大,&nbsp;真值越大(更靠近0),&nbsp;多表示一个最小负数</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 5)&nbsp;移码保持数据原有大小顺序,&nbsp;移码大则真值大</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 6)&nbsp;补码符号位可以参与运算</p> 
+         <h3 id="5.2%C2%A0%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97">5.2&nbsp;定点数的运算</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;在计算机中,&nbsp;小数点不用专门的器件表示,&nbsp;而是按约定的方式标出,&nbsp;即<strong>定点表示法</strong>和<strong>浮点表示法</strong>。</p> 
+         </blockquote> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定点表示法:</strong>&nbsp;小数点位于数符和第一数值之间时,&nbsp;机器内的数为<strong>纯小数</strong>; 当小数点位于数值位之后时,&nbsp;机器内的数为<strong>纯整数</strong>。</p> 
+         <p><strong>定点数示意图:</strong></p> 
+         <p><img alt="" height="328" src="https://i-blog.csdnimg.cn/blog_migrate/006718be5b03279f52963d0bc144916c.png" width="934"></p> 
+         <h4 id="2.1%C2%A0%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97">&nbsp;5.2.1&nbsp;移位运算</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过移位运算与加减法运算可实现乘除运算。</p> 
+         </blockquote> 
+         <p><strong>算术移位规则:</strong></p> 
+         <p><img alt="" height="310" src="https://i-blog.csdnimg.cn/blog_migrate/deee17e8e5949212f77f36a1331e9fa5.png" width="1031"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;逻辑移位:&nbsp;</strong>左移,&nbsp;右移都补0&nbsp;</p> 
+         <h4 id="2.2%C2%A0%E5%8A%A0%E5%87%8F%E6%B3%95%E8%BF%90%E7%AE%97">5.2.2&nbsp;加减法运算</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现代计算机中都采用补码做加减法运算。符号位一起参与运算。</p> 
+         </blockquote> 
+         <p><strong>基本公式:</strong></p> 
+         <p><img alt="" height="197" src="https://i-blog.csdnimg.cn/blog_migrate/e09539a82211def1f659fdf9a9704fe1.png" width="832"></p> 
+         <p><strong>溢出判断:&nbsp;</strong></p> 
+         <p><strong>方法一示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="250" src="https://i-blog.csdnimg.cn/blog_migrate/7a069fb5a629863ebce19e89a8f93a51.png" width="461"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法二:</strong>&nbsp;采用一位符号位,&nbsp;根据<strong><span style="color:#fe2c24;">数据位进位C1与符号位进Cs位异或</span></strong>判断,&nbsp;不同为溢出&nbsp;</p> 
+         <p><strong>示意图:&nbsp;</strong></p> 
+         <p class="img-center"><img alt="" height="284" src="https://i-blog.csdnimg.cn/blog_migrate/818b2f21cb8e7eaec56d92a977d7c074.png" width="488"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法三: 采用双</strong>符号位,&nbsp;符号位不同为溢出。(模4补码,&nbsp;更容易检查加减法溢出问题)</p> 
+         <h4 id="2.3%C2%A0%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97">5.2.3&nbsp;乘法运算</h4> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fe2c24;"><strong>&nbsp;&nbsp;溢出判断:&nbsp;</strong>无符号n位 x n位,&nbsp;仅当前n位为0不溢出,&nbsp;有符号时,&nbsp;前n+1位为全1或全0不溢出。</span></p> 
+         <p><strong>原码乘法步骤:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;符号位与数值位分开求,&nbsp;符号位采用异或</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 由乘数末位值确定被乘数是否与原部分积相加,&nbsp;然后右移一位,&nbsp;形成新的部分积,&nbsp;同时乘数也右移一位,&nbsp;空出最高位放部分积的最低位。<strong>重复n次</strong></p> 
+         <p><strong>示例图:</strong></p> 
+         <p class="img-center"><img alt="" height="500" src="https://i-blog.csdnimg.cn/blog_migrate/cabae3fa8df0414a888c5267d7f6cb8b.png" width="638"></p> 
+         <p><strong>补码乘法示例图:&nbsp;</strong>符号位参与运算,&nbsp;<strong>进行n+1累加, n次右移</strong>&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+         <p><img alt="" height="724" src="https://i-blog.csdnimg.cn/blog_migrate/991b76b8b9f3271f67941f755c5effb8.png" width="1200"></p> 
+         <h4 id="2.4%C2%A0%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97">5.2.4&nbsp;除法运算</h4> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;恢复余数法</strong>: 相减后, 当余数为负时,&nbsp;需要加上除数,&nbsp;将其恢复成原来的余数。</p> 
+         <p><strong>原码恢复余数法示例图:</strong></p> 
+         <p><img alt="" height="580" src="https://i-blog.csdnimg.cn/blog_migrate/ac1e73a750e1cd5fba87328970c893a4.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加减交替法:&nbsp;</strong>可以认为是恢复余数法的一种改进算法。设余数为R,&nbsp;除数为y, 则:</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1) R&gt;0时,&nbsp;上商"1",&nbsp;再2R-y;</p> 
+         <p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 2) R&lt;0时,&nbsp;上商"0",&nbsp;先R+y,&nbsp;再左移一位-y,&nbsp;即2(R+y)-y=2R+y。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3)&nbsp;商符由两个操作数的符号异或而得,&nbsp;第n+1步余数为负时,&nbsp;需要加上|y|得到正确余数</p> 
+         <p><strong>原码加减交替法示意图:</strong></p> 
+         <p><img alt="" height="734" src="https://i-blog.csdnimg.cn/blog_migrate/d5af56729a751502f44970ca2b9223e4.png" width="1200"></p> 
+         <p><strong>补码除法原理图:</strong></p> 
+         <p><img alt="" height="710" src="https://i-blog.csdnimg.cn/blog_migrate/16a45a4f65d878373e1b99c70ed7ca5b.png" width="1200"></p> 
+         <p><strong>原码除法与补码除法对比图:</strong></p> 
+         <p><img alt="" height="310" src="https://i-blog.csdnimg.cn/blog_migrate/e5c0b701e3d14b19c21ff5a22ab2af4c.png" width="1200"></p> 
+         <h3 id="5.3%C2%A0%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97">5.3&nbsp;浮点数的运算</h3> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浮点表示:&nbsp;</strong>小数点位置可以浮动的数。位数相同时,表示数值的范围比定点数大。将尾数最高位为1的浮点数称为规格化数,&nbsp;此时精度最高。尾数是小数,&nbsp;其位数n反映了浮点数的精度。</p> 
+         <p><strong>浮点数形式示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="194" src="https://i-blog.csdnimg.cn/blog_migrate/128bee97ca4dd10a0c368caefc305937.png" width="784"></p> 
+         <p><strong>规格化:&nbsp;</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原码表示的尾数规格化:</strong>&nbsp;尾数最高位数值必须是1</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;补码表示的尾数规格化:</strong>&nbsp;尾数最高数值位必须和尾数符号位相反</p> 
+         <p><strong>IEEE 754 标准:</strong></p> 
+         <p><img alt="" height="513" src="https://i-blog.csdnimg.cn/blog_migrate/4b647b33b07ec6b58007dec686e8ea01.png" width="1200"></p> 
+         <p><strong>最大最小值的绝对值:</strong></p> 
+         <p><img alt="" height="153" src="https://i-blog.csdnimg.cn/blog_migrate/203401ae97d99852d56155018afb9b55.png" width="1200"></p> 
+         <p><strong>全0全1阶码情况:</strong></p> 
+         <p><img alt="" height="317" src="https://i-blog.csdnimg.cn/direct/2b2516842f294993918387d7bfd3c1d1.png" width="856"></p> 
+         <p><strong>浮点数加减运算步骤:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;对阶:&nbsp;小阶向大阶看齐</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;尾数加减</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;规格化</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;舍入 (<span style="color:#fe2c24;"><strong>最简单</strong></span>的是处理方法是 <strong>截断法</strong>)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;判断溢出:&nbsp;阶码溢出才算溢出</p> 
+         <p><strong>C语言中的类型转化:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;int 转化&nbsp;float :&nbsp;</strong>可能会精度缺失</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;float转化int:&nbsp;</strong>可能会溢出或精度缺失</p> 
+         <h3 id="5.4%C2%A0%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83">5.4&nbsp;算术逻辑单元</h3> 
+         <p><strong>逻辑门电路图:</strong></p> 
+         <p><img alt="" height="596" src="https://i-blog.csdnimg.cn/blog_migrate/89938cae7e6b8f22d31fd3ec3e6af8a2.png" width="1005"></p> 
+         <p><strong>一位全加器:</strong></p> 
+         <p><img alt="" height="405" src="https://i-blog.csdnimg.cn/blog_migrate/1f1c89552812e6d059aa020674fc886b.png" width="1200"></p> 
+         <p><strong>并行进位加法器:&nbsp;</strong></p> 
+         <p><img alt="" height="464" src="https://i-blog.csdnimg.cn/blog_migrate/6f5aab90c06ede9c421b7742a8bf7d88.png" width="1200"></p> 
+         <p><strong>带标志的加法器:</strong></p> 
+         <p><img alt="" height="523" src="https://i-blog.csdnimg.cn/blog_migrate/b8a5af0ef571c6c03677b6ba19a3ee2e.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OF:</strong>&nbsp;有符号数的加减运算是否发生了溢出,&nbsp;OF=1时,&nbsp;说明有溢出。(次高进位异或最高位的进位)&nbsp;</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;SF:&nbsp;</strong>有符号数加减运算结果的正负性。SF=0时表示运算结果为正 (最高位生成)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;ZF:</strong>&nbsp;加减运算结果是否为0,&nbsp;ZF=1表示运算结果为0&nbsp;</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CF:&nbsp;</strong>无符号数加减法运算是否发生了溢出,&nbsp;CF=1时说明发生了溢出 (Sub异或Cout最高位产生的进位)</p> 
+         <p><strong>多路选择器:</strong>&nbsp;&nbsp;有k个输入,&nbsp;控制信号的位数&nbsp; &nbsp;<img alt="m\geq \left \lceil log_{2}^{k} \right \rceil bit" class="mathcode" src="https://latex.csdn.net/eq?m%5Cgeq%20%5Cleft%20%5Clceil%20log_%7B2%7D%5E%7Bk%7D%20%5Cright%20%5Crceil%20bit"></p> 
+         <p><img alt="" height="483" src="https://i-blog.csdnimg.cn/blog_migrate/850891767781b680803760863bda16fa.png" width="906"></p> 
+         <p><strong>三态门图:</strong></p> 
+         <p class="img-center"><img alt="" height="270" src="https://i-blog.csdnimg.cn/blog_migrate/efa0293f88104f7e3bc2236f6f5223a1.png" width="329"></p> 
+         <p><strong>&nbsp;ALU框图:</strong></p> 
+         <p><img alt="" height="508" src="https://i-blog.csdnimg.cn/blog_migrate/bedf5c43ddafcecc9f27f8c0f0f09a79.png" width="994"></p> 
+         <p><strong>补码加减运算部件:</strong>&nbsp;Sub控制端为1时表示做减法,&nbsp;实现 X+Y(取反)+1 = [X]补+[-Y]补</p> 
+         <p class="img-center"><img alt="" height="240" src="https://i-blog.csdnimg.cn/direct/d6304922a94643a788dc9856218a8af4.png" width="525"></p> 
+         <h2 id="%E7%AC%AC%E5%85%AD%E7%AB%A0%C2%A0%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F" style="text-align:center;">第六章&nbsp;指令系统</h2> 
+         <h3 id="6.1%20%E6%9C%BA%E5%99%A8%E6%8C%87%E4%BB%A4">6.1 指令概述</h3> 
+         <h4>6.1.1指令集体系结构</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机器语言由一条条语句构成,&nbsp;习惯把每一条机器语言的语句称为<strong>机器指令</strong>,&nbsp;将全部的机器指令的集合称为机器的<strong>指令系统</strong>。</p> 
+         </blockquote> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;指令集体系结构(ISA):</strong>&nbsp;包括<strong>指令格式,</strong>&nbsp;<strong>数据类型及格式</strong>,&nbsp;<strong>操作数的存放方式</strong>,&nbsp;<strong>程序可访问的寄存器个数</strong>,&nbsp;位数和编号,&nbsp;<strong>存储空间大小</strong>和<strong>编址方式</strong>,&nbsp;<strong>寻址方式</strong>,&nbsp;指令执行过程的控制方式等。&nbsp;</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80-20规律:&nbsp;</strong>典型程序中80%的语句仅仅使用处理机中的20%的指令,&nbsp;这些指令都属于简单指令。<br><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RISC:</strong>&nbsp;精简指令系统计算机 (Reduced&nbsp;Instruction&nbsp;Set&nbsp;Computer),&nbsp;指令按边界对齐。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;CISC:</strong>&nbsp;复杂指令系统计算机 (Complex&nbsp;Instruction&nbsp;Set&nbsp;Computer),&nbsp;大多能实现软件兼容,&nbsp;即高档机包含了低档机的全部指令。</p> 
+         <p><strong>RISC与CISC比较图:</strong></p> 
+         <p><img alt="" height="659" src="https://i-blog.csdnimg.cn/blog_migrate/dd16a5c58c8be4d4eaf3ab1e7b2b523b.png" width="1200"></p> 
+         <h4>6.1.2 指令格式</h4> 
+         <p><strong>&nbsp;指令的一般格式图:</strong></p> 
+         <p class="img-center"><img alt="" height="350" src="https://i-blog.csdnimg.cn/blog_migrate/8fe6c9da934ec5dbeb3959a27b4d2164.png" width="804"></p> 
+         <p></p> 
+         <p><strong>按地址码数目分类:&nbsp;</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四地址指令：</strong>该指令完成(A1)OP(A2) --&gt;A3的操作, 4个地址各占6位,&nbsp;直接寻址范围为<img alt="2^{6}" src="https://latex.csdn.net/eq?2%5E%7B6%7D">=64。共需访问4次存储器(取指令一次,&nbsp;取两个操作数两次,&nbsp;存放结果一次)。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;三地址指令:&nbsp;</strong>该指令完成(A1)OP(A2)--&gt;A3的操作,&nbsp;程序中大多数指令是按顺序执行的, 后续指令的地址隐含在程序计数器PC中。3个地址字段各占8位,&nbsp;寻址范围为<img alt="2^{8}" src="https://latex.csdn.net/eq?2%5E%7B8%7D">=256,&nbsp;需要访问4次存储器。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>二地址指令:&nbsp;</strong>该指令完成(A1)OP(A2)--&gt;A1 的操作,&nbsp;A1即代表原操作数,&nbsp;也代表存放本次运算的结果地址。共需要4次访问存储器;&nbsp;若为(A1)OP(A2)--&gt;ACC,&nbsp;只需要两次访存。直接寻址范围为<img alt="2^{12}" src="https://latex.csdn.net/eq?2%5E%7B12%7D">=4K。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一地址指令</strong>:&nbsp;可完成(ACC)OP(A1)--&gt;ACC的操作,&nbsp;只需两次访存,&nbsp;直接寻址范围为<img alt="2^{24}" src="https://latex.csdn.net/eq?2%5E%7B24%7D">=16M。</p> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;零地址指令:</strong>&nbsp;无地址码部分,&nbsp;如空操作,&nbsp;停机,&nbsp;中断返回等指令,&nbsp;或是操作数的地址隐含在堆栈指针SP中。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="486" src="https://i-blog.csdnimg.cn/blog_migrate/66fd4802546c0b801ea83c9679a7ba83.png" width="838"></p> 
+         <p><strong>按操作码长度分类:</strong></p> 
+         <p>&nbsp;<strong>&nbsp; &nbsp; &nbsp; &nbsp;1) 定长操作码:&nbsp;</strong>适用于字长较长的计算机以及RISC,&nbsp;指令译码时间短。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>2)&nbsp;不定长操作码</strong>:&nbsp;在字长较短的微型计算机中广泛使用,&nbsp;会增加指令译码和分析的难度。</p> 
+         <p><strong>不定长操作码图:</strong></p> 
+         <p class="img-center"><img alt="" height="500" src="https://i-blog.csdnimg.cn/blog_migrate/8eb38b3aded3df2c433aec090499efd6.png" width="577"></p> 
+         <p id="1.3%C2%A0%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%9E%8B"><strong>操作类型:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;数据传送:&nbsp;</strong>寄存器与存储单元,&nbsp;存储单元与存储单元,,&nbsp;寄存器与存储单元,之间的传送。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;算术逻辑操作:</strong>&nbsp;算术运算(加,减,乘,除等)与逻辑运算(与,或,非,异或等)。</p> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;移位: </strong>左移, 右移。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;转移:</strong>&nbsp;无条件转移,&nbsp;条件转移,&nbsp;调用与返回,&nbsp;陷阱与陷阱指令。</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;输入输出：</strong>与I/O设备交互。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6)&nbsp;其他:</strong>&nbsp;停机指令,&nbsp;开中断指令等。</p> 
+         <h3 id="1.4%C2%A0%E6%93%8D%E4%BD%9C%E6%95%B0%E7%B1%BB%E5%9E%8B">6.2&nbsp;指令的寻址方式</h3> 
+         <h4 id="6.2.1%20%E6%8C%87%E4%BB%A4%E5%AF%BB%E5%9D%80"><strong>6.2.1 指令寻址</strong></h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分为顺序寻址与跳跃寻址,&nbsp;<strong>顺序寻址</strong>可以通过<strong>PC</strong>自动加<strong>"1个指令字长",&nbsp;</strong>形成下一条指令的地址;&nbsp;<strong>跳跃寻址</strong>通过转移类指令实现。</p> 
+         </blockquote> 
+         <p><strong>指令寻址方式示意图:</strong></p> 
+         <p><img alt="" height="360" src="https://i-blog.csdnimg.cn/blog_migrate/ae4ab21b058b8654d999f8043367ba37.png" width="743"></p> 
+         <h4 id="6.2.2%C2%A0%E6%95%B0%E6%8D%AE%E5%AF%BB%E5%9D%80">6.2.2&nbsp;数据寻址</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;数据寻址方式种类多,&nbsp;在指令中需设一字段表明是哪一种寻址方式。</p> 
+         </blockquote> 
+         <p><strong>一地址指令的格式图:</strong></p> 
+         <p><img alt="" height="164" src="https://i-blog.csdnimg.cn/blog_migrate/7414024009cc93892c8058f11c277afa.png" width="898"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 立即寻址</strong>: 操作数本身设在指令字内,&nbsp;即形式地址就是数据本身, 数据采用补码形式存放。</p> 
+         <p><img alt="" height="279" src="https://i-blog.csdnimg.cn/blog_migrate/f50feccf36010953ac3a9bbe11ce3c76.png" width="724"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 直接寻址:</strong>&nbsp;指令字中的形式地址A就是操作数的真实地址。</p> 
+         <p><img alt="" height="348" src="https://i-blog.csdnimg.cn/blog_migrate/5328c48cc27a484b66a9617f941e4ce6.png" width="1001"></p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 3) 隐含寻址:&nbsp;</strong>不明显给出操作数的地址,&nbsp;操作数的地址隐含在操作码或某个寄存器中。</p> 
+         <p><img alt="" height="559" src="https://i-blog.csdnimg.cn/blog_migrate/cfafd96f3e52b1d2ca301763455099f1.png" width="1080"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4) 间接寻址:&nbsp;</strong>形式地址是操作数的有效地址所在的存储单元地址。与直接寻址相比,&nbsp;扩大了操作数的寻址范围,&nbsp;但<strong>多次间接寻址时,&nbsp;可用存储字首位来标记</strong>是否还需要继续访存寻址。</p> 
+         <p><img alt="" height="615" src="https://i-blog.csdnimg.cn/blog_migrate/a8c6ccfb2896d1d26a2c62d5b3e1cba0.png" width="1168"></p> 
+         <p>&nbsp; &nbsp; &nbsp;<strong> &nbsp; 5) 寄存器寻址:&nbsp;</strong>地址码字段直接给出了寄存器的编号,&nbsp;无需访存,&nbsp;减少执行时间。</p> 
+         <p class="img-center"><img alt="" height="368" src="https://i-blog.csdnimg.cn/blog_migrate/a551529b6ef09ff3c6e56301debceba2.png" width="488"></p> 
+         <p>&nbsp; &nbsp;<strong> &nbsp; &nbsp; 6) 寄存器间接寻址:&nbsp;</strong>比间接寻址少访存一次。</p> 
+         <p><img alt="" height="659" src="https://i-blog.csdnimg.cn/blog_migrate/c5346c6e26cffafc7f0d0988cdef8bd6.png" width="1017"></p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 7) 基址寻址:&nbsp;</strong>需要设有寄存器BR, 可以扩大操作数的寻址范围。<strong>面向操作系统</strong>,&nbsp;有<strong>利于多道程序设计,&nbsp;便于编制浮动程序</strong>, 可由用户指定具体寄存器为基址寄存器。</p> 
+         <p><img alt="" height="514" src="https://i-blog.csdnimg.cn/blog_migrate/57bb1ef7aa2e3d5ac553d88d497cede0.png" width="944"></p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 8) 变址寻址:&nbsp;</strong>与基址寻址极为相似,&nbsp;<strong>面向用户</strong>, 有效地址等于指令字的形式地址+变址寄存器IX,&nbsp;处理数组问题时,&nbsp;只需改变寄存器IX内容,&nbsp;无需多条指令,&nbsp;<strong>适合编制循环程序</strong>。</p> 
+         <p><img alt="" height="523" src="https://i-blog.csdnimg.cn/blog_migrate/ab0057491d76989595f0dd36819c23b9.png" width="926"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9) 相对寻址:&nbsp;</strong>有效地址是程序计数器PC+形式地址。&nbsp;位移量可正可负,&nbsp;由补码表示,&nbsp;<strong>便于程序浮动,&nbsp;广泛用于转移指令</strong>。</p> 
+         <p><img alt="" height="304" src="https://i-blog.csdnimg.cn/blog_migrate/9957e5d2146ec5f5bf16246fcea0db0e.png" width="745"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;直接转移指令:</strong>&nbsp;转移目标地址直接放在指令中</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>间接转移指令:&nbsp;</strong>转移目标地址存放在寄存器或内存单元中&nbsp;</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>相对转移指令:&nbsp;</strong>如上图所示</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10) 堆栈寻址:</strong>&nbsp;要求计算机中设有堆栈,&nbsp;操作数只能从栈顶中存或取,&nbsp;堆栈寻址可视为一种隐含寻址,&nbsp;操作数的地址总是被隐含在<strong>SP指针</strong>中。<strong>硬堆栈(寄存器组)</strong>不访存,&nbsp;<strong>软堆栈</strong>访存1次。</p> 
+         <p><img alt="" height="462" src="https://i-blog.csdnimg.cn/blog_migrate/77f5d445c13bffe2883c93b37b148d23.png" width="1131"></p> 
+         <p><strong>对比图:</strong></p> 
+         <p><img alt="" height="655" src="https://i-blog.csdnimg.cn/blog_migrate/8e82b1f0685573b22fc63cc7b26ef0de.png" width="1200"></p> 
+         <h3 id="6.3%C2%A0%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81%E8%A1%A8%E7%A4%BA">6.3&nbsp;程序的机器级代码表示</h3> 
+         <p><strong>x86架构CPU中的寄存器图:</strong></p> 
+         <p class="img-center"><img alt="" height="500" src="https://i-blog.csdnimg.cn/blog_migrate/7f64e73443987630a978f079451438ea.png" width="610"></p> 
+         <p><img alt="" height="315" src="https://i-blog.csdnimg.cn/blog_migrate/0cacc1c52eab889edf0d28d4736d3192.png" width="779"><img alt="" height="320" src="https://i-blog.csdnimg.cn/blog_migrate/1fee26c7f06ecc43a4b7abebf35db103.png" width="809"></p> 
+         <p><strong>AT&amp;T格式与Inter格式对比图:</strong></p> 
+         <p><img alt="" height="768" src="https://i-blog.csdnimg.cn/blog_migrate/0ec8a67b85327be82b37333cc9132ba6.png" width="1200"></p> 
+         <p><strong>算术运算指令:</strong></p> 
+         <p><img alt="" height="673" src="https://i-blog.csdnimg.cn/blog_migrate/d2e9d8732909cbd093f21fb5565215ee.png" width="1200"></p> 
+         <p><strong>逻辑运算指令:</strong></p> 
+         <p><img alt="" height="524" src="https://i-blog.csdnimg.cn/blog_migrate/ca5b440d7569c5ae97f9bab06f65f308.png" width="1200"></p> 
+         <p><strong>选择语句的机器级表示:</strong></p> 
+         <p><img alt="" height="541" src="https://i-blog.csdnimg.cn/blog_migrate/8f0bf47314fa7be7af75a8c6dc96d26c.png" width="1200"></p> 
+         <p><strong>循环语句的机器级表示:</strong></p> 
+         <p><img alt="" height="629" src="https://i-blog.csdnimg.cn/blog_migrate/65b6631069e116feb12e03accf78ba97.png" width="1200"></p> 
+         <p><strong>loop指令实现循环:</strong>&nbsp;</p> 
+         <p><img alt="" height="553" src="https://i-blog.csdnimg.cn/blog_migrate/e3b509118e6338b10b2fb2c5c13a77a7.png" width="1200"></p> 
+         <p><strong>函数调用的机器级表示:</strong></p> 
+         <p><img alt="" height="690" src="https://i-blog.csdnimg.cn/blog_migrate/219c9269a736d4bb5fcb7ad5c6a9df2c.png" width="1200"></p> 
+         <p><img alt="" height="612" src="https://i-blog.csdnimg.cn/blog_migrate/e5d8a31af7af9d103c0a4911e33a0f48.jpeg" width="1032"></p> 
+         <p><strong>函数调用时:</strong></p> 
+         <p><strong>1)&nbsp;如图情况,&nbsp;保存call下第一条mov的地址</strong></p> 
+         <p><img alt="" height="634" src="https://i-blog.csdnimg.cn/blog_migrate/aa818d3c9d506d0988d26df7053d0611.png" width="1200"></p> 
+         <p><strong>&nbsp;2) 将ebp的内容入栈(+1个单位再入栈) 并&nbsp;使ebp指向栈顶esp</strong><img alt="" height="617" src="https://i-blog.csdnimg.cn/blog_migrate/21798ece35fd902022bde1476a2c079a.png" width="1200"></p> 
+         <p><strong>函数返回时:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) mov将栈顶指针esp指向栈底指针ebp</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) pop将esp(此时esp=ebp)中的内容放入esp中,&nbsp;esp减"一个单位"</strong></p> 
+         <p><img alt="" height="691" src="https://i-blog.csdnimg.cn/blog_migrate/08c27a5276c86e8945d7ecc7a18fa98b.png" width="1200"></p> 
+         <p><strong>函数的传参与函数的局部变量:</strong></p> 
+         <p><img alt="" height="483" src="https://i-blog.csdnimg.cn/blog_migrate/b44d2bc877c7d293d1bda64182f0ecf2.png" width="1200"></p> 
+         <p><strong>函数的返回值:&nbsp;</strong></p> 
+         <p><img alt="" height="661" src="https://i-blog.csdnimg.cn/blog_migrate/78423e4c6baef8d9d88d7090e0eae6f8.png" width="1183"></p> 
+         <p><strong>&nbsp;备注:&nbsp;</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;push xxx :</strong>&nbsp;先让esp减4,&nbsp;再将xxx压入栈中</p> 
+         <p>&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pop&nbsp;xxx:&nbsp;</strong>将栈顶元素出栈写入xxx中,&nbsp;在让esp加4&nbsp;</p> 
+         <h2 id="%E7%AC%AC%E4%B8%83%E7%AB%A0%C2%A0%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8" style="text-align:center;">第七章&nbsp;中央处理器</h2> 
+         <h3 id="%E5%85%AD%E3%80%81%E6%8E%A7%E5%88%B6%E5%8D%95%E5%85%83%E8%AE%BE%E8%AE%A1"></h3> 
+         <h3 id="7.2%20CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%8F%8A%E7%BB%93%E6%9E%84">7.1 CPU的功能及结构</h3> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;汇编程序员可见的寄存器:</strong>&nbsp;PSW、通用寄存器组(含基址/变址)、PC、ACC、SR(移位寄存器)</p> 
+         <p><strong>CPU基本结构图:</strong></p> 
+         <p><img alt="" height="624" src="https://i-blog.csdnimg.cn/blog_migrate/b86ab3ed6371381e0a225a7f1615a6f4.png" width="1200"></p> 
+         <h4 id="7.2.1%20%E9%80%9A%E8%B7%AF%E6%95%B0%E6%8D%AE"><strong>7.2.1 通路数据</strong></h4> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) CPU内部单总线方式:&nbsp;</strong>ALU需要配合暂存器使用。<span style="color:#fe2c24;"><span style="background-color:#ffffff;">单周期处理器不能采用单总线方式</span> </span></p> 
+         <p><strong>示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/2e2ec9b633d03987c60082158f0b2a86.png" width="263"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;2) CPU内部多总线方式:&nbsp;</strong>同时在多个总线上传送不同的数据</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) 专用数据通路方式:&nbsp;</strong>性能较高,&nbsp;但硬件量大</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组合逻辑元件:&nbsp;&nbsp;</strong>输出仅取决于当前的输入,&nbsp;组合电路不含存储信号的记忆单元,&nbsp;如三八译码器,&nbsp;多路选择器,&nbsp;三态门。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;时序逻辑元件:&nbsp;</strong>时序电路包含存储信号的记忆单元,&nbsp;如各类寄存器和存储器,&nbsp;如PC,&nbsp;PSW等</p> 
+         <h4><strong>7.2.2 多处理器</strong></h4> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单指令流单数据流(SISD)结构:</strong>&nbsp;一个处理器和一个存储器,&nbsp;一段时间内仅执行一条指令,&nbsp;可采用指令流水线方式, 多模块交叉方式组织存储器</p> 
+         <p><strong>示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="350" src="https://i-blog.csdnimg.cn/blog_migrate/05a423a2943ad3c59108a1ae366ce303.png" width="566"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;单指令流多数据流(SIMD)结构:&nbsp;</strong>通常由一个指令控制部件,&nbsp;<span style="color:#fe2c24;"><strong>多个处理单元</strong></span>组成, 一个指令流同时对多个数据进行处理,&nbsp;称为数据级并行技术,&nbsp;使用for循环<strong>最有效</strong>,&nbsp;case或switch语句<strong>效率最低</strong>。向量处理器是SIMD的变体。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="350" src="https://i-blog.csdnimg.cn/blog_migrate/1b8ccedb2cb7402fee61d6712439ff1e.png" width="488"></p> 
+         <p><strong>向量处理器:</strong></p> 
+         <p><img alt="" height="409" src="https://i-blog.csdnimg.cn/blog_migrate/992720535c778be617e121a0fb58a690.png" width="993"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多指令流单数据流(MISD)结构:</strong>&nbsp;实际不存在</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;多指令流多数据流(MIMD)结构:&nbsp;</strong>指同时执行多条指令分别处理多个不同数据,&nbsp;分为<strong>多计算机系统</strong>和共享式存储<strong>多处理器系统(SMP)</strong>。</p> 
+         <p><strong>多计算机系统示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="500" src="https://i-blog.csdnimg.cn/blog_migrate/9d9b10a933af62d2bbfb15c5c7990beb.png" width="549"></p> 
+         <p><strong>多核处理器示意图:</strong></p> 
+         <p><img alt="" height="370" src="https://i-blog.csdnimg.cn/blog_migrate/bf558680f28f86c1825567e9946d489c.png" width="696"></p> 
+         <p><strong>硬件多线程的三种实现方式:</strong></p> 
+         <p><img alt="" height="433" src="https://i-blog.csdnimg.cn/blog_migrate/49df07ccfdd1d0f82081aec2b2a48f6e.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>多核处理器:&nbsp;</strong>将多个处理单元集(多个执行核心)成到单个CPU,&nbsp;每个处理单元称为一个核。属于共享内存的对称多处理器。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp; 对称多处理器(SMP):</strong>&nbsp;多个处理器共享单一的地址空间。分为UMA和NUMA两种类型。一般采用偶数路CPU,&nbsp;也称共享内存多处理器。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>同时多线程SMT:</strong>&nbsp;在一个单处理器或单核中设置了两套线程状态部件&nbsp;</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;统一存储访问UMA多处理器:&nbsp;</strong>处理器对所有存储单元的访问时间是大致相同的,&nbsp;需要解决Cache一致性问题</p> 
+         <p>&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非统一存储访问NUMA多处理器:&nbsp;</strong>主存被分割给了不同处理器</p> 
+         <h3>7.2 指令周期</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU从主存中每取出并执行一条指令所需的全部时间。<strong>&nbsp;指令周期的不同阶段区分</strong>是指令还是数据。</p> 
+         </blockquote> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机器周期:</strong>&nbsp;即CPU周期,&nbsp;一个机器周期包含若干时钟周期,&nbsp;一般为<strong>访存时间</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时钟周期:</strong>&nbsp;也称节拍, T周期,&nbsp;CPU时钟周期,&nbsp;CPU操作的基本单位</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存取周期:&nbsp;</strong>存储器进行连续两次独立的存储器操作所需最小间隔时间</p> 
+         <p><strong>各周期关系示意图:</strong></p> 
+         <p><img alt="" height="488" src="https://i-blog.csdnimg.cn/blog_migrate/34c4c5c2752c4747d8c096fc7b3ef201.png" width="819"></p> 
+         <p><strong>不同指令的指令周期:</strong></p> 
+         <p><img alt="" height="618" src="https://i-blog.csdnimg.cn/blog_migrate/56a2c8fe5a7127b68c1da20ad4195a4f.png" width="1200"></p> 
+         <p><strong>&nbsp;指令流程图:</strong></p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/aa3cc0805211a4ee3422393188dd44c3.png" width="497"></p> 
+         <p><strong>取指周期数据流:</strong></p> 
+         <p><img alt="" height="615" src="https://i-blog.csdnimg.cn/blog_migrate/31f741eabe24d4c4788f067ca407e846.png" width="1142"></p> 
+         <p><strong>间址周期数据流:</strong></p> 
+         <p><img alt="" height="677" src="https://i-blog.csdnimg.cn/blog_migrate/424db23cdea9d3a6a09c7bfa259496db.png" width="1040"></p> 
+         <p><strong>中断周期数据流:</strong></p> 
+         <p><img alt="" height="441" src="https://i-blog.csdnimg.cn/blog_migrate/6b40394ba6be8e9cc6b7b6d13980bed7.png" width="821"></p> 
+         <p><strong>指令执行方案:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单指令周期:&nbsp;</strong>对所有指令选用相同的执行时间来完成,&nbsp;指令之间串行执行</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多指令周期:</strong>&nbsp;对不同类型指令选用不同个数的时钟周期,&nbsp;指令之间串行执行</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;流水线方案</strong></p> 
+         <h3 id="7.3%C2%A0%E6%8E%A7%E5%88%B6%E5%99%A8">7.3&nbsp;控制器</h3> 
+         <p><strong>&nbsp;CU的输入信号来源图:&nbsp;</strong></p> 
+         <p><img alt="" height="521" src="https://i-blog.csdnimg.cn/blog_migrate/b1962ed92fba527aae877cd553881cb0.png" width="1165"></p> 
+         <h4 id="7.3.1%20%E7%A1%AC%E5%B8%83%E7%BA%BF%E6%8E%A7%E5%88%B6%E5%99%A8%20(%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91%E8%AE%BE%E8%AE%A1)">7.3.1 硬布线控制器 (组合逻辑设计)</h4> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;略</strong></p> 
+         <h4 id="7.3.2%C2%A0%E5%BE%AE%E7%A8%8B%E5%BA%8F%E6%8E%A7%E5%88%B6%E5%99%A8">7.3.2&nbsp;微程序控制器</h4> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将一条<strong>机器指令</strong>编写成一个<strong>微程序</strong>,&nbsp;每一个微程序包含若干条<strong>微指令</strong>,&nbsp;每<strong>一条微指令</strong>对应一个或<strong>几个微操作命令</strong>。然后把这些微程序存到一个控制存储器中。</p> 
+         </blockquote> 
+         <p><strong>微指令格式:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;水平型微指令:&nbsp;</strong>一条微指令能定义多个可并行的微命令; 微程序短,&nbsp;执行速度快; 缺点是微指令长,&nbsp;造成控存容量极大。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;垂直型微指令:&nbsp;</strong>一条微指令只能定义一个微命令; 微指令短,&nbsp;简单,&nbsp;规整,&nbsp;便于编写微程序;&nbsp;&nbsp;缺点是微程序长,&nbsp;执行速度慢,&nbsp;效率低。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;混合型微指令:</strong>&nbsp;在垂直型的基础上增加一些不太复杂的并行操作。</p> 
+         <p><strong>微指令格式图:</strong></p> 
+         <p class="img-center"><img alt="" height="150" src="https://i-blog.csdnimg.cn/blog_migrate/46fa106091fe68e85cc8c04a1fa76b36.png" width="517"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微周期:&nbsp;</strong>执行一条微指令所需的时间,&nbsp;通常为一个时钟周期</p> 
+         <p><strong>微程序控制单元的基本框图:</strong></p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/7f4675c2cfc55d817138818c6a11e782.png" width="607"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CMDR:&nbsp;</strong>微指令寄存器,&nbsp;又称uIR,&nbsp;存放微指令</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CMAR:&nbsp;</strong>微地址寄存器,&nbsp;又称uPC,&nbsp;存放微指令地址</p> 
+         <p>&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CM:</strong>&nbsp;控制存储器,&nbsp;用ROM实现</p> 
+         <p><strong>工作过程:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;1)&nbsp;取指令</strong>:&nbsp;取指微程序入口地址一般为CM的0号单元,&nbsp;为公共操作,&nbsp;机器开始运行时,&nbsp;自动将取指微程序入口地址送入CMAR。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;2)&nbsp;译指:&nbsp;</strong>由机器指令的操作码字段通过微地址形成部件产生该机器指令所对应的微程序入口地址,&nbsp;并送入CMAR。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;从CM中逐条取出对应的微指令并<strong>执行</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;执行完对应一条机器指令的一个微程序后,&nbsp;回到取指微程序的入口地址,&nbsp;重复 (1)。</p> 
+         <p id="6.3%C2%A0%E5%BE%AE%E6%8C%87%E4%BB%A4%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F"><strong>微指令的编码方式:</strong></p> 
+         <p id="6.3.1%20%E7%9B%B4%E6%8E%A5%E7%BC%96%E7%A0%81"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 直接编码</strong>: 每一位代表一个微操作命令。</p> 
+         <p><strong>直接编码方式图:</strong></p> 
+         <p><img alt="" height="289" src="https://i-blog.csdnimg.cn/blog_migrate/0314ff1e19dc8e44cb45f1eab96651c2.png" width="984"></p> 
+         <p id="6.3.2%20%E5%AD%97%E6%AE%B5%E7%9B%B4%E6%8E%A5%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 字段直接编码方式:&nbsp;</strong>将微指令的操作控制字段分成若干段, 互斥的微操作命令存放在一个字段内(每个小段<span style="color:#fe2c24;"><strong>要考虑留出一个状态表示不操作</strong></span>)。执行速度稍微减慢。</p> 
+         <p><strong>字段直接编码图:</strong></p> 
+         <p><img alt="" height="427" src="https://i-blog.csdnimg.cn/blog_migrate/d3d1925f1fbe547c9209c67cb48a56a4.png" width="915"></p> 
+         <p id="6.3.3%20%E6%B7%B7%E5%90%88%E7%BC%96%E7%A0%81"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;字段间接编码</strong>:&nbsp;又称隐式编码,&nbsp;可进一步缩短微指令字长,&nbsp;但削弱了微指令并行控制能力,&nbsp;故通常作为字段直接编码方式的一种辅助手段。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p class="img-center"><img alt="" height="300" src="https://i-blog.csdnimg.cn/blog_migrate/2fa7e35ef439c3462c00614b8c9be650.png" width="470"></p> 
+         <p id="6.4%C2%A0%E5%BE%AE%E6%8C%87%E4%BB%A4%E5%BA%8F%E5%88%97%E5%9C%B0%E5%9D%80%E7%9A%84%E5%BD%A2%E6%88%90"><strong>微指令序列地址的形成</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;直接由微指令的<strong>下地址字段</strong>指出 (<strong>断定法</strong>)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;根据机器指令的<strong>操作码</strong>形成</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;<strong>增量计数器</strong>:&nbsp;即(CMAR) --&gt; CMAR</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4)&nbsp;根据各种<strong>标志</strong>决定微指令分支转移的地址</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5)&nbsp;由硬件产生<strong>微程序入口地址</strong>:&nbsp;响应中断时</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 6)&nbsp;通过测试网络</p> 
+         <p><strong>后续微指令地址形成方式的原理图:</strong></p> 
+         <p class="img-center"><img alt="" height="400" src="https://i-blog.csdnimg.cn/blog_migrate/ffbb6534ba53c34078b13f0ea31dd653.png" width="482"></p> 
+         <p><strong>微程序控制单元的设计步骤:</strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 写出对应机器指令的微操作命令及节拍安排</strong></p> 
+         <p><strong>如取指周期的微操作命令及节拍安排示意图:</strong></p> 
+         <p><img alt="" height="488" src="https://i-blog.csdnimg.cn/blog_migrate/a06e376e30232eeab04c118319d78245.png" width="1200"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 确定微指令格式:</strong>&nbsp;确定微指令的<strong>编码方式</strong>,&nbsp;以确定微指令的操作<strong>控制字段位数</strong>,&nbsp;根据CM中存的<strong>微指令总数</strong>,&nbsp;确定微指令的<strong>顺序控制字段的位数</strong>,&nbsp;最后可确定微指令字长。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) 编写微指令码点:&nbsp;</strong>根据操作字段每一位代表的微操作命令,&nbsp;编写每一条微指令的码点。</p> 
+         <h3 id="7.4%C2%A0%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF">7.4&nbsp;指令流水线</h3> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;&nbsp;时间并行:&nbsp;</strong>流水线技术,&nbsp;将一个任务分解成几个不同的子阶段,&nbsp;每个子阶段在不同功能部件上并行。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>空间并行:</strong>&nbsp;硬件资源的重复,&nbsp;如超标量处理机。</p> 
+         <p><strong>流水线对指令集的要求:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;指令长度尽量一致</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;<strong>采用LOAD/STORE访存</strong>,&nbsp;其他指令不能访存</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;数据和指令在存储器中<strong>按边界对齐</strong>存放</p> 
+         <p><strong>指令的串行执行:</strong></p> 
+         <p><img alt="" height="151" src="https://i-blog.csdnimg.cn/blog_migrate/c66f6a5fbd414df9492bff51401954f1.png" width="1200"></p> 
+         <p><strong>指令的六级流水:</strong></p> 
+         <p><img alt="" height="618" src="https://i-blog.csdnimg.cn/blog_migrate/8098f304676c1b1fc3001d8d27da5cbb.png" width="1200"></p> 
+         <p><strong>五段式指令流水线图:</strong></p> 
+         <p><img alt="" height="551" src="https://i-blog.csdnimg.cn/blog_migrate/f768e0a16c6cf4ca12492b1f6c8f6f9b.png" width="1075"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;&nbsp;备注:&nbsp;</strong>无条件转移指令修改PC值发生在五段流水线的<span style="color:#fe2c24;"><strong>第三</strong></span>阶段。条件转移指令修改PC值发生在五段流水线的<span style="color:#fe2c24;"><strong>第四</strong></span>阶段。</p> 
+         <h4 id="7.4.1%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><strong>7.4.1流水线性能指标</strong></h4> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 1) 吞吐率:</strong>&nbsp;指单位时间内流水线所完成的任务数量,&nbsp;或是输出结果的数量。</p> 
+         <p><strong>理想的流水线时空图:</strong></p> 
+         <p><img alt="" height="683" src="https://i-blog.csdnimg.cn/blog_migrate/22f50fdcfbdf18f72fe73bd5ad0e62bf.png" width="1200"></p> 
+         <p><strong>&nbsp; &nbsp; &nbsp; &nbsp; 2) 加速比:&nbsp;</strong>同样的任务量,&nbsp;不使用流水线与使用流水线所用的时间之比</p> 
+         <p><strong>理想状态下的流水线图:&nbsp;</strong></p> 
+         <p><img alt="" height="625" src="https://i-blog.csdnimg.cn/blog_migrate/406934e19716459373947a3dd9ca61b3.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;3)&nbsp;效率:&nbsp;</strong>流水线的设备利用率,&nbsp;完成n个任务占用的时空区有效面积与总面积之比</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="358" src="https://i-blog.csdnimg.cn/blog_migrate/6442fee780936cad269eacb2e9b5c0f9.png" width="1016"></p> 
+         <h4 id="7.4.2%20%E5%BD%B1%E5%93%8D%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%80%A7%E8%83%BD%E7%9A%84%E5%9B%A0%E7%B4%A0" style="background-color:transparent;">7.4.2 影响流水线性能的因素</h4> 
+         <p><strong>1) 结构冒险:&nbsp;</strong>不同指令争用同一功能部件产生资源冲突,&nbsp;如访存冲突 (<strong>互斥</strong>)。</p> 
+         <p><img alt="" height="722" src="https://i-blog.csdnimg.cn/direct/a96e4c8b460444ddaa227cf0b2cf2037.png" width="1200"></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>&nbsp;解决方法: </strong></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>1)&nbsp;后一相关暂停一周期;</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 资源重复配置</p> 
+         <p><strong>2) 数据冒险:&nbsp;</strong>读写先后顺序不同,&nbsp;影响计算结果 (<strong>同步</strong>)。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 写后读(RAW):&nbsp;读在写之前,&nbsp;发生数据冒险。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp;<strong> 解决方法:</strong></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;通过硬件或软件来延后冲突的相关指令的执行;&nbsp;一般延后到M(访存段)之后</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) <strong>数据旁路技术:&nbsp;</strong>直接把前一条指令的ALU计算结果作为自己的输入数据(<strong>EX</strong>阶段)</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;<strong>编译优化:</strong>&nbsp;调整指令顺序</p> 
+         <p><strong>3) 控制冒险:&nbsp;</strong>由转移指令引起,&nbsp;使流水线的连续流动被破坏 。</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; <strong>解决方法:</strong></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong> 1)&nbsp;静态预测:</strong>&nbsp;总是预测条件不满足</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong> 2)&nbsp;动态预测:&nbsp;</strong>根据程序执行的历史情况,&nbsp;进行动态预测调整,&nbsp;准确率较高</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3)&nbsp;预取转移成功和不成功两个控制流方向的目标指令</p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4)&nbsp;加快和提前形成条件码</p> 
+         <h4 id="7.4.3%C2%A0%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%8F%91%E6%8A%80%E6%9C%AF">7.4.3&nbsp;流水线中的多发技术</h4> 
+         <p id="3.6.1%20%E8%B6%85%E6%A0%87%E9%87%8F%E6%8A%80%E6%9C%AF"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;超标量技术</strong>: 指在每个时钟周期内可<strong>同时并发</strong>多条独立指令,&nbsp;即以并行操作方式将两条或两条以上指令编译执行。<strong>需要配置多个功能部件</strong>。CPI&lt;1</p> 
+         <p><strong>超标量流水图:</strong></p> 
+         <p><img alt="" height="297" src="https://i-blog.csdnimg.cn/blog_migrate/d62e5793ca00efdcb66cdb0338017d32.png" width="717"></p> 
+         <p id="3.6.2%20%E8%B6%85%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;超流水线技术:&nbsp;</strong>&nbsp;将一些流水寄存器插入流水线段中,&nbsp;好比流水线再分段。<strong>通过提高主频方式, CPI=1。</strong></p> 
+         <p><strong>超流水线图:</strong></p> 
+         <p><img alt="" height="438" src="https://i-blog.csdnimg.cn/blog_migrate/800405c9434b4fc00df5406c6d3ba329.png" width="998"></p> 
+         <p id="3.6.3%20%E8%B6%85%E9%95%BF%E6%8C%87%E4%BB%A4%E5%AD%97%E6%8A%80%E6%9C%AF"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;超长指令字技术</strong>:&nbsp;由编译程序挖掘指令间潜在的并行性, 将多条能并行操作的指令组成一条具有多个操作码字段的超长指令字。<strong>需要多个处理部件</strong></p> 
+         <p><strong>超长指令字图:</strong></p> 
+         <p><img alt="" height="290" src="https://i-blog.csdnimg.cn/blog_migrate/29aea0d4f1be83962d3fabc7313b4173.png" width="692"></p> 
+         <h3 id="5.3%C2%A0%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F">7.5&nbsp;控制方式</h3> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制不同微操作序列所采用的时序控制方式称为<strong> CU</strong> 的控制方式。</p> 
+         </blockquote> 
+         <p id="5.3.1%20%E5%90%8C%E6%AD%A5%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><strong>7.5.1 同步控制方式</strong></p> 
+         <blockquote> 
+          <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>任何一条指令或微操作的执行都是事先确定的,&nbsp;并且受统一基准时标的时序信号所控制的方式。</p> 
+         </blockquote> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1)&nbsp;采用定长的机器周期:</strong>&nbsp;一律以最长的微操作序列和最繁的微操作作为标准,&nbsp;会造成时间上的浪费。</p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2)&nbsp;采用不定长的机器周期:&nbsp;</strong>把大多数微操作安排在一个较短的机器周期内完成,&nbsp;对于复杂微操作,&nbsp;采用延长机器周期或增加节拍的办法来解决&nbsp;</p> 
+         <p><strong>延长机器周期示意图:</strong></p> 
+         <p><img alt="" height="309" src="https://i-blog.csdnimg.cn/blog_migrate/1d3e51609805d5fe0c90da5414ce87c9.png" width="1052"></p> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3)&nbsp;采用中央控制和局部控制相结合的方法:</strong>&nbsp;将机器的大部分指令安排在统一的,&nbsp;较短的机器周期内完成,&nbsp;称为中央控制,&nbsp;将少数操作复杂的指令中的某些操作 (如: 乘除法和浮点运算) 采用局部控制方式来完成。</p> 
+         <p><strong>示意图:</strong></p> 
+         <p><img alt="" height="744" src="https://i-blog.csdnimg.cn/blog_migrate/a019a9e1dfe444b06c61cdea4d51b96b.png" width="1200"></p> 
+         <p id="5.3.2%20%E5%BC%82%E6%AD%A5%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><strong>7.5.2 异步控制方式</strong></p> 
+         <blockquote> 
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不存在基准时标信号,&nbsp;没有固定的周期节拍和严格的时钟同步, 由专门的应答线路控制,&nbsp;即执行部件完成操作后发回 "回答" 信号,再开始新的微操作,&nbsp;需要采用各种应答电路,&nbsp;较同步控制方式复杂。</p> 
+         </blockquote> 
+         <p id="5.3.3%C2%A0%20%E8%81%94%E5%90%88%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><strong>7.5.3 联合控制方式</strong></p> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp; 同步控制和异步控制相结合,&nbsp;对各种不同指令的微操作实行大部分统一,&nbsp;小部分区别对待的办法。</p> 
+         </blockquote> 
+         <p id="5.3.4%C2%A0%E4%BA%BA%E5%B7%A5%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><strong>7.5.4&nbsp;人工控制方式</strong></p> 
+         <blockquote> 
+          <p>&nbsp; &nbsp; &nbsp; &nbsp; 为了调机和软件开发的需要,&nbsp;在机器面板或内部设置一些开关或按键,&nbsp;来达到人工控制的目的。</p> 
+         </blockquote> 
+         <p></p> 
+         <p><strong><span style="color:#fe2c24;">注:&nbsp;以上部分图片来源王道计算机组成原理教材&nbsp;</span></strong></p> 
+        </div> 
+       </div> 
+      </article>   
+      <img src="https://img-home.csdnimg.cn/images/20211209110851.png" alt="pdf_watermark" width="0" height="0" style="display: none"> 
+      <div class="print_watermark"></div> 
+      <div class="print_watermark_info"> 
+       <p>内容来源：csdn.net</p> 
+       <p>作者昵称：我要的图文并茂</p> 
+       <p>原文链接：https://blog.csdn.net/s6664/article/details/132120415</p> 
+       <p>作者主页：https://blog.csdn.net/s6664</p> 
+      </div> 
+      <style>
+    .print_watermark, .print_watermark_info {
+      display: none
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        color-adjust: exact; /* Firefox */
+        background-image: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact;
+      }
+      .blog-content-box {
+        padding: 0;
+      }
+      .blog-content-box .article-header .article-info-box > div:not(.article-bar-top){
+        display: none !important;
+      }
+      .blog-content-box .article-header .article-info-box  .article-bar-top img{
+          display:none
+      }
+      .blog-content-box .article-header .article-info-box > .article-bar-top .bar-content > *:not(.follow-nickName):not(.time){
+          display: none !important;
+      }
+      .print_watermark {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        background-image: url('https://img-home.csdnimg.cn/images/20211209110851.png');
+        background-size: 180px auto;
+        background-repeat: repeat;
+      }
+      .print_watermark_info {
+        display: block;
+        position: fixed;
+        bottom: 16px;
+        right: 0;
+        z-index: 1000;
+        color: #e8e8ed;
+        font-size: 12px;
+        ocapity: .5
+      }
+      @page {
+        margin: 0 10mm 10mm;
+        size: landscape;
+      }
+      body, article {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #csdn-toolbar,.main_father > *:not(#mainBox), .csdn-side-toolbar, .main_father aside {
+        display: none !important;
+      }
+      .main_father > #mainBox {
+        width: unset
+      }
+      .main_father > #mainBox > main > *:not(.blog-content-box){
+        display: none !important;
+      }
+    }
+  </style> 
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/s6664"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/ed151bd4e9274d94bf4ea293ff0e2856_s6664.jpg!1"> <span class="profile-name"> 我要的图文并茂 </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;关注&quot;}">关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 111 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="951" id="get-collection"> 951 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 4 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-downloadpdf" id="tool-downloadpdf"> <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> </a> 
+          <div class="tool-hover-tip">
+           <span class="text">导出PDF</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> <span class="count">导出PDF</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="12249066" data-free="true" data-description="" data-subscribe="false" data-title="计算机组成原理" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/s6664/category_12249066.html" data-sum="6" data-people="15" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>   
+     <a id="commentBox" name="commentBox"></a> 
+     <div id="pcCommentBox" class="comment-box comment-box-new2 login-comment-box-new" style="display:none"> 
+      <div class="has-comment" style="display:block"> 
+       <div class="one-line-box"> 
+        <div class="has-comment-tit go-side-comment"> 
+         <span class="count">4</span>&nbsp;条评论 
+        </div> 
+        <div class="has-comment-con comment-operate-item"></div> 
+        <a class="has-comment-bt-right go-side-comment focus">写评论</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="first-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://devpress.csdn.net/v1/article/detail/124962455" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://devpress.csdn.net/v1/article/detail/124962455" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>计算机组成原理</em>（ 程序员必学简化版 ）
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/weixin_48720080" target="_blank"><span class="blog-title">拥抱白菜的猪博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">05-26</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 4万+ </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://devpress.csdn.net/v1/article/detail/124962455" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           <em>计算机组成原理</em>，程序员必掌握的基础知识。
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>  
+     <div class="second-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_64649189/article/details/126629756" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-126629756-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_64649189/article/details/126629756&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/qq_64649189/article/details/126629756" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-126629756-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_64649189/article/details/126629756&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-126629756-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-126629756-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>计算机组成原理</em>
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/qq_64649189" target="_blank"><span class="blog-title">qq_64649189的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">08-31</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 2659 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/qq_64649189/article/details/126629756" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-126629756-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_64649189/article/details/126629756&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-126629756-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-126629756-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           <em>计算机组成原理</em>
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="recommend-box insert-baidu-box  recommend-highlight-default"> 
+      <div class="recommend-item-box no-index" style="display:none"></div> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/hxj_686/article/details/143079264" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-143079264-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/hxj_686/article/details/143079264&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/hxj_686/article/details/143079264" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-143079264-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/hxj_686/article/details/143079264&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-143079264-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-143079264-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            最完整的
+            <em>计算机组成原理</em>知识点梳理（计组期末复习）
+           </div> 
+           <div class="tag">
+            最新发布
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/hxj_686" target="_blank"><span class="blog-title">hxj_686的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">10-19</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 5482 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/hxj_686/article/details/143079264" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-143079264-blog-132120415.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129923311_59024\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129923311_59024&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/hxj_686/article/details/143079264&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-143079264-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-143079264-blog-132120415.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           cache能提高访问速度，大容量辅存可以缓解主存容量不足的问题，可以提高存储系统的访问速度，缓解cpu与主存，主存与赋存的的性能差异，构建出满足需求的存储容量大，存取速度快，成本低的存储系统。直接寻址的寻址范围和地址码有关，形式地址就是有效地址，地址码的范围就是寻址范围，也就是无符号数的有效范围0~2**n -1。5、西文字符（一个字节表示，字母和数字的标准 ASCII 码都是按顺序编码的，5、掌握动态 RAM 的刷新，知道有哪三种，会求各种方式下的“死区”的时间；每个芯片的型号、译码器的型号等，
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="blog-footer-bottom" style="margin-top:10px;"></div>   
+    </main> 
+    <aside class="blog_container_aside"> 
+     <div id="asideProfile" class="aside-box"> 
+      <div class="profile-intro d-flex"> 
+       <div class="avatar-box d-flex justify-content-center flex-column"> 
+        <a href="https://blog.csdn.net/s6664" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4121&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/ed151bd4e9274d94bf4ea293ff0e2856_s6664.jpg!1" class="avatar_pic"> </a> 
+       </div> 
+       <div class="user-info d-flex flex-column profile-intro-name-box"> 
+        <div class="profile-intro-name-boxTop"> 
+         <a href="https://blog.csdn.net/s6664" target="_blank" class="" id="uid" title="我要的图文并茂" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4122&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664&quot;,&quot;ab&quot;:&quot;new&quot;}"> <span class="name " username="s6664">我要的图文并茂</span> </a> 
+         <span> </span> 
+         <span class="flag expert-blog"> <span class="bubble">CSDN认证博客专家</span> </span> 
+         <span class="flag company-blog"> <span class="bubble">CSDN认证企业博客</span> </span> 
+        </div> 
+        <div class="profile-intro-name-boxFooter"> 
+         <span class="personal-home-page personal-home-years" title="已加入 CSDN 6年">码龄6年</span> 
+         <span class="personal-home-page"> <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证"> <img src="https://csdnimg.cn/identity/nocErtification.png" alt=""> 暂无认证 </a> </span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="30"> 
+        <a href="https://blog.csdn.net/s6664" data-report-click="{&quot;mod&quot;:&quot;1598321000_001&quot;,&quot;spm&quot;:&quot;3001.4310&quot;}" data-report-query="t=1"> 
+         <dt>
+          <span class="count">30</span>
+         </dt> 
+         <dd class="font">
+          原创
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" data-report-click="{&quot;mod&quot;:&quot;1598321000_002&quot;,&quot;spm&quot;:&quot;3001.4311&quot;}" title="10862"> 
+        <a href="https://blog.csdn.net/rank/list/weekly" target="_blank"> 
+         <dt>
+          <span class="count">1万+</span>
+         </dt> 
+         <dd class="font">
+          周排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" title="19191"> 
+        <a href="https://blog.csdn.net/rank/list/total" data-report-click="{&quot;mod&quot;:&quot;1598321000_003&quot;,&quot;spm&quot;:&quot;3001.4312&quot;}" target="_blank"> 
+         <dt>
+          <span class="count">1万+</span>
+         </dt> 
+         <dd class="font">
+          总排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" style="min-width:58px" title="173512"> 
+        <dt>
+         <span class="count">17万+</span>
+        </dt> 
+        <dd>
+         访问
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="4级,点击查看等级说明"> 
+        <dt>
+         <a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank"> <img class="level" src="https://csdnimg.cn/identity/blog4.png"> </a> 
+        </dt> 
+        <dd>
+         等级
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="item-rank"></div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="1453"> 
+        <dt>
+         <span class="count">1453</span>
+        </dt> 
+        <dd>
+         积分
+        </dd> 
+       </dl> 
+       <dl class="text-center" id="fanBox" title="932"> 
+        <dt>
+         <span class="count" id="fan">932</span>
+        </dt> 
+        <dd>
+         粉丝
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="1054"> 
+        <dt>
+         <span class="count">1054</span>
+        </dt> 
+        <dd>
+         获赞
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="43"> 
+        <dt>
+         <span class="count">43</span>
+        </dt> 
+        <dd>
+         评论
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="8114"> 
+        <dt>
+         <span class="count">8114</span>
+        </dt> 
+        <dd>
+         收藏
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="aside-box-footer" data-report-view="{&quot;spm&quot;:&quot;3001.4296&quot;}"> 
+       <div class="badge-box d-flex"> 
+        <div class="badge d-flex"> 
+         <div class="icon-badge" title="新秀勋章"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/xinxiu@240.png" alt="新秀勋章"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="五一创作勋章"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/51_create.png" alt="五一创作勋章"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="创作能手"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/qixiebiaobing4@240.png" alt="创作能手"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="阅读者勋章"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/yuedu7@240.png" alt="阅读者勋章"> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="profile-intro-name-boxOpration"> 
+       <div class="opt-letter-watch-box"> 
+        <a rel="noopener" class="bt-button personal-letter" href="https://im.csdn.net/chat/s6664" target="_blank">私信</a> 
+       </div> 
+       <div class="opt-letter-watch-box"> 
+        <a class="personal-watch bt-button" id="btnAttent">关注</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="swiper-slide-box-remuneration"> 
+      <a data-report-click="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" data-report-view="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" href="https://ai.csdn.net/" target="_blank"> <img src="https://i-operation.csdnimg.cn/images/2dd892a9769b4cce9c086db94eab887f.png" alt=""> </a> 
+     </div> 
+     <div id="asideSearchArticle" class="aside-box"> 
+      <div class="aside-content search-comter"> 
+       <div class="aside-search aside-search-blog"> 
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章"> 
+        <a class="btn-search-blog" data-report-click="{&quot;spm&quot;:&quot;3001.9182&quot;}"> <img src="https://csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042"> </a> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">热门文章</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/s6664/article/details/131201230" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230&quot;,&quot;ab&quot;:&quot;new&quot;}"> 数据结构(全) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">92217</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/s6664/article/details/132120415" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/132120415&quot;,&quot;ab&quot;:&quot;new&quot;}"> 计算机组成原理(全) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">27127</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/s6664/article/details/131762041" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131762041&quot;,&quot;ab&quot;:&quot;new&quot;}"> 计算机网络(全) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">19120</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/s6664/article/details/131578970" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131578970&quot;,&quot;ab&quot;:&quot;new&quot;}"> 操作系统(全) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">12695</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/s6664/article/details/124388322" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/124388322&quot;,&quot;ab&quot;:&quot;new&quot;}"> Java的基本程序设计 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">2168</span> </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideCategory" class="aside-box flexible-box"> 
+      <h3 class="aside-title">分类专栏</h3> 
+      <div class="aside-content"> 
+       <ul> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12916898.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12916898.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 人工智能 </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12249066.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12249066.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 计算机组成原理 </span> </a> <span class="special-column-num">6篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_11949177.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_11949177.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 计算机网络 </span> </a> <span class="special-column-num">6篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12185156.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12185156.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 操作系统 </span> </a> <span class="special-column-num">5篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12015800.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12015800.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> JavaEE </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_11785599.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_11785599.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Java语法 </span> </a> <span class="special-column-num">7篇</span> </li> 
+       </ul> 
+      </div> 
+      <p class="text-center"> <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a> </p> 
+     </div> 
+     <div id="asideNewComments" class="aside-box"> 
+      <h3 class="aside-title">最新评论</h3> 
+      <div class="aside-content"> 
+       <ul class="newcomment-list"> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/s6664/article/details/131201230#comments_36543834" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36543834&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36543834&quot;,&quot;ab&quot;:&quot;new&quot;}">数据结构(全)</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/s6664" class="user-name" target="_blank">我要的图文并茂: </a> <span class="code-comments">推荐当笔记来看，对概念定义没有深究，重点主要是算法和数据结构的思想，文章默认学过一遍再看比较合适，对于小白不利于自学</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/s6664/article/details/131201230#comments_36354846" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36354846&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36354846&quot;,&quot;ab&quot;:&quot;new&quot;}">数据结构(全)</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/m0_66308837" class="user-name" target="_blank">在报错的路上: </a> <span class="code-comments">你是对的</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/s6664/article/details/131201230#comments_36349200" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36349200&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_36349200&quot;,&quot;ab&quot;:&quot;new&quot;}">数据结构(全)</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/lili96107147" class="user-name" target="_blank">lili96107147: </a> <span class="code-comments">你是我的神<img src="https://g.csdnimg.cn/static/face/emoji/029.png" alt="表情包"></span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/s6664/article/details/131201230#comments_35747397" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_35747397&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_35747397&quot;,&quot;ab&quot;:&quot;new&quot;}">数据结构(全)</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/2401_83186388" class="user-name" target="_blank">愤怒的码农66: </a> <span class="code-comments">2.5求模式串的next数组，不应该是001234吗？</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/s6664/article/details/131201230#comments_35747385" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_35747385&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/131201230#comments_35747385&quot;,&quot;ab&quot;:&quot;new&quot;}">数据结构(全)</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/2401_83186388" class="user-name" target="_blank">愤怒的码农66: </a> <span class="code-comments">我也觉得，应该＝二叉树右指针-1吧</span> </p> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">大家在看</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/zyh15076752858/article/details/146547518" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zyh15076752858/article/details/146547518&quot;,&quot;strategy&quot;:&quot;202_1052723-2615339_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zyh15076752858/article/details/146547518&quot;,&quot;strategy&quot;:&quot;202_1052723-2615339_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> redis分片集群的部署 </a> </li> 
+        <li> <a href="https://blog.csdn.net/plmm__/article/details/146569195" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/plmm__/article/details/146569195&quot;,&quot;strategy&quot;:&quot;202_1052723-2615312_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/plmm__/article/details/146569195&quot;,&quot;strategy&quot;:&quot;202_1052723-2615312_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 在 RK3588 多线程推理 YOLO 时，同时开启硬件解码和 RGA 加速的性能分析 </a> </li> 
+        <li> <a href="https://blog.csdn.net/cainiao080605/article/details/146467479" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/cainiao080605/article/details/146467479&quot;,&quot;strategy&quot;:&quot;202_1052723-2615124_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/cainiao080605/article/details/146467479&quot;,&quot;strategy&quot;:&quot;202_1052723-2615124_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> Flink实时数仓搭建：日均百亿级数据处理 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">961</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/zhihao501/article/details/146588817" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zhihao501/article/details/146588817&quot;,&quot;strategy&quot;:&quot;202_1052723-2615588_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zhihao501/article/details/146588817&quot;,&quot;strategy&quot;:&quot;202_1052723-2615588_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 2025年计算机毕业设计springboot创新创业评审系统 </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_48502062/article/details/146548353" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_48502062/article/details/146548353&quot;,&quot;strategy&quot;:&quot;202_1052723-2615587_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_48502062/article/details/146548353&quot;,&quot;strategy&quot;:&quot;202_1052723-2615587_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 2025-03-28：超级饮料的最大强化能量。用go语言，你有两个整数数组 energyDrinkA 和 energyDrinkB，它们的长度都是 n，分别表示 A 和 B 两种能量饮料在每小时提供的 </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideArchive" class="aside-box" style="display:block!important; width:300px;"> 
+      <h3 class="aside-title">最新文章</h3> 
+      <div class="aside-content"> 
+       <ul class="inf_list clearfix"> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/s6664/article/details/145857507" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145857507&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145857507&quot;,&quot;ab&quot;:&quot;new&quot;}">机器学习(吴恩达)</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/s6664/article/details/145665905" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145665905&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145665905&quot;,&quot;ab&quot;:&quot;new&quot;}">数据库系统概念</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/s6664/article/details/145140678" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145140678&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/article/details/145140678&quot;,&quot;ab&quot;:&quot;new&quot;}">Git的使用</a> </li> 
+       </ul> 
+       <div class="archive-bar"></div> 
+       <div class="archive-box"> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/s6664?type=blog&amp;year=2025&amp;month=03" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664?type=blog&amp;year=2025&amp;month=03&quot;}"><span class="year">2025年</span><span class="num">3篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/s6664?type=blog&amp;year=2023&amp;month=08" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664?type=blog&amp;year=2023&amp;month=08&quot;}"><span class="year">2023年</span><span class="num">14篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/s6664?type=blog&amp;year=2022&amp;month=09" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664?type=blog&amp;year=2022&amp;month=09&quot;}"><span class="year">2022年</span><span class="num">13篇</span></a>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 详情页显示目录 --> 
+     <!--文章目录--> 
+     <div id="asidedirectory" class="aside-box"> 
+      <div class="groupfile" id="directory"> 
+       <h3 class="aside-title">目录</h3> 
+       <div class="align-items-stretch group_item"> 
+        <div class="pos-box"> 
+         <div class="scroll-box"> 
+          <div class="toc-box"></div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside>    
+   </div> 
+   <div class="recommend-right align-items-stretch clearfix" id="rightAside" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div class="rightside-fixed-hide"> 
+      <div class="recommend-column-box aside-box"> 
+       <h3 class="aside-title">相关专栏 </h3> 
+       <div class="aside-content"> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/qq_56012214/category_12282494.html" title="计算机组成原理" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_56012214/category_12282494.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;0\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_56012214/category_12282494.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;0\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/4e6a5160c63a16aed96933ce2b23bed2.png?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="计算机组成原理" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">计算机组成原理</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">3 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="考研计算机组成原理">考研计算机组成原理</p> </a> 
+        </div> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/qq_51625007/category_12034060.html" title="计算机组成原理习题&amp;实验" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_51625007/category_12034060.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;1\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_51625007/category_12034060.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;1\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/93b4cecfa8455f24625573e18a314ca7.png?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="计算机组成原理习题&amp;实验" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">计算机组成原理习题&amp;实验</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">21 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="西安邮电大学
+计科20级
+计算机组成原理
+2022年9月~2023年1月">西安邮电大学 计科20级 计算机组成原理 2022年9月~2023年1月</p> </a> 
+        </div> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/jmilk/category_11731305.html" title="软硬件融合加速技术专栏" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/jmilk/category_11731305.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;2\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/jmilk/category_11731305.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;132120415\&quot;,\&quot;recommendCount\&quot;:\&quot;15\&quot;,\&quot;index\&quot;:\&quot;2\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/090033d7ae7265460e3200d62fbd799b.jpeg?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="软硬件融合加速技术专栏" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">软硬件融合加速技术专栏</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">162 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="软硬件融合加速技术专栏系列文章。">软硬件融合加速技术专栏系列文章。</p> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="recommend-right"> 
+      <div class="flex-column aside-box groupfile" id="groupfile"> 
+       <div class="groupfile-div"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="aside-box kind_person d-flex flex-column"> 
+       <h3 class="aside-title">分类专栏</h3> 
+       <div class="align-items-stretch kindof_item" id="kind_person_column"> 
+        <div class="aside-content"> 
+         <ul> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12916898.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12916898.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 人工智能 </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12249066.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12249066.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 计算机组成原理 </span> </a> <span class="special-column-num">6篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_11949177.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_11949177.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 计算机网络 </span> </a> <span class="special-column-num">6篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12185156.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12185156.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 操作系统 </span> </a> <span class="special-column-num">5篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_12015800.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_12015800.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> JavaEE </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/s6664/category_11785599.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/s6664/category_11785599.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Java语法 </span> </a> <span class="special-column-num">7篇</span> </li> 
+         </ul> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div class="comment-side-box-shadow comment-side-tit-close" id="commentSideBoxshadow"> 
+   <div class="comment-side-content"> 
+    <div class="comment-side-tit"> 
+     <div class="comment-side-tit-count">
+      评论&nbsp;
+      <span class="count">4</span>
+     </div> 
+     <img class="comment-side-tit-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png">
+    </div> 
+    <div id="pcCommentSideBox" class="comment-box comment-box-new2 " style="display:block"> 
+     <div class="comment-edit-box d-flex"> 
+      <div class="user-img"> 
+       <a href="https://blog.csdn.net/2401_84444578" target="_blank"> <img src="https://profile-avatar.csdnimg.cn/default.jpg!1"> </a> 
+      </div> 
+      <form id="commentform"> 
+       <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="欢迎高质量的评论，低质的评论会被折叠" maxlength="1000"></textarea> 
+       <div class="comment-reward-box" style="background-image: url('https://img-home.csdnimg.cn/images/20230131025301.png');"> 
+        <a class="btn-remove-reward"></a> 
+        <div class="form-reward-box"> 
+         <div class="info">
+           成就一亿技术人! 
+         </div> 
+         <div class="price-info">
+           拼手气红包
+          <span class="price">6.0元</span> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="comment-operate-box"> 
+        <div class="comment-operate-l"> 
+         <span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span> 
+        </div> 
+        <div class="comment-operate-c">
+          &nbsp; 
+        </div> 
+        <div class="comment-operate-r"> 
+         <div class="comment-operate-item comment-reward"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentReward.png" alt="红包"> 
+          <span class="comment-operate-tip">添加红包</span> 
+         </div> 
+         <div class="comment-operate-item comment-emoticon"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentEmotionIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">插入表情</span> 
+          <div class="comment-emoticon-box comment-operate-isshow"> 
+           <div class="comment-emoticon-img-box"></div> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item comment-code"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentCodeIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">代码片</span> 
+          <div class="comment-code-box comment-operate-isshow"> 
+           <ul id="commentCode"> 
+            <li><a data-code="html">HTML/XML</a></li> 
+            <li><a data-code="objc">objective-c</a></li> 
+            <li><a data-code="ruby">Ruby</a></li> 
+            <li><a data-code="php">PHP</a></li> 
+            <li><a data-code="csharp">C</a></li> 
+            <li><a data-code="cpp">C++</a></li> 
+            <li><a data-code="javascript">JavaScript</a></li> 
+            <li><a data-code="python">Python</a></li> 
+            <li><a data-code="java">Java</a></li> 
+            <li><a data-code="css">CSS</a></li> 
+            <li><a data-code="sql">SQL</a></li> 
+            <li><a data-code="plain">其它</a></li> 
+           </ul> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item"> 
+          <input type="hidden" id="comment_replyId" name="comment_replyId"> 
+          <input type="hidden" id="article_id" name="article_id" value="132120415"> 
+          <input type="hidden" id="comment_userId" name="comment_userId" value=""> 
+          <input type="hidden" id="commentId" name="commentId" value=""> 
+          <a data-report-click="{&quot;mod&quot;:&quot;1582594662_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4227&quot;,&quot;ab&quot;:&quot;new&quot;}"> <input type="submit" class="btn-comment btn-comment-input" value="评论"> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </form> 
+     </div> 
+     <div class="comment-list-container"> 
+      <div class="comment-list-box comment-operate-item"> 
+      </div> 
+      <div id="lookGoodComment" class="look-good-comment side-look-comment"> 
+       <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+      </div> 
+      <div id="lookFlodComment" class="look-flod-comment"> 
+       <span class="count"></span>&nbsp;条评论被折叠&nbsp;
+       <a class="look-more-flodcomment">查看</a> 
+      </div> 
+      <div class="opt-box text-center"> 
+       <div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div> 
+      </div> 
+     </div> 
+    </div> 
+    <div id="pcFlodCommentSideBox" class="pc-flodcomment-sidebox"> 
+     <div class="comment-fold-tit">
+      <span id="lookUnFlodComment" class="back"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png" alt=""></span>被折叠的&nbsp;
+      <span class="count"></span>&nbsp;条评论 
+      <a href="https://blogdev.blog.csdn.net/article/details/122245662" class="tip" target="_blank">为什么被折叠?</a> 
+      <a href="https://bbs.csdn.net/forums/FreeZone" class="park" target="_blank"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png">到【灌水乐园】发言</a> 
+     </div> 
+     <div class="comment-fold-content"></div> 
+     <div id="lookBadComment" class="look-bad-comment side-look-comment"> 
+      <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="comment-rewarddialog-box"> 
+    <div class="form-box"> 
+     <div class="title-box">
+       添加红包 
+      <a class="btn-form-close"></a> 
+     </div> 
+     <form id="commentRewardForm"> 
+      <div class="ipt-box"> 
+       <label for="txtName">祝福语</label> 
+       <div class="ipt-btn-box"> 
+        <input type="text" name="name" id="txtName" autocomplete="off" maxlength="50"> 
+        <a class="btn-ipt btn-random"></a> 
+       </div> 
+       <p class="notice">请填写红包祝福语或标题</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtSendAmount">红包数量</label> 
+       <div class="ipt-txt-box"> 
+        <input type="text" name="sendAmount" maxlength="4" id="txtSendAmount" placeholder="请填写红包数量(最小10个)" autocomplete="off"> 
+        <span class="after-txt">个</span> 
+       </div> 
+       <p class="notice">红包个数最小为10个</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtMoney">红包总金额</label> 
+       <div class="ipt-txt-box error"> 
+        <input type="text" name="money" maxlength="5" id="txtMoney" placeholder="请填写总金额(最低5元)" autocomplete="off"> 
+        <span class="after-txt">元</span> 
+       </div> 
+       <p class="notice">红包金额最低5元</p> 
+      </div> 
+      <div class="balance-info-box"> 
+       <label>余额支付</label> 
+       <div class="balance-info">
+         当前余额
+        <span class="balance">3.43</span>元 
+        <a href="https://i.csdn.net/#/wallet/balance/recharge" class="link-charge" target="_blank">前往充值 &gt;</a> 
+       </div> 
+      </div> 
+      <div class="opt-box"> 
+       <div class="pay-info">
+         需支付：
+        <span class="price">10.00</span>元 
+       </div> 
+       <button type="button" class="ml-auto btn-cancel">取消</button> 
+       <button type="button" class="ml8 btn-submit" disabled="true">确定</button> 
+      </div> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="rr-guide-box"> 
+    <div class="rr-first-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png" alt=""> 
+     <button class="btn-guide-known next">下一步</button> 
+    </div> 
+    <div class="rr-second-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png" alt=""> 
+     <button class="btn-guide-known known">知道了</button> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="redEnvolope" id="redEnvolope"> 
+   <div class="env-box"> 
+    <div class="env-container"> 
+     <div class="pre-open" id="preOpen"> 
+      <div class="top"> 
+       <header> 
+        <img class="clearTpaErr" :src="redpacketAuthor.avatar" alt=""> 
+        <div class="author">
+         成就一亿技术人!
+        </div> 
+       </header> 
+       <div class="bot-icon"></div> 
+      </div> 
+      <footer> 
+       <div class="red-openbtn open-start"></div> 
+       <div class="tip">
+         领取后你会自动成为博主和红包主的粉丝 
+        <a class="rule" target="_blank">规则</a> 
+       </div> 
+      </footer> 
+     </div> 
+     <div class="opened" id="opened"> 
+      <div class="bot-icon"> 
+       <header> 
+        <a class="creatorUrl" href="" target="_blank"> <img class="clearTpaErr" src="https://profile-avatar.csdnimg.cn/default.jpg!2" alt=""> </a> 
+        <div class="author"> 
+         <div class="tt">
+          hope_wisdom
+         </div> 发出的红包 
+        </div> 
+       </header> 
+      </div> 
+      <div class="receive-box"> 
+       <header></header> 
+       <div class="receive-list"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="close-btn"></div> 
+   </div> 
+  </div> 
+  <div class="pay-code"> 
+   <div class="pay-money">
+    实付
+    <span class="pay-money-span" data-nowprice="" data-oldprice="">元</span>
+   </div> 
+   <div class="content-blance">
+    <a class="blance-bt" href="javascript:;">使用余额支付</a>
+   </div> 
+   <div class="content-code"> 
+    <div id="payCode" data-id=""> 
+     <div class="renovate"> 
+      <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+      <span>点击重新获取</span> 
+     </div> 
+    </div> 
+    <div class="pay-style">
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span>
+     <span class="text">扫码支付</span>
+    </div> 
+   </div> 
+   <div class="bt-close"> 
+    <svg t="1567152543821" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"> 
+     <defs> 
+      <style type="text/css"></style> 
+     </defs> 
+     <path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path> 
+    </svg> 
+   </div> 
+   <div class="pay-balance"> 
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span> 
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span> 
+    <div class="pay-code-tile"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt=""> 
+     <div class="pay-code-content"> 
+      <div class="span"> 
+       <p class="title">抵扣说明：</p> 
+       <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。</p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span>余额充值</span></a> 
+  </div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div>  
+  <!-- 富文本柱状图  --> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css">                  
+ </body>
+</html>

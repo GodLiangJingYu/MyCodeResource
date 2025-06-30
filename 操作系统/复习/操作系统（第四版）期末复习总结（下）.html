@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/qq_41261490/article/details/80886482"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#">  
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>操作系统（第四版）期末复习总结（下）-CSDN博客</title>  
+  <meta name="keywords" content="操作系统（第四版）期末复习总结（下）"> 
+  <meta name="description" content="文章浏览阅读1.7w次，点赞139次，收藏956次。本文是操作系统第四版的期末复习总结，涵盖了I/O系统的结构，包括微机型和主机型，详细介绍了设备控制器的功能和组成。文章还讨论了设备管理，如设备分配策略、I/O控制方式（中断、DMA、通道）以及缓冲技术的作用和类型。最后，提到了设备分配的静态与动态策略以及假脱机（SPOOLing）系统的特点。
+"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-72afa20676.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-blackboard/skin-blackboard-3adcc2c475.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>      
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">操作系统（第四版）期末复习总结（下）</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a href="https://mall.csdn.net/vip" data-report-query="spm=3001.10404" data-report-click="{&quot;spm&quot;:&quot;3001.10404&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10404&quot;}" class="article-vip-box" target="_blank"><img class="article-vip-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/identityVipNew.png" alt=""></a> 
+           <a class="follow-nickName " href="https://blog.csdn.net/qq_41261490" target="_blank" rel="noopener" title="DiuDiu_yang">DiuDiu_yang</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2022-12-22 16:18:14&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量1.7w</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 956 </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 139 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/qq_41261490/category_7769956.html" target="_blank" rel="noopener">计算机操作系统</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;I/O设备&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;I/O设备\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;I/O设备&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;I/O设备\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=I%2FO%E8%AE%BE%E5%A4%87&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">I/O设备</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;中断方式&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;中断方式\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;中断方式&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;中断方式\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E4%B8%AD%E6%96%AD%E6%96%B9%E5%BC%8F&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">中断方式</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;设备分配&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;设备分配\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;设备分配&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;设备分配\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E8%AE%BE%E5%A4%87%E5%88%86%E9%85%8D&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">设备分配</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;缓冲技术&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;缓冲技术\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;缓冲技术&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;缓冲技术\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E7%BC%93%E5%86%B2%E6%8A%80%E6%9C%AF&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">缓冲技术</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;操作系统&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;操作系统\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">操作系统</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2018-07-02 16:57:59&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/qq_41261490/article/details/80886482" target="_blank">https://blog.csdn.net/qq_41261490/article/details/80886482</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert" class=""></div> 
+      <div class="ai-abstract-box"> 
+       <div class="ai-abstract"> 
+        <div class="abstract-content"> 
+         <img class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png" alt=""> 本文是操作系统第四版的期末复习总结，涵盖了I/O系统的结构，包括微机型和主机型，详细介绍了设备控制器的功能和组成。文章还讨论了设备管理，如设备分配策略、I/O控制方式（中断、DMA、通道）以及缓冲技术的作用和类型。最后，提到了设备分配的静态与动态策略以及假脱机（SPOOLing）系统的特点。 
+        </div> 
+        <p> 摘要生成于 <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-view="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;}}" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;C知道&quot;}}" target="_blank"> C知道</a> ，由 DeepSeek-R1 满血版支持， <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;前往体验&quot;}}" target="_blank"> 前往体验 &gt;</a></p> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views atom-one-dark"> 
+         <p>很多小伙伴私信要word下载，我就整理出来了一份pdf，是和线上的完全一样，建议大家看线上的，因为pdf下载需要收费，但是下载有好处就是可以打印出来复习，各位伙伴自行选择吧。现在这里给出pdf完整下载：&nbsp;<a href="https://download.csdn.net/download/qq_41261490/16011342" title="操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载">操作系统（第四版）期末复习总结.pdf_操作系统复习-OS文档类资源-CSDN下载</a></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80872072" title="操作系统（第四版）期末复习总结（上）">操作系统（第四版）期末复习总结（上）</a></p> 
+         <p><a href="https://blog.csdn.net/qq_41261490/article/details/80875252" title="操作系统（第四版）期末复习总结（中）">操作系统（第四版）期末复习总结（中）</a></p> 
+         <p><strong>衔接我的上两篇博文，之前总结到第五章，这儿继续总结第六章（可进入我的主页看前两篇总结，前面的考点挺多的）</strong></p> 
+         <p><strong>第六章：输入输出系统</strong></p> 
+         <p><strong>1、I/O系统的结构</strong></p> 
+         <p></p> 
+         <ul>
+          <li>微机型I/O系统—I/O设备通过设备控制器链接到总线上，CPU通过设备控制器与相应设备进行通信</li>
+          <li>主机型I/O系统（带通道的I/O系统）—具有通道的I/O系统结构：I/O设备、设备控制器、I/O通道、处理器。</li>
+         </ul> 
+         <p></p> 
+         <p><strong>2、设备控制器—是一个可编址设备，分为字符设备控制器和块设备控制器，是CPU与设备间的接口。</strong></p> 
+         <p></p> 
+         <ul>
+          <li>功能：</li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收和识别命令<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据交换<br> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备状态的了解和报告<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址识别<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据缓冲、差错控制</p> 
+         <p></p> 
+         <p></p> 
+         <p></p> 
+         <ul>
+          <li>设备控制器的组成（三部分）</li>
+         </ul> 
+         <ol>
+          <li>设备控制器与处理机的接口（数据线（数据寄存器、控制/状态寄存器）、地址线、控制线）</li>
+          <li>设备控制器与设备的接口（数据信号、状态信号、控制信号）</li>
+          <li>I/O逻辑：实现对设备的控制</li>
+         </ol> 
+         <p></p> 
+         <p>3、设备管理功能</p> 
+         <p></p> 
+         <ul>
+          <li>监视系统中所有设备的状态</li>
+          <li>设备的分配（相关数据结构、设备分配策略、分配的方式、分配技术和算法等。）</li>
+          <li>I/O控制（<span style="color:#009900;">设备驱动处理（块设备）</span>和<span style="color:#009900;">设备中断处理（字符设备）</span>。）</li>
+         </ul> 
+         <p></p> 
+         <p><strong>4、I/O控制方式</strong></p> 
+         <p></p> 
+         <ul>
+          <li><span style="color:#33cc00;">循环测试I/O方式</span></li>
+          <li><span style="color:#009900;">I/O中断方式</span></li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;优点：<br> 　　&nbsp;&nbsp;&nbsp;&nbsp;CPU利用率大大提高。（相对于忙等待方式）<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺点：<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每台设备每输入/出一个字（节）的数据都有一次中断。如果设备较多时，中断次数会很多，使CPU的计算时间大大减少。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不适合<span style="color:#cc9933;">块设备</span>。中断次数多，效率极低。<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为减少中断对CPU造成的影响，可采用DMA方式和通道方式。</p> 
+         <p></p> 
+         <ul>
+          <li>DMA方式—控制器功能更强，除有中断功能外，还有一个DMA控制器（DMAC）。</li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在DMAC的控制下，设备同主存之间可<span style="color:#cc9933;">成批交换数据</span>，不用CPU干预。</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;DMAC由三部分组成：<span style="color:#3366ff;">主机与DMAC的接口</span>、<span style="color:#3366ff;">DMAC与块设备的接口</span>、<span style="color:#3366ff;">I/O控制逻辑</span>。</p> 
+         <p></p> 
+         <p>PS：中断方式与DMA方式区别</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;中断方式是在<span style="color:#cc6600;">数据缓冲寄存器满后</span>，发中断请求，CPU进行中断处理；DMA方式则是在所要求传送的数据块<span style="color:#cc6600;">全部传送结束时</span>要求CPU进行中断处理；&nbsp;——大大减少了CPU<span style="color:#cc6600;">进行中断处理的次数。</span></p> 
+         <p>&nbsp; &nbsp;中断方式的数据传送是由<span style="color:#ff0000;">CPU控制</span>完成的；DMA方式则是在<span style="color:#ff0000;">DMAC的控制</span>下完成的。</p> 
+         <ul>
+          <li>通道方式</li>
+         </ul> 
+         <p></p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为使CPU从<span style="color:#ff0000;">繁忙的I/O处理中摆脱</span>出来，现代大、中型计算机系统中设置了<span style="color:#ff0000;">专门处理I/O操作</span>的处理机，并把这种处理机称为通道。<span style="color:#330099;">通道=I/O处理机</span></p> 
+         <p></p> 
+         <p><strong>5、缓冲技术</strong></p> 
+         <p>5.1、缓冲技术的实现</p> 
+         <p>提出用缓冲技术来<span style="color:#ff0000;">匹配CPU与设备的速度的差异</span>和<span style="color:#ff0000;">负荷的不均匀</span>，从而提高<span style="color:#ff0000;">处理机与外设的并行程度</span>。<br> 引入缓冲<span style="color:#ff0000;">可缓和CPU与外设的速度差异</span>。</p> 
+         <p>凡是数据到达和离去速度不匹配的地方均可采用缓冲技术<strong>。</strong></p> 
+         <ul>
+          <li><span style="color:#3366ff;">硬件缓冲器</span>，在设备控制器中有硬件缓冲器，通常容量较小。</li>
+          <li><span style="color:#3366ff;">软件缓冲技术</span>是广泛应用的一种缓冲技术，它由<span style="color:#cc9933;">缓冲区</span>和<span style="color:#ff9900;">对缓冲区的管理</span>两部分组成。</li>
+         </ul> 
+         <p></p> 
+         <p>5.2、常用的缓冲技术</p> 
+         <p></p> 
+         <ul>
+          <li>单缓冲 —最简单的一种缓冲形式。当进程发出一I/O请求时，OS在内存中为之分配一缓冲区</li>
+         </ul> 
+         <p></p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/8e893bca82329d13a10f18a6d100ffc7.png"></p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/fcbb27ed1abedcaa0b9eb804336cce40.png"></p> 
+         <ul>
+          <li>双缓冲—设置两个缓冲区buf1和buf2。交替使用两个缓冲区，使CPU和设备的并行操作的程度进一步提高。</li>
+         </ul> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/89a01302a2d4c92d8d6d9efb421f8f86.png"></p> 
+         <p><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/fcad52759305bd39c2a8800a5e1febf5.png"></p> 
+         <ul>
+          <li>环形缓冲 —环形缓冲技术是在主存中分配一组大小相等的存储区作为缓冲区，并将这些缓冲区链接起来。</li>
+          <li>缓冲池—环形缓冲区一般用于特定的进程，属于专用缓冲区，当系统较大时，将会有许多这样的环形缓冲区，这不仅要消耗大量的内存空间，利用率也不高。</li>
+         </ul> 
+         <p><strong><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/d5e2afc9e4a0d7e35939b8ff21def99d.png"></strong></p> 
+         <p><strong>hin、sin、hout、sout为指针</strong></p> 
+         <p></p> 
+         <p><strong>5.3、引入缓冲技术的原因</strong></p> 
+         <p>&nbsp; 提出用缓冲技术来<span style="color:#ff0000;">匹配CPU与设备的速度的差异</span>和<span style="color:#ff0000;">负荷的不均匀</span>，从而提高<span style="color:#ff0000;">处理机与外设的并行程度</span>。<br> 引入缓冲<span style="color:#ff0000;">可缓和CPU与外设的速度差异</span>。</p> 
+         <p>凡是数据到达和离去速度不匹配的地方均可采用缓冲技术。</p> 
+         <p>6、设备分配</p> 
+         <p></p> 
+         <ul>
+          <li>设备分配中的数据结构</li>
+          <li>设备分配方式</li>
+         </ul> 
+         <ol>
+          <li>静态分配</li>
+         </ol> 
+         <p></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 在作业级进行的，当一个作业运行之前由系统一次分配满足需要的全部设备，这些设备一直为该作业占用，直到作业撤消。<br> &nbsp; &nbsp; &nbsp; &nbsp; 设备的利用效率较低</p> 
+         <p></p> 
+         <p>&nbsp; &nbsp; &nbsp; &nbsp; 不会出现死锁</p> 
+         <p>&nbsp; &nbsp; 2.&nbsp; 动态分配 &nbsp;</p> 
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;在进程运行的过程中进行的，当进程需要使用设备时，通过系统调用命令向系统提出设备请求，系统按一定的分配策略给进程分配所需设备，一旦使用完毕立即释放。<br> &nbsp;&nbsp;&nbsp;&nbsp;有利于提高设备的使用效率<br> &nbsp;&nbsp;&nbsp;&nbsp;会出现死锁，应力求避免</p> 
+         <ul>
+          <li>&nbsp;设备分配算法</li>
+         </ul> 
+         <ol>
+          <li>先请求先服务</li>
+          <li>优先级高的优先服务</li>
+         </ol> 
+         <ul>
+          <li>&nbsp;设备分配技术</li>
+         </ul> 
+         <ol>
+          <li>独享分配（打印机、键盘、显示器。磁带机可作为独占设备，也可作为共享设备。）</li>
+          <li>共享分配（磁盘，磁带和磁鼓）</li>
+          <li>虚拟分配（为提高计算机系统的效率，提出了在高速共享设备上模拟低速设备功能的技术，称为虚拟设备技术。）</li>
+         </ol> 
+         <p><strong>7、假脱机（SPOOLing）系统特点</strong></p> 
+         <p></p> 
+         <ul>
+          <li>提高了I/O速度</li>
+          <li>将独占设备改造为共享设备</li>
+          <li>实现了虚拟设备功能</li>
+         </ul> 
+        </div> 
+       </div> 
+      </article>  
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/qq_41261490"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/e5cdb908be774a9f9be3ad72656c8e63_qq_41261490.jpg!1"> <span class="profile-name"> DiuDiu_yang </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">已关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 139 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="956" id="get-collection"> 956 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 1 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode active" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="rewardBtNewHide" data-report-click="{&quot;spm&quot;:&quot;3001.4237&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault reward-bt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="7769956" data-free="true" data-description="" data-subscribe="false" data-title="计算机操作系统" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/qq_41261490/category_7769956.html" data-sum="7" data-people="75" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>    
+     <a id="commentBox" name="commentBox"></a> 
+    </main> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                  
+ </body>
+</html>

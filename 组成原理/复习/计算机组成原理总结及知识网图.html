@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/weixin_42104154/article/details/112854139"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#"> 
+  <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>计算机组成原理总结及知识网图_计算机组成原理传送图-CSDN博客</title>  
+  <meta name="keywords" content="计算机组成原理传送图"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;计算机组成原理传送图&quot;}"> 
+  <meta name="description" content="文章浏览阅读10w+次，点赞1.3k次，收藏1w次。计算机组成原理知识摘要，个人复习整理，仅供参考_计算机组成原理传送图"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-850e130245.min.css">  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin3-template/skin3-template-762f7595fd.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>    
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">计算机组成原理总结及知识网图</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a class="follow-nickName " href="https://blog.csdn.net/weixin_42104154" target="_blank" rel="noopener" title="老邓不想敲代码">老邓不想敲代码</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2022-06-26 11:03:15&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量10w+</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 1w </span> </a> 
+            <div class="read-count-box is-like"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 1.3k </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/weixin_42104154/category_10887237.html" target="_blank" rel="noopener">计算机专业基础</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;其他&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;其他\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;其他&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;其他\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%85%B6%E4%BB%96&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">其他</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2021-01-19 23:55:34&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/weixin_42104154/article/details/112854139" target="_blank">https://blog.csdn.net/weixin_42104154/article/details/112854139</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert"></div> 
+      <div id="blogColumnPayAdvert"> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/weixin_42104154/category_10887237.html" target="_blank" title="计算机专业基础" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://i-blog.csdnimg.cn/columns/default/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">计算机专业基础</span> <span class="dec">专栏收录该内容</span> </span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>6 篇文章</span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-bt articleColumnFreeBt" data-id="10887237">订阅专栏</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="markdown_views prism-atom-one-dark"> 
+         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;"> 
+          <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path> 
+         </svg> 
+         <p></p> 
+         <div class="toc"> 
+          <h4>目录</h4> 
+          <ul>
+           <li>
+            <ul>
+             <li><a href="#_3" rel="nofollow">相关链接</a></li>
+             <li><a href="#__10" rel="nofollow">第一章 计算机系统概述</a></li>
+             <li>
+              <ul>
+               <li><a href="#_12" rel="nofollow">知识网图</a></li>
+               <li><a href="#_15" rel="nofollow">冯诺依曼机的特点：</a></li>
+               <li><a href="#_24" rel="nofollow">不同级别的语言：</a></li>
+               <li><a href="#_29" rel="nofollow">计算机的工作过程：</a></li>
+               <li><a href="#_34" rel="nofollow">计算机的性能指标：</a></li>
+              </ul> </li>
+             <li><a href="#__50" rel="nofollow">第二章 数据的表示和运算</a></li>
+             <li>
+              <ul>
+               <li><a href="#_52" rel="nofollow">知识网图</a></li>
+               <li><a href="#_54" rel="nofollow">在计算机系统内部，所有信息都用二进制进行编码的原因有以下几点：</a></li>
+               <li><a href="#_59" rel="nofollow">有符号的机器表示</a></li>
+              </ul> </li>
+             <li><a href="#__66" rel="nofollow">第三章 存储系统</a></li>
+             <li>
+              <ul>
+               <li><a href="#_68" rel="nofollow">知识网图</a></li>
+               <li><a href="#DRAM_71" rel="nofollow">DRAM刷新方式</a></li>
+               <li><a href="#_84" rel="nofollow">程序访问的局部性原理</a></li>
+               <li><a href="#_93" rel="nofollow">虚拟存储器程序的执行过程</a></li>
+               <li><a href="#_96" rel="nofollow">快表</a></li>
+               <li><a href="#Cache_99" rel="nofollow">虚拟存储器与Cache的比较</a></li>
+              </ul> </li>
+             <li><a href="#__112" rel="nofollow">第四章 指令系统</a></li>
+             <li>
+              <ul>
+               <li><a href="#_113" rel="nofollow">知识网图</a></li>
+               <li><a href="#_115" rel="nofollow">常见指令寻址方式的特点及适用情况：</a></li>
+               <li><a href="#CISCRISC_125" rel="nofollow">CISC与RISC特点</a></li>
+               <li><a href="#CISCRISC_143" rel="nofollow">与CISC相比，RISC的优点：</a></li>
+              </ul> </li>
+             <li><a href="#__149" rel="nofollow">第五章 中央处理器</a></li>
+             <li>
+              <ul>
+               <li><a href="#_150" rel="nofollow">知识网图</a></li>
+               <li><a href="#CPU_152" rel="nofollow">CPU的具体功能</a></li>
+               <li><a href="#_159" rel="nofollow">控制器的工作原理</a></li>
+               <li><a href="#_166" rel="nofollow">控制器的主要功能</a></li>
+               <li><a href="#CPU_171" rel="nofollow">CPU的控制方式</a></li>
+               <li><a href="#_181" rel="nofollow">硬布线控制单元设计步骤：</a></li>
+               <li><a href="#_186" rel="nofollow">硬布线和微程序控制器的特点</a></li>
+              </ul> </li>
+             <li><a href="#__192" rel="nofollow">第六章 总线</a></li>
+             <li>
+              <ul>
+               <li><a href="#_193" rel="nofollow">知识网图</a></li>
+               <li><a href="#4_195" rel="nofollow">总线传输的4个阶段</a></li>
+              </ul> </li>
+             <li><a href="#___202" rel="nofollow">第七章 输入/输出系统</a></li>
+             <li>
+              <ul>
+               <li><a href="#_203" rel="nofollow">知识网图</a></li>
+               <li><a href="#_207" rel="nofollow">程序查询方式的工作流程</a></li>
+               <li><a href="#_216" rel="nofollow">程序中断的作用</a></li>
+               <li><a href="#_225" rel="nofollow">中断处理流程</a></li>
+               <li><a href="#DMA_237" rel="nofollow">DMA方式与中断方式的区别</a></li>
+              </ul> </li>
+             <li><a href="#_245" rel="nofollow">知识网图下载</a></li>
+             <li><a href="#pdf_247" rel="nofollow">pdf版下载</a></li>
+            </ul> </li>
+          </ul> 
+         </div> 
+         <p></p> 
+         <h3><a id="_3"></a>相关链接</h3> 
+         <blockquote> 
+          <p><a href="https://blog.csdn.net/weixin_42104154/article/details/113628184">数据结构总结与知识网图</a><br> <a href="https://blog.csdn.net/weixin_42104154/article/details/113439733">计算机网络知识总结及知识网图</a><br> <a href="https://blog.csdn.net/weixin_42104154/article/details/113004686">操作系统总结及知识网图</a><br> <a href="https://blog.csdn.net/weixin_42104154/article/details/112854139">计算机组成原理总结及知识网图</a></p> 
+         </blockquote> 
+         <h3><a id="__10"></a>第一章 计算机系统概述</h3> 
+         <h4><a id="_12"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/75df82f799c5166f42fb98b0a0def719.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="_15"></a>冯诺依曼机的特点：</h4> 
+         <blockquote> 
+          <p>1）计算机硬件系统由运算器、存储器、控制器、输入设备、输出设备5大部件组成。<br> 2）指令和数据以同等地位存储在存储器中，并可按地址寻址。<br> 3）指令和数据均用二进制代码表示。<br> 4）指令由操作码和地址码组成。操作码用来表示操作的性质，地址码用来表示操作数在存储器中的位置。<br> 5）指令在存储器内按顺序存放。通常，指令是顺序执行的，在特定条件下可根据运算结果或根据设定的条件改变执行顺序。<br> 6）早期的冯诺依曼机以运算器为中心，输入/输出设备通过运算器和存储器传送数据。</p> 
+         </blockquote> 
+         <h4><a id="_24"></a>不同级别的语言：</h4> 
+         <blockquote> 
+          <p><strong>机器语言:</strong> (二进制语言）计算机唯一可以直接识别和执行的语言。<br> <strong>汇编语言：</strong> 用英文单词或其缩写代替二进制的指令代码，易于人们记忆和理解。<br> <strong>高级语言：</strong> 为方便程序设计人员写出解决问题的处理方案和解题过程的程序。</p> 
+         </blockquote> 
+         <h4><a id="_29"></a>计算机的工作过程：</h4> 
+         <blockquote> 
+          <p>1)把程序和数据装入主存储器。<br> 2)将源程序转换成可执行文件。<br> 3）从可执行文件的首地址开始逐条执行指令。</p> 
+         </blockquote> 
+         <h4><a id="_34"></a>计算机的性能指标：</h4> 
+         <blockquote> 
+          <p><strong>机器字长：</strong> 指计算机进行一次整数运算所能处理的二进制数据的位数。（通常与CPU的寄存器、加法器有关。<br> <strong>数据通路宽带</strong>：指数据总线一次所能并行传送信息的位数（指外部数据总线的宽度，与CPU内部的数据总线宽度有可能不同）<br> <strong>主存容量：</strong> 指主存储器所能存储信息的最大容量，通常以字节来衡量，也可用字数<em>字长来表述存储容量。<br> <strong>运算速度</strong><br> <strong>1）吞吐量</strong>:指系统在单位时间内处理请求的数量<br> <strong>2）响应时间</strong>:指从用户向计算机发送一个请求到系统对该请求做出响应并获得所需结果的等待时间。通常包括CPU时间（运行一个程序所花费的时间）与等待时间（用于磁盘访问、存储器访问、I/O操作、操作系统开销等时间）<br> <strong>主频和CPU时钟周期</strong>：<br> <strong>1）CPU时钟周期</strong>：<br> <strong>2）主频</strong>：<br> <strong>CPI</strong>：执行一条程序所用的时钟周期数<br> <strong>CPU执行时间</strong>：指运行一个程序所花费的时间。<br> CPU执行时间 = CPU时钟周期数/主频=（指令条数</em>CPI)/主频<br> <strong>MIPS、MFLOPS、GFLOPS、TFLOPS</strong></p> 
+         </blockquote> 
+         <h3><a id="__50"></a>第二章 数据的表示和运算</h3> 
+         <h4><a id="_52"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/c1355504e0db48061882b4f4f3494882.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="_54"></a>在计算机系统内部，所有信息都用二进制进行编码的原因有以下几点：</h4> 
+         <blockquote> 
+          <p>1）二进制只有0和1两种状态，使用有两个稳定状态的物理器件就可以表示二进制的每一位。制造成本低。<br> 2）二进制位1和0正好与逻辑值“真”和“假”对应，为计算机实现逻辑运算和程序中的逻辑判断提供了便利条件。<br> 3）二进制的编码和运算规则简单，通过逻辑门电路便能方便实现算术运算。</p> 
+         </blockquote> 
+         <h4><a id="_59"></a>有符号的机器表示</h4> 
+         <table>
+          <thead>
+           <tr>
+            <th>（n+1)位</th>
+            <th>整数表示范围</th>
+            <th>小数表示范围</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td>原码和反码</td>
+            <td><img src="https://i-blog.csdnimg.cn/blog_migrate/7a3ae81b31480ef8e51f5f8bfd45b9a5.png#pic_center" alt="在这里插入图片描述"></td>
+            <td><img src="https://i-blog.csdnimg.cn/blog_migrate/6ddf68530e7bbfde4848ea2d511cc4b8.png#pic_center" alt="在这里插入图片描述"></td>
+           </tr>
+           <tr>
+            <td>补码</td>
+            <td><img src="https://i-blog.csdnimg.cn/blog_migrate/a1f270b40bc23b37aaac10a631de9442.png#pic_center" alt="在这里插入图片描述"></td>
+            <td><img src="https://i-blog.csdnimg.cn/blog_migrate/07164974328af8b1d503ae1043afd7e4.png#pic_center" alt="在这里插入图片描述"></td>
+           </tr>
+           <tr>
+            <td>移码</td>
+            <td><img src="https://i-blog.csdnimg.cn/blog_migrate/7fae4caa7239e6b9b35fcb5958727400.png#pic_center" alt="在这里插入图片描述"></td>
+            <td>移码全为0真值最小，移码全为1真值最大</td>
+           </tr>
+          </tbody>
+         </table> 
+         <h3><a id="__66"></a>第三章 存储系统</h3> 
+         <h4><a id="_68"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/ac7d823e00720b0f677d4218c8b93434.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="DRAM_71"></a>DRAM刷新方式</h4> 
+         <blockquote> 
+          <p><strong>1）集中刷新</strong><br> 在一个刷新周期内，利用一段固定的时间，依次对存储器的所有行进行逐一再生，期间停止对存储器的读写操作，即死时间，访存“死区”。<br> 优点：读写操作时不受刷新工作的影响，系统的存取速度较高。<br> 缺点：在集中刷新期间（死区）不能访问存储器。<br> <strong>2）分散刷新</strong><br> 把对每行的刷新分散到各个工作周期中，一个存储器的系统工作周期分为两部分：前半部分用于正常读写或保持；后半部分用于刷新某一行。<br> 优点：没有死区。<br> 缺点：加长了系统的存取周期，降低了整机的速度。<br> <strong>3）异步刷新</strong><br> 将刷新周期除以行数，得到两次刷新操作之间的时间间隔t，每间隔时间t产生一次刷新请求。<br> 前两种方法的结合，即可缩短”死时间“，又能充分利用最大刷新间隔2ms的特点。</p> 
+         </blockquote> 
+         <h4><a id="_84"></a>程序访问的局部性原理</h4> 
+         <blockquote> 
+          <p>程序访问的局部性原理包括时间局部性和空间局部性。<br> <strong>时间局部性</strong><br> 指在最近的未来要用的信息很可能是现在正在使用的信息，（因为程序中存在循环）<br> <strong>空间局部性</strong><br> 是指在最近的未来要用到的信息，很可能与现在正在使用的信息在存储空间上是邻近的，因为指令通常是顺序存放，顺序执行的。<br> <strong>高速缓冲技术</strong><br> 利用程序访问的局部性原理，把程序中正在使用的部分存放在一个高速的容量较小的Cache中，使CPU的访存操作大多数针对Cache进行，从而大大提高程序的执行速度。</p> 
+         </blockquote> 
+         <h4><a id="_93"></a>虚拟存储器程序的执行过程</h4> 
+         <blockquote> 
+          <p>CPU使用续存时，由辅存硬件找出虚地址与实地址之间的对应关系，并判断这个虚地址对应的存储单元是否已装入主存。若已在主存中，则通过地址转换，CPU可直接访问主存指示的实际单元；若不在主存中，则把包含这个字的一页或一段调入主存后再由CPU访问。若主存已满，则采用替换算法置换主存的一页或一段。</p> 
+         </blockquote> 
+         <h4><a id="_96"></a>快表</h4> 
+         <blockquote> 
+          <p>通常采用全相联或组相联方式，每个TLB项由页表表项内容加上一个TLB标记字段组成，TLB标记用来表示该表项曲子页表中的哪个虚页号对应的页表项，所以TLB标记的内容在<strong>全相联方式</strong>下表示该页表项对应的虚页号；<strong>组相联方式</strong>下表示对应虚页号的高位部分，虚页号的低位部分用于选择TLB组的组索引。</p> 
+         </blockquote> 
+         <h4><a id="Cache_99"></a>虚拟存储器与Cache的比较</h4> 
+         <blockquote> 
+          <p><strong>共同点</strong>：<br> 1）均是为了提高系统性能，二者都有容量、速度、价格的梯度；<br> 2）均把数据划分为小信息块，并作为基本得传递单元，虚存系统的信息块更大；<br> 3）都有地址的映射、替换算法、更新策略等问题；<br> 4）依据程序的局部性原理，将活跃的数据放在相对高速的部件中。<br> <strong>不同点：</strong><br> 1）Cache主要解决系统速度，虚存为了解决主存容量；<br> 2）Cache由硬件实现，是硬件存储器，对所有程序员透明；而虚拟存储器由OS和硬件共同实现，是逻辑上的存储器，对系统程序员不透明，对应用程序员透明；<br> 3）虚拟存储器系统不命中时对系统性能影响更大；<br> 4）CPU与Cache和主存都建立了直接访问的通路，辅存与CPU无直接通路。</p> 
+         </blockquote> 
+         <h3><a id="__112"></a>第四章 指令系统</h3> 
+         <h4><a id="_113"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/bbd26bd714915167f6bb90fb3a66dab3.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="_115"></a>常见指令寻址方式的特点及适用情况：</h4> 
+         <blockquote> 
+          <p><strong>1）立即寻址</strong>：操作数获取便捷，通常用于给寄存器赋初值。<br> <strong>2）直接寻址</strong>：相对于立即寻址，缩短了指令长度。<br> <strong>3）间接寻址</strong>：扩大了寻址范围，便于编制程序，易于完成子程序返回。<br> <strong>4）寄存器寻址</strong>：指令字较短，指令执行速度较快。<br> <strong>5）寄存器间接寻址</strong>：扩大了寻址范围。<br> <strong>6）基址寻址</strong>：扩大了操作数寻址范围，适用于多道程序设计，常用于为程序或数据分配存储空间。<br> <strong>7）变址寻址</strong>：主要用于处理数组问题，适合编制循环程序。<br> <strong>8）相对寻址</strong>：用于控制程序的执行顺序、转移等。</p> 
+         </blockquote> 
+         <h4><a id="CISCRISC_125"></a>CISC与RISC特点</h4> 
+         <blockquote> 
+          <p><strong>CISC的主要特点</strong>：<br> 1）指令系统复杂庞大，指令数量一般大于200+；<br> 2）指令的长度不固定，指令格式多，寻址方式多；<br> 3）可以放村的指令不受限制；<br> 4）各种指令的使用频度相差很大；<br> 5）各种指令执行时间相差很大，大多数指令需要多个时钟周期才能完成；<br> 6）控制器大多数采用微程序控制，有些指令非常复杂，难以采用硬连线控制；<br> 7）难以用优化编译生成高效的目标代码程序。<br> <strong>RISC的主要特点</strong>：<br> 1）选取使用频率最高的一些简单指令，复杂指令的功能由简单指令的组合来实现；<br> 2）指令长度固定，指令格式种类少，寻址方式种类少；<br> 3）只有Load/Store指令访存，其余指令的操作都在寄存器之间进行；<br> 4）CPU中通用寄存器的数量相当多；<br> 5）RISC采用指令流水线技术，大部分指令在一个时钟周期内完成；<br> 6）以硬布线控制为主，不用或少用微程序控制；<br> 7）重视编译优化工作，减少程序执行时间。</p> 
+         </blockquote> 
+         <h4><a id="CISCRISC_143"></a>与CISC相比，RISC的优点：</h4> 
+         <blockquote> 
+          <p>1）更能充分利用VLSI芯片的面积；<br> 2）更能提高运算速度；<br> 3）便于设计，可降低成本，提高可靠性；<br> 4）有利于编译程序代码优化。</p> 
+         </blockquote> 
+         <h3><a id="__149"></a>第五章 中央处理器</h3> 
+         <h4><a id="_150"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/9fb64c99836ad454b1ae6c75710a80c4.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="CPU_152"></a>CPU的具体功能</h4> 
+         <blockquote> 
+          <p><strong>1）指令控制</strong>：完成取指令，分析指令和执行指令的操作，即程序的顺序执行。<br> <strong>2）操作控制</strong>：CPU管理并产生由内存取出的每条指令的操作信号，把各种操作信号送往相应的部件，从而控制这些部件按指令的要求进行动作。<br> <strong>3）时间控制</strong>：对各种操作加以时间上的控制。<br> <strong>4）数据加工</strong>：对数据进行算数和逻辑运算。<br> <strong>5）中断处理</strong>：对计算机运行过程中出现的异常情况及特殊请求进行处理。</p> 
+         </blockquote> 
+         <h4><a id="_159"></a>控制器的工作原理</h4> 
+         <blockquote> 
+          <p>根据指令操作码、指令的执行步骤（微命令序列）和条件信号来形成当前计算机各部件要用到的控制信号。计算机整机各硬件系统在这些控制信号的控制下协同运行，产生预期的执行结果。<br> 1）运算器部件通过数据总线与内存储器、输入输出设备传送数据。<br> 2）输入输出设备通过接口电路与总线相连接。<br> 3）内存储器、输入输出设备从地址总线接收地址信息，从控制总线得到控制信号，通过数据总线与其他部件传送数据。<br> 4）控制器部件从数据总线接收指令信息，从运算器部件接收指令转移地址，送出指令地址到地址总线，还要向系统中的部件提供它们运行所需要的控制信号。</p> 
+         </blockquote> 
+         <h4><a id="_166"></a>控制器的主要功能</h4> 
+         <blockquote> 
+          <p>1）从主存中取出一条指令并指出下一条指令在主存的位置。<br> 2）对指令进行译码或测试，产生相应的操作控制信号，以便启动规定的动作。<br> 3）指挥并控制CPU、主存、输入输出之间的数据流动方向。</p> 
+         </blockquote> 
+         <h4><a id="CPU_171"></a>CPU的控制方式</h4> 
+         <blockquote> 
+          <p><strong>1）同步控制方式</strong><br> 系统有一个统一的时钟，所有的信号均来自这一统一的时钟信号。<br> 控制电路简单，但运行速度慢。<br> <strong>2）异步控制方式</strong><br> 不存在基准时标信号，各部件按自身固有的速度工作，通过应答方式进行联络。<br> 运行速度快，但控制电路比较复杂。<br> <strong>3）联合控制方式</strong><br> 介于同步、异步之间的一种折中。对各种不同的指令的微操作实行大部分采用同步控制，小部分采用异步控制的办法。</p> 
+         </blockquote> 
+         <h4><a id="_181"></a>硬布线控制单元设计步骤：</h4> 
+         <blockquote> 
+          <p>1）<strong>列出微操作命令的操作时间表</strong>。根据微操作节拍安排，列出微操作命令的操作时间表（包含各个机器周期，节拍下的每条指令完成的为操作控制信号）。<br> 2）<strong>进行微操作信号综合</strong>。对微操作信号进行综合分析、归类，根据微操作时间表可写出各微操作控制信号的逻辑表达式并进行适当的简化。<br> 3）<strong>画出微操作命令的逻辑图</strong>。根据逻辑表达式可画出对应每个微操作信号的逻辑电路图，并用逻辑门电路实现。</p> 
+         </blockquote> 
+         <h4><a id="_186"></a>硬布线和微程序控制器的特点</h4> 
+         <blockquote> 
+          <p><strong>硬布线控制器的特点</strong>：<br> 速度快（控制器的速度取决于电路延迟），一旦设计完成后，就不能通过其他额外修改添加新功能（将控制部件视为专门产生固定时序控制信号的逻辑电路，用最少元件和取得最高速度作为设计目标）。<br> <strong>微程序控制器</strong>：<br> 具有规整性，灵活性，可维护性等优点，但由于微程序控制器采用了存储程序原理，所以每条指令都要从控制存储器中取一次，影响速度。</p> 
+         </blockquote> 
+         <h3><a id="__192"></a>第六章 总线</h3> 
+         <h4><a id="_193"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/8f1693887d000183f194a1ec84c206fb.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="4_195"></a>总线传输的4个阶段</h4> 
+         <blockquote> 
+          <p><strong>1）申请分配阶段</strong>。由需要使用总线的主模块提出申请，经总线仲裁机构决定将下一传输周期的总线使用权授予某一申请者（分为传输请求，总线仲裁两阶段）。<br> <strong>2）寻址阶段</strong>。取得使用权的主模块通过总线发出本次要访问的从模块（或从设备）的地址及相关命令，启动参与本次传输的从模块。<br> <strong>3）传输阶段</strong>。主模块和从模块进行数据交换，可单向或双向进行数据传送。<br> <strong>4）结束阶段</strong>。主模块的有关信息均从系统总线上撤除，让出总线的使用权。</p> 
+         </blockquote> 
+         <h3><a id="___202"></a>第七章 输入/输出系统</h3> 
+         <h4><a id="_203"></a>知识网图</h4> 
+         <p><img src="https://i-blog.csdnimg.cn/blog_migrate/56989d5d71638bf48d49572dce66c1eb.png#pic_center" alt="在这里插入图片描述"></p> 
+         <h4><a id="_207"></a>程序查询方式的工作流程</h4> 
+         <blockquote> 
+          <p>1）CPU执行初始化程序，并预置传送参数；<br> 2）向Iowa接口发送命令字，启动IO设备；<br> 3）从外设接口读取其状态信息；<br> 4）CPU不断查询IO设备状态，直到外设准备就绪；<br> 5）传送一次数据；<br> 6）修改地址和计数器参数；<br> 7）判断传送是否结束，若未结束转3），直到计数器为0</p> 
+         </blockquote> 
+         <h4><a id="_216"></a>程序中断的作用</h4> 
+         <blockquote> 
+          <p>1）实现CPU与IO设备的并行工作；<br> 2）处理硬件故障和软件错误；<br> 3）实现人机交互，用户干预机器需要用到中断系统；<br> 4）实现多道程序，分是操作，多道程序的切换；<br> 5）实时处理需要借助中断系统来实现快速响应；<br> 6）实现应用程序和操作系统的切换；<br> 7）多处理器系统中各处理器之间的信息交流和任务切换。</p> 
+         </blockquote> 
+         <h4><a id="_225"></a>中断处理流程</h4> 
+         <blockquote> 
+          <p>关中断<br> 保存断点<br> 引出中断服务程序<br> 保存断点和屏蔽字<br> 开中断<br> 执行中断服务程序<br> 关中断<br> 恢复现场和屏蔽字<br> 开中断</p> 
+         </blockquote> 
+         <h4><a id="DMA_237"></a>DMA方式与中断方式的区别</h4> 
+         <blockquote> 
+          <p>1）中断方式时程序的切换，需要保护和恢复现场；而DMA处理预处理和后处理，其他操作均不占用CPU的任何资源<br> 2）对中断请求的响应只发生在每条指令执行完毕时，而对DMA请求的响应可以发生在每个机器周期结束时，只要CPU不占用总线即可<br> 3）终端传送需要CPU的干预，而DMA传送过程无需CPU的干预<br> 4）DMA请求的优先级高于中断请求<br> 中断方式具有对异常事件的处理能力，而DMA仅限于传送数据块的IO操作<br> 6）中断方式靠程序传送数据，DMA方式靠硬件传送数据</p> 
+         </blockquote> 
+         <h3><a id="_245"></a>知识网图下载</h3> 
+         <p><a href="https://download.csdn.net/download/weixin_42104154/14922915">https://download.csdn.net/download/weixin_42104154/14922915</a></p> 
+         <h3><a id="pdf_247"></a>pdf版下载</h3> 
+         <p>pdf下载链接已经放在文末，大家可以点链接下载，个人总结，仅供学习参考，勿商用<br> <a href="https://download.csdn.net/download/weixin_42104154/85783343">https://download.csdn.net/download/weixin_42104154/85783343</a></p> 
+        </div> 
+        <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-a5d25dd831.css" rel="stylesheet"> 
+        <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-e504d6a974.css" rel="stylesheet"> 
+       </div> 
+      </article>   
+      <img src="https://img-home.csdnimg.cn/images/20211209110851.png" alt="pdf_watermark" width="0" height="0" style="display: none"> 
+      <div class="print_watermark"></div> 
+      <div class="print_watermark_info"> 
+       <p>内容来源：csdn.net</p> 
+       <p>作者昵称：老邓不想敲代码</p> 
+       <p>原文链接：https://blog.csdn.net/weixin_42104154/article/details/112854139</p> 
+       <p>作者主页：https://blog.csdn.net/weixin_42104154</p> 
+      </div> 
+      <style>
+    .print_watermark, .print_watermark_info {
+      display: none
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        color-adjust: exact; /* Firefox */
+        background-image: none !important;
+      }
+      * {
+        -webkit-print-color-adjust: exact;
+      }
+      .blog-content-box {
+        padding: 0;
+      }
+      .blog-content-box .article-header .article-info-box > div:not(.article-bar-top){
+        display: none !important;
+      }
+      .blog-content-box .article-header .article-info-box  .article-bar-top img{
+          display:none
+      }
+      .blog-content-box .article-header .article-info-box > .article-bar-top .bar-content > *:not(.follow-nickName):not(.time){
+          display: none !important;
+      }
+      .print_watermark {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        background-image: url('https://img-home.csdnimg.cn/images/20211209110851.png');
+        background-size: 180px auto;
+        background-repeat: repeat;
+      }
+      .print_watermark_info {
+        display: block;
+        position: fixed;
+        bottom: 16px;
+        right: 0;
+        z-index: 1000;
+        color: #e8e8ed;
+        font-size: 12px;
+        ocapity: .5
+      }
+      @page {
+        margin: 0 10mm 10mm;
+        size: landscape;
+      }
+      body, article {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #csdn-toolbar,.main_father > *:not(#mainBox), .csdn-side-toolbar, .main_father aside {
+        display: none !important;
+      }
+      .main_father > #mainBox {
+        width: unset
+      }
+      .main_father > #mainBox > main > *:not(.blog-content-box){
+        display: none !important;
+      }
+    }
+  </style> 
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/weixin_42104154"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/default.jpg!1"> <span class="profile-name"> 老邓不想敲代码 </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;关注&quot;}">关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 1347 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="10314" id="get-collection"> 10314 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 86 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-downloadpdf" id="tool-downloadpdf"> <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> </a> 
+          <div class="tool-hover-tip">
+           <span class="text">导出PDF</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" data-report-click="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.6881&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/pdf.png" alt=""> <span class="count">导出PDF</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="10887237" data-free="true" data-description="" data-subscribe="false" data-title="计算机专业基础" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/weixin_42104154/category_10887237.html" data-sum="6" data-people="118" data-price="0" data-hotrank="0" data-status="true" data-oldprice="0" data-join="false" data-studyvip="true" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>   
+     <a id="commentBox" name="commentBox"></a> 
+     <div id="pcCommentBox" class="comment-box comment-box-new2 login-comment-box-new" style="display:none"> 
+      <div class="has-comment" style="display:block"> 
+       <div class="one-line-box"> 
+        <div class="has-comment-tit go-side-comment"> 
+         <span class="count">86</span>&nbsp;条评论 
+        </div> 
+        <div class="has-comment-con comment-operate-item"></div> 
+        <a class="has-comment-bt-right go-side-comment focus">写评论</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="first-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://devpress.csdn.net/v1/article/detail/124962455" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://devpress.csdn.net/v1/article/detail/124962455" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>计算机组成原理</em>（ 程序员必学简化版 ）
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/weixin_48720080" target="_blank"><span class="blog-title">拥抱白菜的猪博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">05-26</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 4万+ </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://devpress.csdn.net/v1/article/detail/124962455" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~activity-1-124962455-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~activity&quot;,&quot;dest&quot;:&quot;https://devpress.csdn.net/v1/article/detail/124962455&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Eactivity-1-124962455-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           <em>计算机组成原理</em>，程序员必掌握的基础
+           <em>知识</em>。
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>  
+     <div class="second-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_40539125/article/details/106600117" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-106600117-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40539125/article/details/106600117&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/weixin_40539125/article/details/106600117" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-106600117-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40539125/article/details/106600117&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-106600117-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-106600117-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>计算机组成原理</em>笔记
+           </div> 
+           <div class="tag">
+            热门推荐
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/weixin_40539125" target="_blank"><span class="blog-title">Jeff_的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">07-05</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 1万+ </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/weixin_40539125/article/details/106600117" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-106600117-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40539125/article/details/106600117&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-106600117-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-106600117-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           一、计算机的基本组成 完成一条指令分为了三个阶段：取指令-分析指令-执行指令。 下面我们分析上
+           <em>图</em>的取数指令。（取数指令 ≠ 取指令 ， 取数指令需要实施取指令、分析指令） 取指令 要执行的指令的地址我们是保存在PC当中的，取数指令这条指令的地址是保存在存储体当中的。所以，取指令的第一个操作，就是PC（PC给出了取数指令这条指令它所在的内存单元地址）要把指令的地址送给MAR，再由MAR送给存储体。在控制器的控制下，存储体把指定存储体中保存那条取数指令取出送到MDR中。取出的指令送到IR（IR的功能就是
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="recommend-box insert-baidu-box  recommend-highlight-default"> 
+      <div class="recommend-item-box no-index" style="display:none"></div> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/m0_46090675/article/details/109529695" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-109529695-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_46090675/article/details/109529695&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/m0_46090675/article/details/109529695" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-109529695-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_46090675/article/details/109529695&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-109529695-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-109529695-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>计算机组成原理</em>详解
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/m0_46090675" target="_blank"><span class="blog-title">人丑就要多读书的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">11-06</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 3万+ </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/m0_46090675/article/details/109529695" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-109529695-blog-112854139.235^v43^pc_blog_bottom_relevance_base9\&quot;,\&quot;dist_request_id\&quot;:\&quot;1743129946960_53381\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1743129946960_53381&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_46090675/article/details/109529695&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-109529695-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-109529695-blog-112854139.235%5Ev43%5Epc_blog_bottom_relevance_base9"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           <em>计算机组成原理</em> 1. 什么是计算机？ 俗称电脑，即通电的大脑，电脑二字蕴含了人类对计算机的终极期望，希望它能真的像人脑一样去工作，从而解放人力。 2. 为什么要用计算机？ 世界是由聪明的懒人统治的，任何时期，总有一群聪明的懒人想要奴隶别人。在奴隶制社会，聪明的懒人奴役的是真正的人，而人是无法不吃、不喝、不睡觉一直工作的，但是计算机作为一台机器是可以做到的，所以把计算机当奴隶是上上之选。 3. 计算机的五大组成部分 计算机有五大组成部分，既然计算机是人的奴隶，那么计算机设计核心肯定也是在模仿真正的人，所以我
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="blog-footer-bottom" style="margin-top:10px;"></div>   
+    </main> 
+    <aside class="blog_container_aside"> 
+     <div id="asideProfile" class="aside-box"> 
+      <div class="profile-intro d-flex"> 
+       <div class="avatar-box d-flex justify-content-center flex-column"> 
+        <a href="https://blog.csdn.net/weixin_42104154" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4121&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/default.jpg!1" class="avatar_pic"> </a> 
+       </div> 
+       <div class="user-info d-flex flex-column profile-intro-name-box"> 
+        <div class="profile-intro-name-boxTop"> 
+         <a href="https://blog.csdn.net/weixin_42104154" target="_blank" class="" id="uid" title="老邓不想敲代码" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4122&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154&quot;,&quot;ab&quot;:&quot;new&quot;}"> <span class="name " username="weixin_42104154">老邓不想敲代码</span> </a> 
+         <span> </span> 
+         <span class="flag expert-blog"> <span class="bubble">CSDN认证博客专家</span> </span> 
+         <span class="flag company-blog"> <span class="bubble">CSDN认证企业博客</span> </span> 
+        </div> 
+        <div class="profile-intro-name-boxFooter"> 
+         <span class="personal-home-page personal-home-years" title="已加入 CSDN 7年">码龄7年</span> 
+         <span class="personal-home-page"> <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证"> <img src="https://csdnimg.cn/identity/nocErtification.png" alt=""> 暂无认证 </a> </span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="26"> 
+        <a href="https://blog.csdn.net/weixin_42104154" data-report-click="{&quot;mod&quot;:&quot;1598321000_001&quot;,&quot;spm&quot;:&quot;3001.4310&quot;}" data-report-query="t=1"> 
+         <dt>
+          <span class="count">26</span>
+         </dt> 
+         <dd class="font">
+          原创
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" data-report-click="{&quot;mod&quot;:&quot;1598321000_002&quot;,&quot;spm&quot;:&quot;3001.4311&quot;}" title="301925"> 
+        <a href="https://blog.csdn.net/rank/list/weekly" target="_blank"> 
+         <dt>
+          <span class="count">30万+</span>
+         </dt> 
+         <dd class="font">
+          周排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" title="1039821"> 
+        <a href="https://blog.csdn.net/rank/list/total" data-report-click="{&quot;mod&quot;:&quot;1598321000_003&quot;,&quot;spm&quot;:&quot;3001.4312&quot;}" target="_blank"> 
+         <dt>
+          <span class="count">103万+</span>
+         </dt> 
+         <dd class="font">
+          总排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" style="min-width:58px" title="199168"> 
+        <dt>
+         <span class="count">19万+</span>
+        </dt> 
+        <dd>
+         访问
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="5级,点击查看等级说明"> 
+        <dt>
+         <a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank"> <img class="level" src="https://csdnimg.cn/identity/blog5.png"> </a> 
+        </dt> 
+        <dd>
+         等级
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="item-rank"></div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="2015"> 
+        <dt>
+         <span class="count">2015</span>
+        </dt> 
+        <dd>
+         积分
+        </dd> 
+       </dl> 
+       <dl class="text-center" id="fanBox" title="854"> 
+        <dt>
+         <span class="count" id="fan">854</span>
+        </dt> 
+        <dd>
+         粉丝
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="1431"> 
+        <dt>
+         <span class="count">1431</span>
+        </dt> 
+        <dd>
+         获赞
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="121"> 
+        <dt>
+         <span class="count">121</span>
+        </dt> 
+        <dd>
+         评论
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="10905"> 
+        <dt>
+         <span class="count">1万+</span>
+        </dt> 
+        <dd>
+         收藏
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="aside-box-footer" data-report-view="{&quot;spm&quot;:&quot;3001.4296&quot;}"> 
+       <div class="badge-box d-flex"> 
+        <div class="badge d-flex"> 
+         <div class="icon-badge" title="分享学徒"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/fenxiangxuetu@240.png" alt="分享学徒"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="分享小兵"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/fengxiangxiaobing@240.png" alt="分享小兵"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="签到新秀"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/qiandao5@240.png" alt="签到新秀"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="持续创作"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/chizhiyiheng@240.png" alt="持续创作"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="创作能手"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/qixiebiaobing4@240.png" alt="创作能手"> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="profile-intro-name-boxOpration"> 
+       <div class="opt-letter-watch-box"> 
+        <a rel="noopener" class="bt-button personal-letter" href="https://im.csdn.net/chat/weixin_42104154" target="_blank">私信</a> 
+       </div> 
+       <div class="opt-letter-watch-box"> 
+        <a class="personal-watch bt-button" id="btnAttent">关注</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="swiper-slide-box-remuneration"> 
+      <a data-report-click="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" data-report-view="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" href="https://ai.csdn.net/" target="_blank"> <img src="https://i-operation.csdnimg.cn/images/2dd892a9769b4cce9c086db94eab887f.png" alt=""> </a> 
+     </div> 
+     <div id="asideSearchArticle" class="aside-box"> 
+      <div class="aside-content search-comter"> 
+       <div class="aside-search aside-search-blog"> 
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章"> 
+        <a class="btn-search-blog" data-report-click="{&quot;spm&quot;:&quot;3001.9182&quot;}"> <img src="https://csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042"> </a> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">热门文章</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/weixin_42104154/article/details/112854139" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/112854139&quot;,&quot;ab&quot;:&quot;new&quot;}"> 计算机组成原理总结及知识网图 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">117732</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_42104154/article/details/123615753" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/123615753&quot;,&quot;ab&quot;:&quot;new&quot;}"> openEuler 操作系统安装及配置网络 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">26857</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_42104154/article/details/123950744" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/123950744&quot;,&quot;ab&quot;:&quot;new&quot;}"> 初始化k8s踩过的坑 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">11845</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_42104154/article/details/123961616" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/123961616&quot;,&quot;ab&quot;:&quot;new&quot;}"> k8s踩坑——网络插件fannel安装 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">6674</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_42104154/article/details/113439733" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/113439733&quot;,&quot;ab&quot;:&quot;new&quot;}"> 计算机网络知识总结及知识网图 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">4405</span> </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideCategory" class="aside-box flexible-box"> 
+      <h3 class="aside-title">分类专栏</h3> 
+      <div class="aside-content"> 
+       <ul> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11733833.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11733833.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> k8s </span> </a> <span class="special-column-num">9篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_12049527.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_12049527.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> git </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_10887237.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_10887237.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 计算机专业基础 </span> </a> <span class="special-column-num">6篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11705286.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11705286.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> openEuler </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_10951504.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_10951504.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 云计算 </span> </a> <span class="special-column-num">3篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11688489.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11688489.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 开发语言 </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_7630473.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_7630473.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 操作系统 </span> </a> <span class="special-column-num">5篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_7630478.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_7630478.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> linux </span> </a> <span class="special-column-num">9篇</span> </li> 
+       </ul> 
+      </div> 
+      <p class="text-center"> <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a> </p> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">大家在看</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/ghost143/article/details/146535451" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ghost143/article/details/146535451&quot;,&quot;strategy&quot;:&quot;202_1052723-2615424_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ghost143/article/details/146535451&quot;,&quot;strategy&quot;:&quot;202_1052723-2615424_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> C#学习第3天：类和对象的全面解析 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">533</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/u012172506/article/details/146588527" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u012172506/article/details/146588527&quot;,&quot;strategy&quot;:&quot;202_1052723-2615526_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u012172506/article/details/146588527&quot;,&quot;strategy&quot;:&quot;202_1052723-2615526_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> Lambda 服务迁移至 ECS 的详细方案设计 </a> </li> 
+        <li> <a href="https://blog.csdn.net/powertoolsteam/article/details/146493181" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/powertoolsteam/article/details/146493181&quot;,&quot;strategy&quot;:&quot;202_1052723-2615337_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/powertoolsteam/article/details/146493181&quot;,&quot;strategy&quot;:&quot;202_1052723-2615337_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> GrapeCity Documents V8.0 新版本特性 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">939</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/2301_76761656/article/details/146584896" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2301_76761656/article/details/146584896&quot;,&quot;strategy&quot;:&quot;202_1052723-2615423_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2301_76761656/article/details/146584896&quot;,&quot;strategy&quot;:&quot;202_1052723-2615423_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 《项目实训1》课程设计 </a> </li> 
+        <li> <a href="https://blog.csdn.net/qq_20466211/article/details/146558978" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_20466211/article/details/146558978&quot;,&quot;strategy&quot;:&quot;202_1052723-2615545_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_20466211/article/details/146558978&quot;,&quot;strategy&quot;:&quot;202_1052723-2615545_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> python-60-执行用户自定义的python代码文本 </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideArchive" class="aside-box" style="display:block!important; width:300px;"> 
+      <h3 class="aside-title">最新文章</h3> 
+      <div class="aside-content"> 
+       <ul class="inf_list clearfix"> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/weixin_42104154/article/details/137210164" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/137210164&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/137210164&quot;,&quot;ab&quot;:&quot;new&quot;}">win10 安装kubectl，配置config连接k8s集群</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/weixin_42104154/article/details/127273340" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/127273340&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/127273340&quot;,&quot;ab&quot;:&quot;new&quot;}">window 环境下vscode push项目至gitlab</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/weixin_42104154/article/details/126163297" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/126163297&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/article/details/126163297&quot;,&quot;ab&quot;:&quot;new&quot;}">Anaconda进入base环境</a> </li> 
+       </ul> 
+       <div class="archive-bar"></div> 
+       <div class="archive-box"> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2024&amp;month=03" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2024&amp;month=03&quot;}"><span class="year">2024年</span><span class="num">1篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2022&amp;month=10" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2022&amp;month=10&quot;}"><span class="year">2022年</span><span class="num">10篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2021&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2021&amp;month=12&quot;}"><span class="year">2021年</span><span class="num">15篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2018&amp;month=05" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154?type=blog&amp;year=2018&amp;month=05&quot;}"><span class="year">2018年</span><span class="num">3篇</span></a>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 详情页显示目录 --> 
+     <!--文章目录--> 
+     <div id="asidedirectory" class="aside-box"> 
+      <div class="groupfile" id="directory"> 
+       <h3 class="aside-title">目录</h3> 
+       <div class="align-items-stretch group_item"> 
+        <div class="pos-box"> 
+         <div class="scroll-box"> 
+          <div class="toc-box"></div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside>    
+   </div> 
+   <div class="recommend-right align-items-stretch clearfix" id="rightAside" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div class="rightside-fixed-hide"> 
+      <div class="recommend-column-box aside-box"> 
+       <h3 class="aside-title">相关专栏 </h3> 
+       <div class="aside-content"> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/qq_56012214/category_12282494.html" title="计算机组成原理" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_56012214/category_12282494.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;0\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_56012214/category_12282494.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;0\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/4e6a5160c63a16aed96933ce2b23bed2.png?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="计算机组成原理" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">计算机组成原理</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">3 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="考研计算机组成原理">考研计算机组成原理</p> </a> 
+        </div> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/qq_39183034/category_11186164.html" title="408王道考研计算机组成原理" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_39183034/category_11186164.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;1\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_39183034/category_11186164.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;1\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/d6e34aa853cecfa9cdcbffdf344c1baa.jpeg?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="408王道考研计算机组成原理" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">408王道考研计算机组成原理</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">1680 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="以天勤和王道为视频资料，详细记录笔记，不止是书上的基本内容，更多记录的是自己的一些理解，部分图片会借用王道，请不要见谅。可以下载手机app方便观看">以天勤和王道为视频资料，详细记录笔记，不止是书上的基本内容，更多记录的是自己的一些理解，部分图片会借用王道，请不要见谅。可以下载手机app方便观看</p> </a> 
+        </div> 
+        <div class="recommend-column-itembox exp1"> 
+         <a href="https://blog.csdn.net/m0_64198455/category_12560606.html" title="计算机408专业课+数据库" target="_blank" data-report-view="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_64198455/category_12560606.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;2\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}" data-report-click="{&quot;spm&quot;:&quot;3001.10573&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_64198455/category_12560606.html&quot;,&quot;ab&quot;:&quot;exp1&quot;,&quot;extra&quot;:&quot;{\&quot;id\&quot;:\&quot;112854139\&quot;,\&quot;recommendCount\&quot;:\&quot;17\&quot;,\&quot;index\&quot;:\&quot;2\&quot;,\&quot;type\&quot;:\&quot;column\&quot;}&quot;}"> 
+          <div class="info-box"> 
+           <div class="img-box"> 
+            <div class="column-img" style="background-image: url(https://i-blog.csdnimg.cn/blog_column_migrate/825cfa93c9f10c0842fd3e42a19f1ad1.jpeg?x-oss-process=image/resize,m_fixed,h_224,w_224)" alt="计算机408专业课+数据库" srcset=""></div> 
+           </div> 
+           <div class="info"> 
+            <div class="title-box"> 
+             <p class="title">计算机408专业课+数据库</p> 
+             <p class="tag">专栏</p> 
+            </div> 
+            <p class="learn">3 人学习</p> 
+           </div> 
+          </div> <p class="desc" title="欢迎来到操作系统分类专栏！我们将深入探讨各种类型的操作系统，包括批处理、分时、实时、网络和嵌入式操作系统。了解它们的特点、功能和用途，为选择合适的操作系统提供参考。无论您是学生、开发人员还是对计算机科学感兴趣的读者，本专栏都将带给您有价值的知识和见解。让我们一起探索操作系统的世界吧！">欢迎来到操作系统分类专栏！我们将深入探讨各种类型的操作系统，包括批处理、分时、实时、网络和嵌入式操作系统。了解它们的特点、功能和用途，为选择合适的操作系统提供参考。无论您是学生、开发人员还是对计算机科学感兴趣的读者，本专栏都将带给您有价值的知识和见解。让我们一起探索操作系统的世界吧！</p> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="recommend-right"> 
+      <div class="flex-column aside-box groupfile" id="groupfile"> 
+       <div class="groupfile-div"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="aside-box kind_person d-flex flex-column"> 
+       <h3 class="aside-title">分类专栏</h3> 
+       <div class="align-items-stretch kindof_item" id="kind_person_column"> 
+        <div class="aside-content"> 
+         <ul> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11733833.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11733833.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> k8s </span> </a> <span class="special-column-num">9篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_12049527.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_12049527.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> git </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_10887237.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_10887237.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 计算机专业基础 </span> </a> <span class="special-column-num">6篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11705286.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11705286.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> openEuler </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_10951504.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_10951504.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 云计算 </span> </a> <span class="special-column-num">3篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_11688489.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_11688489.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 开发语言 </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_7630473.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_7630473.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 操作系统 </span> </a> <span class="special-column-num">5篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/weixin_42104154/category_7630478.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42104154/category_7630478.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> linux </span> </a> <span class="special-column-num">9篇</span> </li> 
+         </ul> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div class="comment-side-box-shadow comment-side-tit-close" id="commentSideBoxshadow"> 
+   <div class="comment-side-content"> 
+    <div class="comment-side-tit"> 
+     <div class="comment-side-tit-count">
+      评论&nbsp;
+      <span class="count">86</span>
+     </div> 
+     <img class="comment-side-tit-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png">
+    </div> 
+    <div id="pcCommentSideBox" class="comment-box comment-box-new2 " style="display:block"> 
+     <div class="comment-edit-box d-flex"> 
+      <div class="user-img"> 
+       <a href="https://blog.csdn.net/2401_84444578" target="_blank"> <img src="https://profile-avatar.csdnimg.cn/default.jpg!1"> </a> 
+      </div> 
+      <form id="commentform"> 
+       <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="欢迎高质量的评论，低质的评论会被折叠" maxlength="1000"></textarea> 
+       <div class="comment-reward-box" style="background-image: url('https://img-home.csdnimg.cn/images/20230131025301.png');"> 
+        <a class="btn-remove-reward"></a> 
+        <div class="form-reward-box"> 
+         <div class="info">
+           成就一亿技术人! 
+         </div> 
+         <div class="price-info">
+           拼手气红包
+          <span class="price">6.0元</span> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="comment-operate-box"> 
+        <div class="comment-operate-l"> 
+         <span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span> 
+         <span class="tip" id="isShowCommentAuth" data-type="1">&nbsp;|&nbsp;博主筛选后可见</span> 
+        </div> 
+        <div class="comment-operate-c">
+          &nbsp; 
+        </div> 
+        <div class="comment-operate-r"> 
+         <div class="comment-operate-item comment-reward"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentReward.png" alt="红包"> 
+          <span class="comment-operate-tip">添加红包</span> 
+         </div> 
+         <div class="comment-operate-item comment-emoticon"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentEmotionIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">插入表情</span> 
+          <div class="comment-emoticon-box comment-operate-isshow"> 
+           <div class="comment-emoticon-img-box"></div> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item comment-code"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentCodeIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">代码片</span> 
+          <div class="comment-code-box comment-operate-isshow"> 
+           <ul id="commentCode"> 
+            <li><a data-code="html">HTML/XML</a></li> 
+            <li><a data-code="objc">objective-c</a></li> 
+            <li><a data-code="ruby">Ruby</a></li> 
+            <li><a data-code="php">PHP</a></li> 
+            <li><a data-code="csharp">C</a></li> 
+            <li><a data-code="cpp">C++</a></li> 
+            <li><a data-code="javascript">JavaScript</a></li> 
+            <li><a data-code="python">Python</a></li> 
+            <li><a data-code="java">Java</a></li> 
+            <li><a data-code="css">CSS</a></li> 
+            <li><a data-code="sql">SQL</a></li> 
+            <li><a data-code="plain">其它</a></li> 
+           </ul> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item"> 
+          <input type="hidden" id="comment_replyId" name="comment_replyId"> 
+          <input type="hidden" id="article_id" name="article_id" value="112854139"> 
+          <input type="hidden" id="comment_userId" name="comment_userId" value=""> 
+          <input type="hidden" id="commentId" name="commentId" value=""> 
+          <a data-report-click="{&quot;mod&quot;:&quot;1582594662_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4227&quot;,&quot;ab&quot;:&quot;new&quot;}"> <input type="submit" class="btn-comment btn-comment-input" value="评论"> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </form> 
+     </div> 
+     <div class="comment-list-container"> 
+      <div class="comment-list-box comment-operate-item"> 
+      </div> 
+      <div id="lookGoodComment" class="look-good-comment side-look-comment"> 
+       <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+      </div> 
+      <div id="lookFlodComment" class="look-flod-comment"> 
+       <span class="count"></span>&nbsp;条评论被折叠&nbsp;
+       <a class="look-more-flodcomment">查看</a> 
+      </div> 
+      <div class="opt-box text-center"> 
+       <div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div> 
+      </div> 
+     </div> 
+    </div> 
+    <div id="pcFlodCommentSideBox" class="pc-flodcomment-sidebox"> 
+     <div class="comment-fold-tit">
+      <span id="lookUnFlodComment" class="back"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png" alt=""></span>被折叠的&nbsp;
+      <span class="count"></span>&nbsp;条评论 
+      <a href="https://blogdev.blog.csdn.net/article/details/122245662" class="tip" target="_blank">为什么被折叠?</a> 
+      <a href="https://bbs.csdn.net/forums/FreeZone" class="park" target="_blank"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png">到【灌水乐园】发言</a> 
+     </div> 
+     <div class="comment-fold-content"></div> 
+     <div id="lookBadComment" class="look-bad-comment side-look-comment"> 
+      <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="comment-rewarddialog-box"> 
+    <div class="form-box"> 
+     <div class="title-box">
+       添加红包 
+      <a class="btn-form-close"></a> 
+     </div> 
+     <form id="commentRewardForm"> 
+      <div class="ipt-box"> 
+       <label for="txtName">祝福语</label> 
+       <div class="ipt-btn-box"> 
+        <input type="text" name="name" id="txtName" autocomplete="off" maxlength="50"> 
+        <a class="btn-ipt btn-random"></a> 
+       </div> 
+       <p class="notice">请填写红包祝福语或标题</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtSendAmount">红包数量</label> 
+       <div class="ipt-txt-box"> 
+        <input type="text" name="sendAmount" maxlength="4" id="txtSendAmount" placeholder="请填写红包数量(最小10个)" autocomplete="off"> 
+        <span class="after-txt">个</span> 
+       </div> 
+       <p class="notice">红包个数最小为10个</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtMoney">红包总金额</label> 
+       <div class="ipt-txt-box error"> 
+        <input type="text" name="money" maxlength="5" id="txtMoney" placeholder="请填写总金额(最低5元)" autocomplete="off"> 
+        <span class="after-txt">元</span> 
+       </div> 
+       <p class="notice">红包金额最低5元</p> 
+      </div> 
+      <div class="balance-info-box"> 
+       <label>余额支付</label> 
+       <div class="balance-info">
+         当前余额
+        <span class="balance">3.43</span>元 
+        <a href="https://i.csdn.net/#/wallet/balance/recharge" class="link-charge" target="_blank">前往充值 &gt;</a> 
+       </div> 
+      </div> 
+      <div class="opt-box"> 
+       <div class="pay-info">
+         需支付：
+        <span class="price">10.00</span>元 
+       </div> 
+       <button type="button" class="ml-auto btn-cancel">取消</button> 
+       <button type="button" class="ml8 btn-submit" disabled="true">确定</button> 
+      </div> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="rr-guide-box"> 
+    <div class="rr-first-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png" alt=""> 
+     <button class="btn-guide-known next">下一步</button> 
+    </div> 
+    <div class="rr-second-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png" alt=""> 
+     <button class="btn-guide-known known">知道了</button> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="redEnvolope" id="redEnvolope"> 
+   <div class="env-box"> 
+    <div class="env-container"> 
+     <div class="pre-open" id="preOpen"> 
+      <div class="top"> 
+       <header> 
+        <img class="clearTpaErr" :src="redpacketAuthor.avatar" alt=""> 
+        <div class="author">
+         成就一亿技术人!
+        </div> 
+       </header> 
+       <div class="bot-icon"></div> 
+      </div> 
+      <footer> 
+       <div class="red-openbtn open-start"></div> 
+       <div class="tip">
+         领取后你会自动成为博主和红包主的粉丝 
+        <a class="rule" target="_blank">规则</a> 
+       </div> 
+      </footer> 
+     </div> 
+     <div class="opened" id="opened"> 
+      <div class="bot-icon"> 
+       <header> 
+        <a class="creatorUrl" href="" target="_blank"> <img class="clearTpaErr" src="https://profile-avatar.csdnimg.cn/default.jpg!2" alt=""> </a> 
+        <div class="author"> 
+         <div class="tt">
+          hope_wisdom
+         </div> 发出的红包 
+        </div> 
+       </header> 
+      </div> 
+      <div class="receive-box"> 
+       <header></header> 
+       <div class="receive-list"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="close-btn"></div> 
+   </div> 
+  </div> 
+  <div class="pay-code"> 
+   <div class="pay-money">
+    实付
+    <span class="pay-money-span" data-nowprice="" data-oldprice="">元</span>
+   </div> 
+   <div class="content-blance">
+    <a class="blance-bt" href="javascript:;">使用余额支付</a>
+   </div> 
+   <div class="content-code"> 
+    <div id="payCode" data-id=""> 
+     <div class="renovate"> 
+      <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+      <span>点击重新获取</span> 
+     </div> 
+    </div> 
+    <div class="pay-style">
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span>
+     <span class="text">扫码支付</span>
+    </div> 
+   </div> 
+   <div class="bt-close"> 
+    <svg t="1567152543821" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"> 
+     <defs> 
+      <style type="text/css"></style> 
+     </defs> 
+     <path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path> 
+    </svg> 
+   </div> 
+   <div class="pay-balance"> 
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span> 
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span> 
+    <div class="pay-code-tile"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt=""> 
+     <div class="pay-code-content"> 
+      <div class="span"> 
+       <p class="title">抵扣说明：</p> 
+       <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。</p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span>余额充值</span></a> 
+  </div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div>       
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css">                  
+ </body>
+</html>
