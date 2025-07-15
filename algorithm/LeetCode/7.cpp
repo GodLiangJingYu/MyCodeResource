@@ -7,7 +7,7 @@ using namespace std;
 
 // 你自己实现这个函数
 int reverse(int x) {
-    long MIN = -2e31, MAX = 2e31 - 1;
+    long MIN = -2147483648L, MAX = 2147483647L;
     long res = 0;
     queue<int> q;
     while (x != 0) {
