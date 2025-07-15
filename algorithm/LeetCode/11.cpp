@@ -7,7 +7,16 @@
 using namespace std;
 
 int maxArea(vector<int>& height) {
-    return 0;
+    int left = 0, right = height.size() - 1, res = 0;
+    while (left < right) {
+        int h = min(height[left], height[right]);
+        res = max(res, h * (right - left));
+        if (height[left] < height[right])
+            ++left;
+        else
+            --right;
+    }
+    return res;
 }
 
 vector<int> parseInput(const string& line) {
