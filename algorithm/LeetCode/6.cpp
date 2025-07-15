@@ -11,7 +11,7 @@ string convert(string s, int numRows){
     if (numRows <= 1 || numRows >= s.size()) {
         return s; // 如果行数小于等于1或大于等于字符串长度，直接返回原字符串
     }
-    
+
     return res;
 }
 
