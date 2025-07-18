@@ -7,7 +7,6 @@ using namespace std;
 
 int myAtoi(string s){
     int res;
-    
     return res;
 }
 
