@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+   <title>
+    Reading 6, Part 1: Specifications
+   </title>
+   <link href="../../../web/handout-style.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+   </link>
+  </meta>
+ </head>
+ <body>
+  <header>
+   <a href="https://ocw.mit.edu/ans7870/6/6.005/s16/">
+    6.005 — Software Construction on MIT OpenCourseWare
+   </a>
+   |
+   <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-005-software-construction-spring-2016/">
+    OCW 6.005 Homepage
+   </a>
+   <div>
+    Spring 2016
+   </div>
+  </header>
+  <nav class="table-of-contents col-sm-2">
+   <ul class="nav">
+    <li>
+     <a href="#reading_6_part_1_specifications">
+      Reading 6, Part 1: Specifications
+     </a>
+    </li>
+    <li>
+     <a href="#why_specifications">
+      Why specifications?
+     </a>
+    </li>
+    <li>
+     <a href="#behavioral_equivalence">
+      Behavioral equivalence
+     </a>
+    </li>
+    <li>
+     <a href="#specification_structure">
+      Specification structure
+     </a>
+    </li>
+    <li>
+     <a href="#null_references">
+      Null references
+     </a>
+    </li>
+    <li>
+     <a href="#what_a_specification_may_talk_about">
+      What a specification may talk about
+     </a>
+    </li>
+    <li>
+     <a href="#testing_and_specifications">
+      Testing and specifications
+     </a>
+    </li>
+    <li>
+     <a href="#specifications_for_mutating_methods">
+      Specifications for mutating methods
+     </a>
+    </li>
+    <li>
+     <a href="#next_exceptions">
+      Next: Exceptions
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <main class="container-fluid">
+   <h1 class="handout-title col-sm-8 col-sm-offset-2" id="reading_6_part_1_specifications">
+    Reading 6, Part 1: Specifications
+   </h1>
+   <div data-outline="reading_6_part_1_specifications">
+    <style>
+     table.side-by-side td {
+  vertical-align: top;
+}
+table.side-by-side pre {
+  padding: 4px;
+}
+table.side-by-side td:first-child {
+  border-right: 1px solid #333;
+  padding-right: 1em;
+}
+table.side-by-side td:last-child {
+  padding-left: 1em;
+}
+    </style>
+    <div class="markdown col-sm-8 col-sm-offset-2 converted">
+     <p>
+      Before we dive into the structure and meaning of specifications…
+     </p>
+     <h2 id="why_specifications">
+      Why specifications?
+     </h2>
+     <div data-outline="why_specifications">
+      <p>
+       Many of the nastiest bugs in programs arise because of misunderstandings about behavior at the interface between two pieces of code.
+Although every programmer has specifications in mind, not all programmers write them down.
+As a result, different programmers on a team have
+       <em>
+        different
+       </em>
+       specifications in mind.
+When the program fails, it’s hard to determine where the error is.
+Precise specifications in the code let you apportion blame (to code fragments, not people!), and can spare you the agony of puzzling over where a fix should go.
+      </p>
+      <p>
+       Specifications are good for the client of a method because they spare the task of reading code.
+If you’re not convinced that reading a spec is easier than reading code, take a look at some of the standard Java specs and compare them to the source code that implements them.
+      </p>
+      <p>
+       Here’s an example of one method from
+       <a href="http://docs.oracle.com/javase/8/docs/api/?java/math/BigInteger.html">
+        <code>
+         BigInteger
+        </code>
+       </a>
+       — a class for representing integers up to arbitrary size without the size limit of primitive
+       <code>
+        int
+       </code>
+       — next to its code:
+      </p>
+      <table class="side-by-side pull-margin">
+       <tbody>
+        <tr>
+         <td>
+          <p>
+           <a href="http://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html#add-java.math.BigInteger-">
+            Specification from the API documentation
+           </a>
+           :
+          </p>
+          <div class="panel panel-default">
+           <div class="panel-heading">
+            <p>
+             <strong>
+              add
+             </strong>
+            </p>
+           </div>
+           <div class="panel-body">
+            <p>
+             <code>
+              public BigInteger add(BigInteger val)
+             </code>
+            </p>
+            <p>
+             Returns a BigInteger whose value is
+             <code>
+              (this + val)
+             </code>
+             .
+            </p>
+            <p>
+             <strong>
+              Parameters:
+             </strong>
+             <br>
+              <code>
+               val
+              </code>
+              - value to be added to this BigInteger.
+             </br>
+            </p>
+            <p>
+             <strong>
+              Returns:
+             </strong>
+             <br>
+              <code>
+               this + val
+              </code>
+             </br>
+            </p>
+           </div>
+          </div>
+         </td>
+         <td>
+          <p>
+           <a href="http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/math/BigInteger.java#l1207">
+            Method body from Java 8 source
+           </a>
+           :
+          </p>
+          <pre><code class="language-java hljs"><span class="hljs-keyword">if</span> (val.signum == <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+<span class="hljs-keyword">if</span> (signum == <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> val;
+<span class="hljs-keyword">if</span> (val.signum == signum)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BigInteger(add(mag, val.mag), signum);
+
+<span class="hljs-keyword">int</span> cmp = compareMagnitude(val);
+<span class="hljs-keyword">if</span> (cmp == <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> ZERO;
+<span class="hljs-keyword">int</span>[] resultMag = (cmp &gt; <span class="hljs-number">0</span> ? subtract(mag, val.mag)
+                   : subtract(val.mag, mag));
+resultMag = trustedStripLeadingZeroInts(resultMag);
+
+<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BigInteger(resultMag, cmp == signum ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>);</code></pre>
+         </td>
+        </tr>
+       </tbody>
+      </table>
+      <p>
+       The spec for
+       <code>
+        BigInteger.add
+       </code>
+       is straightforward for clients to understand, and if we have questions about corner cases, the
+       <code>
+        BigInteger
+       </code>
+       class provides additional human-readable documentation.
+If all we had was the code, we’d have to read through the
+       <code>
+        BigInteger
+       </code>
+       constructor,
+       <code>
+        compare­Magnitude
+       </code>
+       ,
+       <code>
+        subtract
+       </code>
+       , and
+       <code>
+        trusted­StripLeadingZero­Ints
+       </code>
+       just as a starting point.
+      </p>
+      <div class="panel panel-default panel-figure pull-right pull-margin no-markdown">
+       <div class="panel-body text-center">
+        <img class="pull-right" src="../figures/firewall.png" width="196">
+        </img>
+       </div>
+      </div>
+      <p>
+       Specifications are good for the implementer of a method because they give the implementor freedom to change the implementation without telling clients.
+Specifications can make code faster, too.
+We’ll see that using a weaker specification can rule out certain states in which a method might be called.
+This restriction on the inputs might allow the implementor to skip an expensive check that is no longer necessary and use a more efficient implementation.
+      </p>
+      <p>
+       The contract acts as a
+       <em>
+        firewall
+       </em>
+       between client and implementor.
+It shields the client from the details of the
+       <em>
+        workings
+       </em>
+       of the unit — you don’t need to read the source code of the procedure if you have its specification.
+And it shields the implementor from the details of the
+       <em>
+        usage
+       </em>
+       of the unit; he doesn’t have to ask every client how she plans to use the unit.
+This firewall results in
+       <em>
+        decoupling
+       </em>
+       , allowing the code of the unit and the code of a client to be changed independently, so long as the changes respect the specification — each obeying its obligation.
+      </p>
+      <div class="clearfix">
+      </div>
+     </div>
+     <h2 id="behavioral_equivalence">
+      Behavioral equivalence
+     </h2>
+     <div data-outline="behavioral_equivalence">
+      <p>
+       Consider these two methods.
+Are they the same or different?
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findFirst</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
+        <span class="hljs-keyword">if</span> (arr[i] == val) <span class="hljs-keyword">return</span> i;
+    }
+    <span class="hljs-keyword">return</span> arr.length;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findLast</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = arr.length -<span class="hljs-number">1</span> ; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">if</span> (arr[i] == val) <span class="hljs-keyword">return</span> i;
+    }
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+}</code></pre>
+      <p>
+       Of course the code is different, so in that sense they are different; and we’ve given them different names, just for the purpose of discussion.
+To determine
+       <em>
+        behavioral equivalence
+       </em>
+       , our question is whether we could substitute one implementation for the other.
+      </p>
+      <p>
+       Not only do these methods have different code, they actually have different behavior:
+      </p>
+      <ul>
+       <li>
+        when
+        <code>
+         val
+        </code>
+        is missing,
+        <code>
+         findFirst
+        </code>
+        returns the length of
+        <code>
+         arr
+        </code>
+        and
+        <code>
+         findLast
+        </code>
+        returns -1;
+       </li>
+       <li>
+        when
+        <code>
+         val
+        </code>
+        appears twice,
+        <code>
+         findFirst
+        </code>
+        returns the lower index and
+        <code>
+         findLast
+        </code>
+        returns the higher.
+       </li>
+      </ul>
+      <p>
+       But when
+       <code>
+        val
+       </code>
+       occurs at exactly one index of the array, the two methods behave the same: they both return that index.
+It may be that clients never rely on the behavior in the other cases.
+Whenever they call the method, they will be passing in an
+       <code>
+        arr
+       </code>
+       with exactly one element
+       <code>
+        val
+       </code>
+       .
+For such clients, these two methods are the same, and we could switch from one implementation to the other without issue.
+      </p>
+      <p>
+       The notion of equivalence is in the eye of the beholder — that is, the client.
+In order to make it possible to substitute one implementation for another, and to know when this is acceptable, we need a specification that states exactly what the client depends on.
+      </p>
+      <p>
+       In this case, our specification might be:
+      </p>
+      <pre><p>static int find(int[] arr, int val)
+  <em>requires</em>: val occurs exactly once in arr
+  <em>effects</em>:  returns index i such that arr[i] = val</p></pre>
+      <div class="panel panel-default panel-figure pull-right pull-margin no-markdown">
+       <div class="panel-body text-center">
+        <img class="pull-right" src="../figures/firewall-implies.png" width="258">
+        </img>
+       </div>
+      </div>
+     </div>
+     <h2 id="specification_structure">
+      Specification structure
+     </h2>
+     <div data-outline="specification_structure">
+      <p>
+       A specification of a method consists of several clauses:
+      </p>
+      <ul>
+       <li>
+        a
+        <em>
+         precondition
+        </em>
+        , indicated by the keyword
+        <em>
+         requires
+        </em>
+       </li>
+       <li>
+        a
+        <em>
+         postcondition
+        </em>
+        , indicated by the keyword
+        <em>
+         effects
+        </em>
+       </li>
+      </ul>
+      <p>
+       The precondition is an obligation on the client (i.e., the caller of the method).
+It’s a condition over the state in which the method is invoked.
+      </p>
+      <p>
+       The postcondition is an obligation on the implementer of the method.
+If the precondition holds for the invoking state, the method is obliged to obey the postcondition, by returning appropriate values, throwing specified exceptions, modifying or not modifying objects, and so on.
+      </p>
+      <div class="clearfix">
+      </div>
+      <div class="panel panel-default panel-figure pull-right pull-margin no-markdown">
+       <div class="panel-body text-center">
+        <img class="pull-right" src="../figures/firewall-unsat.png" width="258">
+        </img>
+       </div>
+      </div>
+      <p>
+       The overall structure is a logical implication:
+       <em>
+        if
+       </em>
+       the precondition holds when the method is called,
+       <em>
+        then
+       </em>
+       the postcondition must hold when the method completes.
+      </p>
+      <p>
+       If the precondition does
+       <em>
+        not
+       </em>
+       hold when the method is called, the implementation is
+       <em>
+        not
+       </em>
+       bound by the postcondition.
+It is free to do anything, including not terminating, throwing an exception, returning arbitrary results, making arbitrary modifications, etc.
+      </p>
+      <div class="clearfix">
+      </div>
+      <h3 id="specifications_in_java">
+       Specifications in Java
+      </h3>
+      <div data-outline="specifications_in_java">
+       <p>
+        Some languages (notably
+        <a href="http://en.wikipedia.org/wiki/Eiffel_(programming_language)">
+         Eiffel
+        </a>
+        ) incorporate preconditions and postconditions as a fundamental part of the language, as expressions that the runtime system (or even the compiler) can automatically check to enforce the contracts between clients and implementers.
+       </p>
+       <p>
+        Java does not go quite so far, but its static type declarations
+        <em>
+         are
+        </em>
+        effectively part of the precondition and postcondition of a method, a part that is automatically checked and enforced by the compiler.
+The rest of the contract — the parts that we can’t write as types — must be described in a comment preceding the method, and generally depends on human beings to check it and guarantee it.
+       </p>
+       <p>
+        Java has a convention for
+        <a href="http://en.wikipedia.org/wiki/Javadoc">
+         documentation comments
+        </a>
+        , in which parameters are described by
+        <code>
+         @param
+        </code>
+        clauses and results are described by
+        <code>
+         @return
+        </code>
+        and
+        <code>
+         @throws
+        </code>
+        clauses.
+You should put the preconditions into
+        <code>
+         @param
+        </code>
+        where possible, and postconditions into
+        <code>
+         @return
+        </code>
+        and
+        <code>
+         @throws
+        </code>
+        .
+So a specification like this:
+       </p>
+       <pre><p>static int find(int[] arr, int val)
+  <em>requires</em>: val occurs exactly once in arr
+  <em>effects</em>:  returns index i such that arr[i] = val</p></pre>
+       <p>
+        … might be rendered in Java like this:
+       </p>
+       <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * Find a value in an array.
+ * <span class="hljs-doctag">@param</span> arr array to search, requires that val occurs exactly once
+ *            in arr
+ * <span class="hljs-doctag">@param</span> val value to search for
+ * <span class="hljs-doctag">@return</span> index i such that arr[i] = val
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span> val)</span></span></code></pre>
+       <p>
+        The
+        <a href="http://docs.oracle.com/javase/8/docs/api/">
+         Java API documentation
+        </a>
+        is produced from Javadoc comments in the
+        <a href="http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java">
+         Java standard library source code
+        </a>
+        .
+Documenting your specifications in Javadoc allows Eclipse to show you (and clients of your code) useful information, and allows you to
+        <a href="http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Freference%2Fref-export-javadoc.htm">
+         produce HTML documentation
+        </a>
+        in the same format as the Java API docs.
+       </p>
+       <div class="handout-solo alert alert-warning">
+        <p>
+         Read:
+         <em>
+          Introduction
+         </em>
+         ,
+         <em>
+          Commenting in Java
+         </em>
+         , and
+         <em>
+          Javadoc Comments
+         </em>
+         in
+         <strong>
+          <a class="alert-link" href="http://javaworkshop.sourceforge.net/chapter4.html">
+           Javadoc Comments
+          </a>
+         </strong>
+         .
+        </p>
+        <p>
+         When writing your specifications, you can also refer to Oracle’s
+         <strong>
+          <a class="alert-link" href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+           How to Write Doc Comments
+          </a>
+         </strong>
+         .
+        </p>
+       </div>
+      </div>
+     </div>
+     <h2 id="null_references">
+      Null references
+     </h2>
+     <div data-outline="null_references">
+      <p>
+       In Java, references to objects and arrays can also take on the special value
+       <em>
+        null
+       </em>
+       , which means that the reference doesn’t point to an object.
+Null values are an unfortunate hole in Java’s type system.
+      </p>
+      <p>
+       Primitives cannot be null:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-keyword">int</span> size = <span class="hljs-keyword">null</span>;     <span class="hljs-comment">// illegal</span>
+<span class="hljs-keyword">double</span> depth = <span class="hljs-keyword">null</span>; <span class="hljs-comment">// illegal</span></code></pre>
+      <p>
+       and the compiler will reject such attempts with static errors.
+      </p>
+      <p>
+       On the other hand, we can assign null to any non-primitive variable:
+      </p>
+      <pre><code class="language-java hljs">String name = <span class="hljs-keyword">null</span>;
+<span class="hljs-keyword">int</span>[] points = <span class="hljs-keyword">null</span>;</code></pre>
+      <p>
+       and the compiler happily accepts this code at compile time.
+But you’ll get errors at runtime because you can’t call any methods or use any fields with one of these references:
+      </p>
+      <pre><code class="language-java hljs">name.length()   <span class="hljs-comment">// throws NullPointerException  </span>
+points.length   <span class="hljs-comment">// throws NullPointerException</span></code></pre>
+      <p>
+       Note, in particular, that
+       <code>
+        null
+       </code>
+       is not the same as an empty string
+       <code>
+        ""
+       </code>
+       or an empty array.
+On an empty string or empty array, you
+       <em>
+        can
+       </em>
+       call methods and access fields.
+The length of an empty array or an empty string is 0.
+The length of a string variable that points to
+       <code>
+        null
+       </code>
+       isn’t anything: calling
+       <code>
+        length()
+       </code>
+       throws a
+       <code>
+        NullPointer­Exception
+       </code>
+       .
+      </p>
+      <p>
+       Also note that arrays of non-primitives and collections like
+       <code>
+        List
+       </code>
+       might be non-null but contain null as a value:
+      </p>
+      <pre><code class="language-java hljs">String[] names = <span class="hljs-keyword">new</span> String[] { <span class="hljs-keyword">null</span> };
+List&lt;Double&gt; sizes = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+sizes.add(<span class="hljs-keyword">null</span>);</code></pre>
+      <p>
+       These nulls are likely to cause errors as soon as someone tries to use the contents of the collection.
+      </p>
+      <p>
+       Null values are troublesome and unsafe, so much so that you’re well advised to remove them from your design vocabulary.
+In 6.005 — and in fact in most good Java programming —
+       <strong>
+        null values are implicitly disallowed in parameters and return values
+       </strong>
+       .
+So every method implicitly has a precondition on its object and array parameters that they be non-null.
+Every method that returns an object or an array implicitly has a postcondition that its return value is non-null.
+If a method allows null values for a parameter, it should explicitly state it, or if it might return a null value as a result, it should explicitly state it.
+But these are in general not good ideas.
+       <strong>
+        Avoid null
+       </strong>
+       .
+      </p>
+      <p>
+       There are extensions to Java that allow you to forbid
+       <code>
+        null
+       </code>
+       directly in the type declaration, e.g.:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(@NonNull List&lt;T&gt; list1, @NonNull List&lt;T&gt; list2)</span></span></code></pre>
+      <p>
+       where it can be
+       <a href="http://types.cs.washington.edu/checker-framework/">
+        checked automatically
+       </a>
+       at compile time or runtime.
+      </p>
+      <p>
+       Google has their own
+       <a href="https://code.google.com/p/guava-libraries/wiki/UsingAndAvoidingNullExplained">
+        discussion of
+        <code>
+         null
+        </code>
+        in Guava, the company’s core Java libraries
+       </a>
+       .
+The project explains:
+      </p>
+      <blockquote>
+       <p>
+        Careless use of
+        <code>
+         null
+        </code>
+        can cause a staggering variety of bugs.
+  Studying the Google code base, we found that something like 95% of collections weren’t supposed to have any null values in them, and having those
+        <strong>
+         fail fast
+        </strong>
+        rather than silently accept
+        <code>
+         null
+        </code>
+        would have been helpful to developers.
+       </p>
+       <p>
+        Additionally,
+        <code>
+         null
+        </code>
+        is unpleasantly ambiguous.
+  It’s rarely obvious what a
+        <code>
+         null
+        </code>
+        return value is supposed to mean — for example,
+        <code>
+         Map.get(key)
+        </code>
+        can return
+        <code>
+         null
+        </code>
+        either because the value in the map is
+        <code>
+         null
+        </code>
+        , or the value is not in the map.
+  Null can mean failure, can mean success, can mean almost anything.
+  Using something other than
+        <code>
+         null
+        </code>
+        <strong>
+         makes your meaning clear
+        </strong>
+        .
+       </p>
+      </blockquote>
+      <p>
+       (Emphasis added.)
+      </p>
+      <div class="panel panel-default panel-figure pull-right pull-margin no-markdown">
+       <div class="panel-body text-center">
+        <img class="pull-right" src="../figures/firewall-talk.png" width="196">
+        </img>
+       </div>
+      </div>
+     </div>
+     <h2 id="what_a_specification_may_talk_about">
+      What a specification may talk about
+     </h2>
+     <div data-outline="what_a_specification_may_talk_about">
+      <p>
+       A specification of a method can talk about the parameters and return value of the method, but it should never talk about local variables of the method or private fields of the method’s class.
+You should consider the implementation invisible to the reader of the spec.
+      </p>
+      <p>
+       In Java, the source code of the method is often unavailable to the reader of your spec, because the Javadoc tool extracts the spec comments from your code and renders them as HTML.
+      </p>
+      <div class="clearfix">
+      </div>
+     </div>
+     <h2 id="testing_and_specifications">
+      Testing and specifications
+     </h2>
+     <div data-outline="testing_and_specifications">
+      <p>
+       In testing, we talk about
+       <em>
+        black box tests
+       </em>
+       that are chosen with only the specification in mind, and
+       <em>
+        glass box tests
+       </em>
+       that are chosen with knowledge of the actual implementation (
+       <a href="../../03-testing/#blackbox_and_whitebox_testing">
+        <em>
+         Testing
+        </em>
+       </a>
+       ).
+But it’s important to note that
+       <strong>
+        even glass box tests must follow the specification
+       </strong>
+       .
+Your implementation may provide stronger guarantees than the specification calls for, or it may have specific behavior where the specification is undefined.
+But your test cases should not count on that behavior.
+Test cases must obey the contract, just like every other client.
+      </p>
+      <p>
+       For example, suppose you are testing this specification of
+       <code>
+        find
+       </code>
+       , slightly different from the one we’ve used so far:
+      </p>
+      <pre><p>static int find(int[] arr, int val)
+  <em>requires</em>: val occurs in arr
+  <em>effects</em>:  returns index i such that arr[i] = val</p></pre>
+      <p>
+       This spec has a strong precondition in the sense that
+       <code>
+        val
+       </code>
+       is required to be found; and it has a fairly weak postcondition in the sense that if
+       <code>
+        val
+       </code>
+       appears more than once in the array, this specification says nothing about which particular index of
+       <code>
+        val
+       </code>
+       is returned.
+Even if you implemented
+       <code>
+        find
+       </code>
+       so that it always returns the lowest index, your test case can’t assume that specific behavior:
+      </p>
+      <pre class="no-markdown"><code class="java hljs"><span class="hljs-keyword">int</span>[] array = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[] { <span class="hljs-number">7</span>, <span class="hljs-number">7</span>, <span class="hljs-number">7</span> };
+<strike>assertEquals(<span class="hljs-number">0</span>, find(array, <span class="hljs-number">7</span>));</strike>  <span class="hljs-comment">// bad test case: violates the spec</span>
+assertEquals(<span class="hljs-number">7</span>, array[find(array, <span class="hljs-number">7</span>)]);  <span class="hljs-comment">// correct</span>
+</code></pre>
+      <p>
+       Similarly, even if you implemented
+       <code>
+        find
+       </code>
+       so that it (sensibly) throws an exception when
+       <code>
+        val
+       </code>
+       isn’t found, instead of returning some arbitrary misleading index, your test case can’t assume that behavior, because it can’t call
+       <code>
+        find()
+       </code>
+       in a way that violates the precondition.
+      </p>
+      <p>
+       So what does glass box testing mean, if it can’t go beyond the spec?
+It means you are trying to find new test cases that exercise different parts of the implementation, but still checking those test cases in an implementation-independent way.
+      </p>
+      <h3 id="testing_units">
+       Testing units
+      </h3>
+      <div data-outline="testing_units">
+       <p>
+        Recall the
+        <a href="../../03-testing/#unit_testing_and_stubs">
+         web search example from
+         <em>
+          Testing
+         </em>
+        </a>
+        with these methods:
+       </p>
+       <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/** <span class="hljs-doctag">@return</span> the contents of the web page downloaded from url */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getWebPage</span><span class="hljs-params">(URL url)</span> </span>{ ... }
+
+<span class="hljs-comment handout-javadoc-comment">/** <span class="hljs-doctag">@return</span> the words in string s, in the order they appear,
+ *          where a word is a contiguous sequence of
+ *          non-whitespace and non-punctuation characters */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">extractWords</span><span class="hljs-params">(String s)</span> </span>{ ... }
+
+<span class="hljs-comment handout-javadoc-comment">/** <span class="hljs-doctag">@return</span> an index mapping a word to the set of URLs
+ *          containing that word, for all webpages in the input set */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Map&lt;String, Set&lt;URL&gt;&gt; makeIndex(Set&lt;URL&gt; urls) { 
+    ...
+    calls getWebPage and extractWords
+    ...
+} </code></pre>
+       <p>
+        We talked then about
+        <em>
+         unit testing
+        </em>
+        , the idea that we should write tests of each module of our program in isolation.
+A good unit test is focused on just a single specification.
+Our tests will nearly always rely on the specs of Java library methods, but a unit test for one method we’ve written shouldn’t fail if a
+        <em>
+         different
+        </em>
+        method fails to satisfy its spec.
+As we saw in the example, a test for
+        <code>
+         extractWords
+        </code>
+        shouldn’t fail if
+        <code>
+         getWebPage
+        </code>
+        doesn’t satisfy its postcondition.
+       </p>
+       <p>
+        Good
+        <em>
+         integration tests
+        </em>
+        , tests that use a combination of modules, will make sure that our different methods have compatible specifications: callers and implementors of different methods are passing and returning values as the other expects.
+Integration tests cannot replace systematically-designed unit tests.
+From the example, if we only ever test
+        <code>
+         extractWords
+        </code>
+        by calling
+        <code>
+         makeIndex
+        </code>
+        , we will only test it on a potentially small part of its input space: inputs that are possible outputs of
+        <code>
+         getWebPage
+        </code>
+        .
+In doing so, we’ve left a place for bugs to hide, ready to jump out when we use
+        <code>
+         extractWords
+        </code>
+        for a different purpose elsewhere in our program, or when
+        <code>
+         getWebPage
+        </code>
+        starts returning web pages written in a new format, etc.
+       </p>
+      </div>
+     </div>
+     <h2 id="specifications_for_mutating_methods">
+      Specifications for mutating methods
+     </h2>
+     <div data-outline="specifications_for_mutating_methods">
+      <p>
+       We previously discussed mutable vs. immutable objects, but our specifications of
+       <code>
+        find
+       </code>
+       didn’t give us the opportunity to illustrate how to describe side-effects — changes to mutable data — in the postcondition.
+      </p>
+      <p>
+       Here’s a specification that describes a method that mutates an object:
+      </p>
+      <pre class="no-markdown">static boolean addAll(List&lt;T&gt; list1, List&lt;T&gt; list2)
+  <em>requires</em>: list1 != list2
+  <em>effects</em>:  modifies list1 by adding the elements of list2 to the end of
+              it, and returns true if list1 changed as a result of call</pre>
+      <p>
+       We’ve taken this, slightly simplified, from the Java
+       <a href="http://docs.oracle.com/javase/8/docs/api/?java/util/List.html">
+        <code>
+         List
+        </code>
+       </a>
+       interface.
+First, look at the postcondition.
+It gives two constraints: the first telling us how
+       <code>
+        list1
+       </code>
+       is modified, and the second telling us how the return value is determined.
+      </p>
+      <p>
+       Second, look at the precondition.
+It tells us that the behavior of the method if you attempt to add the elements of a list to itself is undefined.
+You can easily imagine why the implementor of the method would want to impose this constraint: it’s not likely to rule out any useful applications of the method, and it makes it easier to implement.
+The specification allows a simple implementation in which you take an element from
+       <code>
+        list2
+       </code>
+       and add it to
+       <code>
+        list1
+       </code>
+       , then go on to the next element of
+       <code>
+        list2
+       </code>
+       until you get to the end.
+If
+       <code>
+        list1
+       </code>
+       and
+       <code>
+        list2
+       </code>
+       are the same list, this algorithm will not terminate — an outcome permitted by the specification because of its precondition.
+      </p>
+      <p>
+       Remember also our implicit precondition that
+       <code>
+        list1
+       </code>
+       and
+       <code>
+        list2
+       </code>
+       must be valid objects, rather than
+       <code>
+        null
+       </code>
+       .
+We’ll usually omit saying this because it’s virtually always required of object references.
+      </p>
+      <p>
+       Here is another example of a mutating method:
+      </p>
+      <pre class="no-markdown">static void sort(List&lt;String&gt; lst)
+  <em>requires</em>: nothing
+  <em>effects</em>:  puts lst in sorted order, i.e. lst[i] &lt;= lst[j]
+              for all 0 &lt;= i &lt; j &lt; lst.size()</pre>
+      <p>
+       And an example of a method that does not mutate its argument:
+      </p>
+      <pre class="no-markdown">static List&lt;String&gt; toLowerCase(List&lt;String&gt; lst)
+  <em>requires</em>: nothing
+  <em>effects</em>:  returns a new list t where t[i] = lst[i].toLowerCase()</pre>
+      <p>
+       Just as we’ve said that
+       <code>
+        null
+       </code>
+       is implicitly disallowed unless stated otherwise, we will also use the convention that
+       <strong>
+        mutation is disallowed unless stated otherwise
+       </strong>
+       .
+The spec of
+       <code>
+        to­Lower­Case
+       </code>
+       could explicitly state as an
+       <em>
+        effect
+       </em>
+       that “lst is not modified”, but in the absence of a postcondition describing mutation, we demand no mutation of the inputs.
+      </p>
+     </div>
+     <h2 id="next_exceptions">
+      Next:
+      <a href="../exceptions/">
+       Exceptions
+      </a>
+     </h2>
+    </div>
+   </div>
+  </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript">
+  </script>
+  <script src="../../../web/handout-run.js" type="text/javascript">
+  </script>
+ </body>
+</html>
+<!-- Handout delivered Thu Feb 25 2016 12:33:17 GMT-0500 (EST) -->
