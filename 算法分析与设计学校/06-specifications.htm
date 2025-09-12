@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+   <title>
+    Reading 6: Specifications
+   </title>
+   <link href="../../web/handout-style.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+   </link>
+  </meta>
+ </head>
+ <body>
+  <header>
+   <a href="https://ocw.mit.edu/ans7870/6/6.005/s16/">
+    6.005 — Software Construction on MIT OpenCourseWare
+   </a>
+   |
+   <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-005-software-construction-spring-2016/">
+    OCW 6.005 Homepage
+   </a>
+   <div>
+    Spring 2016
+   </div>
+  </header>
+  <nav class="table-of-contents col-sm-2">
+   <ul class="nav">
+    <li>
+     <a href="#reading_6_specifications">
+      Reading 6: Specifications
+     </a>
+    </li>
+    <li>
+     <a href="#introduction">
+      Introduction
+     </a>
+    </li>
+    <li>
+     <a href="#part_1_specifications">
+      Part 1: Specifications
+     </a>
+    </li>
+    <li>
+     <a href="#part_2_exceptions">
+      Part 2: Exceptions
+     </a>
+    </li>
+    <li>
+     <a href="#summary">
+      Summary
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <main class="container-fluid">
+   <h1 class="handout-title col-sm-8 col-sm-offset-2" id="reading_6_specifications">
+    Reading 6: Specifications
+   </h1>
+   <div data-outline="reading_6_specifications">
+    <div class="markdown col-sm-8 col-sm-offset-2 converted">
+     <h4>
+      Software in 6.005
+     </h4>
+     <table class="table table-striped no-markdown">
+      <tbody>
+       <tr>
+        <th width="33%">
+         Safe from bugs
+        </th>
+        <th>
+         Easy to understand
+        </th>
+        <th>
+         Ready for change
+        </th>
+       </tr>
+       <tr>
+        <td>
+         Correct today and correct in the unknown future.
+        </td>
+        <td>
+         Communicating clearly with future programmers, including future you.
+        </td>
+        <td>
+         Designed to accommodate change without rewriting.
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h4>
+      Objectives
+     </h4>
+     <ul>
+      <li>
+       Understand preconditions and postconditions in method specifications, and be able to write correct specifications
+      </li>
+      <li>
+       Be able to write tests against a specification
+      </li>
+      <li>
+       Know the difference between checked and unchecked exceptions in Java
+      </li>
+      <li>
+       Understand how to use exceptions for special results
+      </li>
+     </ul>
+     <h2 id="introduction">
+      Introduction
+     </h2>
+     <div data-outline="introduction">
+      <p>
+       Specifications are the linchpin of teamwork.
+It’s impossible to delegate responsibility for implementing a method without a specification.
+The specification acts as a contract: the implementer is responsible for meeting the contract, and a client that uses the method can rely on the contract.
+In fact, we’ll see that like real legal contracts, specifications place demands on both parties: when the specification has a precondition, the client has responsibilities too.
+      </p>
+      <p>
+       In this reading we’ll look at the role played by specifications of methods.
+We’ll discuss what preconditions and postconditions are, and what they mean for the implementor and the client of a method.
+We’ll also talk about how to use exceptions, an important language feature found in Java, Python, and many other modern languages, which allows us to make a method’s interface safer from bugs and easier to understand.
+      </p>
+     </div>
+     <h2 id="part_1_specifications">
+      <a href="specs/">
+       Part 1: Specifications
+      </a>
+     </h2>
+     <h2 id="part_2_exceptions">
+      <a href="exceptions/">
+       Part 2: Exceptions
+      </a>
+     </h2>
+     <h2 id="summary">
+      Summary
+     </h2>
+     <div data-outline="summary">
+      <p>
+       Before we wrap up, check your understanding with one last example:
+      </p>
+      <p>
+       A specification acts as a crucial firewall between the implementor of a procedure and its client.
+It makes separate development possible: the client is free to write code that uses the procedure without seeing its source code, and the implementor is free to write the code that implements the procedure without knowing how it will be used.
+      </p>
+      <p>
+       Let’s review how specifications help with the main goals of this course:
+      </p>
+      <ul>
+       <li>
+        <p>
+         <strong>
+          Safe from bugs
+         </strong>
+         .
+A good specification clearly documents the mutual assumptions that a client and implementor are relying on.
+Bugs often come from disagreements at the interfaces, and the presence of a specification reduces that.
+Using machine-checked language features in your spec, like static typing and exceptions rather than just a human-readable comment, can reduce bugs still more.
+        </p>
+       </li>
+       <li>
+        <p>
+         <strong>
+          Easy to understand
+         </strong>
+         .
+A short, simple spec is easier to understand than the implementation itself, and saves other people from having to read the code.
+        </p>
+       </li>
+       <li>
+        <p>
+         <strong>
+          Ready for change
+         </strong>
+         .
+Specs establish contracts between different parts of your code, allowing those parts to change independently as long as they continue to satisfy the requirements of the contract.
+        </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript">
+  </script>
+  <script src="../../web/handout-run.js" type="text/javascript">
+  </script>
+ </body>
+</html>
+<!-- Handout delivered Thu Feb 25 2016 12:33:09 GMT-0500 (EST) -->
