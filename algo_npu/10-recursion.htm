@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+   <title>
+    Reading 10: Recursion
+   </title>
+   <link href="../../web/handout-style.css" rel="stylesheet">
+    <style>
+     #factorial-call-stacks tbody td { vertical-align: bottom; }
+#factorial-call-stacks .panel { margin-bottom: 10px; }
+#factorial-call-stacks .panel div { padding: 5px 7px; }
+#factorial-call-stacks .return-value { font-weight: bold; color: #31708f; }
+#factorial-call-stacks thead { font-size: 80%;}
+    </style>
+    <script>
+     window.onHandoutDidRender = function() {
+  $('a[href*="pythontutor.com"]').each(function() {
+    $(this).attr('target', '_blank');
+  });
+}
+    </script>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+   </link>
+  </meta>
+ </head>
+ <body>
+  <header>
+   <a href="https://ocw.mit.edu/ans7870/6/6.005/s16/">
+    6.005 — Software Construction on MIT OpenCourseWare
+   </a>
+   |
+   <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-005-software-construction-spring-2016/">
+    OCW 6.005 Homepage
+   </a>
+   <div>
+    Spring 2016
+   </div>
+  </header>
+  <nav class="table-of-contents col-sm-2">
+   <ul class="nav">
+    <li>
+     <a href="#reading_10_recursion">
+      Reading 10: Recursion
+     </a>
+    </li>
+    <li>
+     <a href="#recursion">
+      Recursion
+     </a>
+    </li>
+    <li>
+     <a href="#choosing_the_right_decomposition_for_a_problem">
+      Choosing the Right Decomposition for a Problem
+     </a>
+    </li>
+    <li>
+     <a href="#structure_of_recursive_implementations">
+      Structure of Recursive Implementations
+     </a>
+    </li>
+    <li>
+     <a href="#helper_methods">
+      Helper Methods
+     </a>
+    </li>
+    <li>
+     <a href="#choosing_the_right_recursive_subproblem">
+      Choosing the Right Recursive Subproblem
+     </a>
+    </li>
+    <li>
+     <a href="#recursive_problems_vs_recursive_data">
+      Recursive Problems vs. Recursive Data
+     </a>
+    </li>
+    <li>
+     <a href="#reentrant_code">
+      Reentrant Code
+     </a>
+    </li>
+    <li>
+     <a href="#when_to_use_recursion_rather_than_iteration">
+      When to Use Recursion Rather Than Iteration
+     </a>
+    </li>
+    <li>
+     <a href="#common_mistakes_in_recursive_implementations">
+      Common Mistakes in Recursive Implementations
+     </a>
+    </li>
+    <li>
+     <a href="#summary">
+      Summary
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <main class="container-fluid">
+   <h1 class="handout-title col-sm-8 col-sm-offset-2" id="reading_10_recursion">
+    Reading 10: Recursion
+   </h1>
+   <div data-outline="reading_10_recursion">
+    <div class="markdown col-sm-8 col-sm-offset-2 converted">
+     <h4>
+      Software in 6.005
+     </h4>
+     <table class="table table-striped no-markdown">
+      <tbody>
+       <tr>
+        <th width="33%">
+         Safe from bugs
+        </th>
+        <th>
+         Easy to understand
+        </th>
+        <th>
+         Ready for change
+        </th>
+       </tr>
+       <tr>
+        <td>
+         Correct today and correct in the unknown future.
+        </td>
+        <td>
+         Communicating clearly with future programmers, including future you.
+        </td>
+        <td>
+         Designed to accommodate change without rewriting.
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <h4>
+      Objectives
+     </h4>
+     <p>
+      After today’s class, you should:
+     </p>
+     <ul>
+      <li>
+       be able to decompose a recursive problem into recursive steps and base cases
+      </li>
+      <li>
+       know when and how to use helper methods in recursion
+      </li>
+      <li>
+       understand the advantages and disadvantages of recursion vs. iteration
+      </li>
+     </ul>
+     <h2 id="recursion">
+      Recursion
+     </h2>
+     <div data-outline="recursion">
+      <p>
+       In today’s class, we’re going to talk about how to implement a method, once you already have a specification.  We’ll focus on one particular technique,
+       <em>
+        recursion
+       </em>
+       .  Recursion is not appropriate for every problem, but it’s an important tool in your software development toolbox, and one that many people scratch their heads over.  We want you to be comfortable and competent with recursion, because you will encounter it over and over.  (That’s a joke, but it’s also true.)
+      </p>
+      <p>
+       Since you’ve taken 6.01, recursion is not completely new to you, and you have seen and written recursive functions like factorial and fibonacci before.  Today’s class will delve more deeply into recursion than you may have gone before.  Comfort with recursive implementations will be necessary for upcoming classes.
+      </p>
+      <p>
+       A recursive function is defined in terms of
+       <em>
+        base cases
+       </em>
+       and
+       <em>
+        recursive steps
+       </em>
+       .
+      </p>
+      <ul>
+       <li>
+        In a base case, we compute the result immediately given the inputs to the function call.
+       </li>
+       <li>
+        In a recursive step, we compute the result with the help of one or more
+        <em>
+         recursive calls
+        </em>
+        to this same function, but with the inputs somehow reduced in size or complexity, closer to a base case.
+       </li>
+      </ul>
+      <p>
+       Consider writing a function to compute factorial.
+We can define factorial in two different ways:
+      </p>
+      <div class="pull-margin">
+       <table class="table no-markdown" style="margin-bottom:0;">
+        <thead>
+         <tr>
+          <th width="50%">
+           Product
+          </th>
+          <th>
+           Recurrence relation
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           <img src="figures/factorial-product.png" width="294">
+            <br>
+             (where the empty product equals
+             <br>
+              multiplicative identity
+              <em>
+               1
+              </em>
+              )
+             </br>
+            </br>
+           </img>
+          </td>
+          <td>
+           <img src="figures/factorial-recurrence.png" width="232"/>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+       <p>
+        which leads to two different implementations:
+       </p>
+       <table class="table" style="margin-bottom:0;">
+        <thead class="no-markdown">
+         <tr>
+          <th width="50%">
+           Iterative
+          </th>
+          <th>
+           Recursive
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">factorial</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">long</span> fact = <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    fact = fact * i;
+  }
+  <span class="hljs-keyword">return</span> fact;
+}</code></pre>
+          </td>
+          <td>
+           <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">factorial</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> n * factorial(n-<span class="hljs-number">1</span>);
+  }
+}</code></pre>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <p>
+       In the recursive implementation on the right, the base case is
+       <em>
+        n = 0
+       </em>
+       , where we compute and return the result immediately:
+       <em>
+        0!
+       </em>
+       is defined to be
+       <em>
+        1
+       </em>
+       .
+The recursive step is
+       <em>
+        n &gt; 0
+       </em>
+       , where we compute the result with the help of a recursive call to obtain
+       <em>
+        (n-1)!
+       </em>
+       , then complete the computation by multiplying by
+       <em>
+        n
+       </em>
+       .
+      </p>
+      <p>
+       To visualize the execution of a recursive function, it is helpful to diagram the
+       <em>
+        call stack
+       </em>
+       of currently-executing functions as the computation proceeds.
+      </p>
+      <p>
+       Let’s run the recursive implementation of
+       <code>
+        factorial
+       </code>
+       in a main method:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+    <span class="hljs-keyword">long</span> x = factorial(<span class="hljs-number">3</span>);
+}</code></pre>
+      <p>
+       At each step, with time moving left to right:
+      </p>
+      <div class="pull-margin overflow:scroll" id="factorial-call-stacks">
+       <table class="table">
+        <thead>
+         <tr>
+          <td>
+           <p>
+            starts in
+            <br>
+             <code>
+              main
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            calls
+            <br>
+             <code>
+              factorial(3)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            calls
+            <br>
+             <code>
+              factorial(2)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            calls
+            <br>
+             <code>
+              factorial(1)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            calls
+            <br>
+             <code>
+              factorial(0)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            returns to
+            <br>
+             <code>
+              factorial(1)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            returns to
+            <br>
+             <code>
+              factorial(2)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            returns to
+            <br>
+             <code>
+              factorial(3)
+             </code>
+            </br>
+           </p>
+          </td>
+          <td>
+           <p>
+            returns to
+            <br>
+             <code>
+              main
+             </code>
+            </br>
+           </p>
+          </td>
+         </tr>
+        </thead>
+        <tbody class="no-markdown">
+         <tr>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 2
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 1
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 2
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 0
+             <br>
+              <span class="return-value">
+               returns 1
+              </span>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 1
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 2
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 1
+             <br>
+              <span class="return-value">
+               returns 1
+              </span>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 2
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 2
+             <br>
+              <span class="return-value">
+               returns 2
+              </span>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             factorial
+            </div>
+            <div class="panel-body">
+             n = 3
+             <br>
+              <span class="return-value">
+               returns 6
+              </span>
+             </br>
+            </div>
+           </div>
+           <div class="panel panel-info">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x
+            </div>
+           </div>
+          </td>
+          <td>
+           <div class="panel panel-primary">
+            <div class="panel-heading">
+             main
+            </div>
+            <div class="panel-body">
+             x = 6
+            </div>
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <p>
+       In the diagram, we can see how the stack grows as
+       <code>
+        main
+       </code>
+       calls
+       <code>
+        factorial
+       </code>
+       and
+       <code>
+        factorial
+       </code>
+       then calls
+       <em>
+        itself
+       </em>
+       , until
+       <code>
+        factorial(0)
+       </code>
+       does not make a recursive call.
+Then the call stack unwinds, each call to
+       <code>
+        factorial
+       </code>
+       returning its answer to the caller, until
+       <code>
+        factorial(3)
+       </code>
+       returns to
+       <code>
+        main
+       </code>
+       .
+      </p>
+      <p>
+       Here’s an
+       <a href="http://www.pythontutor.com/visualize.html#code=public+class+Factorial+%7B%0A++++public+static+void+main(String%5B%5D+args)+%7B%0A++++++++long+x+%3D+factorial(3)%3B%0A++++%7D%0A++++public+static+long+factorial(int+n)+%7B%0A++++++++if+(n+%3D%3D+0)+%7B%0A++++++++++++return+1%3B%0A++++++++%7D+else+%7B%0A++++++++++++return+n+*+factorial(n-1)%3B%0A++++++++%7D%0A++++%7D%0A%7D&amp;mode=display&amp;origin=opt-frontend.js&amp;cumulative=false&amp;heapPrimitives=false&amp;textReferences=false&amp;py=java&amp;rawInputLstJSON=%5B%5D&amp;curInstr=0" target="_blank">
+        <strong>
+         interactive visualization of
+         <code>
+          factorial
+         </code>
+        </strong>
+       </a>
+       .
+You can step through the computation to see the recursion in action.
+New stack frames grow down instead of up in this visualization.
+      </p>
+      <p>
+       You’ve probably seen factorial before, because it’s a common example for recursive functions.  Another common example is the Fibonacci series:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * <span class="hljs-doctag">@param</span> n &gt;= 0
+ * <span class="hljs-doctag">@return</span> the nth Fibonacci number 
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; <span class="hljs-comment">// base cases</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> fibonacci(n-<span class="hljs-number">1</span>) + fibonacci(n-<span class="hljs-number">2</span>); <span class="hljs-comment">// recursive step</span>
+    }
+}</code></pre>
+      <p>
+       Fibonacci is interesting because it has multiple base cases: n=0 and n=1.  You can look at an
+       <a href="http://www.pythontutor.com/visualize.html#code=public+class+Fibonacci+%7B%0A++++public+static+void+main(String%5B%5D+args)+%7B%0A++++++++int+x+%3D+fibonacci(3)%3B%0A++++%7D%0A++++public+static+int+fibonacci(int+n)+%7B%0A++++++++if+(n+%3D%3D+0+%7C%7C+n+%3D%3D+1)+%7B%0A++++++++++++return+1%3B%0A++++++++%7D+else+%7B%0A++++++++++++return+fibonacci(n-1)+%2B+fibonacci(n-2)%3B%0A++++++++%7D%0A++++%7D%0A%7D&amp;mode=display&amp;origin=opt-frontend.js&amp;cumulative=false&amp;heapPrimitives=false&amp;textReferences=false&amp;py=java&amp;rawInputLstJSON=%5B%5D&amp;curInstr=0" target="_blank">
+        <strong>
+         interactive visualization of Fibonacci
+        </strong>
+       </a>
+       .
+Notice that where factorial’s stack steadily grows to a maximum depth and then shrinks back to the answer, Fibonacci’s stack grows and shrinks repeatedly over the course of the computation.
+      </p>
+     </div>
+     <h2 id="choosing_the_right_decomposition_for_a_problem">
+      Choosing the Right Decomposition for a Problem
+     </h2>
+     <div data-outline="choosing_the_right_decomposition_for_a_problem">
+      <p>
+       Finding the right way to decompose a problem, such as a method implementation, is important.  Good decompositions are simple, short, easy to understand, safe from bugs, and ready for change.
+      </p>
+      <p>
+       Recursion is an elegant and simple decomposition for some problems.  Suppose we want to implement this specification:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * <span class="hljs-doctag">@param</span> word consisting only of letters A-Z or a-z
+ * <span class="hljs-doctag">@return</span> all subsequences of word, separated by commas,
+ * where a subsequence is a string of letters found in word 
+ * in the same order that they appear in word.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">subsequences</span><span class="hljs-params">(String word)</span></span></code></pre>
+      <p>
+       For example,
+       <code>
+        subsequences("abc")
+       </code>
+       might return
+       <code>
+        "abc,ab,bc,ac,a,b,c,"
+       </code>
+       .  Note the trailing comma preceding the empty subsequence, which is also a valid subsequence.
+      </p>
+      <p>
+       This problem lends itself to an elegant recursive decomposition.  Take the first letter of the word.  We can form one set of subsequences that
+       <em>
+        include
+       </em>
+       that letter, and another set of subsequences that exclude that letter, and those two sets completely cover the set of possible subsequences.
+      </p>
+      <pre><code class="language-java hljs"> <span class="hljs-number">1</span> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">subsequences</span><span class="hljs-params">(String word)</span> </span>{
+ <span class="hljs-number">2</span>     <span class="hljs-keyword">if</span> (word.isEmpty()) {
+ <span class="hljs-number">3</span>         <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>; <span class="hljs-comment">// base case</span>
+ <span class="hljs-number">4</span>     } <span class="hljs-keyword">else</span> {
+ <span class="hljs-number">5</span>         <span class="hljs-keyword">char</span> firstLetter = word.charAt(<span class="hljs-number">0</span>);
+ <span class="hljs-number">6</span>         String restOfWord = word.substring(<span class="hljs-number">1</span>);
+ <span class="hljs-number">7</span>         
+ <span class="hljs-number">8</span>         String subsequencesOfRest = subsequences(restOfWord);
+ <span class="hljs-number">9</span>         
+<span class="hljs-number">10</span>         String result = <span class="hljs-string">""</span>;
+<span class="hljs-number">11</span>         <span class="hljs-keyword">for</span> (String subsequence : subsequencesOfRest.split(<span class="hljs-string">","</span>, -<span class="hljs-number">1</span>)) {
+<span class="hljs-number">12</span>             result += <span class="hljs-string">","</span> + subsequence;
+<span class="hljs-number">13</span>             result += <span class="hljs-string">","</span> + firstLetter + subsequence;
+<span class="hljs-number">14</span>         }
+<span class="hljs-number">15</span>         result = result.substring(<span class="hljs-number">1</span>); <span class="hljs-comment">// remove extra leading comma</span>
+<span class="hljs-number">16</span>         <span class="hljs-keyword">return</span> result;
+<span class="hljs-number">17</span>     }
+<span class="hljs-number">18</span> }</code></pre>
+     </div>
+     <h2 id="structure_of_recursive_implementations">
+      Structure of Recursive Implementations
+     </h2>
+     <div data-outline="structure_of_recursive_implementations">
+      <p>
+       A recursive implementation always has two parts:
+      </p>
+      <ul>
+       <li>
+        <p>
+         <strong>
+          base case
+         </strong>
+         , which is the simplest, smallest instance of the problem, that can’t be decomposed any further.  Base cases often correspond to emptiness – the empty string, the empty list, the empty set, the empty tree, zero, etc.
+        </p>
+       </li>
+       <li>
+        <p>
+         <strong>
+          recursive step
+         </strong>
+         , which
+         <strong>
+          decomposes
+         </strong>
+         a larger instance of the problem into one or more simpler or smaller instances that can be solved by recursive calls, and then
+         <strong>
+          recombines
+         </strong>
+         the results of those subproblems to produce the solution to the original problem.
+        </p>
+       </li>
+      </ul>
+      <p>
+       It’s important for the recursive step to transform the problem instance into something smaller, otherwise the recursion may never end.  If every recursive step shrinks the problem, and the base case lies at the bottom, then the recursion is guaranteed to be finite.
+      </p>
+      <p>
+       A recursive implementation may have more than one base case, or more than one recursive step.  For example, the Fibonacci function has two base cases, n=0 and n=1.
+      </p>
+     </div>
+     <h2 id="helper_methods">
+      Helper Methods
+     </h2>
+     <div data-outline="helper_methods">
+      <p>
+       The recursive implementation we just saw for
+       <code>
+        subsequences()
+       </code>
+       is one possible recursive decomposition of the problem.  We took a solution to a subproblem – the subsequences of the remainder of the string after removing the first character – and used it to construct solutions to the original problem, by taking each subsequence and adding the first character or omitting it.  This is in a sense a
+       <em>
+        direct
+       </em>
+       recursive implementation, where we are using the existing specification of the recursive method to solve the subproblems.
+      </p>
+      <p>
+       In some cases, it’s useful to require a stronger (or different) specification for the recursive steps, to make the recursive decomposition simpler or more elegant.  In this case, what if we built up a partial subsequence using the initial letters of the word, and used the recursive calls to
+       <em>
+        complete
+       </em>
+       that partial subsequence using the remaining letters of the word?  For example, suppose the original word is “orange”.  We’ll both select “o” to be in the partial subsequence, and recursively extend it with all subsequences of “range”; and we’ll skip “o”, use “” as the partial subsequence, and again recursively extend it with all subsequences of “range”.
+      </p>
+      <p>
+       Using this approach, our code now looks much simpler:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * Return all subsequences of word (as defined above) separated by commas,
+ * with partialSubsequence prepended to each one.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">subsequencesAfter</span><span class="hljs-params">(String partialSubsequence, String word)</span> </span>{
+    <span class="hljs-keyword">if</span> (word.isEmpty()) {
+        <span class="hljs-comment">// base case</span>
+        <span class="hljs-keyword">return</span> partialSubsequence;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// recursive step</span>
+        <span class="hljs-keyword">return</span> subsequencesAfter(partialSubsequence, word.substring(<span class="hljs-number">1</span>))
+             + <span class="hljs-string">","</span>
+             + subsequencesAfter(partialSubsequence + word.charAt(<span class="hljs-number">0</span>), word.substring(<span class="hljs-number">1</span>));
+    }
+}</code></pre>
+      <p>
+       This
+       <code>
+        subsequencesAfter
+       </code>
+       method is called a
+       <strong>
+        helper method
+       </strong>
+       .  It satisfies a different spec from the original
+       <code>
+        subsequences
+       </code>
+       , because it has a new parameter
+       <code>
+        partialSubsequence
+       </code>
+       .  This parameter fills a similar role that a local variable would in an iterative implementation.  It holds temporary state during the evolution of the computation.  The recursive calls steadily extend this partial subsequence, selecting or ignoring each letter in the word, until finally reaching the end of the word (the base case), at which point the partial subsequence is returned as the only result. Then the recursion backtracks and fills in other possible subsequences.
+      </p>
+      <p>
+       To finish the implementation, we need to implement the original
+       <code>
+        subsequences
+       </code>
+       spec, which gets the ball rolling by calling the helper method with an initial value for the partial subsequence parameter:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">subsequences</span><span class="hljs-params">(String word)</span> </span>{
+    <span class="hljs-keyword">return</span> subsequencesAfter(<span class="hljs-string">""</span>, word);
+}</code></pre>
+      <p>
+       <strong>
+        Don’t expose the helper method to your clients.
+       </strong>
+       Your decision to decompose the recursion this way instead of another way is entirely implementation-specific.  In particular, if you discover that you need temporary variables like
+       <code>
+        partialSubsequence
+       </code>
+       in your recursion, don’t change the original spec of your method, and don’t force your clients to correctly initialize those parameters.  That exposes your implementation to the client and reduces your ability to change it in the future.  Use a private helper function for the recursion, and have your public method call it with the correct initializations, as shown above.
+      </p>
+     </div>
+     <h2 id="choosing_the_right_recursive_subproblem">
+      Choosing the Right Recursive Subproblem
+     </h2>
+     <div data-outline="choosing_the_right_recursive_subproblem">
+      <p>
+       Let’s look at another example.  Suppose we want to convert an integer to a string representation with a given base, following this spec:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * <span class="hljs-doctag">@param</span> n integer to convert to string
+ * <span class="hljs-doctag">@param</span> base base for the representation. Requires 2&lt;=base&lt;=10.
+ * <span class="hljs-doctag">@return</span> n represented as a string of digits in the specified base, with 
+ *           a minus sign if n&lt;0.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">stringValue</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> base)</span></span></code></pre>
+      <p>
+       For example,
+       <code>
+        stringValue(16, 10)
+       </code>
+       should return
+       <code>
+        "16"
+       </code>
+       , and
+       <code>
+        stringValue(16, 2)
+       </code>
+       should return
+       <code>
+        "10000"
+       </code>
+       .
+      </p>
+      <p>
+       Let’s develop a recursive implementation of this method.  One recursive step here is straightforward: we can handle negative integers simply by recursively calling for the representation of the corresponding positive integer:
+      </p>
+      <pre><code class="hljs cs"><span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">"-"</span> + stringValue(-n, <span class="hljs-keyword">base</span>);</code></pre>
+      <p>
+       This shows that the recursive subproblem can be smaller or simpler in more subtle ways than just the value of a numeric parameter or the size of a string or list parameter.  We have still effectively reduced the problem by reducing it to positive integers.
+      </p>
+      <p>
+       The next question is, given that we have a positive n, say n=829 in base 10, how should we decompose it into a recursive subproblem?  Thinking about the number as we would write it down on paper, we could either start with 8 (the leftmost or highest-order digit), or 9 (the rightmost, lower-order digit).  Starting at the left end seems natural, because that’s the direction we write, but it’s harder in this case, because we would need to first find the number of digits in the number to figure out how to extract the leftmost digit.  Instead, a better way to decompose n is to take its remainder modulo base (which gives the
+       <em>
+        rightmost
+       </em>
+       digit) and also divide by base (which gives the subproblem, the remaining higher-order digits):
+      </p>
+      <pre><code class="hljs cs"><span class="hljs-keyword">return</span> stringValue(n/<span class="hljs-keyword">base</span>, <span class="hljs-keyword">base</span>) + <span class="hljs-string">"0123456789"</span>.charAt(n%<span class="hljs-keyword">base</span>);</code></pre>
+      <p>
+       <strong>
+        Think about several ways to break down the problem, and try to write the recursive steps.
+       </strong>
+       You want to find the one that produces the simplest, most natural recursive step.
+      </p>
+      <p>
+       It remains to figure out what the base case is, and include an if statement that distinguishes the base case from this recursive step.
+      </p>
+     </div>
+     <h2 id="recursive_problems_vs_recursive_data">
+      Recursive Problems vs. Recursive Data
+     </h2>
+     <div data-outline="recursive_problems_vs_recursive_data">
+      <p>
+       The examples we’ve seen so far have been cases where the problem structure lends itself naturally to a recursive definition.  Factorial is easy to define in terms of smaller subproblems.  Having a
+       <em>
+        recursive problem
+       </em>
+       like this is one cue that you should pull a recursive solution out of your toolbox.
+      </p>
+      <p>
+       Another cue is when the data you are operating on is inherently recursive in structure.  We’ll see many examples of recursive data a few classes from now, but for now let’s look at the recursive data found in every laptop computer: its filesystem.  A filesystem consists of named
+       <em>
+        files
+       </em>
+       .  Some files are
+       <em>
+        folders
+       </em>
+       , which can contain other files.  So a filesystem is recursive: folders contain other folders which contain other folders, until finally at the bottom of the recursion are plain (non-folder) files.
+      </p>
+      <p>
+       The Java library represents the file system using
+       <a href="http://docs.oracle.com/javase/8/docs/api/index.html?java/io/File.html">
+        <code>
+         java.io.File
+        </code>
+       </a>
+       .  This is a recursive data type, in the sense that
+       <code>
+        f.getParentFile()
+       </code>
+       returns the parent folder of a file
+       <code>
+        f
+       </code>
+       , which is a
+       <code>
+        File
+       </code>
+       object as well, and
+       <code>
+        f.listFiles()
+       </code>
+       returns the files contained by
+       <code>
+        f
+       </code>
+       , which is an array of other
+       <code>
+        File
+       </code>
+       objects.
+      </p>
+      <p>
+       For recursive data, it’s natural to write recursive implementations:
+      </p>
+      <pre><code class="language-java hljs"><span class="hljs-comment handout-javadoc-comment">/**
+ * <span class="hljs-doctag">@param</span> f a file in the filesystem
+ * <span class="hljs-doctag">@return</span> the full pathname of f from the root of the filesystem
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">fullPathname</span><span class="hljs-params">(File f)</span> </span>{
+    <span class="hljs-keyword">if</span> (f.getParentFile() == <span class="hljs-keyword">null</span>) {
+        <span class="hljs-comment">// base case: f is at the root of the filesystem</span>
+        <span class="hljs-keyword">return</span> f.getName();  
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// recursive step</span>
+        <span class="hljs-keyword">return</span> fullPathname(f.getParentFile()) + <span class="hljs-string">"/"</span> + f.getName();
+    }
+}</code></pre>
+      <p>
+       Recent versions of Java have added a new API,
+       <a href="http://docs.oracle.com/javase/8/docs/api/index.html?java/nio/file/Files.html">
+        <code>
+         java.nio.Files
+        </code>
+       </a>
+       and
+       <a href="http://docs.oracle.com/javase/8/docs/api/index.html?java/nio/file/Path.html">
+        <code>
+         java.nio.Path
+        </code>
+       </a>
+       , which offer a cleaner separation between the filesystem and the pathnames used to name files in it.  But the data structure is still fundamentally recursive.
+      </p>
+     </div>
+     <h2 id="reentrant_code">
+      Reentrant Code
+     </h2>
+     <div data-outline="reentrant_code">
+      <p>
+       Recursion – a method calling itself – is a special case of a general phenomenon in programming called
+       <strong>
+        reentrancy
+       </strong>
+       .  Reentrant code can be safely re-entered, meaning that it can be called again
+       <em>
+        even while a call to it is underway.
+       </em>
+       Reentrant code keeps its state entirely in parameters and local variables, and doesn’t use static variables or global variables, and doesn’t share aliases to mutable objects with other parts of the program, or other calls to itself.
+      </p>
+      <p>
+       Direct recursion is one way that reentrancy can happen.  We’ve seen many examples of that during this reading.  The
+       <code>
+        factorial()
+       </code>
+       method is designed so that
+       <code>
+        factorial(n-1)
+       </code>
+       can be called even though
+       <code>
+        factorial(n)
+       </code>
+       hasn’t yet finished working.
+      </p>
+      <p>
+       Mutual recursion between two or more functions is another way this can happen – A calls B, which calls A again.  Direct mutual recursion is virtually always intentional and designed by the programmer.  But unexpected mutual recursion can lead to bugs.
+      </p>
+      <p>
+       When we talk about concurrency later in the course, reentrancy will come up again, since in a concurrent program, a method may be called at the same time by different parts of the program that are running concurrently.
+      </p>
+      <p>
+       It’s good to design your code to be reentrant as much as possible.  Reentrant code is safer from bugs and can be used in more situations, like concurrency, callbacks, or mutual recursion.
+      </p>
+     </div>
+     <h2 id="when_to_use_recursion_rather_than_iteration">
+      When to Use Recursion Rather Than Iteration
+     </h2>
+     <div data-outline="when_to_use_recursion_rather_than_iteration">
+      <p>
+       We’ve seen two common reasons for using recursion:
+      </p>
+      <ul>
+       <li>
+        The problem is naturally recursive (e.g. Fibonacci)
+       </li>
+       <li>
+        The data is naturally recursive (e.g. filesystem)
+       </li>
+      </ul>
+      <p>
+       Another reason to use recursion is to take more advantage of immutability.  In an ideal recursive implementation, all variables are final, all data is immutable, and the recursive methods are all pure functions in the sense that they do not mutate anything.  The behavior of a method can be understood simply as a relationship between its parameters and its return value, with no side effects on any other part of the program.  This kind of paradigm is called
+       <em>
+        functional programming
+       </em>
+       , and it is far easier to reason about than
+       <em>
+        imperative programming
+       </em>
+       with loops and variables.
+      </p>
+      <p>
+       In iterative implementations, by contrast, you inevitably have non-final variables or mutable objects that are modified during the course of the iteration.  Reasoning about the program then requires thinking about snapshots of the program state at various points in time, rather than thinking about pure input/output behavior.
+      </p>
+      <p>
+       One downside of recursion is that it may take more space than an iterative solution.  Building up a stack of recursive calls consumes memory temporarily, and the stack is limited in size, which may become a limit on the size of the problem that your recursive implementation can solve.
+      </p>
+     </div>
+     <h2 id="common_mistakes_in_recursive_implementations">
+      Common Mistakes in Recursive Implementations
+     </h2>
+     <div data-outline="common_mistakes_in_recursive_implementations">
+      <p>
+       Here are two common ways that a recursive implementation can go wrong:
+      </p>
+      <ul>
+       <li>
+        The base case is missing entirely, or the problem needs more than one base case but not all the base cases are covered.
+       </li>
+       <li>
+        The recursive step doesn’t reduce to a smaller subproblem, so the recursion doesn’t converge.
+       </li>
+      </ul>
+      <p>
+       Look for these when you’re debugging.
+      </p>
+      <p>
+       On the bright side, what would be an infinite loop in an iterative implementation usually becomes a
+       <code>
+        StackOverflowError
+       </code>
+       in a recursive implementation.  A buggy recursive program fails faster.
+      </p>
+     </div>
+     <h2 id="summary">
+      Summary
+     </h2>
+     <div data-outline="summary">
+      <p>
+       We saw these ideas:
+      </p>
+      <ul>
+       <li>
+        recursive problems and recursive data
+       </li>
+       <li>
+        comparing alternative decompositions of a recursive problem
+       </li>
+       <li>
+        using helper methods to strengthen a recursive step
+       </li>
+       <li>
+        recursion vs. iteration
+       </li>
+      </ul>
+      <p>
+       The topics of today’s reading connect to our three key properties of good software as follows:
+      </p>
+      <ul>
+       <li>
+        <p>
+         <strong>
+          Safe from bugs.
+         </strong>
+         Recursive code is simpler and often uses immutable variables and immutable objects.
+        </p>
+       </li>
+       <li>
+        <p>
+         <strong>
+          Easy to understand.
+         </strong>
+         Recursive implementations for naturally recursive problems and recursive data are often shorter and easier to understand than iterative solutions.
+        </p>
+       </li>
+       <li>
+        <p>
+         <strong>
+          Ready for change.
+         </strong>
+         Recursive code is also naturally reentrant, which makes it safer from bugs and ready to use in more situations.
+        </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript">
+  </script>
+  <script src="../../web/handout-run.js" type="text/javascript">
+  </script>
+ </body>
+</html>
+<!-- Handout delivered Fri Feb 19 2016 20:44:56 GMT-0500 (EST) -->
