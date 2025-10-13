@@ -3,70 +3,107 @@
 //
 #include <iostream>
 #include <vector>
+#include <string>
 #include <sstream>
+
 using namespace std;
 
-// 链表节点定义
+// 定义链表节点结构
 struct ListNode {
     int val;
     ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// 读取链表输入，如 "3->6->4->1"
-ListNode* readList(const string& input) {
-    if (input.empty())
-        return nullptr;
-    stringstream ss(input);
-    vector<int> vals;
-    string token;
-    while (getline(ss, token, '-')) {
-        if (!token.empty() && token != ">") {
-            if (token[0] == '>') token = token.substr(1);
-            vals.push_back(stoi(token));
+// 将输入字符串转换为链表
+ListNode* stringToList(string s) {
+    // 去除首尾方括号（如果存在）
+    if (s.length() >= 2 && s[0] == '[' && s[s.length() - 1] == ']') {
+        s = s.substr(1, s.length() - 2);
+    }
+    if (s.empty()) return nullptr;
+
+    // 使用 stringstream 解析数字
+    stringstream ss(s);
+    int num;
+    ListNode dummy(0);
+    ListNode* tail = &dummy;
+
+    while (ss >> num) {
+        tail->next = new ListNode(num);
+        tail = tail->next;
+    }
+    // 检查是否有未解析的非法字符
+    string remaining;
+    ss >> remaining;
+    if (!remaining.empty()) {
+        // 清理已分配的节点并返回空链表
+        while (dummy.next) {
+            ListNode* temp = dummy.next;
+            dummy.next = temp->next;
+            delete temp;
         }
-    }
-    if (vals.empty())
         return nullptr;
-    ListNode* head = new ListNode(vals[0]);
-    ListNode* curr = head;
-    for (size_t i = 1; i < vals.size(); ++i) {
-        curr->next = new ListNode(vals[i]);
-        curr = curr->next;
     }
-    return head;
+    return dummy.next;
 }
 
-// 空白子函数（你可以在这里实现功能，比如反转链表）
-vector<int> solve(ListNode* head) {
-    // TODO: 实现你的功能
+// 反转链表并返回所有节点值的数组
+vector<int> reverseLinkedList(ListNode* head) {
+    vector<int> result;
 
+    // 特殊情况：空链表
+    if (!head) {
+        return result;
+    }
+
+    // 反转链表
+    ListNode* prev = nullptr;
+    ListNode* curr = head;
+    while (curr) {
+        ListNode* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    // 遍历反转后的链表，收集所有节点值
+    ListNode* newHead = prev;
+    while (newHead) {
+        result.push_back(newHead->val);
+        newHead = newHead->next;
+    }
+
+    return result;
 }
 
 int main() {
     string input;
-    getline(cin, input); // 读取链表输入
-    ListNode* head = readList(input);
+    getline(cin, input); // 读取整行输入
+    ListNode* list = stringToList(input);
+    vector<int> result = reverseLinkedList(list);
 
-    vector<int> result = solve(head);
-
-    // 输出结果
+    // 输出结果，数字间用空格分隔
     if (result.empty()) {
+        // 对于空链表，输出空行（根据样例 3）
         cout << endl;
     } else {
         for (size_t i = 0; i < result.size(); ++i) {
-            if (i) cout << " ";
+            if (i > 0) cout << " ";
             cout << result[i];
         }
         cout << endl;
     }
 
     // 释放链表内存
-    ListNode* curr = head;
+    ListNode* curr = list;
     while (curr) {
-        ListNode* tmp = curr;
+        ListNode* temp = curr;
         curr = curr->next;
-        delete tmp;
+        delete temp;
     }
+
     return 0;
 }
