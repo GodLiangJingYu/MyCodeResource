@@ -30,21 +30,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94211448-1b6a-4f66-9927-bb66a7c16fb9" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/GamePassProbability.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/39.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/43.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/44.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/45.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/46.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../OJ/47.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../1-Specification.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../1-《算法设计与分析》-算法概述.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../2-《算法设计与分析》-算法效率分析基础.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../4-《算法设计与分析》-分治法.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../5-《算法设计与分析》-动态规划.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../OJ/reprac_10.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../OJ/reprac_10.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OJ/48.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OJ/ai_30.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/MNIST_Data/t10k-images-idx3-ubyte.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/MNIST_Data/t10k-labels-idx1-ubyte.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/MNIST_Data/train-images-idx3-ubyte.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/MNIST_Data/train-labels-idx1-ubyte.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/cnn_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/download_mnist.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/download_mnist_numpy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DL_npu/exec1/mindspore_CNN/train.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../OJ/24.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../OJ/none_24.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../OJ/none_20.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../OJ/none_20.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../OJ/none_30.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../OJ/runtime/38.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../贪心算法-2025.10.9-2010版本.ppt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +137,7 @@
       <recent name="C:\Users\86180\Desktop\MyCodeResource\algo_npu\EXEC\exec1" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake 应用程序.CMakeCXXCompilerId">
+  <component name="RunManager">
     <configuration name="CMakeCXXCompilerId" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="exec1" TARGET_NAME="CMakeCXXCompilerId" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="exec1" RUN_TARGET_NAME="CMakeCXXCompilerId">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -170,6 +169,7 @@
       <workItem from="1760667587405" duration="10000" />
       <workItem from="1760668916337" duration="15000" />
       <workItem from="1760680753475" duration="7000" />
+      <workItem from="1761266615577" duration="18000" />
     </task>
     <servers />
   </component>
