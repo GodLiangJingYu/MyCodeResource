@@ -1,0 +1,6 @@
+我看了一下我发的这些论文，可以让ai总结一下现在的研究方向，记录册里面的咱们应该只用写一二部分和中期评价，第一部分可以让ai总结写目前的研究现状，第二部分就写咱们选GNN方法将源代码转化为抽象语法树或程序依赖图，通过消息传递捕获节点间语义关系，基于此进行研究，咱们目前处于学习GNN框架，学习使用PyTorch，阅读了"The Graph Neural Network Model" (2009)：GNN的起源；"Semi-Supervised Classification with Graph Convolutional Networks" (2017)：GCN的提出；"Graph Attention Networks" (2018)：GAT的介绍等相关文献，使用统计学习方法等书籍进行基础学习，并参加了学校机器学习基础的课程。目前咱们干的内容差不多就这些，不用特别理解这些是什么，有这些文献，扔给ai总结就行。ppt内容也是这两个方面，主要分成两个part：
+
+第一个part就写也就成果，粘贴几张论文图片就行，第二part，让ai生成一些相关代码，逼格高一点的那种，放进去，然后总结一下上面的内容做个ppt就完了。
+
+ai的话做ppt可以用讯飞智文，百度文库，文字类的总结可以用grok和chatgpt，咱们的ddl是20号。
+
