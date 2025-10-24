@@ -1,0 +1,599 @@
+import os
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import numpy as np
+import dgl
+from dgl.nn.pytorch import GraphConv, GATConv, SAGEConv
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+import networkx as nx
+import json
+import re
+from tree_sitter import Language, Parser
+
+# 1. 代码解析与图构建模块
+class CodeToGraphConverter:
+    def __init__(self, language='c'):
+        # 初始化Tree-sitter解析器
+        self.language = language
+        self.parser = Parser()
+        # 实际使用时需要构建或下载语言库
+        # Language.build_library('build/languages.so', ['path/to/tree-sitter-c'])
+        # 这里假设我们已经有了预构建的库
+        LANGUAGE_PATH = f'./build/tree-sitter-{language}.so'
+        if os.path.exists(LANGUAGE_PATH):
+            self.lang = Language(LANGUAGE_PATH, language)
+            self.parser.set_language(self.lang)
+        else:
+            print(f"Language library not found at {LANGUAGE_PATH}. Using mock parser.")
+            self.use_mock_parser = True
+    
+    def _extract_ast(self, code):
+        """将代码解析为AST"""
+        if hasattr(self, 'use_mock_parser') and self.use_mock_parser:
+            # 使用模拟数据用于示例
+            return self._create_mock_ast()
+        
+        tree = self.parser.parse(bytes(code, 'utf8'))
+        root_node = tree.root_node
+        
+        # 将AST转换为NetworkX图
+        G = nx.DiGraph()
+        
+        def traverse_node(node, parent_id=None):
+            node_id = len(G)
+            # 提取节点类型和文本作为节点特征
+            G.add_node(node_id, 
+                      type=node.type, 
+                      text=code[node.start_byte:node.end_byte],
+                      start=node.start_byte,
+                      end=node.end_byte)
+            
+            if parent_id is not None:
+                G.add_edge(parent_id, node_id)
+            
+            for child in node.children:
+                traverse_node(child, node_id)
+        
+        traverse_node(root_node)
+        return G
+    
+    def _create_mock_ast(self):
+        """创建模拟AST用于示例"""
+        G = nx.DiGraph()
+        # 添加一些示例节点
+        G.add_node(0, type="translation_unit", text="", start=0, end=100)
+        G.add_node(1, type="function_definition", text="void func()", start=0, end=100)
+        G.add_node(2, type="declarator", text="func", start=5, end=9)
+        G.add_node(3, type="parameter_list", text="()", start=9, end=11)
+        G.add_node(4, type="compound_statement", text="{...}", start=12, end=100)
+        G.add_node(5, type="declaration", text="char buffer[100];", start=20, end=40)
+        G.add_node(6, type="call_expression", text="strcpy(buffer, input);", start=50, end=70)
+        
+        # 添加边
+        G.add_edge(0, 1)
+        G.add_edge(1, 2)
+        G.add_edge(1, 3)
+        G.add_edge(1, 4)
+        G.add_edge(4, 5)
+        G.add_edge(4, 6)
+        
+        return G
+    
+    def _build_pdg(self, ast_graph, code):
+        """从AST构建程序依赖图 (PDG)"""
+        # 复制AST作为基础
+        pdg = nx.DiGraph(ast_graph)
+        
+        # 简单的数据流分析
+        variables = {}  # 变量名到定义节点的映射
+        
+        # 识别变量定义
+        for node_id, node_data in ast_graph.nodes(data=True):
+            node_type = node_data.get('type', '')
+            node_text = node_data.get('text', '')
+            
+            # 识别变量声明
+            if node_type == 'declaration':
+                var_match = re.search(r'(\w+)\s*(\[\d+\])?\s*;', node_text)
+                if var_match:
+                    var_name = var_match.group(1)
+                    variables[var_name] = node_id
+            
+            # 识别赋值操作
+            elif node_type == 'assignment_expression':
+                var_match = re.search(r'(\w+)\s*=', node_text)
+                if var_match:
+                    var_name = var_match.group(1)
+                    variables[var_name] = node_id
+        
+        # 添加数据依赖边
+        for node_id, node_data in ast_graph.nodes(data=True):
+            node_text = node_data.get('text', '')
+            
+            # 检查节点是否使用了任何已定义的变量
+            for var_name, def_node_id in variables.items():
+                if var_name in node_text and node_id != def_node_id:
+                    # 避免自引用
+                    if not pdg.has_edge(def_node_id, node_id):
+                        pdg.add_edge(def_node_id, node_id, type='data_dependency')
+        
+        return pdg
+    
+    def _extract_vulnerable_patterns(self, graph):
+        """识别潜在的漏洞模式"""
+        vulnerable_nodes = []
+        
+        # 检查危险函数调用
+        dangerous_functions = ['strcpy', 'strcat', 'sprintf', 'gets', 'system', 'exec']
+        
+        for node_id, node_data in graph.nodes(data=True):
+            node_type = node_data.get('type', '')
+            node_text = node_data.get('text', '')
+            
+            # 检查危险函数调用
+            if node_type == 'call_expression':
+                for func in dangerous_functions:
+                    if func + '(' in node_text:
+                        vulnerable_nodes.append(node_id)
+                        graph.nodes[node_id]['vulnerable'] = True
+                        graph.nodes[node_id]['vuln_type'] = f'dangerous_function_{func}'
+            
+            # 识别硬编码凭证
+            if 'password' in node_text.lower() and '=' in node_text:
+                vulnerable_nodes.append(node_id)
+                graph.nodes[node_id]['vulnerable'] = True
+                graph.nodes[node_id]['vuln_type'] = 'hardcoded_credentials'
+        
+        return vulnerable_nodes
+    
+    def convert_to_dgl_graph(self, graph, node_types=None):
+        """将NetworkX图转换为DGL图"""
+        if node_types is None:
+            # 提取所有可能的节点类型
+            node_types = set()
+            for _, attr in graph.nodes(data=True):
+                node_types.add(attr.get('type', 'unknown'))
+            node_types = list(node_types)
+        
+        # 为节点类型创建映射
+        type_to_idx = {t: i for i, t in enumerate(node_types)}
+        
+        # 创建节点特征
+        num_nodes = graph.number_of_nodes()
+        node_features = torch.zeros((num_nodes, len(node_types)))
+        vulnerable_labels = torch.zeros(num_nodes, dtype=torch.long)
+        
+        for node_id, node_data in graph.nodes(data=True):
+            node_type = node_data.get('type', 'unknown')
+            if node_type in type_to_idx:
+                node_features[node_id, type_to_idx[node_type]] = 1.0  # One-hot编码
+            
+            # 设置漏洞标签
+            if node_data.get('vulnerable', False):
+                vulnerable_labels[node_id] = 1
+        
+        # 转换为DGL图
+        src_nodes, dst_nodes = zip(*graph.edges())
+        dgl_graph = dgl.graph((torch.tensor(src_nodes), torch.tensor(dst_nodes)))
+        dgl_graph.ndata['feat'] = node_features
+        dgl_graph.ndata['label'] = vulnerable_labels
+        
+        return dgl_graph, type_to_idx
+    
+    def process_code(self, code, extract_pdg=True):
+        """处理源代码，返回AST和可选的PDG，并识别潜在漏洞"""
+        # 提取AST
+        ast_graph = self._extract_ast(code)
+        
+        # 识别漏洞模式
+        vulnerable_nodes = self._extract_vulnerable_patterns(ast_graph)
+        
+        # 可选地构建PDG
+        if extract_pdg:
+            pdg_graph = self._build_pdg(ast_graph, code)
+            pdg_vulnerable_nodes = self._extract_vulnerable_patterns(pdg_graph)
+            
+            # 将DGL图用于AST和PDG
+            ast_dgl, ast_type_map = self.convert_to_dgl_graph(ast_graph)
+            pdg_dgl, pdg_type_map = self.convert_to_dgl_graph(pdg_graph)
+            
+            return {
+                'ast': ast_graph,
+                'pdg': pdg_graph,
+                'ast_dgl': ast_dgl,
+                'pdg_dgl': pdg_dgl,
+                'ast_vulnerable_nodes': vulnerable_nodes,
+                'pdg_vulnerable_nodes': pdg_vulnerable_nodes,
+                'ast_type_map': ast_type_map,
+                'pdg_type_map': pdg_type_map
+            }
+        else:
+            # 只返回AST
+            ast_dgl, ast_type_map = self.convert_to_dgl_graph(ast_graph)
+            
+            return {
+                'ast': ast_graph,
+                'ast_dgl': ast_dgl,
+                'ast_vulnerable_nodes': vulnerable_nodes,
+                'ast_type_map': ast_type_map
+            }
+
+# 2. GNN模型定义
+class VulnerabilityGNN(nn.Module):
+    def __init__(self, in_feats, h_feats, num_classes=2, gnn_type='gcn'):
+        super(VulnerabilityGNN, self).__init__()
+        self.gnn_type = gnn_type
+        
+        # First GNN layer
+        if gnn_type == 'gcn':
+            self.conv1 = GraphConv(in_feats, h_feats)
+        elif gnn_type == 'gat':
+            self.conv1 = GATConv(in_feats, h_feats, num_heads=4)
+        elif gnn_type == 'sage':
+            self.conv1 = SAGEConv(in_feats, h_feats, aggregator_type='mean')
+        else:
+            raise ValueError(f"Unknown GNN type: {gnn_type}")
+        
+        # Second GNN layer
+        if gnn_type == 'gcn':
+            self.conv2 = GraphConv(h_feats, h_feats)
+        elif gnn_type == 'gat':
+            # For GAT, we need to consider multi-head attention output
+            self.conv2 = GATConv(h_feats * 4, h_feats, num_heads=1)
+        elif gnn_type == 'sage':
+            self.conv2 = SAGEConv(h_feats, h_feats, aggregator_type='mean')
+        
+        # Prediction layer
+        self.predict = nn.Linear(h_feats, num_classes)
+        
+        # Dropout layer
+        self.dropout = nn.Dropout(0.5)
+    
+    def forward(self, g, features):
+        # First GNN layer message passing
+        if self.gnn_type == 'gat':
+            h = self.conv1(g, features)
+            h = h.view(h.shape[0], -1)  # Flatten multi-head attention results
+        else:
+            h = self.conv1(g, features)
+        
+        h = F.relu(h)
+        h = self.dropout(h)
+        
+        # Second GNN layer message passing
+        h = self.conv2(g, h)
+        h = F.relu(h)
+        h = self.dropout(h)
+        
+        # Prediction
+        return self.predict(h)
+    
+    def get_node_embeddings(self, g, features):
+        """Get node embeddings for visualization or analysis"""
+        if self.gnn_type == 'gat':
+            h = self.conv1(g, features)
+            h = h.view(h.shape[0], -1)  # Flatten multi-head attention results
+        else:
+            h = self.conv1(g, features)
+        
+        h = F.relu(h)
+        
+        if self.gnn_type == 'gat':
+            emb = self.conv2(g, h)
+            if len(emb.shape) > 2:  # If there are multiple heads
+                emb = emb.mean(dim=1)  # Average multi-head attention
+        else:
+            emb = self.conv2(g, h)
+        
+        return emb
+
+# 3. 漏洞检测系统
+class VulnerabilityDetectionSystem:
+    def __init__(self, gnn_type='gcn', hidden_dim=64):
+        self.converter = CodeToGraphConverter()
+        self.gnn_type = gnn_type
+        self.hidden_dim = hidden_dim
+        self.model = None
+        self.node_type_map = None
+    
+    def process_dataset(self, code_samples, labels=None):
+        """Process code sample set, extract graph representations"""
+        graphs_data = []
+        graph_labels = []
+        all_node_types = set()
+        
+        # First collect all node types
+        for i, code in enumerate(code_samples):
+            graph_data = self.converter.process_code(code)
+            
+            # Collect AST node types
+            for _, attr in graph_data['ast'].nodes(data=True):
+                all_node_types.add(attr.get('type', 'unknown'))
+        
+        all_node_types = list(all_node_types)
+        self.node_type_map = {t: i for i, t in enumerate(all_node_types)}
+        
+        # Process each code sample
+        for i, code in enumerate(code_samples):
+            graph_data = self.converter.process_code(code)
+            
+            # Recreate DGL graph using unified node type mapping
+            ast_dgl, _ = self.converter.convert_to_dgl_graph(
+                graph_data['ast'], all_node_types)
+            
+            graphs_data.append(ast_dgl)
+            
+            # Set graph-level labels
+            if labels is not None:
+                graph_labels.append(labels[i])
+            else:
+                # If no labels provided, use presence of vulnerable nodes as label
+                has_vuln = len(graph_data['ast_vulnerable_nodes']) > 0
+                graph_labels.append(1 if has_vuln else 0)
+        
+        return graphs_data, torch.tensor(graph_labels)
+    
+    def train(self, train_graphs, train_labels, val_graphs=None, val_labels=None, 
+              epochs=100, lr=0.001):
+        """Train GNN model"""
+        # Determine input feature dimension
+        in_feats = train_graphs[0].ndata['feat'].shape[1]
+        
+        # Create model
+        self.model = VulnerabilityGNN(
+            in_feats=in_feats, 
+            h_feats=self.hidden_dim, 
+            num_classes=2,  # Binary classification: vulnerable/not vulnerable
+            gnn_type=self.gnn_type
+        )
+        
+        # Optimizer and loss function
+        optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
+        loss_fn = nn.CrossEntropyLoss()
+        
+        # Training loop
+        for epoch in range(epochs):
+            self.model.train()
+            epoch_loss = 0
+            
+            # Train on each graph
+            for i, g in enumerate(train_graphs):
+                # Forward pass
+                logits = self.model(g, g.ndata['feat'])
+                
+                # Compute graph-level prediction (average of all nodes)
+                graph_pred = logits.mean(dim=0).unsqueeze(0)
+                
+                # Use graph-level label
+                loss = loss_fn(graph_pred, train_labels[i].unsqueeze(0))
+                
+                # Backward pass
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                
+                epoch_loss += loss.item()
+            
+            # Validation
+            if val_graphs is not None and val_labels is not None and epoch % 10 == 0:
+                val_acc = self.evaluate(val_graphs, val_labels)
+                print(f"Epoch {epoch}, Loss: {epoch_loss/len(train_graphs):.4f}, Val Acc: {val_acc:.4f}")
+            else:
+                print(f"Epoch {epoch}, Loss: {epoch_loss/len(train_graphs):.4f}")
+    
+    def evaluate(self, graphs, labels):
+        """Evaluate model performance"""
+        self.model.eval()
+        correct = 0
+        
+        with torch.no_grad():
+            for i, g in enumerate(graphs):
+                logits = self.model(g, g.ndata['feat'])
+                graph_pred = logits.mean(dim=0)
+                pred_label = torch.argmax(graph_pred).item()
+                
+                if pred_label == labels[i].item():
+                    correct += 1
+        
+        return correct / len(graphs)
+    
+    def predict paperwork(self, code, threshold=0.5, return_explanations=False):
+        """Predict vulnerabilities in a single code sample"""
+        self.model.eval()
+        
+        # Process code
+        graph_data = self.converter.process_code(code)
+        ast_graph = graph_data['ast']
+        
+        # Recreate DGL graph using unified type mapping
+        if self.node_type_map:
+            node_types = list(self.node_type_map.keys())
+        else:
+            # If no predefined type mapping, use automatically extracted one
+            node_types = graph_data['ast_type_map']
+        
+        ast_dgl, _ = self.converter.convert_to_dgl_graph(ast_graph, node_types)
+        
+        # Prediction
+        with torch.no_grad():
+            logits = self.model(ast_dgl, ast_dgl.ndata['feat'])
+            node_probs = F.softmax(logits, dim=1)[:, 1]  # Take probability of class 1 (vulnerable)
+            
+            # Overall vulnerability probability (using average)
+            graph_prob = node_prob.mean().item()
+            
+            if return_explanations:
+                # Use node embeddings from the last GNN layer
+                node_embeddings = self.model.get_node_embeddings(ast_dgl, ast_dgl.ndata['feat'])
+                
+                # Identify nodes predicted as vulnerable
+                vuln_nodes = []
+                for i, prob in enumerate(node_probs):
+                    if prob > threshold:
+                        node_data = ast_graph.nodes[i]
+                        vuln_nodes.append({
+                            'id': i,
+                            'type': node_data.get('type', ''),
+                            'text': node_data.get('text', ''),
+                            'prob': prob.item()
+                        })
+                
+                # Sort by vulnerability probability
+                vuln_nodes.sort(key=lambda x: x['prob'], reverse=True)
+                
+                return {
+                    'vulnerability_probability': graph_prob,
+                    'is_vulnerable': graph_prob > threshold,
+                    'vulnerable_nodes': vuln_nodes[:10],  # Return only top 10 most likely nodes
+                    'node_count': len(node_probs),
+                    'graph_stats': {
+                        'nodes': ast_graph.number_of_nodes(),
+                        'edges': ast_graph.number_of_edges()
+                    }
+                }
+            else:
+                return {
+                    'vulnerability_probability': graph_prob,
+                    'is_vulnerable': graph_prob > threshold
+                }
+    
+    def explain_prediction(self, code):
+        """Explain model predictions for code"""
+        result = self.predict(code, return_explanations=True)
+        
+        explanation = {
+            'overall_vulnerability': result['vulnerability_probability'],
+            'prediction': "Vulnerable" if result['is_vulnerable'] else "Not Vulnerable",
+            'top_vulnerable_elements': []
+        }
+        
+        # Extract most likely vulnerable code elements
+        for node in result['vulnerable_nodes']:
+            explanation['top_vulnerable_elements'].append({
+                'code': node['text'],
+                'type': node['type'],
+                'confidence': node['prob']
+            })
+        
+        # Identify possible vulnerability types
+        vuln_types = set()
+        dangerous_funcs = {'strcpy', 'strcat', 'gets', 'sprintf', 'system', 'exec'}
+        sql_patterns = {'SELECT', 'INSERT', 'UPDATE', 'DELETE'}
+        
+        for node in result['vulnerable_nodes']:
+            node_text = node['text']
+            node_type = node['type']
+            
+            # Check dangerous functions
+            for func in dangerous_funcs:
+                if func in node_text:
+                    if 'str' in func:
+                        vuln_types.add('Buffer Overflow')
+                    elif func in {'system', 'exec'}:
+                        vuln_types.add('Command Injection')
+            
+            # Check SQL injection
+            for pattern in sql_patterns:
+                if pattern in node_text.upper() and 'input' in node_text.lower():
+                    vuln_types.add('SQL Injection')
+            
+            # Check hardcoded credentials
+            if ('password' in node_text.lower() or 'pwd' in node_text.lower()) and '=' in node_text:
+                vuln_types.add('Hardcoded Credentials')
+        
+        explanation['potential_vulnerability_types'] = list(vuln_types)
+        
+        return explanation
+
+# 4. 示例使用
+def main():
+    # 示例代码
+    code_samples = [
+        """
+        void secure_function(char *input, int size) {
+            if (size > 100) return;
+            char buffer[100];
+            memcpy(buffer, input, size);
+            process_buffer(buffer);
+        }
+        """,
+        """
+        void vulnerable_function(char *input) {
+            char buffer[50];
+            strcpy(buffer, input);  // 缓冲区溢出漏洞
+            printf("Input: %s\\n", buffer);
+        }
+        """,
+        """
+        char* process_query(char *username, char *password) {
+            char query[1024];
+            sprintf(query, "SELECT * FROM users WHERE username='%s' AND password='%s'", 
+                    username, password);  // SQL注入漏洞
+            return db_query(query);
+        }
+        """,
+        """
+        int authenticate(void) {
+            char *username = get_username();
+            char *password = get_password();
+            if (strcmp(username, "admin") == 0 && strcmp(password, "hardcoded!123") == 0) {
+                return 1;  // 硬编码凭证漏洞
+            }
+            return check_database(username, password);
+        }
+        """
+    ]
+    
+    # 标签: 0=安全, 1=有漏洞
+    labels = [0, 1, 1, 1]
+    
+    # 创建漏洞检测系统
+    system = VulnerabilityDetectionSystem(gnn_type='gat', hidden_dim=64)
+    
+    # 处理数据集
+    print("处理代码样本...")
+    graphs, graph_labels = system.process_dataset(code_samples, labels)
+    
+    # 分割训练集和验证集
+    train_graphs, val_graphs, train_labels, val_labels = train_test_split(
+        graphs, graph_labels, test_size=0.25, random_state=42)
+    
+    # 训练模型
+    print("训练GNN模型...")
+    system.train(train_graphs, train_labels, val_graphs, val_labels, epochs=50, lr=0.005)
+    
+    # 评估模型
+    val_acc = system.evaluate(val_graphs, val_labels)
+    print(f"Validation accuracy: {val_acc:.4f}")
+    
+    # 预测新代码
+    new_code = """
+    void process_data(char *user_input) {
+        char command[256];
+        sprintf(command, "ls %s", user_input);  // 命令注入漏洞
+        system(command);
+    }
+    """
+    
+    # 获取预测结果和解释
+    explanation = system.explain_prediction(new_code)
+    
+    # 打印解释
+    print("\n代码漏洞分析结果:")
+    print(f"整体漏洞概率: {explanation['overall_vulnerability']:.4f}")
+    print(f"预测结果: {explanation['prediction']}")
+    
+    if len(explanation['potential_vulnerability_types']) > 0:
+        print("\n可能的漏洞类型:")
+        for vuln_type in explanation['potential_vulnerability_types']:
+            print(f"- {vuln_type}")
+    
+    print("\n最可能包含漏洞的代码元素:")
+    for i, element in enumerate(explanation['top_vulnerable_elements'][:3]):
+        print(f"{i+1}. [{element['type']}] (置信度: {element['confidence']:.4f})")
+        print(f"   {element['code']}")
+
+if __name__ == "__main__":
+    main()
