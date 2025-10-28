@@ -1,6 +1,9 @@
 //
 // Created by 86180 on 25-10-24.
 //
+//
+// Created by 86180 on 25-10-24.
+//
 #include <vector>
 #include <climits>
 #include <algorithm>
@@ -17,14 +20,86 @@ private:
     vector<int> x; // 当前路径
     vector<int> bestx; // 当前最优路径
     int n = 0; // 城市数量
+    long long nodeCount = 0; // 搜索节点计数
+
+    // 计算从当前位置到未访问城市的最小边界（简单界值函数）
+    int computeLowerBound1(int i) {
+        int minSum = 0;
+        // 计算剩余未访问城市之间的最小边权和
+        for (int j = i; j <= n; ++j) {
+            int minEdge = bigInt;
+            for (int k = i; k <= n; ++k) {
+                if (j != k && a[x[j]][x[k]] != NoEdge) {
+                    int edgeWeight = a[x[j]][x[k]];
+                    minEdge = min(minEdge, edgeWeight);
+                }
+            }
+            if (minEdge != bigInt) {
+                minSum += minEdge;
+            }
+        }
+        return minSum;
+    }
+
+    // 改进的界值函数：考虑每个城市的最小出边
+    int computeLowerBound2(int i) {
+        int bound = cc;
+        vector<bool> visited(n + 1, false);
+        for (int j = 1; j < i; ++j) {
+            visited[x[j]] = true;
+        }
+
+        // 对于每个未访问的城市，找最小出边
+        for (int j = i; j <= n; ++j) {
+            int minEdge = bigInt;
+            for (int k = 1; k <= n; ++k) {
+                if (!visited[k]) {
+                    int cityJ = x[j];
+                    int edgeWeight = a[cityJ][k];
+                    if (edgeWeight != NoEdge) {
+                        minEdge = min(minEdge, edgeWeight);
+                    }
+                }
+            }
+            if (minEdge != bigInt) {
+                bound += minEdge;
+            }
+        }
+
+        return bound;
+    }
 
     void backtrack(int i) {
+        nodeCount++;
         if (i > n) {
-            // TODO: 当到达叶子节点（所有城市都访问过）时，检查是否形成有效路径并更新最优解
-            // 例如：检查从 x[n] 到 x[1] 是否有边，若有则更新 bestc 和 bestx
+            // 到达叶子节点，检查是否能回到起点
+            if (a[x[n]][x[1]] != NoEdge) {
+                int totalCost = cc + a[x[n]][x[1]];
+                if (totalCost < bestc) {
+                    bestc = totalCost;
+                    bestx = x;
+                }
+            }
         } else {
-            // TODO: 遍历可能的下一个城市，生成子节点并递归
-            // 例如：for 循环遍历 i 之后的城市，检查可行性，交换位置，递归，恢复状态
+            // 遍历可能的下一个城市
+            for (int j = i; j <= n; ++j) {
+                // 检查是否可以到达城市 x[j]
+                int prevCity = x[i - 1];
+                int currCity = x[j];
+                if (a[prevCity][currCity] != NoEdge) {
+                    int edgeWeight = a[prevCity][currCity];
+                    int newCost = cc + edgeWeight;
+
+                    // 剪枝：如果当前路径已经超过最优解，则不继续
+                    if (newCost < bestc) {
+                        swap(i, j);
+                        cc = newCost;
+                        backtrack(i + 1);
+                        cc = newCost - edgeWeight;
+                        swap(i, j); // 回溯
+                    }
+                }
+            }
         }
     }
 
@@ -32,12 +107,6 @@ private:
         int temp = x[i];
         x[i] = x[j];
         x[j] = temp;
-    }
-
-    bool check(int pos) {
-        // TODO: 检查当前城市 pos 是否可以加入路径
-        // 例如：检查 a[x[i-1]][pos] 是否为 NoEdge，是否已访问
-        return false;
     }
 
 public:
@@ -49,6 +118,9 @@ public:
         }
         bestx.resize(n + 1);
         a = b;
+        cc = 0;
+        bestc = bigInt;
+        nodeCount = 0;
         backtrack(2);
     }
 
@@ -58,5 +130,9 @@ public:
 
     vector<int> getBestPath() const {
         return bestx;
+    }
+
+    long long getNodeCount() const {
+        return nodeCount;
     }
 };

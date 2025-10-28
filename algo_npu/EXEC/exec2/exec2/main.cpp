@@ -24,7 +24,7 @@ vector<vector<int>> generateRandomTSP(int n, int maxWeight = 100) {
 }
 
 int main() {
-    vector<int> sizes = {10, 20, 40, 80, 100, 120, 160, 180, 200}; // 500 可能太慢，视情况添加
+    vector<int> sizes = {10, 20, 40, 80, 100, 120, 160, 180, 200,500}; // 500 可能太慢，视情况添加
     for (int n : sizes) {
         cout << "Testing n = " << n << endl;
         auto matrix = generateRandomTSP(n);
