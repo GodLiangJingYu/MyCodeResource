@@ -62,7 +62,7 @@ def create_dataset(data_path, batch_size=32, shuffle=True, usage='train'): # 添
     return data_set
 
 # 4. 加载训练数据集
-data_path = r"C:\Users\86180\Desktop\MyCodeResource\DL_npu\exec1\mindspore_CNN\cifar-10-batches-bin"
+data_path = r"D:\MyCodeResource\DL_npu\exec1\mindspore_CNN\cifar-10-batches-bin"
 if not os.path.exists(data_path):
     print(f"错误：找不到数据集路径 {data_path}")
     print("请下载并解压CIFAR-10数据集到指定路径。")
