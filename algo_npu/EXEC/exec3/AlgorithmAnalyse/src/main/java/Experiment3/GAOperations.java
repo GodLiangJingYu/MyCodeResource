@@ -1,81 +1,197 @@
 package Experiment3;
+
 import java.util.Random;
 
 public class GAOperations {
-	/**
-	 * Ëæ»ú²úÉú³õÊ¼½â£¬Ë¼Â·£ºÏÈ²úÉú£¬ºóĞŞ¸´£¨Ò²¿ÉÒÔ±ß²úÉú±ßĞŞ¸´£¬Èç²úÉúµÄÎ»ÖÃµÄ´úÂë¼ÆÊı¹ı¶à£¬ÔòÖØĞÂËæ»ú²úÉú£©.
-	 * 
-	 * @param popNum ÖÖÈº´óĞ¡       
-	 * @param length  Ã¿Ò»¸ö¸öÌå³¤¶È.
-	 * @param iniPop  ²úÉúµÄ³õÊ¼ÖÖÈº.
-	 * @param codes   ±àÂëĞòÁĞ.
-	 * @param codeNum   ±àÂëµÄÊıÁ¿.
-	 * @param codeCount  Ã¿Ò»¸ö±àÂëµÄ¼ÆÊı.
-	 */
-	public void RandomInitialiation(int popNum, int length, int[] codes, int codeNum, int[] codeCount, int[][] iniPop) {
-		int i, j;
-		int[] nJs = new int[codeNum];//Í³¼ÆÃ¿¸ö±àÂë²úÉúµÄÊıÁ¿
-		Random random = new Random();
-		//TODO
-		//Ëæ»ú²úÉú±àÂë£¬²¢È¥ÖØ£¬ĞŞ¸´
-		
-	}
-	
-	/**
-	 * 
-	 * @param pop ¸öÌå       
-	 * @param length  ¸öÌå³¤¶È.
-	 * @param a ÁÚ½Ó¾ØÕó
-	 */
-	public static double computeFitness(int[] pop, int length, int[][] a)
-	{
-		//¼ÆËã¸öÌåÊÊÓ¦¶È
-		//TODO
-		
-		return 0.0;
-	}
-	
-	/**
-	 * 
-	 * @param popNum ¸öÌå ¸öÊı      
-	 * @param length  ¸öÌå³¤¶È.
-	 * @param iniPop1  ÖÖÈº
-	 * @param fitness Ã¿Ò»¸ö¸öÌåµÄÊÊÓ¦¶È
-	 */
-	public static void roundBet(int popNum, int length, int[][] iniPop1, double[] fitness)
-	{
-		//ÂÖÅÌ¶Ä
-	}
-	
 
-	/**
-	 * 
-	 * @param iniPop  ÖÖÈº
-	 * @param popNum ¸öÌå ¸öÊı      
-	 * @param length  ¸öÌå³¤¶È.
-	 * @param disPos  Ëæ»ú½»»»µÄÎ»ÖÃÊı
-	 */
-	public static void Disturbance(int [][] iniPop, int popNum, int length, int disPos)
-	{
-		//ÈÅ¶¯
-	}
-	
-	/**
-	 * »ñÈ¡codeÔÚcodesÖĞµÄÎ»ÖÃ
-	 * @param code  ±àÂë
-	 * @param codeNum ×Ü±àÂëÊı 
-	 * @param codes  ±àÂë¾ØÕó.
-	 */
-	public static int getCodePos(int code, int codeNum, int[] codes)
-	{
-		int pos = 0;
-		for(; pos < codeNum; pos++)
-		{
-			if(code == codes[pos])
-			{
-				return pos;
-			}
-		}
-		return -1;
-	}
+    /**
+     * éšæœºåˆå§‹åŒ–ç§ç¾¤
+     * è¦æ±‚ï¼šæ¯ä¸ªæŸ“è‰²ä½“æ˜¯ 1..codeNum çš„ä¸€ä¸ªæ’åˆ—ï¼Œä¸”æ¯ç§ç¼–ç  codes[i] å¿…é¡»æ°å¥½å‡ºç° codeCount[i] æ¬¡
+     */
+    public void RandomInitialiation(int popNum, int length, int[] codes, int codeNum, int[] codeCount, int[][] iniPop) {
+        Random random = new Random();
+        int[] nJs = new int[codeNum]; // è®°å½•æ¯ç§ç¼–ç è¿˜å‰©å¤šå°‘ä¸ªæœªä½¿ç”¨
+
+        for (int p = 0; p < popNum; p++) {
+            // é‡ç½®è®¡æ•°
+            for (int i = 0; i < codeNum; i++) {
+                nJs[i] = codeCount[i];
+            }
+
+            // æ„å»ºä¸€ä¸ªåˆæ³•æ’åˆ—
+            for (int j = 0; j < length; j++) {
+                // éšæœºé€‰æ‹©ä¸€ç§è¿˜æ²¡ç”¨å®Œçš„ç¼–ç 
+                int validCount = 0;
+                for (int k = 0; k < codeNum; k++) {
+                    if (nJs[k] > 0) validCount++;
+                }
+                if (validCount == 0) break; // é˜²å¾¡
+
+                int rand = random.nextInt(validCount);
+                int idx = 0;
+                for (int k = 0; k < codeNum; k++) {
+                    if (nJs[k] > 0) {
+                        if (idx == rand) {
+                            iniPop[p][j] = codes[k];
+                            nJs[k]--;
+                            break;
+                        }
+                        idx++;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * è®¡ç®—å•ä¸ªæŸ“è‰²ä½“çš„é€‚åº”åº¦ï¼ˆTSPï¼šè·¯å¾„è¶ŠçŸ­ï¼Œé€‚åº”åº¦è¶Šé«˜ï¼‰
+     * @return 1 / æ€»è·ç¦»ï¼ˆè·ç¦»ä¸º0æˆ–æ— è¾¹æ—¶è¿”å›æå°å€¼ï¼‰
+     */
+    public static double computeFitness(int[] pop, int length, int[][] a) {
+        double total = 0.0;
+        for (int i = 0; i < length - 1; i++) {
+            int from = pop[i];
+            int to = pop[i + 1];
+            if (a[from][to] <= 0) return 1e-9; // æ— è¾¹æˆ–è´Ÿå€¼ï¼Œæƒ©ç½š
+            total += a[from][to];
+        }
+        // åŠ ä¸Šå›åˆ°èµ·ç‚¹
+        if (a[pop[length - 1]][pop[0]] <= 0) return 1e-9;
+        total += a[pop[length - 1]][pop[0]];
+
+        return total > 0 ? 1.0 / total : 1e-9;
+    }
+
+    /**
+     * è½®ç›˜èµŒé€‰æ‹©ï¼ˆæŒ‰é€‚åº”åº¦æ¯”ä¾‹é€‰æ‹©ï¼‰
+     */
+    public static void roundBet(int popNum, int length, int[][] iniPop1, double[] fitness) {
+        Random random = new Random();
+        double[] cumProb = new double[popNum]; // ç´¯ç§¯æ¦‚ç‡
+        double sumFit = 0.0;
+
+        // è®¡ç®—æ€»é€‚åº”åº¦
+        for (int i = 0; i < popNum; i++) {
+            sumFit += fitness[i];
+        }
+        if (sumFit <= 0) return; // é˜²å¾¡
+
+        // æ„å»ºç´¯ç§¯æ¦‚ç‡
+        cumProb[0] = fitness[0] / sumFit;
+        for (int i = 1; i < popNum; i++) {
+            cumProb[i] = cumProb[i - 1] + fitness[i] / sumFit;
+        }
+
+        // ç”Ÿæˆæ–°ç§ç¾¤
+        int[][] newPop = new int[popNum][length];
+        for (int i = 0; i < popNum; i++) {
+            double r = random.nextDouble();
+            int selected = 0;
+            for (int j = 0; j < popNum; j++) {
+                if (r <= cumProb[j]) {
+                    selected = j;
+                    break;
+                }
+            }
+            System.arraycopy(iniPop1[selected], 0, newPop[i], 0, length);
+        }
+
+        // å†™å›åŸç§ç¾¤
+        for (int i = 0; i < popNum; i++) {
+            System.arraycopy(newPop[i], 0, iniPop1[i], 0, length);
+        }
+    }
+
+    /**
+     * æ‰°åŠ¨å˜å¼‚ï¼šåœ¨ disPos ä½ç½®é™„è¿‘éšæœºäº¤æ¢è‹¥å¹²ä½ç½®
+     */
+    public static void Disturbance(int[][] iniPop, int popNum, int length, int disPos) {
+        Random random = new Random();
+        int range = 3; // æ‰°åŠ¨èŒƒå›´ï¼šdisPos Â± range
+
+        for (int p = 0; p < popNum; p++) {
+            if (random.nextDouble() < 0.3) { // 30% æ¦‚ç‡è§¦å‘æ‰°åŠ¨
+                int center = disPos;
+                int start = Math.max(0, center - range);
+                int end = Math.min(length - 1, center + range);
+
+                // éšæœºäº¤æ¢ 1~3 æ¬¡
+                int times = 1 + random.nextInt(3);
+                for (int t = 0; t < times; t++) {
+                    int i = start + random.nextInt(end - start + 1);
+                    int j = start + random.nextInt(end - start + 1);
+                    if (i != j) {
+                        int temp = iniPop[p][i];
+                        iniPop[p][i] = iniPop[p][j];
+                        iniPop[p][j] = temp;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * è·å– code åœ¨ codes æ•°ç»„ä¸­çš„ä¸‹æ ‡ä½ç½®
+     */
+    public static int getCodePos(int code, int codeNum, int[] codes) {
+        for (int pos = 0; pos < codeNum; pos++) {
+            if (code == codes[pos]) {
+                return pos;
+            }
+        }
+        return -1;
+    }
+
+    /* ------------------- æµ‹è¯•ä¸»å‡½æ•° ------------------- */
+    public static void main(String[] args) {
+        int popNum = 10;
+        int length = 5;
+        int[] codes = {1, 2, 3};
+        int codeNum = 3;
+        int[] codeCount = {2, 2, 1}; // ç¼–ç  1 å‡ºç° 2 æ¬¡ï¼Œ2 å‡ºç° 2 æ¬¡ï¼Œ3 å‡ºç° 1 æ¬¡
+        int[][] iniPop = new int[popNum][length];
+
+        GAOperations ga = new GAOperations();
+        ga.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
+
+        System.out.println("åˆå§‹ç§ç¾¤ï¼š");
+        for (int i = 0; i < popNum; i++) {
+            for (int j = 0; j < length; j++) {
+                System.out.print(iniPop[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        // æµ‹è¯•é€‚åº”åº¦
+        int[][] a = {
+                {0,0,0,0,0,0},
+                {0,0,10,15,20,25},
+                {0,10,0,35,25,30},
+                {0,15,35,0,30,20},
+                {0,20,25,30,0,15},
+                {0,25,30,20,15,0}
+        };
+        double[] fitness = new double[popNum];
+        for (int i = 0; i < popNum; i++) {
+            fitness[i] = computeFitness(iniPop[i], length, a);
+        }
+
+        System.out.println("\nè½®ç›˜èµŒé€‰æ‹©åï¼š");
+        roundBet(popNum, length, iniPop, fitness);
+        for (int i = 0; i < popNum; i++) {
+            for (int j = 0; j < length; j++) {
+                System.out.print(iniPop[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println("\næ‰°åŠ¨åï¼ˆdisPos=2ï¼‰ï¼š");
+        Disturbance(iniPop, popNum, length, 2);
+        for (int i = 0; i < popNum; i++) {
+            for (int j = 0; j < length; j++) {
+                System.out.print(iniPop[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }

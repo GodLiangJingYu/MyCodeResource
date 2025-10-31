@@ -1,318 +1,197 @@
 #include <GL/glut.h>
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
+#include <iostream>
 
-static int g_width2 = 1280;
-static int g_height2 = 800;
-static float g_angle2 = 0.0f;
-static bool g_spin = true;
+// 相机参数
+float camX = 3.0f, camY = 2.5f, camZ = 5.0f;
+float lookX = 0.0f, lookY = 0.0f, lookZ = 0.0f;
+float angleH = 0.0f, angleV = 0.0f;  // 水平、垂直旋转角
+bool mouseDown = false;
+int lastX, lastY;
 
-// 观察参数
-static float camDist = 12.0f;
-static float camYaw  = 135.0f;
-static float camPitch= 25.0f;
-
-// 显示开关
-static bool g_showGrid = true;
-static bool g_showAxes = true;
-static bool g_showLights = true;
-static bool g_showShadow = true;
-static bool g_showWireframe = false;
-
-// 光源位置存储
-struct LightPos2 { float x, y, z; float r, g, b; };
-static LightPos2 g_lights2[3];
-
-inline float deg2rad2(float d){ return d * 3.14159265358979323846f / 180.0f; }
-
-static void setDirectionalLikePos2(GLenum light, int idx, float azimuthDeg, float elevationDeg,
-                                   const GLfloat color[4], float R = 20.0f) {
-    const float az = deg2rad2(azimuthDeg);
-    const float el = deg2rad2(elevationDeg);
-    const GLfloat pos[4] = {
-        R * std::cos(el) * std::sin(az),
-        R * std::sin(el),
-        R * std::cos(el) * std::cos(az),
-        1.0f
-    };
-    g_lights2[idx] = {pos[0], pos[1], pos[2], color[0], color[1], color[2]};
-
-    glLightfv(light, GL_DIFFUSE,  color);
-    glLightfv(light, GL_SPECULAR, color);
-    glLightf(light, GL_CONSTANT_ATTENUATION,  1.0f);
-    glLightf(light, GL_LINEAR_ATTENUATION,    0.0f);
-    glLightf(light, GL_QUADRATIC_ATTENUATION, 0.0f);
-    glLightfv(light, GL_POSITION, pos);
-}
-
-static void drawGrid2(float size = 20.0f, int steps = 40) {
-    glDisable(GL_LIGHTING);
-    glLineWidth(1.0f);
-
-    glBegin(GL_LINES);
-    float step = size / steps;
-    for (int i = 0; i <= steps; ++i) {
-        float pos = -size/2 + i*step;
-        // 中心线加亮
-        if (i == steps/2) glColor3f(0.5f, 0.5f, 0.55f);
-        else glColor3f(0.25f, 0.25f, 0.3f);
-
-        glVertex3f(-size/2, 0.0f, pos);
-        glVertex3f(size/2, 0.0f, pos);
-        glVertex3f(pos, 0.0f, -size/2);
-        glVertex3f(pos, 0.0f, size/2);
-    }
-    glEnd();
+// 初始化灯光（三盏方向光）
+void initLights() {
     glEnable(GL_LIGHTING);
-}
-
-static void drawAxes2(float len = 6.0f) {
-    glDisable(GL_LIGHTING);
-    glLineWidth(3.0f);
-    glBegin(GL_LINES);
-    glColor3f(1.0f, 0.2f, 0.2f);
-    glVertex3f(0, 0, 0); glVertex3f(len, 0, 0);
-    glColor3f(0.2f, 1.0f, 0.2f);
-    glVertex3f(0, 0, 0); glVertex3f(0, len, 0);
-    glColor3f(0.2f, 0.5f, 1.0f);
-    glVertex3f(0, 0, 0); glVertex3f(0, 0, len);
-    glEnd();
-
-    // 箭头提示
-    glPushMatrix();
-    glTranslatef(len, 0, 0);
-    glRotatef(90, 0, 1, 0);
-    glColor3f(1.0f, 0.2f, 0.2f);
-    glutSolidCone(0.15, 0.4, 8, 1);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, len, 0);
-    glRotatef(-90, 1, 0, 0);
-    glColor3f(0.2f, 1.0f, 0.2f);
-    glutSolidCone(0.15, 0.4, 8, 1);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, len);
-    glColor3f(0.2f, 0.5f, 1.0f);
-    glutSolidCone(0.15, 0.4, 8, 1);
-    glPopMatrix();
-
-    glEnable(GL_LIGHTING);
-}
-
-static void drawLightMarkers2() {
-    glDisable(GL_LIGHTING);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    for (int i = 0; i < 3; ++i) {
-        // 光晕效果
-        glPushMatrix();
-        glTranslatef(g_lights2[i].x, g_lights2[i].y, g_lights2[i].z);
-        glColor4f(g_lights2[i].r, g_lights2[i].g, g_lights2[i].b, 0.3f);
-        glutSolidSphere(0.5, 16, 16);
-        glColor3f(g_lights2[i].r, g_lights2[i].g, g_lights2[i].b);
-        glutSolidSphere(0.25, 12, 12);
-        glPopMatrix();
-
-        // 连线到原点
-        glLineWidth(1.5f);
-        glColor4f(g_lights2[i].r, g_lights2[i].g, g_lights2[i].b, 0.4f);
-        glBegin(GL_LINES);
-        glVertex3f(0, 0.5f, 0);
-        glVertex3f(g_lights2[i].x, g_lights2[i].y, g_lights2[i].z);
-        glEnd();
-    }
-
-    glDisable(GL_BLEND);
-    glEnable(GL_LIGHTING);
-}
-
-static void drawShadow2() {
-    glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
-
-    glPushMatrix();
-    GLfloat shadowMat[16] = {
-        1, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 1, 0,
-        0, 0.02f, 0, 1
-    };
-    glMultMatrixf(shadowMat);
-    glRotatef(g_angle2, 0.0f, 1.0f, 0.0f);
-    glTranslatef(0.0f, 0.5f, 0.0f);
-    glutSolidTeapot(1.5);
-    glPopMatrix();
-
-    glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-}
+    glClearColor(0.05f, 0.05f, 0.1f, 1.0f);
 
-static void setupLightsAndMaterial2() {
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    glShadeModel(GL_SMOOTH);
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_MULTISAMPLE);
-
-    const GLfloat globalAmbient[4] = {0.08f, 0.08f, 0.08f, 1.0f};
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-
-    // 题目材质要求
-    const GLfloat matDiffuse[4]  = {0.8f, 0.0f, 0.8f, 1.0f};  // 紫色漫反射 0.8
-    const GLfloat matAmbient[4]  = {0.2f, 0.2f, 0.2f, 1.0f};  // 白色环境 0.2
-    const GLfloat matSpecular[4] = {0.5f, 0.0f, 0.5f, 1.0f};  // 品红镜面 0.5
-    const GLfloat shininess      = 50.0f;                      // 光泽度 50
-    const GLfloat matEmission[4] = {0.5f, 0.5f, 0.5f, 1.0f};  // 自发光 0.5
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,   matAmbient);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,   matDiffuse);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,  matSpecular);
-    glMaterialf (GL_FRONT_AND_BACK, GL_SHININESS, shininess);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,  matEmission);
+    // 红色光：正右上方30°
+    GLfloat light0_pos[] = {1.0f, 0.0f, tanf(30.0f * 3.14159f / 180.0f), 0.0f};
+    GLfloat light0_diff[] = {1.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat light0_amb[]  = {0.1f, 0.0f, 0.0f, 1.0f};
 
     glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_pos);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light0_diff);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light0_amb);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light0_diff);
+
+    // 蓝色光：左前上方45°
+    float a45 = 45.0f * 3.14159f / 180.0f;
+    GLfloat light1_pos[] = {-sinf(a45), cosf(a45), sinf(a45), 0.0f};
+    GLfloat light1_diff[] = {0.0f, 0.0f, 1.0f, 1.0f};
+    GLfloat light1_amb[]  = {0.0f, 0.0f, 0.1f, 1.0f};
+
     glEnable(GL_LIGHT1);
+    glLightfv(GL_LIGHT1, GL_POSITION, light1_pos);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE,  light1_diff);
+    glLightfv(GL_LIGHT1, GL_AMBIENT,  light1_amb);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light1_diff);
+
+    // 黄色光：左前下方60°
+    float a60 = 60.0f * 3.14159f / 180.0f;
+    GLfloat light2_pos[] = {-sinf(a60), -cosf(a60), sinf(a60), 0.0f};
+    GLfloat light2_diff[] = {1.0f, 1.0f, 0.0f, 1.0f};
+    GLfloat light2_amb[]  = {0.1f, 0.1f, 0.0f, 1.0f};
+
     glEnable(GL_LIGHT2);
+    glLightfv(GL_LIGHT2, GL_POSITION, light2_pos);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE,  light2_diff);
+    glLightfv(GL_LIGHT2, GL_AMBIENT,  light2_amb);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, light2_diff);
 }
 
-static void reshape2(int w, int h) {
-    g_width2  = (w > 0) ? w : 1;
-    g_height2 = (h > 0) ? h : 1;
-    glViewport(0, 0, g_width2, g_height2);
+// 设置茶壶材质
+void setTeapotMaterial() {
+    // 环境光：白色，强度 0.2
+    GLfloat mat_ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(50.0, static_cast<double>(g_width2)/g_height2, 0.1, 200.0);
+    // 漫反射：紫色，强度 0.8
+    GLfloat mat_diffuse[] = {0.8f, 0.0f, 0.8f, 1.0f};
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    // 镜面反射：品红，强度 0.5
+    GLfloat mat_specular[] = {0.5f, 0.0f, 0.5f, 1.0f};
+
+    // 自发光：中等强度（发紫光）
+    GLfloat mat_emission[] = {0.5f, 0.0f, 0.5f, 1.0f};
+
+    // 光泽度
+    GLfloat mat_shininess[] = {50.0f};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+    glMaterialfv(GL_FRONT, GL_EMISSION,  mat_emission);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 }
 
-static void applyCamera() {
-    const float ry = deg2rad2(camYaw);
-    const float rp = deg2rad2(camPitch);
-    const float cx = camDist * std::cos(rp) * std::sin(ry);
-    const float cy = camDist * std::sin(rp);
-    const float cz = camDist * std::cos(rp) * std::cos(ry);
-    gluLookAt(cx, cy, cz,  0.0, 0.8, 0.0,  0.0, 1.0, 0.0);
-}
-
-static void display2() {
-    glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
+void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    applyCamera();
 
-    const GLfloat red   [4] = {1.0f, 0.0f, 0.0f, 1.0f};
-    const GLfloat blue  [4] = {0.0f, 0.4f, 1.0f, 1.0f};
-    const GLfloat yellow[4] = {1.0f, 1.0f, 0.0f, 1.0f};
+    // 计算相机位置（球坐标）
+    float radius = sqrtf(camX*camX + camY*camY + camZ*camZ);
+    float theta = atan2f(camX, camZ);      // 水平角
+    float phi   = acosf(camY / radius);    // 垂直角
 
-    setDirectionalLikePos2(GL_LIGHT0, 0, 90.0f, 30.0f, red);
-    setDirectionalLikePos2(GL_LIGHT1, 1, 135.0f, 45.0f, blue);
-    setDirectionalLikePos2(GL_LIGHT2, 2, 135.0f, -60.0f, yellow);
+    // 应用鼠标旋转
+    theta += angleH * 3.14159f / 180.0f;
+    phi   += angleV * 3.14159f / 180.0f;
 
-    if (g_showGrid)   drawGrid2();
-    if (g_showAxes)   drawAxes2();
-    if (g_showShadow) drawShadow2();
+    // 限制垂直角
+    if (phi < 0.1f) phi = 0.1f;
+    if (phi > 3.04159f) phi = 3.04159f;
 
-    // 茶壶
-    glPushMatrix();
-    if (g_spin) {
-        g_angle2 += 0.2f;
-        if (g_angle2 > 360.0f) g_angle2 -= 360.0f;
-    }
-    glRotatef(g_angle2, 0.0f, 1.0f, 0.0f);
-    glTranslatef(0.0f, 0.5f, 0.0f);
+    // 更新相机位置
+    camX = radius * sinf(phi) * sinf(theta);
+    camY = radius * cosf(phi);
+    camZ = radius * sinf(phi) * cosf(theta);
 
-    if (g_showWireframe) {
-        glDisable(GL_LIGHTING);
-        glColor3f(0.8f, 0.0f, 0.8f);
-        glutWireTeapot(1.5);
-        glEnable(GL_LIGHTING);
-    } else {
-        glutSolidTeapot(1.5);
-    }
-    glPopMatrix();
+    gluLookAt(camX, camY, camZ,
+              lookX, lookY, lookZ,
+              0.0f, 1.0f, 0.0f);
 
-    if (g_showLights) drawLightMarkers2();
+    // 绘制茶壶前设置材质
+    setTeapotMaterial();
+    glutSolidTeapot(1.0);
 
     glutSwapBuffers();
 }
 
-static void idle2() {
-    glutPostRedisplay();
+void reshape(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (double)w / h, 0.1, 100.0);
+    glMatrixMode(GL_MODELVIEW);
 }
 
-static void keyboard2(unsigned char key, int, int) {
+// 键盘控制移动
+void keyboard(unsigned char key, int x, int y) {
+    float speed = 0.3f;
+    float dx = -camX + lookX;
+    float dz = -camZ + lookZ;
+    float len = sqrtf(dx*dx + dz*dz);
+    if (len > 0.01f) { dx /= len; dz /= len; }
+
     switch (key) {
-        case 27: case 'q': case 'Q': std::exit(0); break;
-        case '+': case '=': camDist = std::max(2.0f, camDist - 0.5f); break;
-        case '-': case '_': camDist = std::min(80.0f, camDist + 0.5f); break;
-        case ' ': g_spin = !g_spin; break;
-        case 'g': case 'G': g_showGrid = !g_showGrid; break;
-        case 'a': case 'A': g_showAxes = !g_showAxes; break;
-        case 'l': case 'L': g_showLights = !g_showLights; break;
-        case 's': case 'S': g_showShadow = !g_showShadow; break;
-        case 'w': case 'W': g_showWireframe = !g_showWireframe; break;
+        case 27: case 'q': case 'Q': exit(0); break;
+        case 'w': case 'W': camZ -= speed; break;
+        case 's': case 'S': camZ += speed; break;
+        case 'a': case 'A': camX -= speed; break;
+        case 'd': case 'D': camX += speed; break;
+        case 'e': camY += speed; break;
+        case 'c': camY -= speed; break;
         case 'r': case 'R':
-            camDist = 12.0f; camYaw = 135.0f; camPitch = 25.0f;
-            printf("Camera reset.\n");
-            break;
-        case 'h': case 'H':
-            printf("\n=== Controls ===\n");
-            printf("Arrow Keys: Rotate view (Yaw/Pitch)\n");
-            printf("+/- : Zoom in/out\n");
-            printf("Space: Pause/Resume spin\n");
-            printf("G: Toggle grid\n");
-            printf("A: Toggle axes\n");
-            printf("L: Toggle light markers\n");
-            printf("S: Toggle shadow\n");
-            printf("W: Toggle wireframe\n");
-            printf("R: Reset camera\n");
-            printf("Q: Quit\n\n");
+            camX = 3.0f; camY = 2.5f; camZ = 5.0f;
+            angleH = angleV = 0.0f;
             break;
     }
     glutPostRedisplay();
 }
 
-static void special2(int key, int, int) {
-    const float step = 3.0f;
-    if (key == GLUT_KEY_LEFT)  camYaw  -= step;
-    if (key == GLUT_KEY_RIGHT) camYaw  += step;
-    if (key == GLUT_KEY_UP)    camPitch= std::min(85.0f, camPitch + step);
-    if (key == GLUT_KEY_DOWN)  camPitch= std::max(-85.0f, camPitch - step);
+// 鼠标拖动旋转视角
+void motion(int x, int y) {
+    if (mouseDown) {
+        angleH += (x - lastX) * 0.5f;
+        angleV += (y - lastY) * 0.5f;
+        lastX = x; lastY = y;
+        glutPostRedisplay();
+    }
+}
+
+void mouse(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON) {
+        if (state == GLUT_DOWN) {
+            mouseDown = true;
+            lastX = x; lastY = y;
+        } else {
+            mouseDown = false;
+        }
+    }
+}
+
+void idle() {
     glutPostRedisplay();
 }
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
-    glutInitWindowSize(g_width2, g_height2);
-    glutCreateWindow("Enhanced Material Teapot - GodLiangJingYu");
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(900, 700);
+    glutCreateWindow("OpenGL 茶壶 - 自定义材质 + 三色光 + 交互观察");
 
-    setupLightsAndMaterial2();
+    initLights();
 
-    glutDisplayFunc(display2);
-    glutReshapeFunc(reshape2);
-    glutKeyboardFunc(keyboard2);
-    glutSpecialFunc(special2);
-    glutIdleFunc(idle2);
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyboard);
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
+    glutIdleFunc(idle);
 
-    printf("\n=== Enhanced Material Teapot ===\n");
-    printf("Material: Purple diffuse(0.8), White ambient(0.2)\n");
-    printf("          Magenta specular(0.5), Shininess(50), Emission(0.5)\n");
-    printf("Press H for help\n\n");
+    std::cout << "\n=== OpenGL 茶壶光照材质演示 ===\n";
+    std::cout << "材质参数：\n";
+    std::cout << "  漫反射：紫色 (0.8, 0.0, 0.8)\n";
+    std::cout << "  环境光：白色 强度 0.2\n";
+    std::cout << "  镜面反射：品红 强度 0.5，光泽度 50\n";
+    std::cout << "  自发光：强度 0.5（发紫光）\n";
+    std::cout << "\n操作说明：\n";
+    std::cout << "  WASD：前后左右移动\n";
+    std::cout << "  E/C：上升/下降\n";
+    std::cout << "  鼠标左键拖动：旋转视角\n";
+    std::cout << "  R：复位视角\n";
+    std::cout << "  Esc：退出\n\n";
 
     glutMainLoop();
     return 0;
