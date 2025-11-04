@@ -4,106 +4,109 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class GATest {
-	int popNum = 10;
-	int length = 5;
-	int codeNum = 5;
-	int[] codes = {1, 2, 3, 4, 5};
-	int[] codeCount = {1, 1, 1, 1, 1};
-	int[][] a = {
-			{100, 3, 1, 5, 8},
-			{3, 100, 6, 7, 9},
-			{1, 6, 100, 4, 2},
-			{5, 7, 4, 100, 3},
-			{8, 9, 2, 3, 100}
-	};
-	int[][] iniPop = new int[popNum][length];
-	GAOperations gaOperations = new GAOperations();
-	
-	@Test
-	public void TestRandomInitialiation()
-	{		
-		gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
-		int i, j;
-		int[] nJs = new int[codeNum];//Í³¼ÆÃ¿¸ö±àÂë²úÉúµÄÊıÁ¿
-		for(i = 0; i < popNum; i++)
-		{
-			for(j = 0; j < codeNum; j++)
-			{
-				nJs[j] = 0;
-			}
-			for(j = 0; j < length; j++) //Í³¼ÆÃ¿¸öcodeµÄÊıÁ¿
-			{
-				int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//»ñÈ¡code ÔÚcodesÖĞµÄÎ»ÖÃ
-				nJs[pos]++;
-			}
-			for(j = 0; j < codeNum; j++)
-			{
-				Assert.assertEquals(nJs[j], codeCount[j]);
-			}
-		}
-	}
-	
-	@Test
-	public void TestComputeFitness()
-	{
-		int[] pop = {1, 3, 5, 4, 2};
-		double fit = GAOperations.computeFitness(pop, length, a);
-		Assert.assertTrue(Math.abs(fit-1/16.0) < 0.0001);
-	}
-	
-	@Test
-	public void TestRoundBet()
-	{
-		gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
-		int i, j;
-		int[] nJs = new int[codeNum];//Í³¼ÆÃ¿¸ö±àÂë²úÉúµÄÊıÁ¿
-		double[] fitness = new double[popNum];
-		for(i = 0; i < popNum; i++)
-		{
-			fitness[i] = GAOperations.computeFitness(iniPop[i], length, a);
-		}
-		GAOperations.roundBet(popNum, length, iniPop, fitness);
-		for(i = 0; i < popNum; i++)
-		{
-			for(j = 0; j < codeNum; j++)
-			{
-				nJs[j] = 0;
-			}
-			for(j = 0; j < length; j++) //Í³¼ÆÃ¿¸öcodeµÄÊıÁ¿
-			{
-				int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//»ñÈ¡code ÔÚcodesÖĞµÄÎ»ÖÃ
-				nJs[pos]++;
-			}
-			for(j = 0; j < codeNum; j++)
-			{
-				Assert.assertEquals(nJs[j], codeCount[j]);
-			}
-		}
-	}
+    int popNum = 10;
+    int length = 5; // ä¸ codes.length å’Œ codeCount.length ç›¸åŒï¼Œè¡¨ç¤º TSP è·¯å¾„é•¿åº¦
+    int codeNum = 5; // åŸå¸‚ç§ç±»æ•°
+    int[] codes = {1, 2, 3, 4, 5}; // åŸå¸‚ç¼–å· 1-5
+    int[] codeCount = {1, 1, 1, 1, 1}; // æ¯ç§åŸå¸‚æ°å¥½å‡ºç° 1 æ¬¡ (æ ‡å‡† TSP)
+    // ä¿®æ­£ a çŸ©é˜µä¸º 6x6 (ç´¢å¼• 0-5)ï¼Œä»¥å®¹çº³åŸå¸‚ç¼–å· 1-5
+    int[][] a = {
+            {100, 100, 100, 100, 100, 100}, // row 0 (å“¨å…µè¡Œï¼Œé¿å…è®¿é—® 0)
+            {100, 100, 3, 1, 5, 8},         // row 1
+            {100, 3, 100, 6, 7, 9},         // row 2
+            {100, 1, 6, 100, 4, 2},         // row 3
+            {100, 5, 7, 4, 100, 3},         // row 4
+            {100, 8, 9, 2, 3, 100}          // row 5
+    };
+    int[][] iniPop = new int[popNum][length];
+    GAOperations gaOperations = new GAOperations();
 
-	@Test
-	public void TestDisturbance()
-	{
-		gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
-		int i, j;
-		int[] nJs = new int[codeNum];//Í³¼ÆÃ¿¸ö±àÂë²úÉúµÄÊıÁ¿
-		GAOperations.Disturbance(iniPop, popNum, length, 5);
-		for(i = 0; i < popNum; i++)
-		{
-			for(j = 0; j < codeNum; j++)
-			{
-				nJs[j] = 0;
-			}
-			for(j = 0; j < length; j++) //Í³¼ÆÃ¿¸öcodeµÄÊıÁ¿
-			{
-				int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//»ñÈ¡code ÔÚcodesÖĞµÄÎ»ÖÃ
-				nJs[pos]++;
-			}
-			for(j = 0; j < codeNum; j++)
-			{
-				Assert.assertEquals(nJs[j], codeCount[j]);
-			}
-		}
-	}
+    @Test
+    public void TestRandomInitialiation()
+    {
+        gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
+        int i, j;
+        int[] nJs = new int[codeNum];//ç»Ÿè®¡æ¯ç§ç¼–ç å‡ºç°æ¬¡æ•°
+        for(i = 0; i < popNum; i++)
+        {
+            for(j = 0; j < codeNum; j++)
+            {
+                nJs[j] = 0;
+            }
+            for(j = 0; j < length; j++) //ç»Ÿè®¡æ¯ä¸ªcodeå‡ºç°æ¬¡æ•°
+            {
+                int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//è·å–code åœ¨codesä¸­çš„ä½ç½®
+                nJs[pos]++;
+            }
+            for(j = 0; j < codeNum; j++)
+            {
+                Assert.assertEquals(nJs[j], codeCount[j]);
+            }
+        }
+    }
+
+    @Test
+    public void TestComputeFitness()
+    {
+        int[] pop = {1, 3, 5, 4, 2}; // å€¼ 1-5 éƒ½åœ¨ a çŸ©é˜µç´¢å¼• 1-5 èŒƒå›´å†…
+        // è®¡ç®—è·¯å¾„: 1->3->5->4->2->1
+        // è·ç¦»: a[1][3]=1 + a[3][5]=2 + a[5][4]=3 + a[4][2]=7 + a[2][1]=3 = 16
+        double fit = GAOperations.computeFitness(pop, length, a);
+        Assert.assertTrue("Expected fitness close to 1/16.0, but got: " + fit, Math.abs(fit - 1.0/16.0) < 0.0001);
+    }
+
+    @Test
+    public void TestRoundBet()
+    {
+        gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
+        int i, j;
+        int[] nJs = new int[codeNum];//ç»Ÿè®¡æ¯ç§ç¼–ç å‡ºç°æ¬¡æ•°
+        double[] fitness = new double[popNum];
+        for(i = 0; i < popNum; i++)
+        {
+            fitness[i] = GAOperations.computeFitness(iniPop[i], length, a); // ç°åœ¨è°ƒç”¨ä¸ä¼šè¶Šç•Œ
+        }
+        GAOperations.roundBet(popNum, length, iniPop, fitness);
+        for(i = 0; i < popNum; i++)
+        {
+            for(j = 0; j < codeNum; j++)
+            {
+                nJs[j] = 0;
+            }
+            for(j = 0; j < length; j++) //ç»Ÿè®¡æ¯ä¸ªcodeå‡ºç°æ¬¡æ•°
+            {
+                int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//è·å–code åœ¨codesä¸­çš„ä½ç½®
+                nJs[pos]++;
+            }
+            for(j = 0; j < codeNum; j++)
+            {
+                Assert.assertEquals(nJs[j], codeCount[j]);
+            }
+        }
+    }
+
+    @Test
+    public void TestDisturbance()
+    {
+        gaOperations.RandomInitialiation(popNum, length, codes, codeNum, codeCount, iniPop);
+        int i, j;
+        int[] nJs = new int[codeNum];//ç»Ÿè®¡æ¯ç§ç¼–ç å‡ºç°æ¬¡æ•°
+        GAOperations.Disturbance(iniPop, popNum, length, 5);
+        for(i = 0; i < popNum; i++)
+        {
+            for(j = 0; j < codeNum; j++)
+            {
+                nJs[j] = 0;
+            }
+            for(j = 0; j < length; j++) //ç»Ÿè®¡æ¯ä¸ªcodeå‡ºç°æ¬¡æ•°
+            {
+                int pos = GAOperations.getCodePos(iniPop[i][j], codeNum, codes);//è·å–code åœ¨codesä¸­çš„ä½ç½®
+                nJs[pos]++;
+            }
+            for(j = 0; j < codeNum; j++)
+            {
+                Assert.assertEquals(nJs[j], codeCount[j]);
+            }
+        }
+    }
 }
-
