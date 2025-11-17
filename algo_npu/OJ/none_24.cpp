@@ -1,107 +1,152 @@
-//
-// Created by 86180 on 25-9-19.
-//
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <map>
+#include <algorithm>
+
 using namespace std;
 
-int tile_id = 1;
+// The grid to store the base numbers.
+vector<vector<int>> board;
+// A counter for assigning unique numbers to each L-shaped base.
+int base_id_counter = 1;
 
-void place_tile(vector<vector<int>>& board, int n, int x, int y, int hx, int hy) {
-    if (n == 1) {
-        // 2x2 网格的基本情况
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (x + i != hx || y + j != hy) {
-                    board[x + i][y + j] = tile_id;
-                }
+// Function to remap the IDs to achieve left-to-right, top-to-bottom ordering
+void remapIds(int size) {
+    // Create a mapping from old IDs to new IDs
+    vector<pair<int, pair<int, int>>> id_positions; // {old_id, {row, col}}
+    
+    // Collect positions of each unique ID (excluding 0)
+    for (int i = 1; i <= size; ++i) {
+        for (int j = 1; j <= size; ++j) {
+            if (board[i][j] != 0) {
+                id_positions.push_back({board[i][j], {i, j}});
             }
         }
-        tile_id++;
-        return;
     }
-
-    int size = 1 << n;
-    int half = size >> 1;
-
-    // 确定总部在哪个象限
-    int quadrant;
-    if (hx < x + half && hy < y + half) quadrant = 0;      // 左上
-    else if (hx < x + half && hy >= y + half) quadrant = 1; // 右上
-    else if (hx >= x + half && hy < y + half) quadrant = 2; // 左下
-    else quadrant = 3;                                      // 右下
-
-    // 中心位置的四个点
-    int center_x = x + half - 1;
-    int center_y = y + half - 1;
-
-    // 放置L型骨牌（除了包含总部的象限）
-    if (quadrant != 0) board[center_x][center_y] = tile_id;
-    if (quadrant != 1) board[center_x][center_y + 1] = tile_id;
-    if (quadrant != 2) board[center_x + 1][center_y] = tile_id;
-    if (quadrant != 3) board[center_x + 1][center_y + 1] = tile_id;
-
-    int current_id = tile_id++;
-
-    // 递归处理四个象限
-    if (quadrant == 0) {
-        place_tile(board, n - 1, x, y, hx, hy);
-        place_tile(board, n - 1, x, y + half, center_x, center_y + 1);
-        place_tile(board, n - 1, x + half, y, center_x + 1, center_y);
-        place_tile(board, n - 1, x + half, y + half, center_x + 1, center_y + 1);
-    } else if (quadrant == 1) {
-        place_tile(board, n - 1, x, y, center_x, center_y);
-        place_tile(board, n - 1, x, y + half, hx, hy);
-        place_tile(board, n - 1, x + half, y, center_x + 1, center_y);
-        place_tile(board, n - 1, x + half, y + half, center_x + 1, center_y + 1);
-    } else if (quadrant == 2) {
-        place_tile(board, n - 1, x, y, center_x, center_y);
-        place_tile(board, n - 1, x, y + half, center_x, center_y + 1);
-        place_tile(board, n - 1, x + half, y, hx, hy);
-        place_tile(board, n - 1, x + half, y + half, center_x + 1, center_y + 1);
-    } else {
-        place_tile(board, n - 1, x, y, center_x, center_y);
-        place_tile(board, n - 1, x, y + half, center_x, center_y + 1);
-        place_tile(board, n - 1, x + half, y, center_x + 1, center_y);
-        place_tile(board, n - 1, x + half, y + half, hx, hy);
+    
+    // Sort by position (row first, then column)
+    sort(id_positions.begin(), id_positions.end(), 
+         [](const auto& a, const auto& b) {
+             if (a.second.first != b.second.first) {
+                 return a.second.first < b.second.first;
+             }
+             return a.second.second < b.second.second;
+         });
+    
+    // Create mapping from old ID to new ID
+    map<int, int> old_to_new;
+    int new_id = 1;
+    
+    for (const auto& item : id_positions) {
+        int old_id = item.first;
+        if (old_to_new.find(old_id) == old_to_new.end()) {
+            old_to_new[old_id] = new_id++;
+        }
+    }
+    
+    // Apply the mapping to the board
+    for (int i = 1; i <= size; ++i) {
+        for (int j = 1; j <= size; ++j) {
+            if (board[i][j] != 0) {
+                board[i][j] = old_to_new[board[i][j]];
+            }
+        }
     }
 }
 
+void tileBoard(int tr, int tc, int pr, int pc, int size) {
+    // Base Case: When we have a 2x2 grid, there's nothing more to divide.
+    // The calling function has already placed the L-tromino that covers 3 of its squares.
+    if (size == 1) {
+        return;
+    }
+
+    // --- Divide Step ---
+    int sub_size = size / 2;
+    int current_id = base_id_counter++;
+
+    // Determine which quadrant the special square is in and place the central L-tromino.
+
+    // 1. Special square is in the Top-Left quadrant
+    if (pr < tr + sub_size && pc < tc + sub_size) {
+        // Place the central L-tromino to occupy one corner of the other three quadrants.
+        board[tr + sub_size - 1][tc + sub_size] = current_id; // Corner of Top-Right
+        board[tr + sub_size][tc + sub_size - 1] = current_id; // Corner of Bottom-Left
+        board[tr + sub_size][tc + sub_size]     = current_id; // Corner of Bottom-Right
+
+        // --- Conquer Step (Recurse on the four sub-grids) ---
+        // The hole for each sub-problem is now defined. We pass their ABSOLUTE coordinates.
+        tileBoard(tr, tc, pr, pc, sub_size);                                             // Top-Left (original hole)
+        tileBoard(tr, tc + sub_size, tr + sub_size - 1, tc + sub_size, sub_size);         // Top-Right (new hole)
+        tileBoard(tr + sub_size, tc, tr + sub_size, tc + sub_size - 1, sub_size);         // Bottom-Left (new hole)
+        tileBoard(tr + sub_size, tc + sub_size, tr + sub_size, tc + sub_size, sub_size); // Bottom-Right (new hole)
+    }
+    // 2. Special square is in the Top-Right quadrant
+    else if (pr < tr + sub_size && pc >= tc + sub_size) {
+        board[tr + sub_size - 1][tc + sub_size - 1] = current_id; // Top-Left
+        board[tr + sub_size][tc + sub_size - 1]     = current_id; // Bottom-Left
+        board[tr + sub_size][tc + sub_size]         = current_id; // Bottom-Right
+
+        tileBoard(tr, tc, tr + sub_size - 1, tc + sub_size - 1, sub_size);     // Top-Left (new hole)
+        tileBoard(tr, tc + sub_size, pr, pc, sub_size);                        // Top-Right (original hole)
+        tileBoard(tr + sub_size, tc, tr + sub_size, tc + sub_size - 1, sub_size); // Bottom-Left (new hole)
+        tileBoard(tr + sub_size, tc + sub_size, tr + sub_size, tc + sub_size, sub_size); // Bottom-Right (new hole)
+    }
+    // 3. Special square is in the Bottom-Left quadrant
+    else if (pr >= tr + sub_size && pc < tc + sub_size) {
+        board[tr + sub_size - 1][tc + sub_size - 1] = current_id; // Top-Left
+        board[tr + sub_size - 1][tc + sub_size]     = current_id; // Top-Right
+        board[tr + sub_size][tc + sub_size]         = current_id; // Bottom-Right
+
+        tileBoard(tr, tc, tr + sub_size - 1, tc + sub_size - 1, sub_size);     // Top-Left (new hole)
+        tileBoard(tr, tc + sub_size, tr + sub_size - 1, tc + sub_size, sub_size); // Top-Right (new hole)
+        tileBoard(tr + sub_size, tc, pr, pc, sub_size);                        // Bottom-Left (original hole)
+        tileBoard(tr + sub_size, tc + sub_size, tr + sub_size, tc + sub_size, sub_size); // Bottom-Right (new hole)
+    }
+    // 4. Special square is in the Bottom-Right quadrant
+    else {
+        board[tr + sub_size - 1][tc + sub_size - 1] = current_id; // Top-Left
+        board[tr + sub_size - 1][tc + sub_size]     = current_id; // Top-Right
+        board[tr + sub_size][tc + sub_size - 1]     = current_id; // Bottom-Left
+
+        tileBoard(tr, tc, tr + sub_size - 1, tc + sub_size - 1, sub_size);         // Top-Left (new hole)
+        tileBoard(tr, tc + sub_size, tr + sub_size - 1, tc + sub_size, sub_size);     // Top-Right (new hole)
+        tileBoard(tr + sub_size, tc, tr + sub_size, tc + sub_size - 1, sub_size);     // Bottom-Left (new hole)
+        tileBoard(tr + sub_size, tc + sub_size, pr, pc, sub_size);                // Bottom-Right (original hole)
+    }
+}
+
+
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
     int k, p, q;
     cin >> k >> p >> q;
 
-    int n = 1 << k;
-    vector<vector<int>> board(n, vector<int>(n, 0));
+    int board_size = 1 << k; // Equivalent to pow(2, k)
 
-    // 调整坐标为0-based
-    p--;
-    q--;
-    board[p][q] = 0;  // 总部位置
+    // Initialize the board with all zeros.
+    board.resize(board_size + 1, vector<int>(board_size + 1, 0));
 
-    tile_id = 1;
-    place_tile(board, k, 0, 0, p, q);
+    // The problem uses 1-based indexing, so we use it directly.
+    int headquarters_row = p;
+    int headquarters_col = q;
+    board[headquarters_row][headquarters_col] = 0; // Mark the HQ
 
-    // 重新编号
-    vector<int> new_id(n * n + 1, 0);
-    int current_new_id = 1;
+    // Start the recursive tiling process on the whole board (using 1-based indices).
+    tileBoard(1, 1, headquarters_row, headquarters_col, board_size);
+    
+    // Reassign IDs in the desired order (left-to-right, top-to-bottom)
+    remapIds(board_size);
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int val = board[i][j];
-            if (val == 0) {
-                cout << 0;
-            } else {
-                if (new_id[val] == 0) {
-                    new_id[val] = current_new_id++;
-                }
-                cout << new_id[val];
-            }
-            if (j < n - 1) cout << " ";
+    // Print the final board layout.
+    for (int i = 1; i <= board_size; ++i) {
+        for (int j = 1; j <= board_size; ++j) {
+            cout << board[i][j] << (j == board_size ? "" : " ");
         }
-      if (i != n-1) cout << '\n';
+        cout << endl;
     }
 
     return 0;
