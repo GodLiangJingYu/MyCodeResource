@@ -1,0 +1,167 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage[font={it,footnotesize}]{caption}
+\usepackage{sectsty}
+\usepackage{booktabs}
+
+% Section title formatting
+\sectionfont{\fontsize{12}{15}\selectfont\bfseries}
+\subsectionfont{\fontsize{12}{15}\selectfont\bfseries}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Margins and spacing
+\geometry{left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm}
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parindent}{0.5cm}
+
+% Title
+\title{\fontsize{14}{17}\selectfont\textbf{Avanços em Aprendizagem Profunda para Classificação de Imagens de Sensoriamento Remoto: Uma Visão Geral Abrangente}}
+\author{Liang Jingyu\\
+        Universidade Politécnica do Noroeste\\
+        Xi'an, Shaanxi, China\\
+        \texttt{3445078775@qq.com}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Redes neurais profundas transformaram fundamentalmente como analisamos imagens de satélite e aéreas. Quando adequadamente projetadas, arquiteturas hierárquicas modernas alcançam níveis de precisão sem precedentes. Elas se destacam no tratamento de tarefas complexas que variam desde interpretação de cenas até localização precisa de objetos e anotação semântica em nível de pixel. Três fatores críticos sustentam esses avanços: extração de características multiescala, mecanismos de atenção que destacam regiões salientes, e aprendizagem por transferência de conjuntos de dados em larga escala.
+
+No entanto, obstáculos significativos persistem. Amostras de treinamento anotadas permanecem escassas. Treinamento e inferência impõem cargas computacionais substanciais, complicando implantação espacial. O desempenho degrada sob variações em iluminação, clima, estação ou configurações de sensores.
+
+Pesquisadores estão explorando várias direções promissoras. Muitos agora pré-treinam modelos em vastas coleções de imagens não rotuladas, reduzindo dependência de anotação manual. Interesse crescente existe na fusão de observações ópticas, radar, elevação e hiperespectrais. Enquanto isso, outros estão projetando redes compactas sem sacrificar precisão. Esses esforços coletivos impulsionam a expansão de aplicações práticas no campo.
+\end{abstract}
+
+\textbf{Palavras-chave:} aprendizagem profunda, sensoriamento remoto, classificação de imagem, redes neurais convolucionais, classificação de cena, detecção de objetos
+
+\section{Introdução}
+\label{sec:introduction}
+A tecnologia de sensoriamento remoto passou por transformação tremenda na última década. Constelações de satélites, plataformas aéreas e sensores baseados em terra agora transmitem volumes enormes de imagens de alta resolução diariamente. Esses conjuntos de dados capturam informações espectrais, espaciais e temporais diversas, suportando aplicações como mapeamento de uso do solo, planejamento urbano, resposta a desastres e monitoramento ambiental. No entanto, o crescimento em volume e complexidade de dados de sensoriamento remoto rapidamente superou métodos de classificação tradicionais.
+
+Por muitos anos, pesquisadores dependiam amplamente de características artesanais. Especialistas projetavam descritores baseados em respostas espectrais, padrões de textura e formas geométricas. Embora essas técnicas tenham desempenhado razoavelmente bem em cenários simples, elas lutavam em ambientes heterogêneos ou condições de imagem variáveis. Engenharia de características exigia profundo conhecimento de domínio e tempo considerável. Adaptar a novos sensores ou tarefas provou ser lento e trabalhoso.
+
+Aprendizagem profunda revolucionou completamente este cenário. Redes neurais aprendem representações diretamente de pixels brutos, eliminando engenharia manual de características. Redes neurais convolucionais (CNNs) provaram ser particularmente eficazes porque capturam naturalmente hierarquias espaciais e relacionamentos contextuais que métodos tradicionais perdem.
+
+Imagens de sensoriamento remoto diferem marcadamente de fotografias cotidianas. Elas frequentemente contêm dez ou mais bandas espectrais, com resolução espacial variando significativamente entre plataformas. Objetos aparecem em escalas vastamente diferentes dentro de arranjos espaciais complexos. Anotação permanece cara e demorada. Essas características únicas impulsionaram a criação de arquiteturas de rede especializadas e estratégias de treinamento.
+
+Esta revisão foca em desenvolvimentos-chave de 2020 a 2023. A Seção 2 cobre conceitos fundamentais. A Seção 3 descreve inovações arquitetônicas. A Seção 4 examina três áreas principais de aplicação: classificação de cena, detecção de objetos e segmentação semântica. A Seção 5 discute desafios contínuos e direções futuras de pesquisa, enquanto a Seção 6 conclui o artigo.
+
+\begin{table}[htbp]
+\centering
+\caption{Visão Geral de Aplicações de Aprendizagem Profunda em Sensoriamento Remoto}
+\label{tab:applications}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Aplicação} & \textbf{Tarefa Principal} & \textbf{Desafio} \\
+\midrule
+Classificação de Cena & Rotulagem em nível de imagem & Características multiescala \\
+Detecção de Objetos & Localização e reconhecimento & Detecção de pequenos objetos \\
+Segmentação Semântica & Classificação em nível de pixel & Desequilíbrio de classes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Fundamentos}
+\label{sec:background}
+\subsection{Fundamentos de Redes Neurais Convolucionais}
+CNNs foram especificamente desenvolvidas para dados estruturados em grade como imagens. Arquiteturas típicas empilham camadas convolucionais, operações de pooling e camadas totalmente conectadas, intercaladas com funções de ativação não lineares.
+
+Camadas convolucionais servem como detectores de características. Cada filtro desliza pela entrada, respondendo a padrões locais como bordas, cantos ou texturas. Como o mesmo filtro se aplica em todos os lugares, números de parâmetros permanecem gerenciáveis. Camadas de pooling então subamostram dimensões espaciais enquanto preservam ativações importantes, fornecendo invariância à translação e reduzindo carga computacional. Através de camadas sucessivas, redes constroem representações cada vez mais abstratas. Finalmente, camadas totalmente conectadas geram pontuações de classificação ou previsões de caixas delimitadoras. A Unidade Linear Retificada (ReLU) tornou-se a função de ativação padrão devido à sua resistência ao desaparecimento de gradientes e velocidade de treinamento mais rápida.
+
+\subsection{Treinamento e Otimização de CNN}
+O processo de treinamento minimiza a discrepância entre previsões e rótulos verdade. Retropropagação computa gradientes, enquanto otimizadores como descenso gradiente estocástico (SGD) ou estimativa de momento adaptativo (Adam) atualizam pesos iterativamente. Várias técnicas melhoram estabilidade de treinamento e aceleram convergência.
+
+Aumento de dados introduz rotações aleatórias, inversões e deslocamentos de cor, expondo redes a mais variação. Métodos de regularização como dropout e decaimento de peso previnem sobreajuste. Normalização em lote padroniza ativações dentro de cada mini-lote, estabilizando o processo de treinamento. Aprendizagem por transferência prova particularmente valiosa em sensoriamento remoto, onde pesos ImageNet pré-treinados inicializam redes antes de ajuste fino em conjuntos de dados menores e específicos do domínio.
+
+\subsection{Desafios Específicos do Sensoriamento Remoto}
+Imagens frequentemente contêm mais de dez bandas espectrais, exigindo modificações em canais de entrada. Distância de amostragem do solo varia consideravelmente, levando a enormes diferenças em tamanhos de objetos. Cenas são semanticamente densas, contendo arranjos complexos de estradas, edifícios, vegetação, veículos e corpos d'água. Conjuntos de dados tendem a ser menores que os em visão computacional geral devido ao alto custo de produzir rótulos precisos em nível de pixel ou objeto. Desequilíbrio de classes também é comum; por exemplo, cobertura florestal pode exceder muito áreas de aeroporto.
+
+Essas características significam que modelos treinados em ImageNet padrão frequentemente performam mal, motivando pesquisa em soluções específicas do domínio.
+
+\section{Avanços em Arquiteturas CNN para Sensoriamento Remoto}
+\label{sec:developments}
+\subsection{Extração de Características Multiescala}
+Objetos em imagens aéreas e de satélite variam de carros individuais a cidades inteiras. Redes backbone convencionais com campos receptivos fixos frequentemente perdem detalhes finos ou contexto amplo. Várias estratégias eficazes foram desenvolvidas para abordar este problema.
+
+Pooling piramidal aplica operações de pooling em múltiplas escalas, então combina resultados, capturando informações locais e globais simultaneamente. Convolução atrous usa taxas de dilatação diferentes para alcançar objetivos similares sem perder resolução espacial. Redes de pirâmide de características fundem progressivamente características semanticamente fortes de camadas profundas com características de alta resolução de camadas rasas através de conexões laterais, construindo representações multinível. As características resultantes possuem robustez semântica em todas as escalas, auxiliando detecção de pequenos objetos.
+
+\subsection{Mecanismos de Atenção}
+Atenção tornou-se ubíqua em arquiteturas modernas. Atenção espacial aprende a focar em regiões ricas em informação, melhorando características discriminativas enquanto suprime clutter de fundo. Atenção de canal, como demonstrado em Squeeze-and-Excitation, repesa mapas de características de acordo com importância global. Combinar ambos em módulos como o módulo de atenção de bloco convolucional tipicamente produz melhores resultados.
+
+Em cenas complexas como portos ou aeroportos, atenção pode ignorar grandes áreas uniformes (água, pistas) e focar em elementos definidores de categoria como navios ou aeronaves.
+
+\subsection{Aprendizagem por Transferência e Adaptação de Domínio}
+Dada a escassez de dados de sensoriamento remoto anotados, a maioria dos pesquisadores começa com backbones pré-treinados em ImageNet. Ajuste fino padrão traz ganhos significativos, mas o gap de domínio entre fotografias naturais e vistas aéreas permanece substancial. Adaptação de domínio adversarial, alinhamento de correlação e métodos auto-supervisionados usando pseudo-rótulos mostram promessa em estreitar ainda mais esse gap.
+
+\subsection{Arquiteturas de Rede Leves}
+Processamento espacial em satélites ou drones requer redes menores que 100 MB que possam completar inferência dentro de dezenas de milissegundos. Poda, quantização, destilação de conhecimento e variantes de atenção eficientes ajudam a atender essas restrições. Busca de arquitetura neural consciente de hardware cada vez mais projeta redes otimizadas para hardware de satélite ou drone.
+
+\section{Desafios e Direções Futuras}
+\label{sec:challenges}
+\subsection{Dados de Treinamento Limitados}
+Conjuntos de dados anotados de alta qualidade permanecem o maior gargalo. Pré-treinamento auto-supervisionado em coleções massivas de imagens não rotuladas ganhou considerável atenção. Frameworks de aprendizagem contrastiva como MoCo, SwAV e DINO, juntamente com abordagens de modelagem de imagem mascarada como MAE e SimMIM, produzem representações que podem corresponder ou exceder aprendizagem supervisionada ImageNet quando ajustadas para tarefas de sensoriamento remoto.
+
+Métodos fracamente supervisionados e semi-supervisionados também mostram promessa. Rótulos em nível de imagem, rabiscos grosseiros ou anotações pontuais custam muito menos que máscaras de pixel completas, mas ainda podem treinar modelos de segmentação eficazes quando usados criteriosamente.
+
+\subsection{Eficiência Computacional}
+Inferência espacial em tempo real exige redes menores que 100 MB que completam inferência dentro de dezenas de milissegundos. Poda, quantização, destilação de conhecimento e mecanismos de atenção eficientes todos contribuem para atender esses requisitos. Busca de arquitetura neural consciente de hardware está gerando redes customizadas para processadores de satélite e drone.
+
+\subsection{Fusão de Dados Multimodais}
+Sensores ópticos falham à noite ou sob nuvens. Radar de abertura sintética (SAR) e detecção e alcance de luz (LiDAR) funcionam em todas as condições climáticas, mas carecem de detalhes espectrais ricos. Como combinar efetivamente essas fontes complementares permanece uma questão aberta. Fusão inicial prova simples mas vulnerável a mudança de domínio. Fusão tardia oferece robustez mas perde interações entre modos. Fusão intermediária usando atenção cruzada ou arquiteturas transformer conjuntas parece mais promissora.
+
+\subsection{Interpretabilidade}
+Para implantação prática, partes interessadas precisam entender por que redes classificam uma área como "danificada" após um desastre. Mapeamento de ativação de classe ponderado por gradiente (Grad-CAM) e visualização de atenção tornaram-se práticas padrão. Métodos de interpretabilidade baseados em conceitos que ligam ativações a conceitos compreensíveis por humanos como índices de vegetação ou materiais de construção estão emergindo mas permanecem imaturos.
+
+\section{Conclusão}
+\label{sec:conclusion}
+De 2020 a 2023, o campo alcançou progresso notável. Combinar fusão de características multiescala, mecanismos de atenção, aprendizagem por transferência melhorada e arquiteturas eficientes impulsionou desempenho a níveis possibilitando implantação prática. No entanto, escassez de dados, limitações computacionais, dificuldades de fusão multimodal e gaps de interpretabilidade ainda dificultam adoção mais ampla.
+
+Olhando para frente, modelos auto-supervisionados e fundamentais treinados em bilhões de imagens de satélite não rotuladas provavelmente reduzirão necessidades de anotação. Arquiteturas eficientes customizadas para dispositivos de borda tornar-se-ão mais prevalentes. Fusão inteligente de dados ópticos, SAR, hiperespectrais e temporais desbloqueará novas aplicações. Métodos de interpretabilidade amadurecerão, construindo confiança para decisões de alto risco.
+
+Sensoriamento remoto gera dados exponencialmente crescentes anualmente. Aprendizagem profunda, adaptada aos desafios únicos deste domínio, permanece a ferramenta mais poderosa para transformar fluxos massivos de pixels em insights acionáveis.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparação de Métodos de Aprendizagem Profunda em Sensoriamento Remoto}
+\label{tab:comparison}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Método} & \textbf{Vantagens} & \textbf{Limitações} & \textbf{Melhores Aplicações} \\
+\midrule
+Baseado em CNN & Alta precisão & Altos requisitos de dados & Classificação de cena \\
+Baseado em atenção & Seleção de características & Alto custo computacional & Cenas complexas \\
+Modelos leves & Alta eficiência & Possível perda de precisão & Implantação de borda \\
+Fusão multimodal & Informação rica & Difícil integração de dados & Tarefas de fusão \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{8}
+\bibitem{zhu2017deep} Zhu, X. X., Tuia, D., Mou, L., et al. (2017). Deep learning in remote sensing: A comprehensive review and list of resources. \emph{IEEE Geoscience and Remote Sensing Magazine}, 5(4), 8-36.
+\bibitem{cheng2016survey} Cheng, G., and Han, J. (2016). A survey on object detection in optical remote sensing images. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 117, 11-28.
+\bibitem{xia2017aid} Xia, G. S., Hu, J., Hu, F., Shi, B., Bai, X., Zhong, Y., and Lu, X. (2017). AID: A benchmark data set for performance evaluation of aerial scene classification. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 55(7), 3965-3981.
+\bibitem{maggiori2017end} Maggiori, E., Tarabalka, Y., Charpiat, G., and Alliez, P. (2017). Convolutional neural networks for large-scale remote-sensing image classification. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 55(2), 645-657.
+\bibitem{zhang2016weakly} Zhang, F., Du, B., Zhang, L., and Xu, M. (2016). Weakly supervised learning based on coupled convolutional neural networks for aircraft detection. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 54(9), 5553-5563.
+\bibitem{liu2019learning} Liu, Y., Chen, X., Wang, H., Ye, Z., Lin, Z., and Yu, P. S. (2019). Deep learning for pixel-level remote sensing data analysis: A review. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 150, 1-15.
+\bibitem{zeng2018improving} Zeng, D., Chen, S., Chen, B., and Li, S. (2018). Improving remote sensing scene classification by integrating global-context and local-object features. \emph{Remote Sensing}, 10(7), 734.
+\bibitem{deng2017enhanced} Deng, Z., Sun, H., Zhou, S., Zhao, L., Lei, H., and Zou, H. (2017). Multi-scale object detection in remote sensing imagery with convolutional neural networks. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 130, 83-94.
+\end{thebibliography}
+\end{document}
