@@ -1,0 +1,168 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\usepackage[font={it,footnotesize}]{caption}
+\usepackage{sectsty}
+\usepackage{booktabs}
+
+% Section title formatting
+\sectionfont{\fontsize{12}{15}\selectfont\bfseries}
+\subsectionfont{\fontsize{12}{15}\selectfont\bfseries}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% Margins and spacing
+\geometry{left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm}
+\renewcommand{\baselinestretch}{1.5}
+\setlength{\parindent}{0.5cm}
+
+% Title
+\title{\fontsize{14}{17}\selectfont\textbf{遥感图像分类中深度学习的进展:综合性概述}}
+\author{梁景宇\\
+        西北工业大学\\
+        中国,陕西,西安\\
+        \texttt{3445078775@qq.com}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+深度神经网络从根本上改变了我们分析卫星和航空图像的方式。经过合理设计后,现代分层架构达到了以前无法企及的精度水平。它们能够处理从场景解译到精确目标定位再到像素级语义标注等复杂任务。三个关键因素支撑着这些进展:多尺度特征提取、突出显著区域的注意力模块,以及来自大规模数据集的迁移学习。
+
+然而重大障碍依然存在。标注训练样本十分稀缺。训练和推理施加了沉重的计算负担,这使得星载部署变得复杂。在光照、天气、季节或传感器配置变化时,性能会出现下降。
+
+研究人员正在探索几个有前景的方向。许多人现在在大规模未标注图像库上预训练模型,减少了对人工标注的依赖。融合光学、雷达、高程和高光谱观测数据的兴趣日益增长。与此同时,其他人在设计不牺牲精度的紧凑型网络。这些努力共同推动着该领域实际应用的拓展。
+\end{abstract}
+
+\textbf{关键词:} 深度学习,遥感,图像分类,卷积神经网络,场景分类,目标检测
+
+\section{引言}
+\label{sec:introduction}
+遥感技术在过去十年经历了巨大变革。卫星星座、航空平台和地基传感器现在每天传输大量高分辨率图像。这些数据集捕获了多样的光谱、空间和时间信息,支持土地利用制图、城市规划、灾害响应和环境监测等应用。然而,遥感数据量和复杂性的增长已迅速超越了传统分类方法。
+
+多年来,研究人员在很大程度上依赖手工设计的特征。专家基于光谱响应、纹理模式和几何形状设计描述符。虽然这些技术在简单场景上运行得相当好,但在混杂环境或可变成像条件下却遇到困难。特征工程需要深厚的领域知识和大量时间。适应新传感器或任务既缓慢又费力。
+
+深度学习完全改变了这一局面。神经网络直接从原始像素学习表示,消除了人工特征设计。卷积神经网络(CNN)已被证明特别有效,因为它们能够自然捕获传统方法遗漏的空间层次结构和上下文关系。
+
+遥感图像与日常照片有明显差异。它们通常包含十个或更多光谱波段,空间分辨率在不同平台间差异很大。物体以vastly不同的尺度出现在复杂的空间布局中。标注仍然既昂贵又耗时。这些独特属性推动了专用网络架构和训练策略的创建。
+
+本综述聚焦于2020年至2023年的关键发展。第2节涵盖基础概念。第3节描述架构创新。第4节考察三个主要应用领域:场景分类、目标检测和语义分割。第5节讨论持续的挑战和未来研究方向,第6节总结全文。
+
+\begin{table}[htbp]
+\centering
+\caption{深度学习在遥感中的应用概览}
+\label{tab:applications}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{应用} & \textbf{主要任务} & \textbf{挑战} \\
+\midrule
+场景分类 & 图像级标签 & 多尺度特征 \\
+目标检测 & 位置估计和识别 & 小目标检测 \\
+语义分割 & 像素级分类 & 类别不平衡 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{背景}
+\label{sec:background}
+\subsection{卷积神经网络基础}
+CNN专门为像图像这样的网格结构数据而开发。典型架构堆叠卷积层、池化操作和全连接层,其间设有非线性激活函数。
+
+卷积层充当特征检测器。每个滤波器在输入上滑动,响应诸如边缘、角点或纹理等局部模式。因为同一滤波器在各处应用,参数数量保持可控。然后池化层对空间维度进行下采样,同时保留重要激活,这提供了平移不变性并降低了计算量。通过连续的层次,网络构建出日益抽象的表示。最后,全连接层产生分类分数或边界框预测。修正线性单元(ReLU)已成为标准激活函数,因其对梯度消失的抵抗力和更快的训练速度。
+
+\subsection{CNN训练与优化}
+训练过程最小化预测与真实标签之间的差异。反向传播计算梯度,而像随机梯度下降(SGD)或自适应矩估计(Adam)这样的优化器迭代更新权重。多种技术改善了训练稳定性并加速了收敛。
+
+数据增强引入随机旋转、翻转和颜色偏移,让网络接触更多变化。诸如dropout和权重衰减等正则化方法防止过拟合。批归一化在每个小批次内标准化激活,稳定训练过程。迁移学习在遥感中特别有价值,预训练的ImageNet权重在针对较小的特定领域数据集进行微调之前初始化网络。
+
+\subsection{遥感的特定挑战}
+图像经常有超过十个光谱波段,需要修改输入通道。地面采样距离变化相当大,导致物体尺寸差异巨大。场景在语义上很密集,包含道路、建筑物、植被、车辆和水体等复杂排列。由于精确的像素级或目标级标签生产成本高昂,数据集往往小于通用计算机视觉中的数据集。类别不平衡也很常见;例如,森林覆盖的面积可能远大于机场。
+
+这些特征意味着标准的ImageNet训练模型通常表现欠佳,激励了对特定领域解决方案的研究。
+
+\section{遥感中CNN架构的进展}
+\label{sec:developments}
+\subsection{多尺度特征提取}
+航空和卫星图像中的物体范围从单个汽车到整个城市。具有固定感受野的常规骨干网络往往会遗漏精细细节或广泛背景。已经开发出几种有效策略来解决这个问题。
+
+金字塔池化在多个尺度上应用池化操作,然后组合结果,同时捕获局部和全局信息。空洞卷积使用不同的膨胀率来实现类似目标,而不损失空间分辨率。特征金字塔网络通过侧向连接逐步融合来自深层的语义强特征与来自浅层的高分辨率特征,构建多级表示。生成的特征在所有尺度上都具有语义鲁棒性,这有助于检测小物体。
+
+\subsection{注意力机制}
+注意力已在现代架构中无处不在。空间注意力学习聚焦于信息丰富的区域,增强判别性特征同时抑制背景杂波。通道注意力,如Squeeze-and-Excitation中所示,根据全局重要性重新加权特征图。在卷积块注意力模块等模块中结合两者通常产生最佳结果。
+
+在港口或机场等复杂场景中,注意力可以忽略大面积均匀区域(水域、跑道),专注于船舶或飞机等类别定义元素。
+
+\subsection{迁移学习与领域自适应}
+鉴于标注遥感数据的稀缺性,大多数研究人员从ImageNet预训练的骨干网络开始。标准微调带来显著收益,但自然照片与俯视图像之间的领域差距仍然很大。对抗性领域自适应、相关对齐以及使用伪标签的自监督方法在进一步缩小这一差距方面显示出前景。
+
+\subsection{轻量级网络架构}
+卫星或无人机上的星载处理需要小于100 MB且能在数十毫秒内完成推理的网络。剪枝、量化、知识蒸馏和高效注意力变体有助于满足这些约束。硬件感知神经架构搜索越来越多地用于设计针对卫星或无人机硬件优化的网络。
+
+\section{挑战与未来方向}
+\label{sec:challenges}
+\subsection{有限的训练数据}
+高质量标注数据集仍然是最大的瓶颈。在大规模未标注图像集合上进行自监督预训练已引起相当大的关注。对比学习框架如MoCo、SwAV和DINO,以及掩码图像建模方法如MAE和SimMIM,在针对遥感任务微调时产生的表示可以匹敌或超越ImageNet监督学习。
+
+弱监督和半监督方法也具有潜力。图像级标签、粗糙涂鸦或点标注的获取成本远低于完整像素掩码,但在谨慎使用时仍能训练出有效的分割模型。
+
+\subsection{计算效率}
+实时星载推理需要小于100 MB且在数十毫秒内完成推理的网络。剪枝、量化、知识蒸馏和高效注意力机制都有助于满足这些需求。硬件感知神经架构搜索正在生成为卫星和无人机处理器定制的网络。
+
+\subsection{多模态数据融合}
+光学传感器在夜间或云层下失效。合成孔径雷达(SAR)和激光雷达(LiDAR)在所有天气下工作,但缺乏丰富的光谱细节。如何有效组合这些互补来源仍然是一个开放问题。早期融合简单但对领域迁移脆弱。后期融合鲁棒但遗漏了跨模态交互。使用交叉注意力或联合transformer架构的中级融合似乎最有前景。
+
+\subsection{可解释性}
+对于实际部署,利益相关者需要理解为什么网络在灾害后将某个区域分类为"受损"。梯度加权类激活映射(Grad-CAM)和注意力可视化已成为常规做法。基于概念的可解释性方法将激活与人类可理解的概念(如植被指数或建筑材料)联系起来,正在出现但仍不成熟。
+
+\section{结论}
+\label{sec:conclusion}
+从2020年到2023年,该领域取得了显著进展。结合多尺度特征融合、注意力机制、更好的迁移学习和高效架构,已将性能推向能够实现实际部署的水平。然而,数据稀缺、计算限制、多模态融合困难和可解释性差距仍然阻碍着更广泛的采用。
+
+展望未来,在数十亿未标注卫星图像上训练的自监督和基础模型可能会减少标注需求。为边缘设备定制的高效架构将变得更加普遍。光学、SAR、高光谱和时间数据的智能融合将解锁新应用。可解释性方法将成熟,为高风险决策建立信任。
+
+遥感每年产生的数据呈指数级增长。深度学习适应这一领域的独特挑战后,仍然是将大规模像素流转化为可操作洞察的最强大工具。
+
+\begin{table}[htbp]
+\centering
+\caption{遥感中深度学习方法的比较}
+\label{tab:comparison}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{方法} & \textbf{优势} & \textbf{局限性} & \textbf{最佳应用} \\
+\midrule
+基于CNN & 高精度 & 数据需求高 & 场景分类 \\
+基于注意力 & 特征选择 & 计算成本高 & 复杂场景 \\
+轻量级模型 & 高效率 & 易损失精度 & 边缘部署 \\
+多模态融合 & 信息丰富 & 数据集成困难 & 融合任务 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\begin{thebibliography}{8}
+\bibitem{zhu2017deep} Zhu, X. X., Tuia, D., Mou, L., et al. (2017). Deep learning in remote sensing: A comprehensive review and list of resources. \emph{IEEE Geoscience and Remote Sensing Magazine}, 5(4), 8-36.
+\bibitem{cheng2016survey} Cheng, G., and Han, J. (2016). A survey on object detection in optical remote sensing images. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 117, 11-28.
+\bibitem{xia2017aid} Xia, G. S., Hu, J., Hu, F., Shi, B., Bai, X., Zhong, Y., and Lu, X. (2017). AID: A benchmark data set for performance evaluation of aerial scene classification. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 55(7), 3965-3981.
+\bibitem{maggiori2017end} Maggiori, E., Tarabalka, Y., Charpiat, G., and Alliez, P. (2017). Convolutional neural networks for large-scale remote-sensing image classification. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 55(2), 645-657.
+\bibitem{zhang2016weakly} Zhang, F., Du, B., Zhang, L., and Xu, M. (2016). Weakly supervised learning based on coupled convolutional neural networks for aircraft detection. \emph{IEEE Transactions on Geoscience and Remote Sensing}, 54(9), 5553-5563.
+\bibitem{liu2019learning} Liu, Y., Chen, X., Wang, H., Ye, Z., Lin, Z., and Yu, P. S. (2019). Deep learning for pixel-level remote sensing data analysis: A review. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 150, 1-15.
+\bibitem{zeng2018improving} Zeng, D., Chen, S., Chen, B., and Li, S. (2018). Improving remote sensing scene classification by integrating global-context and local-object features. \emph{Remote Sensing}, 10(7), 734.
+\bibitem{deng2017enhanced} Deng, Z., Sun, H., Zhou, S., Zhao, L., Lei, H., and Zou, H. (2017). Multi-scale object detection in remote sensing imagery with convolutional neural networks. \emph{ISPRS Journal of Photogrammetry and Remote Sensing}, 130, 83-94.
+\end{thebibliography}
+\end{document}
