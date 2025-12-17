@@ -2,31 +2,45 @@
     "version": 4,
     "data": {
         "envValue": "env/env.env",
-        "title": "",
+        "title": "4.1",
         "remarks": "",
-        "testCode": "",
+        "testCode": "41",
         "config": {},
         "deviceList": [
             {
-                "id": "1oFluoxkefz6NiFsEWpkl",
+                "id": "HSIEqGOfJvs21KV4lVteZ",
                 "name": "仿真设备(脚本)",
                 "luaVal": "func/4interface_target.lua",
-                "yamlVal": "testdata/data.yml",
+                "yamlVal": "testdata/data_biao.yml",
                 "kind": "SIMU"
             }
         ],
         "channelList": [
             {
-                "id": "4_YK89S4ffUIR5Use5jDs",
+                "id": "Bz0p7zOO9PCrSUN5WveLz",
                 "name": "仿真设备(脚本)",
                 "items": [
                     {
+                        "name": "shoot",
+                        "checked": true
+                    },
+                    {
+                        "name": "target",
+                        "checked": true
+                    }
+                ]
+            },
+            {
+                "id": "BLll2fILO4gDzd2Vt_aj4",
+                "name": "实物设备",
+                "items": [
+                    {
                         "name": "COM_shoot",
-                        "checked": false
+                        "checked": true
                     },
                     {
                         "name": "COM_target",
-                        "checked": false
+                        "checked": true
                     }
                 ]
             }
@@ -34,11 +48,13 @@
         "protocolList": [
             {
                 "name": "target",
-                "uri": "prot/target.prot"
+                "uri": "prot/target.prot",
+                "checked": true
             },
             {
                 "name": "shoot",
-                "uri": "prot/shoot.prot"
+                "uri": "prot/shoot.prot",
+                "checked": true
             }
         ]
     }

@@ -1,0 +1,471 @@
+Using device: cpu
+Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz to ../data\MNIST\raw\train-images-idx3-ubyte.gz
+Extracting ../data\MNIST\raw\train-images-idx3-ubyte.gz to ../data\MNIST\raw
+
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz to ../data\MNIST\raw\train-labels-idx1-ubyte.gz
+Extracting ../data\MNIST\raw\train-labels-idx1-ubyte.gz to ../data\MNIST\raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz to ../data\MNIST\raw\t10k-images-idx3-ubyte.gz
+Extracting ../data\MNIST\raw\t10k-images-idx3-ubyte.gz to ../data\MNIST\raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 404: Not Found
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz to ../data\MNIST\raw\t10k-labels-idx1-ubyte.gz
+Extracting ../data\MNIST\raw\t10k-labels-idx1-ubyte.gz to ../data\MNIST\raw
+
+Starting training...
+Iteration, Loss
+Epoch [1/5], Step [100/600], Loss: 0.2035
+Epoch [1/5], Step [200/600], Loss: 0.1537
+Epoch [1/5], Step [300/600], Loss: 0.0379
+Epoch [1/5], Step [400/600], Loss: 0.0341
+Epoch [1/5], Step [500/600], Loss: 0.0418
+Epoch [1/5], Step [600/600], Loss: 0.1165
+Epoch [2/5], Step [100/600], Loss: 0.0933
+Epoch [2/5], Step [200/600], Loss: 0.0468
+Epoch [2/5], Step [300/600], Loss: 0.0116
+Epoch [2/5], Step [400/600], Loss: 0.0130
+Epoch [2/5], Step [500/600], Loss: 0.0550
+Epoch [2/5], Step [600/600], Loss: 0.0263
+Epoch [3/5], Step [100/600], Loss: 0.0296
+Epoch [3/5], Step [200/600], Loss: 0.0493
+Epoch [3/5], Step [300/600], Loss: 0.0397
+Epoch [3/5], Step [400/600], Loss: 0.0348
+Epoch [3/5], Step [500/600], Loss: 0.0056
+Epoch [3/5], Step [600/600], Loss: 0.0130
+Epoch [4/5], Step [100/600], Loss: 0.0301
+Epoch [4/5], Step [200/600], Loss: 0.0080
+Epoch [4/5], Step [300/600], Loss: 0.0520
+Epoch [4/5], Step [400/600], Loss: 0.0027
+Epoch [4/5], Step [500/600], Loss: 0.0549
+Epoch [4/5], Step [600/600], Loss: 0.0320
+Epoch [5/5], Step [100/600], Loss: 0.0055
+Epoch [5/5], Step [200/600], Loss: 0.0228
+Epoch [5/5], Step [300/600], Loss: 0.0016
+Epoch [5/5], Step [400/600], Loss: 0.0290
+Epoch [5/5], Step [500/600], Loss: 0.0037
+Epoch [5/5], Step [600/600], Loss: 0.0359
+Training finished. Loss history saved to loss_history.txt
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+  0%|          | 0.00/9.91M [00:00<?, ?B/s]
+  0%|          | 32.8k/9.91M [00:00<00:56, 173kB/s]
+  1%|          | 65.5k/9.91M [00:00<00:51, 192kB/s]
+  1%|鈻�         | 131k/9.91M [00:00<00:32, 299kB/s]
+  2%|鈻�         | 229k/9.91M [00:00<00:22, 433kB/s]
+  5%|鈻�         | 492k/9.91M [00:00<00:10, 866kB/s]
+ 11%|鈻�         | 1.05M/9.91M [00:00<00:05, 1.73MB/s]
+ 19%|鈻堚枈        | 1.84M/9.91M [00:01<00:02, 2.72MB/s]
+ 26%|鈻堚枅鈻�       | 2.59M/9.91M [00:01<00:01, 3.78MB/s]
+ 31%|鈻堚枅鈻�       | 3.08M/9.91M [00:01<00:01, 4.00MB/s]
+ 36%|鈻堚枅鈻堚枌      | 3.54M/9.91M [00:01<00:01, 3.91MB/s]
+ 42%|鈻堚枅鈻堚枅鈻�     | 4.16M/9.91M [00:01<00:01, 3.97MB/s]
+ 50%|鈻堚枅鈻堚枅鈻�     | 4.95M/9.91M [00:01<00:01, 4.26MB/s]
+ 58%|鈻堚枅鈻堚枅鈻堚枈    | 5.73M/9.91M [00:01<00:00, 4.43MB/s]
+ 64%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 6.32M/9.91M [00:02<00:00, 4.70MB/s]
+ 70%|鈻堚枅鈻堚枅鈻堚枅鈻�   | 6.98M/9.91M [00:02<00:00, 5.12MB/s]
+ 76%|鈻堚枅鈻堚枅鈻堚枅鈻堚枌  | 7.54M/9.91M [00:02<00:00, 4.55MB/s]
+ 82%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 8.09M/9.91M [00:02<00:00, 4.53MB/s]
+ 90%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻� | 8.88M/9.91M [00:02<00:00, 4.62MB/s]
+ 98%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枈| 9.67M/9.91M [00:02<00:00, 4.66MB/s]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 9.91M/9.91M [00:02<00:00, 3.51MB/s]
+
+  0%|          | 0.00/28.9k [00:00<?, ?B/s]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 28.9k/28.9k [00:00<00:00, 170kB/s]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 28.9k/28.9k [00:00<00:00, 170kB/s]
+
+  0%|          | 0.00/1.65M [00:00<?, ?B/s]
+  2%|鈻�         | 32.8k/1.65M [00:00<00:12, 128kB/s]
+  6%|鈻�         | 98.3k/1.65M [00:00<00:05, 298kB/s]
+ 10%|鈻�         | 164k/1.65M [00:00<00:03, 376kB/s]
+ 20%|鈻堚枆        | 328k/1.65M [00:00<00:02, 630kB/s]
+ 40%|鈻堚枅鈻堚枆      | 655k/1.65M [00:00<00:01, 962kB/s]
+ 52%|鈻堚枅鈻堚枅鈻堚枏    | 852k/1.65M [00:01<00:00, 1.12MB/s]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 1.65M/1.65M [00:01<00:00, 1.47MB/s]
+
+  0%|          | 0.00/4.54k [00:00<?, ?B/s]
+100%|鈻堚枅鈻堚枅鈻堚枅鈻堚枅鈻堚枅| 4.54k/4.54k [00:00<00:00, 2.44MB/s]
+Traceback (most recent call last):
+  File "task1_basic_loss/main.py", line 109, in <module>
+    images = images[0].to(device)
+TypeError: 'int' object is not subscriptable
+
+ERROR conda.cli.main_run:execute(127): `conda run python task1_basic_loss/main.py` failed. (See above for error)
+
+----------------------------------------------------------------
+
+Running Task 2: Depth Impact (Shallow - 1 Layer)...
+Using device: cpu
+Starting training (Shallow CNN - 1 Conv Layer)...
+Epoch [1/5], Step [100/600], Loss: 0.3689
+Epoch [1/5], Step [200/600], Loss: 0.1415
+Epoch [1/5], Step [300/600], Loss: 0.1477
+Epoch [1/5], Step [400/600], Loss: 0.1084
+Epoch [1/5], Step [500/600], Loss: 0.2249
+Epoch [1/5], Step [600/600], Loss: 0.0906
+Epoch [2/5], Step [100/600], Loss: 0.0603
+Epoch [2/5], Step [200/600], Loss: 0.1304
+Epoch [2/5], Step [300/600], Loss: 0.0335
+Epoch [2/5], Step [400/600], Loss: 0.1200
+Epoch [2/5], Step [500/600], Loss: 0.0428
+Epoch [2/5], Step [600/600], Loss: 0.0714
+Epoch [3/5], Step [100/600], Loss: 0.0815
+Epoch [3/5], Step [200/600], Loss: 0.0923
+Epoch [3/5], Step [300/600], Loss: 0.0454
+Epoch [3/5], Step [400/600], Loss: 0.0439
+Epoch [3/5], Step [500/600], Loss: 0.0410
+Epoch [3/5], Step [600/600], Loss: 0.0507
+Epoch [4/5], Step [100/600], Loss: 0.0335
+Epoch [4/5], Step [200/600], Loss: 0.0120
+Epoch [4/5], Step [300/600], Loss: 0.0341
+Epoch [4/5], Step [400/600], Loss: 0.1635
+Epoch [4/5], Step [500/600], Loss: 0.0595
+Epoch [4/5], Step [600/600], Loss: 0.1351
+Epoch [5/5], Step [100/600], Loss: 0.0126
+Epoch [5/5], Step [200/600], Loss: 0.0080
+Epoch [5/5], Step [300/600], Loss: 0.0363
+Epoch [5/5], Step [400/600], Loss: 0.1173
+Epoch [5/5], Step [500/600], Loss: 0.0106
+Epoch [5/5], Step [600/600], Loss: 0.0593
+Accuracy of Shallow CNN (1 Layer) on 10000 test images: 98.33 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 2: Depth Impact (Standard - 2 Layers)...
+Using device: cpu
+Starting training (Depth 2 - Standard)...
+Epoch [1/5], Step [100/600], Loss: 0.1591
+Epoch [1/5], Step [200/600], Loss: 0.0587
+Epoch [1/5], Step [300/600], Loss: 0.0598
+Epoch [1/5], Step [400/600], Loss: 0.0993
+Epoch [1/5], Step [500/600], Loss: 0.0859
+Epoch [1/5], Step [600/600], Loss: 0.0437
+Epoch [2/5], Step [100/600], Loss: 0.0378
+Epoch [2/5], Step [200/600], Loss: 0.0074
+Epoch [2/5], Step [300/600], Loss: 0.0079
+Epoch [2/5], Step [400/600], Loss: 0.0365
+Epoch [2/5], Step [500/600], Loss: 0.0169
+Epoch [2/5], Step [600/600], Loss: 0.0347
+Epoch [3/5], Step [100/600], Loss: 0.0143
+Epoch [3/5], Step [200/600], Loss: 0.0218
+Epoch [3/5], Step [300/600], Loss: 0.0161
+Epoch [3/5], Step [400/600], Loss: 0.0304
+Epoch [3/5], Step [500/600], Loss: 0.0309
+Epoch [3/5], Step [600/600], Loss: 0.0199
+Epoch [4/5], Step [100/600], Loss: 0.0033
+Epoch [4/5], Step [200/600], Loss: 0.0109
+Epoch [4/5], Step [300/600], Loss: 0.0249
+Epoch [4/5], Step [400/600], Loss: 0.0170
+Epoch [4/5], Step [500/600], Loss: 0.0179
+Epoch [4/5], Step [600/600], Loss: 0.0191
+Epoch [5/5], Step [100/600], Loss: 0.0048
+Epoch [5/5], Step [200/600], Loss: 0.0672
+Epoch [5/5], Step [300/600], Loss: 0.0030
+Epoch [5/5], Step [400/600], Loss: 0.0269
+Epoch [5/5], Step [500/600], Loss: 0.0078
+Epoch [5/5], Step [600/600], Loss: 0.0495
+Accuracy of CNN (Depth 2) on 10000 test images: 98.97 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 2: Depth Impact (Deep - 3 Layers)...
+Using device: cpu
+Starting training (Deep CNN - 3 Conv Layers)...
+Epoch [1/5], Step [100/600], Loss: 0.1747
+Epoch [1/5], Step [200/600], Loss: 0.1105
+Epoch [1/5], Step [300/600], Loss: 0.0219
+Epoch [1/5], Step [400/600], Loss: 0.0932
+Epoch [1/5], Step [500/600], Loss: 0.0609
+Epoch [1/5], Step [600/600], Loss: 0.0435
+Epoch [2/5], Step [100/600], Loss: 0.0086
+Epoch [2/5], Step [200/600], Loss: 0.0158
+Epoch [2/5], Step [300/600], Loss: 0.1012
+Epoch [2/5], Step [400/600], Loss: 0.1084
+Epoch [2/5], Step [500/600], Loss: 0.0137
+Epoch [2/5], Step [600/600], Loss: 0.0373
+Epoch [3/5], Step [100/600], Loss: 0.0339
+Epoch [3/5], Step [200/600], Loss: 0.0053
+Epoch [3/5], Step [300/600], Loss: 0.0161
+Epoch [3/5], Step [400/600], Loss: 0.0191
+Epoch [3/5], Step [500/600], Loss: 0.0051
+Epoch [3/5], Step [600/600], Loss: 0.0448
+Epoch [4/5], Step [100/600], Loss: 0.0344
+Epoch [4/5], Step [200/600], Loss: 0.0370
+Epoch [4/5], Step [300/600], Loss: 0.0191
+Epoch [4/5], Step [400/600], Loss: 0.0047
+Epoch [4/5], Step [500/600], Loss: 0.0690
+Epoch [4/5], Step [600/600], Loss: 0.0670
+Epoch [5/5], Step [100/600], Loss: 0.0350
+Epoch [5/5], Step [200/600], Loss: 0.0410
+Epoch [5/5], Step [300/600], Loss: 0.0036
+Epoch [5/5], Step [400/600], Loss: 0.0009
+Epoch [5/5], Step [500/600], Loss: 0.0132
+Epoch [5/5], Step [600/600], Loss: 0.0007
+Accuracy of Deep CNN (3 Layers) on 10000 test images: 99.03 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 2: Depth Impact (Deeper - 4 Layers)...
+Using device: cpu
+Starting training (Depth 4)...
+Epoch [1/5], Step [100/600], Loss: 0.0745
+Epoch [1/5], Step [200/600], Loss: 0.1372
+Epoch [1/5], Step [300/600], Loss: 0.0238
+Epoch [1/5], Step [400/600], Loss: 0.0151
+Epoch [1/5], Step [500/600], Loss: 0.1356
+Epoch [1/5], Step [600/600], Loss: 0.0360
+Epoch [2/5], Step [100/600], Loss: 0.0269
+Epoch [2/5], Step [200/600], Loss: 0.0418
+Epoch [2/5], Step [300/600], Loss: 0.0081
+Epoch [2/5], Step [400/600], Loss: 0.0348
+Epoch [2/5], Step [500/600], Loss: 0.0815
+Epoch [2/5], Step [600/600], Loss: 0.0083
+Epoch [3/5], Step [100/600], Loss: 0.0074
+Epoch [3/5], Step [200/600], Loss: 0.0084
+Epoch [3/5], Step [300/600], Loss: 0.0218
+Epoch [3/5], Step [400/600], Loss: 0.0197
+Epoch [3/5], Step [500/600], Loss: 0.0079
+Epoch [3/5], Step [600/600], Loss: 0.0207
+Epoch [4/5], Step [100/600], Loss: 0.0174
+Epoch [4/5], Step [200/600], Loss: 0.0064
+Epoch [4/5], Step [300/600], Loss: 0.0202
+Epoch [4/5], Step [400/600], Loss: 0.0074
+Epoch [4/5], Step [500/600], Loss: 0.0222
+Epoch [4/5], Step [600/600], Loss: 0.0034
+Epoch [5/5], Step [100/600], Loss: 0.0147
+Epoch [5/5], Step [200/600], Loss: 0.0018
+Epoch [5/5], Step [300/600], Loss: 0.0130
+Epoch [5/5], Step [400/600], Loss: 0.0071
+Epoch [5/5], Step [500/600], Loss: 0.0099
+Epoch [5/5], Step [600/600], Loss: 0.0045
+Accuracy of CNN (Depth 4) on 10000 test images: 98.97 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 2: Depth Impact (Deepest - 5 Layers)...
+Using device: cpu
+Starting training (Depth 5 - VGG style)...
+Epoch [1/5], Step [100/600], Loss: 0.0471
+Epoch [1/5], Step [200/600], Loss: 0.0590
+Epoch [1/5], Step [300/600], Loss: 0.0272
+Epoch [1/5], Step [400/600], Loss: 0.0311
+Epoch [1/5], Step [500/600], Loss: 0.0430
+Epoch [1/5], Step [600/600], Loss: 0.0545
+Epoch [2/5], Step [100/600], Loss: 0.0404
+Epoch [2/5], Step [200/600], Loss: 0.0527
+Epoch [2/5], Step [300/600], Loss: 0.0291
+Epoch [2/5], Step [400/600], Loss: 0.0018
+Epoch [2/5], Step [500/600], Loss: 0.0244
+Epoch [2/5], Step [600/600], Loss: 0.0135
+Epoch [3/5], Step [100/600], Loss: 0.0335
+Epoch [3/5], Step [200/600], Loss: 0.0079
+Epoch [3/5], Step [300/600], Loss: 0.0351
+Epoch [3/5], Step [400/600], Loss: 0.0049
+Epoch [3/5], Step [500/600], Loss: 0.0022
+Epoch [3/5], Step [600/600], Loss: 0.0365
+Epoch [4/5], Step [100/600], Loss: 0.0148
+Epoch [4/5], Step [200/600], Loss: 0.0008
+Epoch [4/5], Step [300/600], Loss: 0.0440
+Epoch [4/5], Step [400/600], Loss: 0.0060
+Epoch [4/5], Step [500/600], Loss: 0.0040
+Epoch [4/5], Step [600/600], Loss: 0.1258
+Epoch [5/5], Step [100/600], Loss: 0.0012
+Epoch [5/5], Step [200/600], Loss: 0.0009
+Epoch [5/5], Step [300/600], Loss: 0.0238
+Epoch [5/5], Step [400/600], Loss: 0.0048
+Epoch [5/5], Step [500/600], Loss: 0.0149
+Epoch [5/5], Step [600/600], Loss: 0.0110
+Accuracy of CNN (Depth 5) on 10000 test images: 99.24 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+----------------------------------------------------------------
+
+Running Task 3: Kernel Impact (Kernel 3x3)...
+Using device: cpu
+Starting training (Kernel Size 3)...
+Epoch [1/5], Step [100/600], Loss: 0.1279
+Epoch [1/5], Step [200/600], Loss: 0.0549
+Epoch [1/5], Step [300/600], Loss: 0.0756
+Epoch [1/5], Step [400/600], Loss: 0.0339
+Epoch [1/5], Step [500/600], Loss: 0.0365
+Epoch [1/5], Step [600/600], Loss: 0.0746
+Epoch [2/5], Step [100/600], Loss: 0.0662
+Epoch [2/5], Step [200/600], Loss: 0.0180
+Epoch [2/5], Step [300/600], Loss: 0.0342
+Epoch [2/5], Step [400/600], Loss: 0.0513
+Epoch [2/5], Step [500/600], Loss: 0.0056
+Epoch [2/5], Step [600/600], Loss: 0.1322
+Epoch [3/5], Step [100/600], Loss: 0.0361
+Epoch [3/5], Step [200/600], Loss: 0.0050
+Epoch [3/5], Step [300/600], Loss: 0.0469
+Epoch [3/5], Step [400/600], Loss: 0.0290
+Epoch [3/5], Step [500/600], Loss: 0.0107
+Epoch [3/5], Step [600/600], Loss: 0.0128
+Epoch [4/5], Step [100/600], Loss: 0.0347
+Epoch [4/5], Step [200/600], Loss: 0.0276
+Epoch [4/5], Step [300/600], Loss: 0.0586
+Epoch [4/5], Step [400/600], Loss: 0.0530
+Epoch [4/5], Step [500/600], Loss: 0.0071
+Epoch [4/5], Step [600/600], Loss: 0.0105
+Epoch [5/5], Step [100/600], Loss: 0.0323
+Epoch [5/5], Step [200/600], Loss: 0.0392
+Epoch [5/5], Step [300/600], Loss: 0.0158
+Epoch [5/5], Step [400/600], Loss: 0.0522
+Epoch [5/5], Step [500/600], Loss: 0.0244
+Epoch [5/5], Step [600/600], Loss: 0.0762
+Accuracy of CNN (Kernel 3x3) on 10000 test images: 98.51 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 3: Kernel Impact (Kernel 5x5)...
+Using device: cpu
+Starting training (Kernel Size 5 - Standard)...
+Epoch [1/5], Step [100/600], Loss: 0.1726
+Epoch [1/5], Step [200/600], Loss: 0.0634
+Epoch [1/5], Step [300/600], Loss: 0.0644
+Epoch [1/5], Step [400/600], Loss: 0.0488
+Epoch [1/5], Step [500/600], Loss: 0.0529
+Epoch [1/5], Step [600/600], Loss: 0.0421
+Epoch [2/5], Step [100/600], Loss: 0.0942
+Epoch [2/5], Step [200/600], Loss: 0.0264
+Epoch [2/5], Step [300/600], Loss: 0.0253
+Epoch [2/5], Step [400/600], Loss: 0.0238
+Epoch [2/5], Step [500/600], Loss: 0.0623
+Epoch [2/5], Step [600/600], Loss: 0.0493
+Epoch [3/5], Step [100/600], Loss: 0.0069
+Epoch [3/5], Step [200/600], Loss: 0.1474
+Epoch [3/5], Step [300/600], Loss: 0.0417
+Epoch [3/5], Step [400/600], Loss: 0.0756
+Epoch [3/5], Step [500/600], Loss: 0.1053
+Epoch [3/5], Step [600/600], Loss: 0.0406
+Epoch [4/5], Step [100/600], Loss: 0.0190
+Epoch [4/5], Step [200/600], Loss: 0.0320
+Epoch [4/5], Step [300/600], Loss: 0.0079
+Epoch [4/5], Step [400/600], Loss: 0.0084
+Epoch [4/5], Step [500/600], Loss: 0.0089
+Epoch [4/5], Step [600/600], Loss: 0.0108
+Epoch [5/5], Step [100/600], Loss: 0.0209
+Epoch [5/5], Step [200/600], Loss: 0.0371
+Epoch [5/5], Step [300/600], Loss: 0.0182
+Epoch [5/5], Step [400/600], Loss: 0.0079
+Epoch [5/5], Step [500/600], Loss: 0.0309
+Epoch [5/5], Step [600/600], Loss: 0.0142
+Accuracy of CNN (Kernel 5x5) on 10000 test images: 98.72 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 3: Kernel Impact (Kernel 7x7)...
+Using device: cpu
+Starting training (Kernel Size 7)...
+Epoch [1/5], Step [100/600], Loss: 0.1407
+Epoch [1/5], Step [200/600], Loss: 0.1172
+Epoch [1/5], Step [300/600], Loss: 0.1877
+Epoch [1/5], Step [400/600], Loss: 0.1126
+Epoch [1/5], Step [500/600], Loss: 0.0732
+Epoch [1/5], Step [600/600], Loss: 0.0361
+Epoch [2/5], Step [100/600], Loss: 0.0257
+Epoch [2/5], Step [200/600], Loss: 0.1901
+Epoch [2/5], Step [300/600], Loss: 0.0075
+Epoch [2/5], Step [400/600], Loss: 0.0714
+Epoch [2/5], Step [500/600], Loss: 0.0809
+Epoch [2/5], Step [600/600], Loss: 0.0334
+Epoch [3/5], Step [100/600], Loss: 0.0170
+Epoch [3/5], Step [200/600], Loss: 0.0228
+Epoch [3/5], Step [300/600], Loss: 0.0303
+Epoch [3/5], Step [400/600], Loss: 0.0015
+Epoch [3/5], Step [500/600], Loss: 0.0152
+Epoch [3/5], Step [600/600], Loss: 0.1071
+Epoch [4/5], Step [100/600], Loss: 0.0417
+Epoch [4/5], Step [200/600], Loss: 0.0628
+Epoch [4/5], Step [300/600], Loss: 0.0382
+Epoch [4/5], Step [400/600], Loss: 0.0576
+Epoch [4/5], Step [500/600], Loss: 0.0119
+Epoch [4/5], Step [600/600], Loss: 0.0359
+Epoch [5/5], Step [100/600], Loss: 0.0191
+Epoch [5/5], Step [200/600], Loss: 0.0359
+Epoch [5/5], Step [300/600], Loss: 0.0184
+Epoch [5/5], Step [400/600], Loss: 0.0071
+Epoch [5/5], Step [500/600], Loss: 0.0192
+Epoch [5/5], Step [600/600], Loss: 0.0158
+Accuracy of CNN (Kernel 7x7) on 10000 test images: 99.27 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+Running Task 3: Kernel Impact (Kernel 9x9)...
+Using device: cpu
+Starting training (Kernel Size 9)...
+Epoch [1/5], Step [100/600], Loss: 0.1358
+Epoch [1/5], Step [200/600], Loss: 0.1188
+Epoch [1/5], Step [300/600], Loss: 0.0485
+Epoch [1/5], Step [400/600], Loss: 0.0746
+Epoch [1/5], Step [500/600], Loss: 0.0923
+Epoch [1/5], Step [600/600], Loss: 0.0487
+Epoch [2/5], Step [100/600], Loss: 0.0200
+Epoch [2/5], Step [200/600], Loss: 0.0226
+Epoch [2/5], Step [300/600], Loss: 0.0429
+Epoch [2/5], Step [400/600], Loss: 0.0157
+Epoch [2/5], Step [500/600], Loss: 0.1440
+Epoch [2/5], Step [600/600], Loss: 0.0659
+Epoch [3/5], Step [100/600], Loss: 0.0152
+Epoch [3/5], Step [200/600], Loss: 0.0094
+Epoch [3/5], Step [300/600], Loss: 0.0348
+Epoch [3/5], Step [400/600], Loss: 0.0230
+Epoch [3/5], Step [500/600], Loss: 0.0296
+Epoch [3/5], Step [600/600], Loss: 0.0315
+Epoch [4/5], Step [100/600], Loss: 0.0363
+Epoch [4/5], Step [200/600], Loss: 0.0538
+Epoch [4/5], Step [300/600], Loss: 0.0594
+Epoch [4/5], Step [400/600], Loss: 0.0193
+Epoch [4/5], Step [500/600], Loss: 0.0443
+Epoch [4/5], Step [600/600], Loss: 0.0045
+Epoch [5/5], Step [100/600], Loss: 0.0140
+Epoch [5/5], Step [200/600], Loss: 0.0117
+Epoch [5/5], Step [300/600], Loss: 0.0212
+Epoch [5/5], Step [400/600], Loss: 0.0426
+Epoch [5/5], Step [500/600], Loss: 0.0240
+Epoch [5/5], Step [600/600], Loss: 0.0065
+Accuracy of CNN (Kernel 9x9) on 10000 test images: 99.13 %
+
+D:\CondaData\envs_dirs\cnn_env\lib\site-packages\google\protobuf\internal\api_implementation.py:87: UserWarning: Selected implementation cpp is not available.
+  warnings.warn(
+
+
+All tasks completed.
+Press any key to continue . . .

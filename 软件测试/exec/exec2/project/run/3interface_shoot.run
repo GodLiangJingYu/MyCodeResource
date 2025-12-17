@@ -2,30 +2,45 @@
     "version": 4,
     "data": {
         "envValue": "env/env.env",
-        "title": "",
+        "title": "3.1",
         "remarks": "",
-        "testCode": "",
+        "testCode": "31",
         "config": {},
         "deviceList": [
             {
-                "id": "NUNKgc7mOSZ59rKf4owH3",
+                "id": "GwoXPwxRxinUN6viz_9TZ",
                 "name": "仿真设备(脚本)",
                 "luaVal": "func/3interface_shoot.lua",
+                "yamlVal": "testdata/data_biao3.yml",
                 "kind": "SIMU"
             }
         ],
         "channelList": [
             {
-                "id": "bACiG7ZY_DOlwmv4OKsRV",
+                "id": "WHbw5R7tCSJU4u-XiLH6I",
                 "name": "仿真设备(脚本)",
                 "items": [
                     {
+                        "name": "shoot",
+                        "checked": true
+                    },
+                    {
+                        "name": "target",
+                        "checked": true
+                    }
+                ]
+            },
+            {
+                "id": "gZog3YA6FX4vj8kb7zD1W",
+                "name": "实物设备",
+                "items": [
+                    {
                         "name": "COM_shoot",
-                        "checked": false
+                        "checked": true
                     },
                     {
                         "name": "COM_target",
-                        "checked": false
+                        "checked": true
                     }
                 ]
             }
@@ -33,11 +48,13 @@
         "protocolList": [
             {
                 "name": "target",
-                "uri": "prot/target.prot"
+                "uri": "prot/target.prot",
+                "checked": true
             },
             {
                 "name": "shoot",
-                "uri": "prot/shoot.prot"
+                "uri": "prot/shoot.prot",
+                "checked": true
             }
         ]
     }
