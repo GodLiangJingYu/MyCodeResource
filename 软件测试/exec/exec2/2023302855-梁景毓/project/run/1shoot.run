@@ -2,45 +2,45 @@
     "version": 4,
     "data": {
         "envValue": "env/env.env",
-        "title": "4.1",
+        "title": "",
         "remarks": "",
-        "testCode": "41",
+        "testCode": "",
         "config": {},
         "deviceList": [
             {
-                "id": "HSIEqGOfJvs21KV4lVteZ",
+                "id": "yVL2lWvi-7EJ7-DQZlKmb",
                 "name": "仿真设备(脚本)",
-                "luaVal": "func/4interface_target.lua",
+                "luaVal": "func/1shoot.lua",
                 "yamlVal": "testdata/data_biao.yml",
                 "kind": "SIMU"
             }
         ],
         "channelList": [
             {
-                "id": "Bz0p7zOO9PCrSUN5WveLz",
+                "id": "L4AwZ2wQIYXOQKG2_IStq",
                 "name": "仿真设备(脚本)",
                 "items": [
                     {
                         "name": "shoot",
-                        "checked": true
+                        "checked": false
                     },
                     {
                         "name": "target",
-                        "checked": true
+                        "checked": false
                     }
                 ]
             },
             {
-                "id": "BLll2fILO4gDzd2Vt_aj4",
+                "id": "gPOuaq4CN8ykJ7RqIvgp1",
                 "name": "实物设备",
                 "items": [
                     {
                         "name": "COM_shoot",
-                        "checked": true
+                        "checked": false
                     },
                     {
                         "name": "COM_target",
-                        "checked": true
+                        "checked": false
                     }
                 ]
             }
@@ -48,13 +48,11 @@
         "protocolList": [
             {
                 "name": "target",
-                "uri": "prot/target.prot",
-                "checked": true
+                "uri": "prot/target.prot"
             },
             {
                 "name": "shoot",
-                "uri": "prot/shoot.prot",
-                "checked": true
+                "uri": "prot/shoot.prot"
             }
         ]
     }
