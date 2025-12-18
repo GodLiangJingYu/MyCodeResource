@@ -1,0 +1,121 @@
+=== 安居客功能测试开始 ===
+
+DevTools listening on ws://127.0.0.1:10836/devtools/browser/754310c4-fd64-4107-8faf-ea153db873f6
+✓ Chrome驱动初始化: 成功
+✓ 窗口最大化: 成功
+正在导航到: https://nj.zu.anjuke.com/
+✓ 页面加载: 成功
+
+步骤: 地铁找房
+✓ 地铁找房: 成功
+
+步骤: 选择2号线
+✓ 选择2号线: 成功
+
+步骤: 选择马群
+✓ 选择马群: 成功
+
+步骤: 设置租金5000-8000元
+[28736:30664:1218/194344.705:ERROR:components\device_event_log\device_event_log_impl.cc:198] [19:43:44.705] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: 鎵句笉鍒板厓绱犮€?(0x490)
+
+[28736:32352:1218/194346.271:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[28736:32352:1218/194415.416:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+尝试 1/3 失败: 所有定位策略失败:
+最低价格placeholder: Waiting for element to be located By(xpath, //input[contains(@placeholder, '最低') or contains(@placeholder, 'min')])
+Wait timed out after 10018ms
+价格输入框: Waiting for element to be located By(css selector, input[name='min_price'])
+Wait timed out after 10010ms
+类名选择: Waiting for element to be located By(css selector, .price-min)
+Wait timed out after 10062ms
+[28736:32352:1218/194438.096:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+尝试 2/3 失败: 所有定位策略失败:
+最低价格placeholder: Waiting for element to be located By(xpath, //input[contains(@placeholder, '最低') or contains(@placeholder, 'min')])
+Wait timed out after 10069ms
+价格输入框: Waiting for element to be located By(css selector, input[name='min_price'])
+Wait timed out after 10062ms
+类名选择: Waiting for element to be located By(css selector, .price-min)
+Wait timed out after 10024ms
+[28736:32352:1218/194507.916:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+截图已保存: screenshots\最低价格_fail_2025-12-18T11-45-19-855Z.png
+尝试 3/3 失败: 所有定位策略失败:
+最低价格placeholder: Waiting for element to be located By(xpath, //input[contains(@placeholder, '最低') or contains(@placeholder, 'min')])
+Wait timed out after 10047ms
+价格输入框: Waiting for element to be located By(css selector, input[name='min_price'])
+Wait timed out after 10011ms
+类名选择: Waiting for element to be located By(css selector, .price-min)
+Wait timed out after 10009ms
+✗ 设置租金5000-8000元: 失败
+  错误: 所有定位策略失败:
+最低价格placeholder: Waiting for element to be located By(xpath, //input[contains(@placeholder, '最低') or contains(@placeholder, 'min')])
+Wait timed out after 10047ms
+价格输入框: Waiting for element to be located By(css selector, input[name='min_price'])
+Wait timed out after 10011ms
+类名选择: Waiting for element to be located By(css selector, .price-min)
+Wait timed out after 10009ms
+
+步骤: 选择整租
+✓ 选择整租: 成功
+
+步骤: 选择普通住宅
+[28736:32352:1218/194528.727:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+尝试 1/3 失败: 所有定位策略失败:
+文本链接: Waiting until element is visible
+Wait timed out after 10119ms
+住宅类型: Waiting for element to be located By(css selector, .house-type-normal)
+Wait timed out after 10022ms
+数据属性: Waiting for element to be located By(xpath, //a[data-house-type='normal'])
+Wait timed out after 10041ms
+[28736:32352:1218/194619.343:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+尝试 2/3 失败: 所有定位策略失败:
+文本链接: Waiting until element is visible
+Wait timed out after 10009ms
+住宅类型: Waiting for element to be located By(css selector, .house-type-normal)
+Wait timed out after 10033ms
+数据属性: Waiting for element to be located By(xpath, //a[data-house-type='normal'])
+Wait timed out after 10013ms
+[28736:32352:1218/194649.652:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+截图已保存: screenshots\普通住宅_fail_2025-12-18T11-46-55-467Z.png
+尝试 3/3 失败: 所有定位策略失败:
+文本链接: Waiting until element is visible
+Wait timed out after 10105ms
+住宅类型: Waiting for element to be located By(css selector, .house-type-normal)
+Wait timed out after 10007ms
+数据属性: Waiting for element to be located By(xpath, //a[data-house-type='normal'])
+Wait timed out after 10005ms
+✗ 选择普通住宅: 失败
+  错误: 所有定位策略失败:
+文本链接: Waiting until element is visible
+Wait timed out after 10105ms
+住宅类型: Waiting for element to be located By(css selector, .house-type-normal)
+Wait timed out after 10007ms
+数据属性: Waiting for element to be located By(xpath, //a[data-house-type='normal'])
+Wait timed out after 10005ms
+
+步骤: 搜索经天路
+✓ 搜索经天路: 成功
+
+步骤: 选择视频看房
+[28736:32352:1218/194709.840:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:483] ConnectionHandler failed with net error: -2
+✓ 选择视频看房: 成功
+
+步骤: 测试排序功能
+✓ 测试排序功能: 成功
+
+步骤: 点击第一个搜索结果
+准备打开房源链接: https://nj.zu.anjuke.com/fangyuan/4369217908517898
+[24948:16396:1218/194740.241:ERROR:services\network\p2p\socket_manager.cc:137] Failed to resolve address for stun.services.mozilla1.com., errorcode: -105
+✓ 点击第一个搜索结果: 成功
+
+=== 测试结果汇总 ===
+总计: 13
+通过: 11
+失败: 2
+成功率: 84.62%
+执行时间: 408.95秒
+报告已保存至: D:\MyCodeResource\软件测试\exec\exec3\task_Anjjuke\tests\test-report.json
+
+✓ 浏览器已关闭
+[29516:27428:1218/194743.114:ERROR:gpu\ipc\client\command_buffer_proxy_impl.cc:321] GPU state invalid after WaitForGetOffsetInRange.
+
+进程已结束，退出代码为 0
