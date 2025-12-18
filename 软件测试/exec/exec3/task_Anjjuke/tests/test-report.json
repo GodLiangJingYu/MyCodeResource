@@ -1,0 +1,67 @@
+{
+  "summary": {
+    "total": 9,
+    "passed": 8,
+    "failed": 1,
+    "duration": "245.03秒",
+    "successRate": "88.89%"
+  },
+  "details": [
+    {
+      "step": "Chrome驱动初始化",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:34:30.600Z",
+      "error": null
+    },
+    {
+      "step": "窗口最大化",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:34:30.674Z",
+      "error": null
+    },
+    {
+      "step": "页面加载",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:34:33.027Z",
+      "error": null
+    },
+    {
+      "step": "地铁找房",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:35:06.743Z",
+      "error": null
+    },
+    {
+      "step": "选择2号线",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:35:40.399Z",
+      "error": null
+    },
+    {
+      "step": "选择马群",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:36:14.102Z",
+      "error": null
+    },
+    {
+      "step": "设置租金5000-8000元",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:38:01.249Z",
+      "error": null
+    },
+    {
+      "step": "选择整租",
+      "status": "PASS",
+      "timestamp": "2025-12-18T12:38:34.646Z",
+      "error": null
+    },
+    {
+      "step": "测试执行错误",
+      "status": "FAIL",
+      "timestamp": "2025-12-18T12:38:34.647Z",
+      "error": "t is not defined"
+    }
+  ],
+  "startTime": "2025-12-18T12:34:29.898Z",
+  "endTime": "2025-12-18T12:38:34.924Z"
+}

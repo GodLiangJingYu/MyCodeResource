@@ -34,15 +34,15 @@ class TestResultCollector {
             timestamp: new Date().toISOString(),
             error: error ? error.message : null
         };
-        
+
         this.results.details.push(result);
-        
+
         if (status === 'PASS') {
             this.results.passed++;
         } else {
             this.results.failed++;
         }
-        
+
         console.log(`${status === 'PASS' ? '✓' : '✗'} ${step}: ${status === 'PASS' ? '成功' : '失败'}`);
         if (error) {
             console.log(`  错误: ${error.message}`);
@@ -72,7 +72,7 @@ class TestResultCollector {
         // 保存报告到文件
         const reportPath = path.join(__dirname, 'test-report.json');
         fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-        
+
         // 输出控制台报告
         console.log('\n=== 测试结果汇总 ===');
         console.log(`总计: ${report.summary.total}`);
@@ -81,7 +81,7 @@ class TestResultCollector {
         console.log(`成功率: ${report.summary.successRate}`);
         console.log(`执行时间: ${report.summary.duration}`);
         console.log(`报告已保存至: ${reportPath}`);
-        
+
         return report;
     }
 }
@@ -131,10 +131,10 @@ async function takeScreenshot(driver, testName) {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         const filename = `${testName}_${timestamp}.png`;
         const filepath = path.join(TEST_CONFIG.screenshotDir, filename);
-        
+
         const image = await driver.takeScreenshot();
         fs.writeFileSync(filepath, image, 'base64');
-        
+
         console.log(`截图已保存: ${filepath}`);
         return filepath;
     } catch (error) {
@@ -146,7 +146,7 @@ async function takeScreenshot(driver, testName) {
 // 工具函数：多策略元素定位
 async function findElementByMultipleStrategies(driver, strategies, timeout = TEST_CONFIG.timeout.default) {
     const errors = [];
-    
+
     for (const strategy of strategies) {
         try {
             const element = await driver.wait(until.elementLocated(strategy.locator), timeout);
@@ -156,7 +156,7 @@ async function findElementByMultipleStrategies(driver, strategies, timeout = TES
             errors.push(`${strategy.name}: ${error.message}`);
         }
     }
-    
+
     throw new Error(`所有定位策略失败:\n${errors.join('\n')}`);
 }
 
@@ -240,23 +240,23 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
     console.log("=== 安居客功能测试开始 ===");
     let driver;
     const testResults = new TestResultCollector();
-    
+
     try {
         // 初始化驱动
         driver = await new Builder().forBrowser('chrome').build();
         testResults.addResult("Chrome驱动初始化", "PASS");
-        
+
         // 最大化窗口
         await driver.manage().window().maximize();
         testResults.addResult("窗口最大化", "PASS");
-        
+
         // 设置隐式等待
         await driver.manage().setTimeouts({ implicit: TEST_CONFIG.timeout.default });
-        
+
         // 导航到安居客南京租房页面
         console.log(`正在导航到: ${TEST_CONFIG.baseUrl}`);
         await driver.get(TEST_CONFIG.baseUrl);
-        
+
         // 验证页面加载
         await waitForPageLoad(driver);
         await driver.wait(until.titleContains('安居客'), TEST_CONFIG.timeout.long);
@@ -272,7 +272,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, strategies, "地铁找房");
             await smartWait(2000);
         }, testResults);
-        
+
         // 步骤4: 选择"2号线"
         await executeStep("选择2号线", async () => {
             const strategies = [
@@ -283,7 +283,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, strategies, "2号线");
             await smartWait(2000);
         }, testResults);
-        
+
         // 步骤5: 选择"马群"
         await executeStep("选择马群", async () => {
             const strategies = [
@@ -294,7 +294,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, strategies, "马群");
             await smartWait(2000);
         }, testResults);
-        
+
         // 步骤6: 设置租金5000-8000元
         await executeStep("设置租金5000-8000元", async () => {
             await smartWait(3000); // 等待筛选区域加载
@@ -353,65 +353,35 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, strategies, "整租");
             await smartWait(2000);
         }, testResults);
-        /*
-                // 8. 房屋类型选择“普通住宅”
-                try {
-                    await t.click(By.xpath("//a[contains(text(),'普通住宅')]"), 'Step 8: 选择普通住宅');
-                } catch (e) {
-                    await t.log('Step 8', 'RETRY', '尝试在下拉菜单中查找普通住宅...');
-                    const dropdown = await driver.findElement(By.xpath("//li[contains(text(),'类型') or contains(text(),'更多')]"));
-                    await dropdown.click();
-                    await driver.sleep(500);
-                    await t.click(By.xpath("//a[contains(text(),'普通住宅')]" 'Step 8: 选择普通住宅 (下拉中)');
-                }
-                await driver.sleep(1500);
-        /*
-                // 步骤8: 选择"普通住宅"
-                // 按指定流程：更多 -> 房屋类型 -> 普通住宅
-                await executeStep("选择普通住宅", async () => {
-                    // 先确保筛选栏在视野中（避免页面滚动到底部导致定位不到）
-                    await driver.executeScript('window.scrollTo(0, 0);');
-                    await smartWait(800);
 
-                    const moreStrategies = [
-                        // 优先定位筛选区“更多”
-                        { name: "筛选栏-更多", locator: By.xpath("(//*[@id='filters' or @id='filter' or contains(@class,'filter')][1]//*[self::a or self::span][normalize-space(.)='更多'])[1]") },
-                        { name: "更多(文本)", locator: By.xpath("(//*[self::a or self::span][normalize-space(.)='更多'])[1]") }
-                    ];
+        // 步骤8: 选择"普通住宅"
+        await executeStep("选择普通住宅", async () => {
+            try {
+                // 策略1: 尝试直接点击
+                const directStrategies = [
+                    { name: "直接链接", locator: By.xpath("//a[contains(text(),'普通住宅')]") }
+                ];
+                // 使用较短的超时时间尝试直接点击
+                await waitAndClick(driver, directStrategies, "普通住宅", 3000);
+            } catch (e) {
+                console.log("直接点击未成功，尝试通过下拉菜单选择...");
 
-                    // “房屋类型”下拉触发器（一般就在更多行里）
-                    const houseTypeTriggerStrategies = [
-                        { name: "更多行-房屋类型", locator: By.xpath("(//*[contains(normalize-space(.),'更多')]/following::*[contains(normalize-space(.),'房屋类型')][1])") },
-                        { name: "房屋类型(文本)", locator: By.xpath("(//*[self::a or self::div or self::span][contains(normalize-space(.),'房屋类型')])[1]") }
-                    ];
+                // 策略2: 先点击下拉菜单（通常是"类型"或"更多"）
+                const dropdownStrategies = [
+                    { name: "类型/更多下拉", locator: By.xpath("//li[contains(text(),'类型') or contains(text(),'更多')] | //div[contains(@class,'filter')]//i[contains(@class,'arrow')]") }
+                ];
+                await waitAndClick(driver, dropdownStrategies, "下拉菜单");
+                await smartWait(1000);
 
-                    // 如果“房屋类型”暂时不可见，先点击“更多”展开
-                    try {
-                        await findElementByMultipleStrategies(driver, houseTypeTriggerStrategies, TEST_CONFIG.timeout.short);
-                    } catch (_) {
-                        await waitAndClick(driver, moreStrategies, "展开更多", TEST_CONFIG.timeout.short);
-                        await smartWait(800);
-                    }
+                // 然后点击选项
+                const optionStrategies = [
+                    { name: "下拉选项", locator: By.xpath("//a[contains(text(),'普通住宅')]") }
+                ];
+                await waitAndClick(driver, optionStrategies, "普通住宅(下拉)");
+            }
+            await smartWait(1500);
+        }, testResults);
 
-                    await waitAndClick(driver, houseTypeTriggerStrategies, "展开房屋类型", TEST_CONFIG.timeout.long);
-                    await smartWait(800);
-
-                    // 在房屋类型面板/下拉中选择“普通住宅”
-                    const normalHouseStrategies = [
-                        {
-                            name: "可见面板-普通住宅",
-                            locator: By.xpath(
-                                "(//*[contains(@class,'dropdown') or contains(@class,'drop') or contains(@class,'select') or contains(@class,'menu') or contains(@class,'panel')][not(contains(@style,'display: none'))]//*[self::a or self::span][contains(normalize-space(.),'普通住宅')])[1]"
-                            )
-                        },
-                        { name: "普通住宅(链接)", locator: By.xpath("//a[contains(normalize-space(.), '普通住宅')]") },
-                        { name: "普通住宅(文本)", locator: By.xpath("(//*[self::a or self::span][contains(normalize-space(.), '普通住宅')])[1]") }
-                    ];
-
-                    await waitAndClick(driver, normalHouseStrategies, "选择普通住宅", TEST_CONFIG.timeout.long);
-                    await smartWait(2000);
-                }, testResults);
-                */
         // 步骤9: 搜索"经天路"
         await executeStep("搜索经天路", async () => {
             const searchStrategies = [
@@ -419,21 +389,21 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
                 { name: "搜索框类名", locator: By.css(".search-input") },
                 { name: "搜索框ID", locator: By.css("#search-input") }
             ];
-            
+
             const searchInput = await findElementByMultipleStrategies(driver, searchStrategies);
             await searchInput.clear();
             await searchInput.sendKeys('经天路');
-            
+
             const btnStrategies = [
                 { name: "搜索按钮", locator: By.xpath("//button[contains(text(), '搜索')]") },
                 { name: "提交按钮", locator: By.xpath("//input[@type='submit']") },
                 { name: "搜索图标", locator: By.xpath("//i[contains(@class, 'search')]") }
             ];
-            
+
             await waitAndClick(driver, btnStrategies, "搜索按钮");
             await smartWait(3000);
         }, testResults);
-        
+
         // 步骤10: 选择"视频看房"
         await executeStep("选择视频看房", async () => {
             const strategies = [
@@ -444,7 +414,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, strategies, "视频看房");
             await smartWait(2000);
         }, testResults);
-        
+
         // 步骤11: 排序功能测试
         await executeStep("测试排序功能", async () => {
             // 按租金排序
@@ -454,7 +424,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             ];
             await waitAndClick(driver, rentSortStrategies, "租金排序");
             await smartWait(2000);
-            
+
             // 按最新排序
             const latestSortStrategies = [
                 { name: "最新排序", locator: By.xpath("//a[contains(text(), '最新')]") },
@@ -463,7 +433,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
             await waitAndClick(driver, latestSortStrategies, "最新排序");
             await smartWait(2000);
         }, testResults);
-        
+
         // 步骤12: 点击第一个搜索结果
         await executeStep("点击第一个搜索结果", async () => {
             const strategies = [
@@ -471,23 +441,23 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
                 { name: "项目链接", locator: By.xpath("(//div[contains(@class, 'item')]//a)[1]") },
                 { name: "列表项", locator: By.css(".house-item a") }
             ];
-            
+
             const firstResult = await findElementByMultipleStrategies(driver, strategies);
             const firstUrl = await firstResult.getAttribute("href");
             console.log(`准备打开房源链接: ${firstUrl}`);
-            
+
             await firstResult.click();
-            
+
             // 处理可能的新窗口
             const handles = await driver.getAllWindowHandles();
             if (handles.length > 1) {
                 await driver.switchTo().window(handles[handles.length - 1]);
                 console.log("✓ 切换到新窗口");
             }
-            
+
             await smartWait(3000);
         }, testResults);
-        
+
     } catch (error) {
         console.error("!!! 测试执行错误:", error);
         testResults.addResult("测试执行错误", "FAIL", error);
@@ -496,7 +466,7 @@ async function waitForPageLoad(driver, timeout = TEST_CONFIG.timeout.long) {
         }
     } finally {
         testResults.finish();
-        
+
         if (driver) {
             await driver.quit();
             console.log("\n✓ 浏览器已关闭");
