@@ -163,6 +163,9 @@ def task1():
 
         idx += 1
 
+    # 隐藏最后一个未使用的子图
+    axes[1, 2].axis('off')
+
     plt.tight_layout()
     plt.savefig('task1_result.png', dpi=300, bbox_inches='tight')
     plt.close()
