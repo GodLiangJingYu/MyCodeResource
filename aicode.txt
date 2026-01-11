@@ -1,0 +1,5 @@
+sk-acw-3fad8ab2-0ee02740aeed73c6
+快速开始
+设置环境变量后即可使用：
+export ANTHROPIC_AUTH_TOKEN=sk-acw-3fad8ab2-0ee02740aeed73c6
+export ANTHROPIC_BASE_URL=https://api.jiuwanliguoxue.com
