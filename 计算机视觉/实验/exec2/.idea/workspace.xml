@@ -5,32 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d5ecf27-e7e3-45be-b08c-043e28e99664" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../.grok/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.grok/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task1_Harris/check_board.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task1_Harris/task1_harris_corner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task1_Harris/task1_result.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/task2_keypoints.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/task2_result.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/task2_sift_matching.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/task2_single_match.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/山脉图1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2_SIFT/山脉图2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/__MACOSX/._check_board.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/__MACOSX/._山脉图1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/__MACOSX/._山脉图2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/check_board.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/山脉图1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业数据/山脉图2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/第二次作业题目.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.grok/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../软件工程导论/软件工程课件(全).ppt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../软件工程导论/软件工程课件(全).ppt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_D:/MyCodeResource/计算机视觉/实验/exec2" value="37N6cHQW5W3RH0JO3MXh5XexqNz" />
+    </persistenceIdMap>
+  </component>
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="22" />
-    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
@@ -47,6 +36,10 @@
     &quot;accountId&quot;: &quot;e739e7aa-f5f3-4d00-bc01-6bb669051371&quot;
   }
 }</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -56,29 +49,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MyCodeResource/计算机视觉/实验/exec2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/MyCodeResource/计算机视觉/实验/exec2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-PY-253.28294.256" />
-        <option value="bundled-python-sdk-f79232025321-b1aafe368c7f-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.28294.256" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.29346.308" />
+        <option value="bundled-python-sdk-ca5e2b39c7df-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.308" />
       </set>
     </attachedChunks>
   </component>
@@ -92,6 +86,7 @@
       <workItem from="1766731269778" duration="9000" />
       <workItem from="1766731279991" duration="3711000" />
       <workItem from="1766841236601" duration="19000" />
+      <workItem from="1770901506381" duration="51000" />
     </task>
     <servers />
   </component>
