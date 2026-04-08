@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第9章 照章办事 | 软件需求（第3版）</title>
+<style>
+/* Base Styles */
+body, html { 
+    margin: 0; padding: 0; font-family: 'Segoe UI', "Microsoft YaHei", Tahoma, Geneva, Verdana, sans-serif; 
+    background: linear-gradient(135deg, #0d324d, #7f5a83); color: #333; overflow: hidden; width: 100vw; height: 100vh; 
+}
+
+/* Slide Container */
+.container { 
+    position: relative; width: 85vw; height: 80vh; margin: 6vh auto 0; perspective: 1000px; 
+    display: flex; justify-content: center; align-items: center; 
+}
+
+.slide { 
+    position: absolute; width: 100%; height: 100%; background: #fff; border-radius: 12px; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5); padding: 40px 70px; box-sizing: border-box; 
+    opacity: 0; transform: translateX(100px) scale(0.9); transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    pointer-events: none; z-index: 1; overflow-y: auto; display: flex; flex-direction: column; 
+}
+.slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; z-index: 2; }
+.slide.prev { transform: translateX(-100px) scale(0.9); }
+
+/* Typography */
+h1 { color: #0d324d; font-size: 2.6em; border-bottom: 3px solid #7f5a83; padding-bottom: 12px; margin-top: 0; }
+h2 { color: #0d324d; font-size: 1.8em; margin-top: 25px; margin-bottom: 15px; }
+p, li { font-size: 1.3em; line-height: 1.6; }
+.title-slide { text-align: center; justify-content: center; align-items: center; }
+.title-slide h1 { border: none; font-size: 4.5em; color: #0d324d; margin-bottom: 10px; }
+.title-slide p.subtitle { font-size: 2em; color: #7f5a83; margin-top: 0; }
+
+/* Cards & Elements */
+.conversation-card { 
+    background: #f4f6f9; border-left: 6px solid #0d324d; padding: 25px; 
+    border-radius: 8px; margin: 20px 0; font-size: 1.25em; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 1.15em; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+th, td { border: 1px solid #e0e0e0; padding: 14px 18px; text-align: left; }
+th { background-color: #0d324d; color: white; }
+tr:nth-child(even) { background-color: #f8f9fa; }
+tr:hover { background-color: #e9ecef; }
+
+/* Animations */
+.bullet { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+.bullet.show { opacity: 1; transform: translateY(0); }
+
+/* SVGs */
+.svg-container { display: flex; justify-content: center; align-items: center; margin-top: 30px; flex-grow: 1; min-height: 250px; }
+
+/* Footer & Navigation */
+.footer { 
+    position: fixed; bottom: 0; width: 100%; padding: 15px 40px; background: rgba(0,0,0,0.7); 
+    color: white; display: flex; justify-content: space-between; align-items: center; 
+    box-sizing: border-box; z-index: 10; font-size: 1.1em; font-weight: 300;
+}
+.nav-controls { display: flex; align-items: center; gap: 20px; }
+.btn { 
+    background: #fff; color: #0d324d; border: none; padding: 8px 18px; border-radius: 6px; 
+    cursor: pointer; font-size: 1.2em; font-weight: bold; transition: all 0.3s; 
+}
+.btn:hover:not(:disabled) { background: #7f5a83; color: white; transform: translateY(-2px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.progress-bar-container { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); }
+.progress-bar { height: 100%; background: #fff; transition: width 0.4s ease; width: 0%; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-container"><div class="progress-bar" id="progress"></div></div>
+
+<div class="container">
+    <!-- Slide 1 -->
+    <div class="slide title-slide active">
+        <h1>第9章 照章办事</h1>
+        <p class="subtitle">软件需求（第3版）</p>
+        <div class="conversation-card bullet" style="text-align: left;">
+            <strong>开篇对话（化学品跟踪系统）：</strong><br>
+            <em>Jackie：</em>“我需要更多的光气...但系统拒绝了我的申请。它说我已经有一年多没有参加过处理危险化学品的培训了。”<br>
+            <em>Tim：</em>“公司要求员工每年都参加安全使用进修班...要想让系统批准，必须参加进修班。”
+        </div>
+        <p class="bullet"><strong>业务规则：</strong>组织的运营要遵守政策、法规及行业标准。它们是需求的来源，决定系统应具备的属性。</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <h1>表9-1 业务规则如何影响各类软件需求</h1>
+        <table>
+            <thead>
+                <tr><th>需求类型</th><th>业务规则的影响</th><th>示例</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td>业务需求</td><td>政府法规可能成为项目的某个业务目标</td><td>化学品跟踪系统必须符合近五个月内所有联邦和州的化学品使用与处理报告法规</td></tr>
+                <tr class="bullet"><td>用户需求</td><td>隐私策略决定哪些用户可以或者被禁止使用系统完成某些任务</td><td>只有实验室管理员可以为自己之外的其他人生成化学品接触报告</td></tr>
+                <tr class="bullet"><td>功能需求</td><td>公司政策规定所有供应商在收到发票之前必须经过核准登记</td><td>如果收到来自一个未注册供应商的发票，供货系统应该以电子邮件方式向供应商发送登记表等文档</td></tr>
+                <tr class="bullet"><td>质量属性</td><td>来自政府机构的法规可以指明安全性要求，必须由系统功能强制执行</td><td>系统必须维护安全培训记录，在申请有害化学品前，必须保证接受过适当培训</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <h1>图9-1 业务规则分类法</h1>
+        <p>包含5类核心业务规则：事实、约束、触发规则、推理、运算。第六类为术语词汇。</p>
+        <div class="svg-container bullet">
+            <svg viewBox="0 0 600 300" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+                <!-- Center -->
+                <rect x="220" y="110" width="160" height="60" rx="10" fill="#0d324d" />
+                <text x="300" y="147" fill="white" font-size="24" text-anchor="middle" font-weight="bold">业务规则</text>
+                
+                <!-- Links -->
+                <line x1="300" y1="110" x2="150" y2="60" stroke="#7f5a83" stroke-width="3" />
+                <line x1="300" y1="110" x2="300" y2="50" stroke="#7f5a83" stroke-width="3" />
+                <line x1="300" y1="110" x2="450" y2="60" stroke="#7f5a83" stroke-width="3" />
+                <line x1="220" y1="140" x2="120" y2="180" stroke="#7f5a83" stroke-width="3" />
+                <line x1="380" y1="140" x2="480" y2="180" stroke="#7f5a83" stroke-width="3" />
+
+                <!-- Nodes -->
+                <rect x="70" y="30" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="120" y="55" fill="#333" font-size="18" text-anchor="middle">事实</text>
+
+                <rect x="250" y="10" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="300" y="35" fill="#333" font-size="18" text-anchor="middle">约束</text>
+
+                <rect x="430" y="30" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="480" y="55" fill="#333" font-size="18" text-anchor="middle">触发规则</text>
+
+                <rect x="50" y="170" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="100" y="195" fill="#333" font-size="18" text-anchor="middle">推理</text>
+
+                <rect x="450" y="170" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="500" y="195" fill="#333" font-size="18" text-anchor="middle">运算</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <h1>业务规则分类：事实</h1>
+        <p class="bullet"><strong>定义：</strong>业务在某个特定时间点简单而正确的陈述。描述重要业务术语之间的关联或关系。</p>
+        <h2>事实的5个示例：</h2>
+        <ul>
+            <li class="bullet">每一个化学容器都有一个唯一的条形码标识</li>
+            <li class="bullet">每一个订单都包含运费</li>
+            <li class="bullet">销售税计算不包含运费</li>
+            <li class="bullet">假如机票不可退，购买人更改行程会产生费用</li>
+            <li class="bullet">高于 16 英寸的书摆放在图书馆的超大图书区</li>
+        </ul>
+        <div class="conversation-card bullet">
+            <strong>💡 提示：</strong>将重点放在项目范围内的事实上，尝试将事实联系到系统事件、内外关系图的输入/输出、已知数据对象或特定的用户需求。
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <h1>业务规则分类：约束</h1>
+        <p class="bullet"><strong>定义：</strong>描述的是限制系统或其用户可执行的行为。可能规定某个行为必须、禁止或不得执行，或者只有某些角色可以执行。</p>
+        <h2>约束的示例：</h2>
+        <ul>
+            <li class="bullet"><strong>组织政策：</strong><br>- 未满18岁的贷款申请人必须有父母或法定监护人作为贷款担保人。<br>- 图书馆读者在同一时间内最多只能借10本书。</li>
+            <li class="bullet"><strong>政府法规：</strong><br>- 所有软件应用必须符合适合视力障碍人士使用这一政府法规。<br>- 航空公司飞行员每24小时航程必须有连续8小时的休息时间。</li>
+            <li class="bullet"><strong>行业标准：</strong><br>- 抵押贷款申请人必须满足联邦住房管理局的资格标准。<br>- Web应用不宜使用HTML5标准中废弃的任何HTML标签或属性。</li>
+        </ul>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <h1>图9-2 角色与授权矩阵</h1>
+        <p>因为很多约束类型的业务规则涉及哪个类型的用户可以操作哪些功能，使用矩阵是简明记录这些规则的方法。</p>
+        <table>
+            <thead>
+                <tr><th>角色与授权矩阵</th><th>用户</th><th>管理员</th><th>用户管理员</th><th>管理员代理</th><th>用户代理</th><th>解雇代理</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td colspan="7" style="background:#0d324d; color:white; font-weight:bold;">系统操作</td></tr>
+                <tr class="bullet"><td>登录图书馆系统</td><td></td><td>X</td><td>X</td><td>X</td><td></td><td></td></tr>
+                <tr class="bullet"><td>登记新的员工</td><td></td><td>X</td><td></td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td>打印借书条</td><td></td><td>X</td><td>X</td><td>X</td><td></td><td></td></tr>
+                <tr class="bullet"><td colspan="7" style="background:#0d324d; color:white; font-weight:bold;">读者记录</td></tr>
+                <tr class="bullet"><td>查看读者记录</td><td></td><td>X</td><td>X</td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td>编辑读者记录</td><td></td><td>X</td><td>X</td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td>查看本人的记录</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+                <tr class="bullet"><td>办理借阅卡</td><td></td><td>X</td><td>X</td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td>接受罚款</td><td></td><td>X</td><td>X</td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td colspan="7" style="background:#0d324d; color:white; font-weight:bold;">物品操作</td></tr>
+                <tr class="bullet"><td>搜索馆藏目录</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+                <tr class="bullet"><td>借出</td><td></td><td>X</td><td>X</td><td></td><td></td><td></td></tr>
+                <tr class="bullet"><td>归还</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td></td></tr>
+                <tr class="bullet"><td>修改类别</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td></td></tr>
+                <tr class="bullet"><td>预约</td><td></td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <h1>业务规则分类：触发规则</h1>
+        <p class="bullet"><strong>定义：</strong>当特定条件满足时触发某些活动的规则。常用“如果&lt;条件为真或事件发生&gt;，那么&lt;事件会发生&gt;”。</p>
+        <h2>化学品跟踪系统示例：</h2>
+        <ul>
+            <li class="bullet">如果化学品库房有所需化学品容器的库存,就将库存容器发放给申请人。</li>
+            <li class="bullet">在季度的最后一个日历日,按规定生成当前季度有关化学品处理的 OSHA 和 EPA 报告。</li>
+            <li class="bullet">如果某个化学品容器有效期满,就需要通知容器当时的持有人。</li>
+        </ul>
+        <h2>电商销售触发示例：</h2>
+        <ul>
+            <li class="bullet">如果客户购买的图书作者写过多本书,就在订单完成前向客户展示此作者其他著作的信息。</li>
+            <li class="bullet">在客户将书放入购物车后,显示购买了此书的其他用户还购买了哪些相关书籍。</li>
+        </ul>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <h1>业务规则分类：推理与运算</h1>
+        <p class="bullet"><strong>推理：</strong>从已知事实中产生新的事实。“如果、那么”中的“那么”部分描述知识性信息，而非动作。<br>
+        <em>例：如果在30个日历日之内没有收到应付款项,这个账号就存在拖欠债务的问题。</em></p>
+        
+        <p class="bullet" style="margin-top: 20px;"><strong>运算：</strong>通过特定数学公式或算法将已知数据加工为新的数据。</p>
+        
+        <h2>表9-2 运算类业务规则示例（折扣）</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>购买数量 (个)</th><th>优惠比例</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td>DISC-1</td><td>1~5</td><td>0</td></tr>
+                <tr class="bullet"><td>DISC-2</td><td>6~10</td><td>9 折</td></tr>
+                <tr class="bullet"><td>DISC-3</td><td>11~20</td><td>8 折</td></tr>
+                <tr class="bullet"><td>DISC-4</td><td>20 以上</td><td>7 折</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <h1>原子业务规则</h1>
+        <p class="bullet"><strong>核心策略：</strong>在原子级别记录业务规则，而不是在一条规则中组合多个细节。这有利于规则的简明、重用、修改以及任意组合。</p>
+        
+        <h2>表9-3 图书馆的原子规则示例</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>规则</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td>Video.Media Types</td><td>DVD 碟片和蓝光碟片是视频物品</td></tr>
+                <tr class="bullet"><td>Video.Checkout Duration</td><td>视频物品每次可以借走一周</td></tr>
+                <tr class="bullet"><td>Renewal Video Times</td><td>视频物品最多可以续借两次</td></tr>
+                <tr class="bullet"><td>Renewal Video Duration</td><td>续借视频物品可以将租借期延长3天</td></tr>
+                <tr class="bullet"><td>Renewal HeldItem</td><td>被其他客户预约的物品不能被续借</td></tr>
+            </tbody>
+        </table>
+        <div class="conversation-card bullet">
+            <strong>提高可维护性：</strong>当图书馆废弃 DVD 碟片时，只需要更新 Video.Media Types 规则，其他规则不受任何影响。
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <h1>记录业务规则</h1>
+        <p class="bullet">将业务规则视为企业级资产进行管理。大型组织应建立业务规则数据库或管理工具。</p>
+        
+        <h2>表9-4 业务规则目录示例</h2>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>规则定义</th><th>规则类型</th><th>静态或动态</th><th>来源</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td>ORDER-5</td><td>如果顾客购买书的作者还写过其他书,那么在交易结束前向他展示</td><td>触发规则</td><td>静态</td><td>××销售政策</td></tr>
+                <tr class="bullet"><td>ACCESS-8</td><td>所有图片必须有文本替代描述供电子阅读设备使用</td><td>约束</td><td>静态</td><td>ADA 标准</td></tr>
+                <tr class="bullet"><td>DISCOUNT-13</td><td>折扣基于当前交易额度计算,算法见表 BR-060</td><td>运算</td><td>动态</td><td>公司的定价政策</td></tr>
+            </tbody>
+        </table>
+        <p class="bullet"><strong>隔离法则：</strong>如果是动态变化的安全、财务等规则，应当放在易于更新的表格或数据库中，不要硬编码在系统代码内。</p>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <h1>发现业务规则</h1>
+        <p class="bullet"><strong>发现方式：</strong>组织内常识、遗留系统、业务过程建模、现有文档分析、数据分析、公司合规系统。</p>
+        <h2>图9-3 从不同角度提问发现业务规则</h2>
+        <div class="svg-container bullet">
+            <svg viewBox="0 0 800 360" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+                <!-- Center -->
+                <circle cx="400" cy="180" r="50" fill="#0d324d" />
+                <text x="400" y="185" fill="white" font-size="18" text-anchor="middle" font-weight="bold">业务规则</text>
+
+                <!-- Lines -->
+                <line x1="400" y1="130" x2="400" y2="70" stroke="#7f5a83" stroke-width="3"/>
+                <line x1="440" y1="150" x2="600" y2="100" stroke="#7f5a83" stroke-width="3"/>
+                <line x1="440" y1="210" x2="600" y2="260" stroke="#7f5a83" stroke-width="3"/>
+                <line x1="360" y1="210" x2="200" y2="260" stroke="#7f5a83" stroke-width="3"/>
+                <line x1="360" y1="150" x2="200" y2="100" stroke="#7f5a83" stroke-width="3"/>
+
+                <!-- Nodes -->
+                <rect x="350" y="30" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="400" y="55" fill="#333" font-size="16" text-anchor="middle" font-weight="bold">事实</text>
+                <text x="400" y="20" fill="#555" font-size="14" text-anchor="middle">什么是已知为真的？</text>
+
+                <rect x="600" y="80" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="650" y="105" fill="#333" font-size="16" text-anchor="middle" font-weight="bold">约束</text>
+                <text x="700" y="70" fill="#555" font-size="14" text-anchor="middle">谁被允许做什么？</text>
+
+                <rect x="600" y="240" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="650" y="265" fill="#333" font-size="16" text-anchor="middle" font-weight="bold">触发规则</text>
+                <text x="700" y="300" fill="#555" font-size="14" text-anchor="middle">什么条件下会发生什么？</text>
+
+                <rect x="100" y="240" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="150" y="265" fill="#333" font-size="16" text-anchor="middle" font-weight="bold">推理</text>
+                <text x="100" y="300" fill="#555" font-size="14" text-anchor="middle">如果X为真得出什么结论？</text>
+
+                <rect x="100" y="80" width="100" height="40" rx="5" fill="#f4f6f9" stroke="#0d324d" stroke-width="2"/>
+                <text x="150" y="105" fill="#333" font-size="16" text-anchor="middle" font-weight="bold">运算</text>
+                <text x="100" y="70" fill="#555" font-size="14" text-anchor="middle">这个数值是如何计算的？</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <h1>业务规则与需求映射</h1>
+        <p class="bullet">业务规则是外部策略，必须由软件强制执行；功能需求描述遇到规则时系统采取的行动。</p>
+        
+        <h2>功能需求推导示例表</h2>
+        <p class="bullet"><strong>父规则：</strong>如果化学品容器有效期满,就需要通知容器当时的持有人。<br>
+        <strong>推导需求 (Expired Notify)：</strong>如果有保质期的化学品未被销毁,按以下时间表通知。</p>
+        <table>
+            <thead>
+                <tr><th>需求标识</th><th>被提醒人</th><th>提醒时间</th></tr>
+            </thead>
+            <tbody>
+                <tr class="bullet"><td>.Before</td><td>容器当前的持有人</td><td>过期日一周之前</td></tr>
+                <tr class="bullet"><td>.Date</td><td>容器当前的持有人</td><td>过期当天</td></tr>
+                <tr class="bullet"><td>.After</td><td>容器当前的持有人</td><td>过期日一周之后</td></tr>
+                <tr class="bullet"><td>.Manager</td><td>容器当前持有人的经理</td><td>过期日两周之后</td></tr>
+            </tbody>
+        </table>
+        <div class="conversation-card bullet">
+            <strong>把一切串起来：</strong>使用需求管理工具的“来源”属性、跟踪矩阵，或在描述中插入规则ID的超链接。避免简单地把规则内容复制粘贴。
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <h1>行动练习</h1>
+        <div class="conversation-card bullet">
+            <ol>
+                <li style="margin-bottom: 15px;">尝试在当前项目中为表 9-1 中的每种业务规则类型分别找到至少一个对应的业务规则。</li>
+                <li style="margin-bottom: 15px;">为当前项目涉及的规则整理出一个业务规则目录。将规则分类并记录来源。</li>
+                <li style="margin-bottom: 15px;">建立一个可追踪矩阵记录你识别出的业务规则分别由哪个功能需求来保证执行。</li>
+                <li style="margin-bottom: 15px;">根据每个功能需求背后的原理，发现其他隐含的业务规则。</li>
+            </ol>
+        </div>
+        <h2 class="bullet" style="text-align: center; color: #7f5a83; margin-top: 50px; font-size: 2.5em;">感谢聆听！</h2>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="footer-text">软件需求（第3版）第9章 | 梁景毓-2023302855</div>
+    <div class="nav-controls">
+        <button id="prev" class="btn" disabled>&#9664; 上一页</button>
+        <span id="counter">1 / 13</span>
+        <button id="next" class="btn">下一页 &#9654;</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const nextBtn = document.getElementById('next');
+    const prevBtn = document.getElementById('prev');
+    const counter = document.getElementById('counter');
+    const progress = document.getElementById('progress');
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            const bullets = slide.querySelectorAll('.bullet');
+            
+            if (index === currentSlide) {
+                slide.classList.add('active');
+                bullets.forEach((b, i) => {
+                    setTimeout(() => b.classList.add('show'), 200 * (i + 1));
+                });
+            } else if (index < currentSlide) {
+                slide.classList.add('prev');
+                bullets.forEach(b => b.classList.remove('show'));
+            } else {
+                bullets.forEach(b => b.classList.remove('show'));
+            }
+        });
+        
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+        counter.innerText = `${currentSlide + 1} / ${totalSlides}`;
+        progress.style.width = `${((currentSlide) / (totalSlides - 1)) * 100}%`;
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlides();
+        }
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    updateSlides();
+});
+</script>
+
+</body>
+</html>
