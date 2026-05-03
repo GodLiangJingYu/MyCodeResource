@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>共享自习室预约管理系统 - 架构设计</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =====================================================================
+       Tokyo Night Theme Variables
+       ===================================================================== */
+    :root {
+      /* Backgrounds */
+      --bg-base: #1a1b26;
+      --bg-surface: #24283b;
+      --bg-surface-elevated: #2f334d;
+      
+      /* Typography Colors */
+      --text-1: #c0caf5;
+      --text-2: #a9b1d6;
+      --text-3: #565f89;
+      
+      /* Accents */
+      --accent-primary: #7aa2f7;    /* Blue */
+      --accent-secondary: #bb9af7;  /* Purple */
+      --accent-tertiary: #7dcfff;   /* Cyan */
+      --accent-success: #9ece6a;    /* Green */
+      --accent-warning: #e0af68;    /* Orange */
+      --accent-danger: #f7768e;     /* Red */
+      --accent-magenta: #ff007c;
+      
+      /* Layout & Spacing */
+      --font-sans: 'Noto Sans SC', system-ui, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      
+      --space-xs: clamp(0.5rem, 1vh, 1rem);
+      --space-sm: clamp(1rem, 2vh, 2rem);
+      --space-md: clamp(1.5rem, 3vh, 3rem);
+      --space-lg: clamp(2rem, 5vh, 5rem);
+      --space-xl: clamp(4rem, 8vh, 8rem);
+      
+      /* Typography Scaling (Fluid) */
+      --text-xs: clamp(0.8rem, 1.2vh, 1.2rem);
+      --text-sm: clamp(1rem, 1.5vh, 1.4rem);
+      --text-base: clamp(1.2rem, 2vh, 1.8rem);
+      --text-lg: clamp(1.5rem, 3vh, 2.5rem);
+      --text-xl: clamp(2rem, 4vh, 3.5rem);
+      --text-2xl: clamp(2.5rem, 5vh, 4.5rem);
+      --text-3xl: clamp(3rem, 7vh, 6rem);
+      --text-4xl: clamp(4rem, 9vh, 8rem);
+      
+      /* Borders & Radii */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --border-color: #414868;
+    }
+
+    /* =====================================================================
+       Reset & Viewport Foundation
+       ===================================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      font-size: 62.5%; /* 1rem = 10px */
+      background: var(--bg-base);
+      color: var(--text-1);
+      font-family: var(--font-sans);
+      overflow: hidden; /* No page-level scrollbars */
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      position: relative;
+      background: radial-gradient(circle at 100% 0%, rgba(122, 162, 247, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 0% 100%, rgba(187, 154, 247, 0.1) 0%, transparent 40%);
+    }
+
+    /* =====================================================================
+       Slide Controller Styles
+       ===================================================================== */
+    #deck {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: var(--space-xl) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; /* Default centered, override locally if needed */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    /* Base Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: var(--space-sm);
+    }
+
+    h1 { font-size: var(--text-4xl); color: var(--text-1); letter-spacing: -0.02em; }
+    h2 { font-size: var(--text-3xl); color: var(--accent-primary); border-bottom: 2px solid var(--border-color); padding-bottom: var(--space-xs); margin-bottom: var(--space-lg); }
+    h3 { font-size: var(--text-2xl); color: var(--accent-tertiary); }
+    
+    p {
+      font-size: var(--text-lg);
+      line-height: 1.6;
+      color: var(--text-2);
+      margin-bottom: var(--space-sm);
+    }
+
+    ul, ol {
+      font-size: var(--text-lg);
+      line-height: 1.8;
+      color: var(--text-2);
+      margin-bottom: var(--space-sm);
+      padding-left: var(--space-md);
+    }
+    
+    li { margin-bottom: var(--space-xs); }
+    strong { color: var(--accent-primary); font-weight: 700; }
+    
+    code {
+      font-family: var(--font-mono);
+      background: var(--bg-surface-elevated);
+      color: var(--accent-success);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      overflow: hidden;
+      line-height: 1.5;
+    }
+
+    /* Layout Primitives */
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      width: 100%;
+    }
+    
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    }
+    
+    /* Navigation UI */
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: var(--accent-primary);
+      width: 0%;
+      transition: width 0.3s ease;
+      z-index: 100;
+    }
+
+    .slide-number {
+      position: fixed;
+      bottom: var(--space-md);
+      right: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-3);
+      z-index: 100;
+    }
+
+    .hint {
+      position: fixed;
+      bottom: var(--space-md);
+      left: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-3);
+      z-index: 100;
+      opacity: 0.5;
+    }
+
+    /* =====================================================================
+       Animations (Triggered when slide becomes active)
+       ===================================================================== */
+    .anim-up, .anim-left, .anim-right, .anim-fade {
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    
+    .anim-up { transform: translateY(30px); }
+    .anim-left { transform: translateX(-40px); }
+    .anim-right { transform: translateX(40px); }
+    
+    .active .anim-up, .active .anim-left, .active .anim-right, .active .anim-fade {
+      animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .active .delay-1 { animation-delay: 0.1s; }
+    .active .delay-2 { animation-delay: 0.2s; }
+    .active .delay-3 { animation-delay: 0.3s; }
+    .active .delay-4 { animation-delay: 0.4s; }
+    .active .delay-5 { animation-delay: 0.5s; }
+
+    @keyframes reveal {
+      to { opacity: 1; transform: translate(0,0); }
+    }
+
+    /* Staggered lists */
+    ul.stagger > li, ol.stagger > li { opacity: 0; transform: translateY(15px); }
+    .active ul.stagger > li, .active ol.stagger > li { animation: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .active ul.stagger > li:nth-child(1), .active ol.stagger > li:nth-child(1) { animation-delay: 0.1s; }
+    .active ul.stagger > li:nth-child(2), .active ol.stagger > li:nth-child(2) { animation-delay: 0.2s; }
+    .active ul.stagger > li:nth-child(3), .active ol.stagger > li:nth-child(3) { animation-delay: 0.3s; }
+    .active ul.stagger > li:nth-child(4), .active ol.stagger > li:nth-child(4) { animation-delay: 0.4s; }
+    .active ul.stagger > li:nth-child(5), .active ol.stagger > li:nth-child(5) { animation-delay: 0.5s; }
+    .active ul.stagger > li:nth-child(6), .active ol.stagger > li:nth-child(6) { animation-delay: 0.6s; }
+    
+    /* Notes element - hidden by default unless in presenter view (which we simulate via JS console if needed) */
+    .notes { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- UI Chrome -->
+  <div class="progress-bar" id="progress"></div>
+  <div class="slide-number"><span id="current-slide">1</span> / <span id="total-slides">X</span></div>
+  <div class="hint">按 ← → 翻页 / 空格键下一页</div>
+
+  <main id="deck">
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active">
+      <div class="container" style="align-items: center; text-align: center;">
+        <div style="width: 80px; height: 80px; background: var(--accent-primary); border-radius: 50%; margin-bottom: var(--space-md); opacity: 0.8; filter: blur(20px);" class="anim-fade"></div>
+        <h1 class="anim-up">共享自习室预约管理系统</h1>
+        <h2 class="anim-up delay-1" style="border:none; color: var(--text-2); font-size: var(--text-2xl);">系统架构设计汇报</h2>
+        <p class="anim-up delay-2" style="color: var(--accent-secondary); margin-top: var(--space-md); font-family: var(--font-mono); letter-spacing: 2px;">ARCHITECTURE & DESIGN</p>
+      </div>
+      <div class="notes">
+        老师好，同学们好。今天我为大家汇报“共享自习室预约管理系统”的架构设计成果。
+        本项目旨在为高校提供一个自动化的自习室管理平台，解决座位资源紧张、占座不规范的问题。
+      </div>
+    </section>
+
+    <!-- Slide 2: Overview -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">1. 核心需求与业务全景</h2>
+        <div class="grid-2">
+          <div class="card anim-left delay-1">
+            <h3 style="color: var(--accent-tertiary);">核心价值</h3>
+            <ul class="stagger">
+              <li><strong>提升资源利用率</strong>：实时查看空闲座位，预约后方可使用</li>
+              <li><strong>规范现场秩序</strong>：扫描门禁签到，超时未达记录违约</li>
+              <li><strong>商业化闭环</strong>：支持付费预约，超时未支付自动释放</li>
+            </ul>
+          </div>
+          <div class="card anim-right delay-2">
+            <h3 style="color: var(--accent-secondary);">系统参与者</h3>
+            <ul class="stagger">
+              <li><strong>自习者</strong>：核心用户，进行座位预约、支付与签到</li>
+              <li><strong>管理员</strong>：负责自习室信息维护、订单查询及异常处理</li>
+              <li><strong>外部系统</strong>：用户账户系统、支付系统、门禁系统</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        首先看核心需求。系统的核心价值在于解决自习室资源分配问题。
+        自习者通过系统预约座位并支付，到达后通过门禁签到。管理员负责后台维护。
+        同时，为了降低复杂度，我们将账户认证、支付、门禁控制交由外部系统处理。
+      </div>
+    </section>
+
+    <!-- Slide 3: Architecture Layers -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">2. 职责划分与架构分层</h2>
+        <p class="anim-up delay-1" style="margin-bottom: var(--space-md);">采用经典的面向对象四层架构设计，确保高内聚、低耦合。</p>
+        
+        <div class="grid-2" style="gap: var(--space-md);">
+          <div class="card anim-up delay-2" style="border-left: 4px solid var(--accent-primary);">
+            <h3 style="color: var(--accent-primary);">边界类 (Boundary)</h3>
+            <p style="font-size: var(--text-base);">隔离外部系统与用户界面交互</p>
+            <code style="color: var(--accent-primary);">ReservationUI, PaymentSystemInterface</code>
+          </div>
+          
+          <div class="card anim-up delay-3" style="border-left: 4px solid var(--accent-secondary);">
+            <h3 style="color: var(--accent-secondary);">控制类 (Control)</h3>
+            <p style="font-size: var(--text-base);">封装核心业务流程与用例逻辑</p>
+            <code style="color: var(--accent-secondary);">ReservationController, CheckInController</code>
+          </div>
+          
+          <div class="card anim-up delay-4" style="border-left: 4px solid var(--accent-warning);">
+            <h3 style="color: var(--accent-warning);">应用逻辑类 (App Logic)</h3>
+            <p style="font-size: var(--text-base);">高复用、易变的复杂业务规则提取</p>
+            <code style="color: var(--accent-warning);">ConflictDetectionLogic, PricingLogic</code>
+          </div>
+          
+          <div class="card anim-up delay-5" style="border-left: 4px solid var(--accent-success);">
+            <h3 style="color: var(--accent-success);">实体类 (Entity)</h3>
+            <p style="font-size: var(--text-base);">系统核心数据与领域模型</p>
+            <code style="color: var(--accent-success);">Reservation, Seat, TimeSlot</code>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        在架构分层上，我们将其分为边界类、控制类、应用逻辑类和实体类。
+        特别说明一下“应用逻辑类”：我们将冲突检测、计费策略等易变、复杂的逻辑从Controller中剥离出来，封装在App Logic层，这样当计费规则改变时，不需要修改控制流。
+      </div>
+    </section>
+
+    <!-- Slide 4: Domain Model -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">3. 领域模型设计 (Static Model)</h2>
+        <div class="card anim-up delay-1" style="background: transparent; border: none; box-shadow: none;">
+          <ul class="stagger">
+            <li style="margin-bottom: var(--space-md);">
+              <span style="font-size: var(--text-xl); color: var(--accent-tertiary); font-weight: bold; display: block; margin-bottom: var(--space-xs);">Seat (座位) 与 TimeSlot (时间段)</span> 
+              解耦物理座位与时间，避免直接锁定物理座位导致并发和资源浪费问题。
+            </li>
+            <li>
+              <span style="font-size: var(--text-xl); color: var(--accent-secondary); font-weight: bold; display: block; margin-bottom: var(--space-xs);">Reservation (预约单) - 核心聚合根</span>
+              <ul style="margin-top: var(--space-xs); background: var(--bg-surface); padding: var(--space-md); border-radius: var(--radius-md);">
+                <li>关联 <strong>1</strong> 个 User 和 <strong>1</strong> 个 Seat</li>
+                <li>占用 <strong>1..*</strong> 个 TimeSlot</li>
+                <li>生命周期强关联 <code>PaymentRecord</code> 和 <code>CheckInRecord</code></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="notes">
+        关于领域模型，最关键的设计是“预约与座位”的关系。
+        一个座位可以被多次预约（在不同时间段）。因此我们引入了TimeSlot（时间段）实体。预约单占用的是特定的时间段，而不是直接霸占物理座位，这为解决时间冲突提供了模型基础。
+      </div>
+    </section>
+
+    <!-- Slide 5: Key Interaction Flow -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">4. 核心用例：预约座位流转</h2>
+        <div class="card anim-fade delay-1" style="padding: var(--space-lg);">
+          <ol class="stagger">
+            <li><strong style="color: var(--accent-tertiary);">触发</strong>：用户通过UI选择座位和时间，提交给 <code>ReservationController</code></li>
+            <li><strong style="color: var(--accent-secondary);">鉴权</strong>：调用 <code>AccountSystemInterface</code> 验证用户身份</li>
+            <li><strong style="color: var(--accent-warning);">防冲突</strong>：调用 <code>ConflictDetectionLogic</code> 检查目标 <code>TimeSlot</code> 是否可用</li>
+            <li><strong style="color: var(--accent-success);">计费</strong>：调用 <code>PricingLogic</code> 计算总价</li>
+            <li><strong style="color: var(--accent-primary);">落库</strong>：创建 <code>Reservation</code> 对象，锁定时间段</li>
+            <li><strong style="color: var(--accent-magenta);">收银</strong>：跳转支付系统，订单状态变更为 <code>待支付</code></li>
+          </ol>
+        </div>
+      </div>
+      <div class="notes">
+        让我们看看最核心的“预约座位”交互流程。
+        用户提交请求后，ReservationController 充当协调者：首先通过边界类调用外部账户系统鉴权，接着调用 ConflictDetectionLogic 检查座位时间冲突，确认可用后调用 PricingLogic 计算价格，最后生成预约单实体并转向支付。整个流程各司其职。
+      </div>
+    </section>
+
+    <!-- Slide 6: State Transitions -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">5. 核心状态机：预约单生命周期</h2>
+        <div class="anim-up delay-1" style="display: flex; justify-content: center;">
+          <pre style="width: 100%; max-width: 800px; font-size: var(--text-base);">
+<span style="color: var(--text-3)">[*]</span> ──▶ <span style="color: var(--accent-warning)">【待支付】</span>
+          │
+          ├──▶ <span style="color: var(--text-2)">支付成功</span> ──▶ <span style="color: var(--accent-primary)">【已预约】</span>
+          │                   │
+          │                   ├──▶ <span style="color: var(--text-2)">扫码入场</span> ──▶ <span style="color: var(--accent-success)">【已签到】</span>──▶ <span style="color: var(--text-3)">【已结束】</span>
+          │                   │
+          │                   └──▶ <span style="color: var(--text-2)">逾期未达</span> ──▶ <span style="color: var(--accent-danger)">【已过期】</span>──▶ <span style="color: var(--accent-danger)">【已违约】</span><span style="color: var(--text-3)">(扣信誉分)</span>
+          │
+          └──▶ <span style="color: var(--text-2)">超时/主动</span> ──▶ <span style="color: var(--text-3)">【已取消】</span> ──▶ <span style="color: var(--text-3)">[*]</span>
+          </pre>
+        </div>
+      </div>
+      <div class="notes">
+        订单的生命周期是系统状态管理的核心。
+        创建订单后进入“待支付”；15分钟内支付成功进入“已预约”；
+        到达自习室扫码后变为“已签到”；如果到时间未签到则变为“已过期”，随后被系统标记为“已违约”并扣除信誉分。
+        待支付状态超时未支付，会被AutoCancelController自动扫描并变更为“已取消”。
+      </div>
+    </section>
+
+    <!-- Slide 7: Design Decisions -->
+    <section class="slide">
+      <div class="container">
+        <h2 class="anim-up">6. 关键设计决策解答</h2>
+        <div class="grid-2">
+          <div class="card anim-left delay-1">
+            <h3 style="color: var(--accent-warning); margin-bottom: var(--space-md);">如何解决时间冲突？</h3>
+            <p><strong>不直接锁定 Seat</strong>。</p>
+            <p>引入 <code>TimeSlot</code> 实体，利用 <code>ConflictDetectionLogic</code> 遍历该座位已售出的时间段并执行 <code>overlap()</code> 交叉对比，确保并发安全与资源最大化利用。</p>
+          </div>
+          <div class="card anim-right delay-2">
+            <h3 style="color: var(--accent-tertiary); margin-bottom: var(--space-md);">为什么提取应用逻辑类？</h3>
+            <p>计费规则、违约扣分规则（<code>CreditPolicyLogic</code>）等业务策略易变。</p>
+            <p>提取成独立类，可使 <code>Controller</code> 只关注流程流转，符合<strong>单一职责原则（SRP）</strong>，提升系统可维护性。</p>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        最后回答一下架构设计中的几个关键决策。
+        第一，时间冲突怎么解决？我们通过TimeSlot重叠检测来避免冲突。
+        第二，为什么要提取应用逻辑类？因为像计费、信誉分扣除这样的规则会经常变动，剥离出来后，改规则不需要动Controller的核心流程，系统可维护性大大提升。
+      </div>
+    </section>
+
+    <!-- Slide 8: Q&A -->
+    <section class="slide">
+      <div class="container" style="align-items: center; text-align: center;">
+        <h1 class="anim-up" style="font-size: var(--text-4xl); color: var(--accent-primary);">演示完毕，谢谢！</h1>
+        <p class="anim-up delay-1" style="font-size: var(--text-2xl); color: var(--text-3); margin-top: var(--space-lg); font-family: var(--font-mono);">Q & A</p>
+      </div>
+      <div class="notes">
+        以上就是我对共享自习室预约管理系统的架构设计汇报，谢谢大家！欢迎提问。
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       Controller JS (Zero Dependency)
+       ===================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.slide');
+      const totalEl = document.getElementById('total-slides');
+      const currentEl = document.getElementById('current-slide');
+      const progressEl = document.getElementById('progress');
+      
+      let currentIndex = 0;
+      totalEl.textContent = slides.length;
+
+      function updateDeck() {
+        // Update DOM
+        slides.forEach((slide, index) => {
+          if (index === currentIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+
+        // Update UI Chrome
+        currentEl.textContent = currentIndex + 1;
+        progressEl.style.width = `${((currentIndex + 1) / slides.length) * 100}%`;
+        
+        // Output notes to console for presenter
+        const notes = slides[currentIndex].querySelector('.notes');
+        if (notes) {
+          console.log(`%c[Slide ${currentIndex + 1} Notes]`, 'color: #bb9af7; font-weight: bold; font-size: 14px;');
+          console.log(`%c${notes.textContent.trim().replace(/\\n\\s+/g, '\\n')}`, 'color: #c0caf5; font-size: 14px; line-height: 1.5;');
+        }
+      }
+
+      function next() {
+        if (currentIndex < slides.length - 1) {
+          currentIndex++;
+          updateDeck();
+        }
+      }
+
+      function prev() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateDeck();
+        }
+      }
+
+      // Keyboard
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+          e.preventDefault();
+          next();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+          e.preventDefault();
+          prev();
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          currentIndex = 0;
+          updateDeck();
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          currentIndex = slides.length - 1;
+          updateDeck();
+        }
+      });
+
+      // Mouse Wheel
+      let wheelTimeout;
+      document.addEventListener('wheel', (e) => {
+        if (wheelTimeout) return;
+        
+        if (e.deltaY > 50) {
+          next();
+          wheelTimeout = setTimeout(() => wheelTimeout = null, 800);
+        } else if (e.deltaY < -50) {
+          prev();
+          wheelTimeout = setTimeout(() => wheelTimeout = null, 800);
+        }
+      });
+
+      // Touch / Swipe
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const threshold = 50;
+        if (touchStartX - touchEndX > threshold) {
+          next(); // swipe left
+        } else if (touchEndX - touchStartX > threshold) {
+          prev(); // swipe right
+        }
+      }
+
+      // Deep Linking
+      const hash = parseInt(window.location.hash.substring(1));
+      if (!isNaN(hash) && hash > 0 && hash <= slides.length) {
+        currentIndex = hash - 1;
+      }
+
+      // Init
+      updateDeck();
+      
+      console.log("%c PPT Initialized. Press F12 to read speaker notes as you navigate.", "color: #9ece6a; font-weight: bold; padding: 10px; border: 1px solid #9ece6a; border-radius: 4px;");
+    });
+  </script>
+</body>
+</html>

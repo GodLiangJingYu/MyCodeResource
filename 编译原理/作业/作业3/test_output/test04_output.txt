@@ -1,0 +1,244 @@
+======================================================================
+S-ONNXCompiler - 编译 D:\MyCodeResource\编译原理\作业\作业3\tests\test04.txt
+======================================================================
+
+>>> 第一步：词法分析
+----------------------------------------
+============================================================
+词法分析结果（Token序列）
+============================================================
+序号     类型                        词值                             行      列
+---------------------------------------------------------------------------
+0      KW_MODELPROTO             'ModelProto'                   1      1
+1      LBRACE                    '{'                            1      11
+2      KW_IR_VERSION             'ir_version'                   2      5
+3      ASSIGN                    '='                            2      16
+4      INTEGER                   '1'                            2      18
+5      KW_PRODUCER_NAME          'producer_name'                3      5
+6      ASSIGN                    '='                            3      19
+7      STRING_LIT                '"TestProducer"'               3      21
+8      KW_PRODUCER_VERSION       'producer_version'             4      5
+9      ASSIGN                    '='                            4      22
+10     STRING_LIT                '"1.0"'                        4      24
+11     KW_DOMAIN                 'domain'                       5      5
+12     ASSIGN                    '='                            5      12
+13     STRING_LIT                '"test.onnx"'                  5      14
+14     KW_MODEL_VERSION          'model_version'                6      5
+15     ASSIGN                    '='                            6      19
+16     INTEGER                   '1'                            6      21
+17     KW_DOC_STRING             'doc_string'                   7      5
+18     ASSIGN                    '='                            7      16
+19     STRING_LIT                '"This is testmodel4."'        7      18
+20     KW_GRAPH                  'graph'                        8      5
+21     LBRACE                    '{'                            8      10
+22     KW_NAME                   'name'                         9      9
+23     ASSIGN                    '='                            9      14
+24     STRING_LIT                '"ComplexShapeGraph"'          9      16
+25     KW_NODE                   'node'                         10     9
+26     LBRACE                    '{'                            10     13
+27     KW_OP_TYPE                'op_type'                      11     13
+28     ASSIGN                    '='                            11     21
+29     STRING_LIT                '"Conv"'                       11     23
+30     KW_NAME                   'name'                         12     13
+31     ASSIGN                    '='                            12     18
+32     STRING_LIT                '"ConvNode"'                   12     20
+33     KW_INPUT                  'input'                        13     13
+34     ASSIGN                    '='                            13     19
+35     LBRACKET                  '['                            13     21
+36     STRING_LIT                '"input1"'                     13     22
+37     COMMA                     ','                            13     30
+38     STRING_LIT                '"initializer1"'               13     32
+39     RBRACKET                  ']'                            13     46
+40     KW_OUTPUT                 'output'                       14     13
+41     ASSIGN                    '='                            14     20
+42     LBRACKET                  '['                            14     22
+43     STRING_LIT                '"output1"'                    14     23
+44     RBRACKET                  ']'                            14     32
+45     RBRACE                    '}'                            15     9
+46     KW_INPUT                  'input'                        16     9
+47     LBRACE                    '{'                            16     14
+48     KW_NAME                   'name'                         17     13
+49     ASSIGN                    '='                            17     18
+50     STRING_LIT                '"input1"'                     17     20
+51     KW_TYPE                   'type'                         18     13
+52     LBRACE                    '{'                            18     17
+53     KW_TENSOR_TYPE            'tensor_type'                  19     17
+54     LBRACE                    '{'                            19     28
+55     KW_ELEM_TYPE              'elem_type'                    20     21
+56     ASSIGN                    '='                            20     31
+57     KW_FLOAT                  'float'                        20     33
+58     KW_SHAPE                  'shape'                        21     21
+59     LBRACE                    '{'                            21     26
+60     KW_DIM                    'dim'                          22     25
+61     LBRACE                    '{'                            22     28
+62     KW_DIM_VALUE              'dim_value'                    23     29
+63     ASSIGN                    '='                            23     39
+64     INTEGER                   '1'                            23     41
+65     RBRACE                    '}'                            24     25
+66     KW_DIM                    'dim'                          25     25
+67     LBRACE                    '{'                            25     28
+68     KW_DIM_VALUE              'dim_value'                    26     29
+69     ASSIGN                    '='                            26     39
+70     INTEGER                   '3'                            26     41
+71     RBRACE                    '}'                            27     25
+72     KW_DIM                    'dim'                          28     25
+73     LBRACE                    '{'                            28     28
+74     KW_DIM_VALUE              'dim_value'                    29     29
+75     ASSIGN                    '='                            29     39
+76     INTEGER                   '224'                          29     41
+77     RBRACE                    '}'                            30     25
+78     KW_DIM                    'dim'                          31     25
+79     LBRACE                    '{'                            31     28
+80     KW_DIM_VALUE              'dim_value'                    32     29
+81     ASSIGN                    '='                            32     39
+82     INTEGER                   '224'                          32     41
+83     RBRACE                    '}'                            33     25
+84     RBRACE                    '}'                            34     21
+85     RBRACE                    '}'                            35     17
+86     RBRACE                    '}'                            36     13
+87     RBRACE                    '}'                            37     9
+88     KW_OUTPUT                 'output'                       38     9
+89     LBRACE                    '{'                            38     15
+90     KW_NAME                   'name'                         39     13
+91     ASSIGN                    '='                            39     18
+92     STRING_LIT                '"output1"'                    39     20
+93     KW_TYPE                   'type'                         40     13
+94     LBRACE                    '{'                            40     17
+95     KW_TENSOR_TYPE            'tensor_type'                  41     17
+96     LBRACE                    '{'                            41     28
+97     KW_ELEM_TYPE              'elem_type'                    42     21
+98     ASSIGN                    '='                            42     31
+99     KW_FLOAT                  'float'                        42     33
+100    KW_SHAPE                  'shape'                        43     21
+101    LBRACE                    '{'                            43     26
+102    KW_DIM                    'dim'                          44     25
+103    LBRACE                    '{'                            44     28
+104    KW_DIM_VALUE              'dim_value'                    45     29
+105    ASSIGN                    '='                            45     39
+106    INTEGER                   '1'                            45     41
+107    RBRACE                    '}'                            46     25
+108    KW_DIM                    'dim'                          47     25
+109    LBRACE                    '{'                            47     28
+110    KW_DIM_VALUE              'dim_value'                    48     29
+111    ASSIGN                    '='                            48     39
+112    INTEGER                   '64'                           48     41
+113    RBRACE                    '}'                            49     25
+114    KW_DIM                    'dim'                          50     25
+115    LBRACE                    '{'                            50     28
+116    KW_DIM_VALUE              'dim_value'                    51     29
+117    ASSIGN                    '='                            51     39
+118    INTEGER                   '222'                          51     41
+119    RBRACE                    '}'                            52     25
+120    KW_DIM                    'dim'                          53     25
+121    LBRACE                    '{'                            53     28
+122    KW_DIM_VALUE              'dim_value'                    54     29
+123    ASSIGN                    '='                            54     39
+124    INTEGER                   '222'                          54     41
+125    RBRACE                    '}'                            55     25
+126    RBRACE                    '}'                            56     21
+127    RBRACE                    '}'                            57     17
+128    RBRACE                    '}'                            58     13
+129    RBRACE                    '}'                            59     9
+130    KW_INITIALIZER            'initializer'                  60     9
+131    LBRACE                    '{'                            60     20
+132    KW_NAME                   'name'                         61     13
+133    ASSIGN                    '='                            61     18
+134    STRING_LIT                '"initializer1"'               61     20
+135    KW_DATA_TYPE              'data_type'                    62     13
+136    ASSIGN                    '='                            62     23
+137    KW_FLOAT                  'float'                        62     25
+138    KW_DIMS                   'dims'                         63     13
+139    ASSIGN                    '='                            63     18
+140    INTEGER                   '64'                           63     20
+141    INTEGER                   '3'                            63     23
+142    INTEGER                   '3'                            63     25
+143    INTEGER                   '3'                            63     27
+144    KW_RAW_DATA               'raw_data'                     64     13
+145    ASSIGN                    '='                            64     22
+146    BYTES                     '0102b'                        64     24
+147    RBRACE                    '}'                            65     9
+148    RBRACE                    '}'                            66     5
+149    KW_OPSET_IMPORT           'opset_import'                 67     5
+150    LBRACE                    '{'                            67     17
+151    KW_DOMAIN                 'domain'                       68     9
+152    ASSIGN                    '='                            68     16
+153    STRING_LIT                '"ai.onnx"'                    68     18
+154    KW_VERSION                'version'                      69     9
+155    ASSIGN                    '='                            69     17
+156    INTEGER                   '11'                           69     19
+157    RBRACE                    '}'                            70     5
+158    RBRACE                    '}'                            71     1
+---------------------------------------------------------------------------
+共识别 159 个词法单元
+
+>>> 第二步：语法分析
+----------------------------------------
+
+抽象语法树（AST）：
+ModelProto
+  ir_version: 1
+  producer_name: TestProducer
+  producer_version: 1.0
+  domain: test.onnx
+  model_version: 1
+  doc_string: This is testmodel4.
+  Graph
+    name: ComplexShapeGraph
+    Node
+      op_type: Conv
+      name: ConvNode
+      inputs: ['input1', 'initializer1']
+      outputs: ['output1']
+    Input
+      name: input1
+      Type
+        TensorType
+          elem_type: float
+          Shape
+            Dim(dim_value=1)
+            Dim(dim_value=3)
+            Dim(dim_value=224)
+            Dim(dim_value=224)
+    Input
+      name: output1
+      Type
+        TensorType
+          elem_type: float
+          Shape
+            Dim(dim_value=1)
+            Dim(dim_value=64)
+            Dim(dim_value=222)
+            Dim(dim_value=222)
+    Initializer
+      name: initializer1
+      data_type: float
+      dims: ['64', '3', '3', '3']
+      raw_data: 0102
+  OpsetImport
+    domain: ai.onnx
+    version: 11
+
+>>> 第三步：语义分析
+----------------------------------------
+============================================================
+语义分析通过，未发现语义错误。
+============================================================
+
+>>> 第四步：中间代码生成
+----------------------------------------
+============================================================
+中间代码生成结果（三地址码）
+============================================================
+    1: T1 = Input("input1", FLOAT, [1, 3, 224, 224])
+    2: T2 = Initializer("initializer1", FLOAT, [64, 3, 3, 3], raw_data=0102)
+    3: T3 = Conv(T1, T2)
+    4: Output("output1", T3)
+============================================================
+共生成 4 条三地址码指令
+
+>>> 编译总结
+----------------------------------------
+======================================================================
+S-ONNXCompiler 错误报告
+======================================================================
+编译通过，未发现任何错误。
