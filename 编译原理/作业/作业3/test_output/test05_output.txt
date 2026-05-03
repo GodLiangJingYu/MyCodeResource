@@ -1,0 +1,188 @@
+======================================================================
+S-ONNXCompiler - 编译 D:\MyCodeResource\编译原理\作业\作业3\tests\test05.txt
+======================================================================
+
+>>> 第一步：词法分析
+----------------------------------------
+============================================================
+词法分析结果（Token序列）
+============================================================
+序号     类型                        词值                             行      列
+---------------------------------------------------------------------------
+0      KW_MODELPROTO             'ModelProto'                   1      1
+1      LBRACE                    '{'                            1      11
+2      KW_IR_VERSION             'ir_version'                   2      5
+3      ASSIGN                    '='                            2      16
+4      INTEGER                   '1'                            2      18
+5      KW_PRODUCER_NAME          'producer_name'                3      5
+6      ASSIGN                    '='                            3      19
+7      STRING_LIT                '"TestProducer"'               3      21
+8      KW_PRODUCER_VERSION       'producer_version'             4      5
+9      ASSIGN                    '='                            4      22
+10     STRING_LIT                '"1.0"'                        4      24
+11     KW_DOMAIN                 'domain'                       5      5
+12     ASSIGN                    '='                            5      12
+13     STRING_LIT                '"test.onnx"'                  5      14
+14     KW_MODEL_VERSION          'model_version'                6      5
+15     ASSIGN                    '='                            6      19
+16     INTEGER                   '1'                            6      21
+17     KW_DOC_STRING             'doc_string'                   7      5
+18     ASSIGN                    '='                            7      16
+19     STRING_LIT                '"This is testmodel5."'        7      18
+20     KW_GRAPH                  'graph'                        8      5
+21     LBRACE                    '{'                            8      10
+22     KW_NAME                   'name'                         9      9
+23     ASSIGN                    '='                            9      14
+24     STRING_LIT                '"NodeWithStringAttrGraph"'    9      16
+25     KW_NODE                   'node'                         10     9
+26     LBRACE                    '{'                            10     13
+27     KW_OP_TYPE                'op_type'                      11     13
+28     ASSIGN                    '='                            11     21
+29     STRING_LIT                '"CustomOp"'                   11     23
+30     KW_NAME                   'name'                         12     13
+31     ASSIGN                    '='                            12     18
+32     STRING_LIT                '"CustomNode"'                 12     20
+33     KW_INPUT                  'input'                        13     13
+34     ASSIGN                    '='                            13     19
+35     LBRACKET                  '['                            13     21
+36     STRING_LIT                '"input1"'                     13     22
+37     RBRACKET                  ']'                            13     30
+38     KW_OUTPUT                 'output'                       14     13
+39     ASSIGN                    '='                            14     20
+40     LBRACKET                  '['                            14     22
+41     STRING_LIT                '"output1"'                    14     23
+42     RBRACKET                  ']'                            14     32
+43     KW_ATTRIBUTE              'attribute'                    15     13
+44     LBRACE                    '{'                            15     22
+45     KW_NAME                   'name'                         16     17
+46     ASSIGN                    '='                            16     22
+47     STRING_LIT                '"customAttr"'                 16     24
+48     KW_VALUE                  'value'                        17     17
+49     ASSIGN                    '='                            17     23
+50     STRING_LIT                '"SomeStringValue"'            17     25
+51     RBRACE                    '}'                            18     13
+52     RBRACE                    '}'                            19     9
+53     KW_INPUT                  'input'                        20     9
+54     LBRACE                    '{'                            20     14
+55     KW_NAME                   'name'                         21     13
+56     ASSIGN                    '='                            21     18
+57     STRING_LIT                '"input1"'                     21     20
+58     KW_TYPE                   'type'                         22     13
+59     LBRACE                    '{'                            22     17
+60     KW_TENSOR_TYPE            'tensor_type'                  23     17
+61     LBRACE                    '{'                            23     28
+62     KW_ELEM_TYPE              'elem_type'                    24     21
+63     ASSIGN                    '='                            24     31
+64     KW_FLOAT                  'float'                        24     33
+65     KW_SHAPE                  'shape'                        25     21
+66     LBRACE                    '{'                            25     26
+67     KW_DIM                    'dim'                          26     25
+68     LBRACE                    '{'                            26     28
+69     KW_DIM_VALUE              'dim_value'                    27     29
+70     ASSIGN                    '='                            27     39
+71     INTEGER                   '1'                            27     41
+72     RBRACE                    '}'                            28     25
+73     RBRACE                    '}'                            29     21
+74     RBRACE                    '}'                            30     17
+75     RBRACE                    '}'                            31     13
+76     RBRACE                    '}'                            32     9
+77     KW_OUTPUT                 'output'                       33     9
+78     LBRACE                    '{'                            33     15
+79     KW_NAME                   'name'                         34     13
+80     ASSIGN                    '='                            34     18
+81     STRING_LIT                '"output1"'                    34     20
+82     KW_TYPE                   'type'                         35     13
+83     LBRACE                    '{'                            35     17
+84     KW_TENSOR_TYPE            'tensor_type'                  36     17
+85     LBRACE                    '{'                            36     28
+86     KW_ELEM_TYPE              'elem_type'                    37     21
+87     ASSIGN                    '='                            37     31
+88     KW_FLOAT                  'float'                        37     33
+89     KW_SHAPE                  'shape'                        38     21
+90     LBRACE                    '{'                            38     26
+91     KW_DIM                    'dim'                          39     25
+92     LBRACE                    '{'                            39     28
+93     KW_DIM_VALUE              'dim_value'                    40     29
+94     ASSIGN                    '='                            40     39
+95     INTEGER                   '1'                            40     41
+96     RBRACE                    '}'                            41     25
+97     RBRACE                    '}'                            42     21
+98     RBRACE                    '}'                            43     17
+99     RBRACE                    '}'                            44     13
+100    RBRACE                    '}'                            45     9
+101    RBRACE                    '}'                            46     5
+102    KW_OPSET_IMPORT           'opset_import'                 47     5
+103    LBRACE                    '{'                            47     17
+104    KW_DOMAIN                 'domain'                       48     9
+105    ASSIGN                    '='                            48     16
+106    STRING_LIT                '"ai.onnx"'                    48     18
+107    KW_VERSION                'version'                      49     9
+108    ASSIGN                    '='                            49     17
+109    INTEGER                   '11'                           49     19
+110    RBRACE                    '}'                            50     5
+111    RBRACE                    '}'                            51     1
+---------------------------------------------------------------------------
+共识别 112 个词法单元
+
+>>> 第二步：语法分析
+----------------------------------------
+
+抽象语法树（AST）：
+ModelProto
+  ir_version: 1
+  producer_name: TestProducer
+  producer_version: 1.0
+  domain: test.onnx
+  model_version: 1
+  doc_string: This is testmodel5.
+  Graph
+    name: NodeWithStringAttrGraph
+    Node
+      op_type: CustomOp
+      name: CustomNode
+      inputs: ['input1']
+      outputs: ['output1']
+      Attribute
+        name: customAttr
+        value: SomeStringValue
+    Input
+      name: input1
+      Type
+        TensorType
+          elem_type: float
+          Shape
+            Dim(dim_value=1)
+    Input
+      name: output1
+      Type
+        TensorType
+          elem_type: float
+          Shape
+            Dim(dim_value=1)
+  OpsetImport
+    domain: ai.onnx
+    version: 11
+
+>>> 第三步：语义分析
+----------------------------------------
+============================================================
+语义分析通过，未发现语义错误。
+============================================================
+
+>>> 第四步：中间代码生成
+----------------------------------------
+============================================================
+中间代码生成结果（三地址码）
+============================================================
+    1: T1 = Input("input1", FLOAT, [1])
+    2: T2 = CustomOp(T1, customAttr="SomeStringValue")
+    3: Output("output1", T2)
+============================================================
+共生成 3 条三地址码指令
+
+>>> 编译总结
+----------------------------------------
+======================================================================
+S-ONNXCompiler 错误报告
+======================================================================
+编译通过，未发现任何错误。

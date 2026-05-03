@@ -1,0 +1,122 @@
+======================================================================
+S-ONNXCompiler - 编译 D:\MyCodeResource\编译原理\作业\作业3\tests\test10.txt
+======================================================================
+
+>>> 第一步：词法分析
+----------------------------------------
+============================================================
+词法分析结果（Token序列）
+============================================================
+序号     类型                        词值                             行      列
+---------------------------------------------------------------------------
+0      KW_MODELPROTO             'ModelProto'                   1      1
+1      LBRACE                    '{'                            1      11
+2      KW_IR_VERSION             'ir_version'                   2      5
+3      ASSIGN                    '='                            2      16
+4      INTEGER                   '1'                            2      18
+5      KW_PRODUCER_NAME          'producer_name'                3      5
+6      ASSIGN                    '='                            3      19
+7      STRING_LIT                '"TestProducer"'               3      21
+8      KW_PRODUCER_VERSION       'producer_version'             4      5
+9      ASSIGN                    '='                            4      22
+10     STRING_LIT                '"1.0"'                        4      24
+11     KW_DOMAIN                 'domain'                       5      5
+12     ASSIGN                    '='                            5      12
+13     STRING_LIT                '"test.onnx"'                  5      14
+14     KW_MODEL_VERSION          'model_version'                6      5
+15     ASSIGN                    '='                            6      19
+16     INTEGER                   '1'                            6      21
+17     KW_DOC_STRING             'doc_string'                   7      5
+18     ASSIGN                    '='                            7      16
+19     STRING_LIT                '"This is testmodel10."'       7      18
+20     KW_GRAPH                  'graph'                        8      5
+21     LBRACE                    '{'                            8      10
+22     KW_NAME                   'name'                         9      9
+23     ASSIGN                    '='                            9      14
+24     STRING_LIT                '"SyntaxErrorGraph"'           9      16
+25     KW_NODE                   'node'                         10     9
+26     LBRACE                    '{'                            10     13
+27     KW_OP_TYPE                'op_type'                      11     13
+28     ASSIGN                    '='                            11     21
+29     STRING_LIT                '"Add"'                        11     23
+30     KW_NAME                   'name'                         12     13
+31     ASSIGN                    '='                            12     18
+32     STRING_LIT                '"AddNode"'                    12     20
+33     KW_INPUT                  'input'                        13     13
+34     ASSIGN                    '='                            13     19
+35     LBRACKET                  '['                            13     21
+36     STRING_LIT                '"input1"'                     13     22
+37     COMMA                     ','                            13     30
+38     STRING_LIT                '"input2"'                     13     32
+39     RBRACKET                  ']'                            13     40
+40     KW_OUTPUT                 'output'                       14     13
+41     ASSIGN                    '='                            14     20
+42     LBRACKET                  '['                            14     22
+43     STRING_LIT                '"output1"'                    14     23
+44     RBRACKET                  ']'                            14     32
+45     RBRACE                    '}'                            15     9
+46     RBRACE                    '}'                            16     5
+47     KW_OPSET_IMPORT           'opset_import'                 17     5
+48     LBRACE                    '{'                            17     17
+49     KW_DOMAIN                 'domain'                       18     9
+50     ASSIGN                    '='                            18     16
+51     STRING_LIT                '"ai.onnx"'                    18     18
+52     KW_VERSION                'version'                      19     9
+53     ASSIGN                    '='                            19     17
+54     INTEGER                   '11'                           19     19
+55     RBRACE                    '}'                            20     5
+56     RBRACE                    '}'                            21     1
+---------------------------------------------------------------------------
+共识别 57 个词法单元
+
+>>> 第二步：语法分析
+----------------------------------------
+
+抽象语法树（AST）：
+ModelProto
+  ir_version: 1
+  producer_name: TestProducer
+  producer_version: 1.0
+  domain: test.onnx
+  model_version: 1
+  doc_string: This is testmodel10.
+  Graph
+    name: SyntaxErrorGraph
+    Node
+      op_type: Add
+      name: AddNode
+      inputs: ['input1', 'input2']
+      outputs: ['output1']
+  OpsetImport
+    domain: ai.onnx
+    version: 11
+
+>>> 第三步：语义分析
+----------------------------------------
+============================================================
+语义分析错误（共 2 个）
+============================================================
+  1. [语义错误-未定义引用] 第0行: 输入张量 'input1' 未定义即被引用——应先定义才能被引用
+  2. [语义错误-未定义引用] 第0行: 输入张量 'input2' 未定义即被引用——应先定义才能被引用
+
+>>> 第四步：中间代码生成
+----------------------------------------
+============================================================
+中间代码生成结果（三地址码）
+============================================================
+    1: T1 = Add(input1, input2)
+============================================================
+共生成 1 条三地址码指令
+
+>>> 编译总结
+----------------------------------------
+======================================================================
+S-ONNXCompiler 错误报告
+======================================================================
+
+--- 语义错误 (2 个) ---
+  1. [语义错误] 第0行 第0列: 输入张量 'input1' 未定义即被引用——应先定义才能被引用
+  2. [语义错误] 第0行 第0列: 输入张量 'input2' 未定义即被引用——应先定义才能被引用
+
+共发现 2 个错误
+======================================================================
