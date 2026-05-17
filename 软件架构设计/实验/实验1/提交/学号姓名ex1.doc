@@ -1,0 +1,182 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>软件架构设计 实验一 实验报告</title>
+  <style>
+    body { font-family: 宋体, "Microsoft YaHei", sans-serif; font-size: 12pt; line-height: 1.6; }
+    h1, h2 { font-family: 黑体, "Microsoft YaHei", sans-serif; font-weight: normal; }
+    h1 { font-size: 20pt; text-align: center; margin: 0; }
+    h2 { font-size: 14pt; margin: 18pt 0 6pt; }
+    .center { text-align: center; }
+    .muted { color: #444; }
+    .pagebreak { page-break-before: always; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border: 1px solid #000; padding: 6pt; vertical-align: top; }
+    .noborder td, .noborder th { border: none; }
+    .meta td { border: none; padding: 6pt 0; }
+    .line { display: inline-block; min-width: 240pt; border-bottom: 1px solid #000; }
+    pre { font-family: Consolas, "Courier New", monospace; font-size: 10pt; background: #f7f7f7; padding: 8pt; border: 1px solid #ddd; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+
+  <div class="center" style="margin-top: 72pt;">
+    <h1>西北工业大学</h1>
+    <div style="font-size: 18pt; margin-top: 12pt;">《软件架构设计》实验报告</div>
+  </div>
+
+  <div style="margin-top: 48pt;">
+    <table class="meta">
+      <tr><td style="width: 90pt;">学&nbsp;&nbsp;院：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>学&nbsp;&nbsp;号：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>姓&nbsp;&nbsp;名：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>专&nbsp;&nbsp;业：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>实验时间：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>实验地点：</td><td><span class="line">&nbsp;</span></td></tr>
+      <tr><td>指导教师：</td><td><span class="line">&nbsp;</span></td></tr>
+    </table>
+  </div>
+
+  <div class="center" style="margin-top: 36pt;">
+    <div style="font-size: 14pt;">西北工业大学</div>
+    <div style="margin-top: 6pt;">202&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;月</div>
+  </div>
+
+  <div class="pagebreak"></div>
+
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>一、实验目的及要求</h2>
+        <div>实验名称：客户机/服务器软件架构设计——银行系统</div>
+        <div style="margin-top: 6pt;">实验目的：</div>
+        <div style="margin-left: 18pt;">
+          通过实践一个银行系统的需求建模、需求分析、架构设计、详细设计的全过程，掌握客户端/服务器模式的软件系统分析和设计方法；
+          熟练使用 UML 语言及其相关建模方法，完成用例模型、静态模型、动态模型、子系统划分以及部署方式设计。
+        </div>
+        <div style="margin-top: 6pt;">实验要求：</div>
+        <div style="margin-left: 18pt;">
+          <div>1）建立银行系统用例模型，并对关键用例进行用例编档。</div>
+          <div>2）完成问题域静态建模（概念/实体类）。</div>
+          <div>3）完成动态建模（至少包含“验证PIN”“取款”等关键用例的交互图/时序图）。</div>
+          <div>4）进行子系统划分与设计，并给出部署/通信视图（ATM 客户端与银行服务端的通信模式）。</div>
+          <div>5）按实验报告模板撰写实验报告，文件名按“学号+姓名+ex1.doc”命名。</div>
+        </div>
+
+        <h2>二、实验设备（环境）及要求</h2>
+        <div style="margin-left: 18pt;">
+          <div>硬件：PC 机（满足课程要求配置即可）。</div>
+          <div>软件/建模工具：Mermaid（Markdown 文本化 UML，便于直接编辑并可在 Markdown 预览中渲染）。</div>
+          <div>案例材料：实验一指导书与《客户端/服务器软件体系结构案例研究：银行系统》。</div>
+        </div>
+
+        <h2>三、实验内容</h2>
+        <div style="margin-left: 18pt;">
+          <div>1）用例模型：识别参与者与用例，并给出用例关系（include）。</div>
+          <div>2）静态建模：识别实体类/边界类/控制类及其关系。</div>
+          <div>3）对象组织与动态建模：为关键用例建立交互图（时序图/通信图）。</div>
+          <div>4）子系统划分：ATM 客户端子系统与银行服务子系统。</div>
+          <div>5）部署方式设计：ATM 通过广域网与中心服务器通信，服务器连接数据库。</div>
+        </div>
+
+        <h2>四、实验步骤与结果</h2>
+        <div class="muted">说明：本实验采用 Mermaid 进行建模，完整可渲染的 UML 源文件见同目录的“uml.md”。</div>
+
+        <div style="margin-top: 10pt;">（1）需求理解与参与者识别</div>
+        <div style="margin-left: 18pt;">
+          <div>ATM 客户：通过 ATM 进行取款、查询余额、账户间转账。</div>
+          <div>ATM 操作员：对 ATM 进行启动、关闭、补钞等维护操作。</div>
+        </div>
+
+        <div style="margin-top: 10pt;">（2）用例模型（结果）</div>
+        <div style="margin-left: 18pt;">
+          <div>关键用例：验证 PIN、取款、查询账户、转账、启动 ATM、关闭 ATM、添加现金。</div>
+          <div>用例关系：取款/查询/转账均包含（include）验证 PIN。</div>
+        </div>
+
+        <div style="margin-top: 10pt;">（3）静态模型（结果）</div>
+        <div style="margin-left: 18pt;">
+          <div>核心实体类：Customer、DebitCard、Account（CheckingAccount/SavingsAccount）、ATMTransaction（Withdraw/Query/Transfer/PinValidation）。</div>
+          <div>边界/接口类：CustomerInteraction、OperatorInteraction、CardReader、CashDispenser、ReceiptPrinter、KeypadDisplay。</div>
+          <div>控制类：ATMController（驱动会话流程与用例执行）。</div>
+        </div>
+
+        <div style="margin-top: 10pt;">（4）动态建模（结果）</div>
+        <div style="margin-left: 18pt;">
+          <div>建立“验证PIN”“取款”的时序图：体现客户端请求/服务端校验/返回结果的交互。</div>
+          <div>在取款授权前检查：账户余额、每日取款上限、ATM 现金是否足够；异常分支给予提示并退卡/必要时停机。</div>
+        </div>
+
+        <div style="margin-top: 10pt;">（5）子系统划分与部署（结果）</div>
+        <div style="margin-left: 18pt;">
+          <div>子系统：ATM 客户端子系统（运行在 ATM 终端）与银行服务子系统（运行在中心服务器）。</div>
+          <div>通信：客户端通过广域网以请求/响应方式发送交易请求，服务端返回授权/余额/错误原因等结果。</div>
+          <div>数据：中心服务器持久化客户、账户、借记卡与交易记录。</div>
+        </div>
+
+        <div style="margin-top: 10pt;">（6）关键模型摘录（Mermaid 源）</div>
+        <div class="muted">更多模型（类图、时序图、状态图、部署视图）请查看“uml.md”。</div>
+        <pre>usecaseDiagram
+actor Customer as "ATM客户"
+actor Operator as "ATM操作员"
+rectangle "银行系统（ATM+银行服务）" {
+  (验证PIN码) as UC_ValidatePIN
+  (取款) as UC_Withdraw
+  (查询账户) as UC_Query
+  (转账) as UC_Transfer
+  (添加现金) as UC_AddCash
+  (启动ATM) as UC_Startup
+  (关闭ATM) as UC_Shutdown
+}
+Customer --> UC_Withdraw
+Customer --> UC_Query
+Customer --> UC_Transfer
+UC_Withdraw ..> UC_ValidatePIN : &lt;&lt;include&gt;&gt;
+UC_Query ..> UC_ValidatePIN : &lt;&lt;include&gt;&gt;
+UC_Transfer ..> UC_ValidatePIN : &lt;&lt;include&gt;&gt;
+Operator --> UC_AddCash
+Operator --> UC_Startup
+Operator --> UC_Shutdown</pre>
+
+        <h2>五、分析与讨论</h2>
+        <div>1）问题域静态建模的目的是什么？</div>
+        <div style="margin-left: 18pt;">
+          用静态模型刻画问题域的核心概念（如客户、账户、借记卡、交易）及其关系与约束，形成稳定的领域词汇表与结构基础，为后续对象识别、交互建模、子系统划分与数据库设计提供依据。
+        </div>
+
+        <div style="margin-top: 8pt;">2）怎样在通信图上描述通信序列分支（举一例）？</div>
+        <div style="margin-left: 18pt;">
+          可在消息上使用守卫条件（例如 [余额足够]、[余额不足]、[超过每日上限]）来表示分支路径，并为不同分支给出不同的消息序列。
+          例如“取款”中：在“授权取款”后分支为 [approved]→dispenseCash/printReceipt 与 [rejected]→showError/ejectCard。
+        </div>
+
+        <div style="margin-top: 8pt;">3）状态相关的控制类的状态图与通信图有何关系？</div>
+        <div style="margin-left: 18pt;">
+          状态图描述控制对象在生命周期内可处于哪些状态，以及在事件触发下如何迁移；
+          通信图/时序图描述在某个用例场景内对象之间的消息交互顺序。二者对应关系体现在：不同状态下允许/触发的消息集合不同，通信图中的关键事件会引起控制类状态迁移。
+        </div>
+
+        <div style="margin-top: 8pt;">4）ATM 客户端与服务器通信模式是什么？给出相关设计图。</div>
+        <div style="margin-left: 18pt;">
+          通信模式为典型的客户端/服务器请求-响应（request/response）：ATM 客户端发送交易请求（验证 PIN、授权取款、查询余额、授权转账等），服务器验证并返回结果。
+          相关设计图见“uml.md”中的时序图与部署/通信视图。
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="width: 80%;">
+        <h2>六、教师评语</h2>
+        <div style="height: 120pt;"></div>
+        <div style="text-align: right; margin-top: 18pt;">签名：__________</div>
+        <div style="text-align: right; margin-top: 6pt;">日期：__________</div>
+      </td>
+      <td style="width: 20%; text-align: center; font-size: 14pt;">
+        成绩
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+

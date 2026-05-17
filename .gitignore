@@ -1,4 +1,12 @@
+# 超过100MB的大文件
 软件需求工程/软件需求第3版.pdf
 软件需求工程/软件需求工程  第2版.pdf
 软件需求工程/作业/作业3/软件需求第3版.pdf
+编译原理/exec/exec1/实验报告/阶段一产物/构建产物/clang.exe
+
+# LLVM项目（太大）
+编译原理/exec/exec1/llvm-project-llvmorg-17.0.5
+
+# 其他忽略
 nul
+node_modules

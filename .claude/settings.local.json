@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git submodule *)",
+      "PowerShell(git add *)",
+      "PowerShell(git reset *)"
+    ]
+  }
+}
