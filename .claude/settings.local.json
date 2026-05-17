@@ -3,7 +3,9 @@
     "allow": [
       "PowerShell(git submodule *)",
       "PowerShell(git add *)",
-      "PowerShell(git reset *)"
+      "PowerShell(git reset *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push *)"
     ]
   }
 }
