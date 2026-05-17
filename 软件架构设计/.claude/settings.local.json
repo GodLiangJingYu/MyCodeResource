@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(where python *)",
+      "Bash(/c/Python39/python.exe scripts/office/unpack.py \"D:\\\\MyCodeResource\\\\软件架构设计\\\\实验报告格式.docx\" \"D:\\\\MyCodeResource\\\\软件架构设计\\\\实验报告格式_unpacked/\")",
+      "Bash(/c/Users/86180/AppData/Local/Programs/Python/Python39/python.exe scripts/office/unpack.py \"D:\\\\MyCodeResource\\\\软件架构设计\\\\实验报告格式.docx\" \"D:\\\\MyCodeResource\\\\软件架构设计\\\\实验报告格式_unpacked/\")",
+      "Bash(unzip *)",
+      "Bash(powershell *)",
+      "Bash(npm --version)",
+      "Read(//c/Program Files/7-Zip/**)",
+      "Read(//c/Program Files \\(x86\\)/7-Zip/**)",
+      "Bash(where node *)",
+      "Bash(where python3 *)",
+      "Bash(where py *)",
+      "Bash(ls /c/Python*/python.exe)",
+      "Read(//c/Users/**)",
+      "Read(//d/nodejs/**)",
+      "Bash(ls /d/*/node.exe)",
+      "Bash(ls /d/node*/node.exe)",
+      "Bash(/d/node/node.exe *)",
+      "Read(//d/anaconda3/**)",
+      "Read(//d/Anaconda3/**)",
+      "Bash(find /d -maxdepth 3 -name \"python.exe\" -path \"*/anaconda*\")",
+      "Bash(find /d -maxdepth 3 -name \"python.exe\" -path \"*/Anaconda*\")",
+      "Bash(/d/anaconda3/python.exe *)",
+      "Bash(bash --version)"
+    ]
+  }
+}

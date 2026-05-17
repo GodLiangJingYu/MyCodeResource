@@ -1,0 +1,259 @@
+{
+  "main": {
+    "id": "ff8d247212c78680",
+    "type": "split",
+    "children": [
+      {
+        "id": "71d4dbab308fa72a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "752adcf00b27fcee",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "复习笔记.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "复习笔记"
+            }
+          }
+        ]
+      },
+      {
+        "id": "298d8511f660f1f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "63aed56a7001a2bc",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "笔记文件/重点问题答案.pdf",
+                "page": 10,
+                "left": -20,
+                "top": 781,
+                "zoom": 0.7720588235294118
+              },
+              "icon": "lucide-file-text",
+              "title": "重点问题答案"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "24a8fb5594518a6f",
+    "type": "split",
+    "children": [
+      {
+        "id": "e6559a41d4fbe371",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "70fa663defdddd2c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "ff737f65f5bdddd6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "5afefa535cc2a217",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "5dc3cd6ed3fb2f98",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "复习笔记.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "复习笔记 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c57c539e0c034959",
+    "type": "split",
+    "children": [
+      {
+        "id": "409f6e854a64eff5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "54ed89041aefb7a8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "复习笔记.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "复习笔记 的反向链接列表"
+            }
+          },
+          {
+            "id": "36eb37a72203dad9",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "软需汇总.pdf",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "软需汇总 的出链列表"
+            }
+          },
+          {
+            "id": "dcc5de29428853c4",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "e2e06bbaf667e1b4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "609cabf25c685cb9",
+            "type": "leaf",
+            "state": {
+              "type": "smart-connections-view",
+              "state": {},
+              "icon": "smart-connections",
+              "title": "Connections"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "obsidian-git:Open Git source control": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "templater-obsidian:Templater": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "copilot:Open Copilot Chat": false,
+      "smart-connections:Smart Connections: Open connections view": false,
+      "smart-connections:Smart Connections: Open random connection": false,
+      "smart-connections:Smart Lookup: Open lookup view": false
+    }
+  },
+  "active": "63aed56a7001a2bc",
+  "lastOpenFiles": [
+    "复习笔记.md",
+    "笔记文件/重点问题答案.pdf",
+    "笔记文件/软需复习2.0（试卷答案）.pdf",
+    "重点问题答案.pdf",
+    "复习笔记.assets/image-20260508104046602.png",
+    "Pasted image 20260508104023.png",
+    "提纲.md",
+    "目录结构.md",
+    "复习笔记.assets.zip",
+    "复习笔记.assets.rar",
+    "复习笔记-mindmap.md",
+    "复习笔记.pdf",
+    "ppt/第5章-需求验证--V4--第11-12次课.pdf",
+    "复习笔记.assets/image-20260507171345507.png",
+    "复习笔记.assets/image-20260507164755309.png",
+    "ppt/第4章-编写需求规格说明--V4--第9-10次课.pdf",
+    "笔记文件/format_post.py",
+    "笔记文件/format_optimizer.py",
+    "笔记文件/重点问题答案.md",
+    "笔记文件/软需汇总.md",
+    "笔记文件/软需复习2.0（试卷答案）.md",
+    "笔记文件/补充问题v2.md",
+    "软需复习2.0_试卷答案.md",
+    "复习笔记.assets/image-20260507094332561.png",
+    "提纲.png",
+    "复习笔记.assets/image-20260506213226315.png"
+  ]
+}
