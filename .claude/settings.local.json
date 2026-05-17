@@ -5,7 +5,8 @@
       "PowerShell(git add *)",
       "PowerShell(git reset *)",
       "PowerShell(git commit *)",
-      "PowerShell(git push *)"
+      "PowerShell(git push *)",
+      "PowerShell(git filter-branch *)"
     ]
   }
 }
