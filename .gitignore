@@ -2,12 +2,24 @@
 软件需求工程/软件需求第3版.pdf
 软件需求工程/软件需求工程  第2版.pdf
 软件需求工程/作业/作业3/软件需求第3版.pdf
+软件工程/软件工程导论第3版.pdf
+软件工程/软件工程导论 第2版.pdf
+软件工程/作业/作业3/软件工程导论第3版.pdf
 编译原理/exec/exec1/实验报告/阶段一产物/构建产物/clang.exe
+编译原理/exec/exec1/实验报告/第一阶段/源程序/clang.exe
+项目组织与管理/文件/操作系统综合实训教程-实验指导手册.zip
 
-# LLVM项目（太大）
+# LLVM项目太大
 编译原理/exec/exec1/llvm-project-llvmorg-17.0.5
+
+# AI代理配置文件
+.claude/
+.omx/
 
 # 其他忽略
 nul
 node_modules
 aicode.txt
+CAD-System/
+
+项目组织与管理/文件/软件系统开发综合能力训练课-实验指导案例.zip

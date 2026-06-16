@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基于机器学习的零件智能分类与推荐系统 — 项目实现工作流程</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f7f8fa; color: #1a1a1a; font-size: 14px; line-height: 1.7; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Header */
+  .header { background: #1e3a5f; color: #fff; border-radius: 16px; padding: 40px 48px; margin-bottom: 40px; }
+  .header h1 { font-size: 26px; font-weight: 600; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.75; }
+  .header .meta { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  .header .meta-item { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 16px; font-size: 13px; }
+
+  /* Phase timeline */
+  .timeline { display: flex; gap: 0; margin-bottom: 40px; overflow-x: auto; padding-bottom: 8px; }
+  .phase-tab { flex: 1; min-width: 120px; text-align: center; padding: 12px 8px; cursor: pointer; border-bottom: 3px solid #e0e4ea; color: #888; font-size: 13px; transition: all .2s; user-select: none; }
+  .phase-tab:hover { color: #1e3a5f; border-bottom-color: #5b8dd9; }
+  .phase-tab.active { color: #1e3a5f; border-bottom-color: #1e3a5f; font-weight: 600; }
+  .phase-tab .num { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #e0e4ea; color: #888; font-size: 11px; line-height: 22px; margin-bottom: 4px; }
+  .phase-tab.active .num { background: #1e3a5f; color: #fff; }
+
+  /* Phase content */
+  .phase-panel { display: none; }
+  .phase-panel.active { display: block; }
+
+  /* Section cards */
+  .section { background: #fff; border-radius: 12px; border: 1px solid #e8eaef; margin-bottom: 20px; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 12px; padding: 18px 24px 14px; border-bottom: 1px solid #f0f2f7; cursor: pointer; }
+  .section-header:hover { background: #fafbfc; }
+  .section-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .section-title { font-size: 15px; font-weight: 600; flex: 1; }
+  .section-badge { font-size: 11px; background: #eef3fb; color: #2060b0; border-radius: 20px; padding: 3px 10px; }
+  .section-toggle { color: #aaa; font-size: 18px; transition: transform .2s; }
+  .section-body { padding: 20px 24px 24px; }
+  .section.collapsed .section-body { display: none; }
+  .section.collapsed .section-toggle { transform: rotate(-90deg); }
+
+  /* Steps */
+  .steps { counter-reset: step; }
+  .step { display: flex; gap: 16px; margin-bottom: 20px; }
+  .step:last-child { margin-bottom: 0; }
+  .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #1e3a5f; color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+  .step-desc { font-size: 13px; color: #555; line-height: 1.7; }
+
+  /* Task checklist */
+  .tasks { margin-top: 12px; }
+  .task { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; border-radius: 7px; margin-bottom: 4px; background: #f8f9fc; font-size: 13px; }
+  .task input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; width: 15px; height: 15px; cursor: pointer; accent-color: #1e3a5f; }
+  .task label { cursor: pointer; color: #444; line-height: 1.5; }
+  .task.done label { text-decoration: line-through; color: #aaa; }
+  .task .tag { flex-shrink: 0; font-size: 11px; border-radius: 4px; padding: 1px 7px; margin-left: auto; }
+  .tag-must { background: #ffeaea; color: #c0392b; }
+  .tag-opt  { background: #e8f5e9; color: #2e7d32; }
+  .tag-hard { background: #fff3e0; color: #e65100; }
+  .tag-doc  { background: #e8eaf6; color: #3949ab; }
+
+  /* Code blocks */
+  .code-block { background: #1e2d40; color: #e0e8f5; border-radius: 8px; padding: 16px 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; line-height: 1.8; overflow-x: auto; margin: 12px 0; }
+  .code-block .comment { color: #6c8aaa; }
+  .code-block .kw { color: #79b8ff; }
+  .code-block .str { color: #9ecbff; }
+  .code-block .fn { color: #b392f0; }
+
+  /* File tree */
+  .file-tree { background: #f5f6fa; border-radius: 8px; padding: 16px 20px; font-family: monospace; font-size: 12.5px; line-height: 2; margin: 12px 0; }
+  .file-tree .dir { color: #1e3a5f; font-weight: 600; }
+  .file-tree .file { color: #555; }
+  .file-tree .new { color: #2e7d32; }
+
+  /* Alerts */
+  .alert { border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-size: 13px; display: flex; gap: 10px; align-items: flex-start; }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-info  { background: #e8f0fe; color: #1a56c4; border-left: 3px solid #4285f4; }
+  .alert-warn  { background: #fff8e1; color: #b25e00; border-left: 3px solid #f5a623; }
+  .alert-tip   { background: #e8f5e9; color: #256427; border-left: 3px solid #34a853; }
+  .alert-danger{ background: #fdecea; color: #b71c1c; border-left: 3px solid #e53935; }
+
+  /* Tech stack grid */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin: 12px 0; }
+  .tech-card { background: #f5f7fc; border: 1px solid #e2e6f0; border-radius: 10px; padding: 14px 16px; }
+  .tech-name { font-weight: 600; font-size: 13px; color: #1e3a5f; margin-bottom: 4px; }
+  .tech-use  { font-size: 12px; color: #666; }
+
+  /* Progress bar */
+  .progress-area { margin: 16px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-bottom: 4px; }
+  .progress-bar { height: 6px; background: #e8eaf0; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #1e3a5f; border-radius: 3px; transition: width 0.3s; }
+
+  /* Milestone table */
+  .milestone-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  .milestone-table th { background: #f0f3fa; text-align: left; padding: 10px 14px; color: #555; font-weight: 600; border-bottom: 2px solid #dde2ee; }
+  .milestone-table td { padding: 10px 14px; border-bottom: 1px solid #f0f2f6; vertical-align: top; }
+  .milestone-table tr:last-child td { border-bottom: none; }
+  .milestone-table tr:hover td { background: #fafbfe; }
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-todo    { background: #ccc; }
+  .dot-doing   { background: #f5a623; }
+  .dot-done    { background: #34a853; }
+
+  /* Two col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Overall progress */
+  .overall-card { background: #fff; border: 1px solid #e8eaef; border-radius: 12px; padding: 24px; margin-bottom: 28px; }
+  .overall-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #1e3a5f; }
+  .phase-progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 13px; }
+  .phase-label { width: 130px; flex-shrink: 0; color: #555; }
+  .phase-bar { flex: 1; height: 8px; background: #eef0f6; border-radius: 4px; overflow: hidden; }
+  .phase-fill { height: 100%; border-radius: 4px; }
+  .fill-p0 { background: #c0392b; width: 0%; }
+  .fill-p1 { background: #f5a623; width: 0%; }
+  .fill-p2 { background: #1e3a5f; width: 0%; }
+  .fill-p3 { background: #1e3a5f; width: 0%; }
+  .fill-p4 { background: #1e3a5f; width: 0%; }
+  .fill-p5 { background: #1e3a5f; width: 0%; }
+  .phase-pct { width: 36px; text-align: right; color: #888; font-size: 12px; }
+
+  /* Nav sticky */
+  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(247,248,250,0.95); backdrop-filter: blur(4px); border-bottom: 1px solid #e8eaef; margin: 0 -24px 32px; padding: 0 24px; }
+
+  h4 { font-size: 13px; font-weight: 600; color: #333; margin: 16px 0 8px; }
+  ul.plain { list-style: none; padding: 0; }
+  ul.plain li { padding: 5px 0; font-size: 13px; color: #555; padding-left: 16px; position: relative; }
+  ul.plain li::before { content: "·"; position: absolute; left: 4px; color: #1e3a5f; }
+
+  .divider { border: none; border-top: 1px solid #f0f2f6; margin: 20px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>基于机器学习的零件智能分类与推荐系统</h1>
+    <div class="subtitle">第十九组 · 软件系统开发 · 项目实现工作流程指南</div>
+    <div class="meta">
+      <div class="meta-item">总工期：6 个月</div>
+      <div class="meta-item">技术方向：机器学习 + CAD + Web</div>
+      <div class="meta-item">核心语言：Python / Vue.js</div>
+      <div class="meta-item">更新时间：2026-06</div>
+    </div>
+  </div>
+
+  <!-- Overall Progress -->
+  <div class="overall-card">
+    <div class="overall-title">六大阶段总览进度（项目目前处于实现阶段）</div>
+    <div class="phase-progress-row"><span class="phase-label">阶段0 环境搭建</span><div class="phase-bar"><div class="phase-fill fill-p0" id="bar0"></div></div><span class="phase-pct" id="pct0">0%</span></div>
+    <div class="phase-progress-row"><span class="phase-label">阶段1 数据准备</span><div class="phase-bar"><div class="phase-fill fill-p1" id="bar1"></div></div><span class="phase-pct" id="pct1">0%</span></div>
+    <div class="phase-progress-row"><span class="phase-label">阶段2 特征提取</span><div class="phase-bar"><div class="phase-fill fill-p2" id="bar2"></div></div><span class="phase-pct" id="pct2">0%</span></div>
+    <div class="phase-progress-row"><span class="phase-label">阶段3 ML建模</span><div class="phase-bar"><div class="phase-fill fill-p3" id="bar3"></div></div><span class="phase-pct" id="pct3">0%</span></div>
+    <div class="phase-progress-row"><span class="phase-label">阶段4 后端开发</span><div class="phase-bar"><div class="phase-fill fill-p4" id="bar4"></div></div><span class="phase-pct" id="pct4">0%</span></div>
+    <div class="phase-progress-row"><span class="phase-label">阶段5 前端开发</span><div class="phase-bar"><div class="phase-fill fill-p5" id="bar5"></div></div><span class="phase-pct" id="pct5">0%</span></div>
+    <div style="margin-top:14px;font-size:12px;color:#999;">提示：勾选下方各阶段的任务复选框后，进度条会自动更新。</div>
+  </div>
+
+  <!-- Tab navigation -->
+  <div class="sticky-nav">
+    <div class="timeline" id="tabs">
+      <div class="phase-tab active" onclick="switchTab(0)"><div class="num">0</div><br>环境搭建</div>
+      <div class="phase-tab" onclick="switchTab(1)"><div class="num">1</div><br>数据准备</div>
+      <div class="phase-tab" onclick="switchTab(2)"><div class="num">2</div><br>特征提取</div>
+      <div class="phase-tab" onclick="switchTab(3)"><div class="num">3</div><br>ML建模</div>
+      <div class="phase-tab" onclick="switchTab(4)"><div class="num">4</div><br>后端开发</div>
+      <div class="phase-tab" onclick="switchTab(5)"><div class="num">5</div><br>前端开发</div>
+      <div class="phase-tab" onclick="switchTab(6)"><div class="num">6</div><br>测试交付</div>
+    </div>
+  </div>
+
+  <!-- ===== PHASE 0: 环境搭建 ===== -->
+  <div class="phase-panel active" id="phase0">
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#eef3fb">💻</div>
+        <div class="section-title">开发环境要求</div>
+        <div class="section-badge">必看</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="tech-grid">
+          <div class="tech-card"><div class="tech-name">Python 3.9+</div><div class="tech-use">ML核心 / 特征提取 / 后端</div></div>
+          <div class="tech-card"><div class="tech-name">Node.js 18+</div><div class="tech-use">前端构建 Vue.js</div></div>
+          <div class="tech-card"><div class="tech-name">CUDA 11.8+</div><div class="tech-use">GPU加速（可选，无GPU用CPU）</div></div>
+          <div class="tech-card"><div class="tech-name">Git</div><div class="tech-use">版本控制与协作</div></div>
+          <div class="tech-card"><div class="tech-name">Docker（推荐）</div><div class="tech-use">环境一致性，部署容器化</div></div>
+          <div class="tech-card"><div class="tech-name">VS Code / PyCharm</div><div class="tech-use">主力开发 IDE</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8f5e9">📦</div>
+        <div class="section-title">Python 核心依赖安装</div>
+        <div class="section-badge">Step 1</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="comment"># 创建虚拟环境</span>
+python -m venv venv
+source venv/bin/activate  <span class="comment"># Windows: venv\Scripts\activate</span>
+
+<span class="comment"># CAD文件处理</span>
+pip install cadquery open3d trimesh numpy-stl pythonocc-core
+
+<span class="comment"># 机器学习框架</span>
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install scikit-learn numpy scipy matplotlib
+
+<span class="comment"># 特征提取</span>
+pip install open3d-python point-cloud-utils
+
+<span class="comment"># 后端框架</span>
+pip install fastapi uvicorn sqlalchemy pydantic python-multipart
+
+<span class="comment"># 向量检索</span>
+pip install faiss-cpu  <span class="comment"># or faiss-gpu</span>
+
+<span class="comment"># 降维可视化</span>
+pip install umap-learn scikit-learn</div>
+
+        <div class="alert alert-tip">
+          <span class="alert-icon">✅</span>
+          <span>如果没有 NVIDIA GPU，所有 torch/faiss 命令去掉 GPU 版即可，训练慢一些但完全可用。ModelNet10/40 数据集较小，CPU 也能完成训练。</span>
+        </div>
+
+        <h4>项目目录结构（推荐）</h4>
+        <div class="file-tree">
+<span class="dir">part-classifier/</span>
+├── <span class="dir">data/</span>               <span class="file"># 原始CAD/STL文件</span>
+│   ├── <span class="dir">raw/</span>            <span class="file"># 原始模型文件</span>
+│   └── <span class="dir">processed/</span>      <span class="new"># 预处理后的文件</span>
+├── <span class="dir">features/</span>           <span class="new"># 提取的特征向量 (.npy)</span>
+├── <span class="dir">models/</span>             <span class="new"># 训练好的模型 (.pkl / .pth)</span>
+├── <span class="dir">src/</span>
+│   ├── <span class="dir">preprocessing/</span>   <span class="new"># 数据预处理模块</span>
+│   ├── <span class="dir">features/</span>        <span class="new"># 特征提取模块</span>
+│   ├── <span class="dir">ml/</span>              <span class="new"># 机器学习模型</span>
+│   └── <span class="dir">api/</span>             <span class="new"># FastAPI 后端</span>
+├── <span class="dir">frontend/</span>           <span class="new"># Vue.js 前端</span>
+├── <span class="dir">notebooks/</span>          <span class="new"># Jupyter 实验笔记</span>
+├── requirements.txt
+└── README.md</div>
+
+        <div class="tasks" id="tasks-phase0">
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>安装 Python 3.9+ 和 pip</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>创建并激活虚拟环境 venv</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>安装 PyTorch（CPU或GPU版）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>安装 open3d、trimesh（3D处理库）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>安装 FastAPI + Uvicorn（后端）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>安装 Node.js + npm，初始化 Vue3 项目</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>初始化 Git 仓库，建立目录结构</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="0"><input type="checkbox" onchange="updateProgress()"><label>（可选）配置 Docker Compose 统一环境</label><span class="tag tag-opt">可选</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 1: 数据准备 ===== -->
+  <div class="phase-panel" id="phase1">
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <span><strong>推荐数据集：</strong>ModelNet10 / ModelNet40（普林斯顿大学，免费公开）包含3D零件模型，各10/40个类别，适合作为原型数据集。也可从 GrabCAD 下载真实工业零件模型。</span>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fff3e0">📥</div>
+        <div class="section-title">数据集获取</div>
+        <div class="section-badge">Step 1</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">下载 ModelNet 数据集（推荐入门）</div>
+              <div class="step-desc">访问 <code>https://modelnet.cs.princeton.edu/</code> 下载 ModelNet10（较小，~2GB）或 ModelNet40。数据格式为 OFF 文件，需转换为 STL/点云。</div>
+              <div class="code-block"><span class="comment"># 下载 ModelNet10（快速验证用）</span>
+wget http://modelnet.cs.princeton.edu/ModelNet10.zip
+unzip ModelNet10.zip -d data/raw/</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">或：从 GrabCAD 获取工业零件</div>
+              <div class="step-desc">访问 <code>https://grabcad.com/library</code>，按类别（齿轮/轴/支架）下载 STEP/STL 文件，手动整理分类目录。推荐每类收集 50+ 个模型。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">整理数据目录结构</div>
+              <div class="file-tree">data/raw/
+├── gear/        (齿轮类)
+├── shaft/       (轴类)
+├── bracket/     (支架类)
+├── bearing/     (轴承类)
+└── plate/       (板类)</div>
+            </div>
+          </div>
+        </div>
+        <div class="tasks" data-phase="1">
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>确定使用的数据集（ModelNet10 或 GrabCAD）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>下载并解压数据集到 data/raw/</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>按类别整理目录，每类至少50个模型</label><span class="tag tag-must">必须</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8f5e9">🔧</div>
+        <div class="section-title">数据预处理流水线</div>
+        <div class="section-badge">Step 2 核心</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">格式统一转换（OFF/STEP → STL/点云）</div>
+              <div class="code-block"><span class="kw">import</span> trimesh
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">load_and_normalize</span>(file_path):
+    mesh = trimesh.load(file_path)
+    <span class="comment"># 1. 归一化：居中 + 缩放到单位球</span>
+    mesh.vertices -= mesh.center_mass
+    scale = np.max(np.linalg.norm(mesh.vertices, axis=1))
+    mesh.vertices /= scale
+    <span class="comment"># 2. 采样点云（2048个点）</span>
+    points, _ = trimesh.sample.sample_surface(mesh, 2048)
+    <span class="kw">return</span> points  <span class="comment"># shape: (2048, 3)</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">批量预处理并保存</div>
+              <div class="code-block"><span class="kw">import</span> os, numpy <span class="kw">as</span> np
+
+category_map = {}
+all_points, all_labels = [], []
+
+<span class="kw">for</span> label_idx, category <span class="kw">in</span> enumerate(os.listdir(<span class="str">'data/raw'</span>)):
+    category_map[label_idx] = category
+    <span class="kw">for</span> file <span class="kw">in</span> os.listdir(f<span class="str">'data/raw/{category}'</span>):
+        pts = load_and_normalize(f<span class="str">'data/raw/{category}/{file}'</span>)
+        <span class="kw">if</span> pts <span class="kw">is not</span> None:
+            all_points.append(pts)
+            all_labels.append(label_idx)
+
+np.save(<span class="str">'data/processed/points.npy'</span>, np.array(all_points))
+np.save(<span class="str">'data/processed/labels.npy'</span>, np.array(all_labels))</div>
+            </div>
+          </div>
+        </div>
+        <div class="tasks">
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>编写格式转换脚本（OFF/STEP → STL）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>实现归一化处理（居中+缩放）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>实现点云采样（每模型1024~2048点）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>批量处理并保存为 .npy 文件</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>划分训练集/验证集/测试集（7:1.5:1.5）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="1"><input type="checkbox" onchange="updateProgress()"><label>数据统计：每类数量、分布可视化</label><span class="tag tag-doc">文档</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 2: 特征提取 ===== -->
+  <div class="phase-panel" id="phase2">
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span>特征提取是整个项目的核心，决定了分类和检索的效果。推荐<strong>优先选择多视图CNN（MVCNN）</strong>或<strong>PointNet</strong>方案，可以利用预训练权重，效果好且资源消耗适中。</span>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fce4ec">🔬</div>
+        <div class="section-title">方案一：传统手工特征（D2形状分布）—— 快速入门</div>
+        <div class="section-badge">适合资源有限</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="step-desc" style="margin-bottom:12px">原理：随机采样模型表面大量点对，计算点间距离分布直方图，构成"几何指纹"特征向量。</div>
+        <div class="code-block"><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">d2_shape_distribution</span>(points, n_bins=64, n_samples=100000):
+    <span class="comment">"""D2形状分布特征提取"""</span>
+    idx1 = np.random.choice(len(points), n_samples)
+    idx2 = np.random.choice(len(points), n_samples)
+    <span class="comment"># 计算采样点对之间的距离</span>
+    dists = np.linalg.norm(points[idx1] - points[idx2], axis=1)
+    <span class="comment"># 归一化直方图作为特征</span>
+    hist, _ = np.histogram(dists, bins=n_bins, range=(0, 2.0), density=True)
+    <span class="kw">return</span> hist  <span class="comment"># 64维特征向量</span>
+
+<span class="comment"># 批量提取所有模型的特征</span>
+all_points = np.load(<span class="str">'data/processed/points.npy'</span>)
+features = np.array([d2_shape_distribution(pts) <span class="kw">for</span> pts <span class="kw">in</span> all_points])
+np.save(<span class="str">'features/d2_features.npy'</span>, features)</div>
+        <div class="tasks">
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>实现 D2 形状分布特征提取函数</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>批量提取所有模型特征并保存</label><span class="tag tag-must">必须</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8eaf6">🤖</div>
+        <div class="section-title">方案二：PointNet 点云深度学习（推荐）</div>
+        <div class="section-badge">推荐方案</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="comment"># 安装 PointNet++ 实现</span>
+pip install torch-geometric torch-scatter torch-sparse
+
+<span class="comment"># 或直接使用已有实现</span>
+git clone https://github.com/yanx27/Pointnet_Pointnet2_pytorch.git</div>
+
+        <div class="code-block"><span class="kw">import</span> torch
+<span class="kw">from</span> pointnet_cls <span class="kw">import</span> PointNetCls
+
+<span class="comment"># 加载预训练模型（在ModelNet40上预训练）</span>
+model = PointNetCls(k=40)
+model.load_state_dict(torch.load(<span class="str">'pointnet_cls.pth'</span>))
+
+<span class="kw">def</span> <span class="fn">extract_pointnet_feature</span>(points):
+    <span class="comment">"""提取PointNet全局特征向量（1024维）"""</span>
+    model.eval()
+    pts = torch.tensor(points).unsqueeze(0).transpose(2,1).float()
+    <span class="kw">with</span> torch.no_grad():
+        _, feature, _ = model(pts)
+    <span class="kw">return</span> feature.squeeze().numpy()  <span class="comment"># 1024维</span></div>
+
+        <div class="alert alert-tip">
+          <span class="alert-icon">✅</span>
+          <span>PointNet 提取的 1024 维特征向量，可直接用于分类（接全连接层）和相似性检索（计算余弦距离），一套特征两用，是整个系统的核心"指纹"。</span>
+        </div>
+
+        <div class="tasks">
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>安装 PyTorch Geometric（PointNet依赖）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>下载或实现 PointNet 模型结构</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>实现特征提取接口（输入点云→输出1024维向量）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>批量提取所有模型特征，保存为 features.npy</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="2"><input type="checkbox" onchange="updateProgress()"><label>t-SNE/UMAP 可视化验证特征质量</label><span class="tag tag-doc">文档</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 3: ML建模 ===== -->
+  <div class="phase-panel" id="phase3">
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8f5e9">🏷️</div>
+        <div class="section-title">有监督学习 — 分类模型</div>
+        <div class="section-badge">Task A</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="two-col">
+          <div>
+            <h4>方法 A：SVM 分类器（快速基线）</h4>
+            <div class="code-block"><span class="kw">from</span> sklearn.svm <span class="kw">import</span> SVC
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+
+X = np.load(<span class="str">'features/d2_features.npy'</span>)
+y = np.load(<span class="str">'data/processed/labels.npy'</span>)
+
+clf = Pipeline([
+    (<span class="str">'scaler'</span>, StandardScaler()),
+    (<span class="str">'svm'</span>, SVC(kernel=<span class="str">'rbf'</span>, C=10, probability=True))
+])
+clf.fit(X_train, y_train)
+print(f<span class="str">"Accuracy: {clf.score(X_test, y_test):.3f}"</span>)</div>
+          </div>
+          <div>
+            <h4>方法 B：神经网络分类（端到端）</h4>
+            <div class="code-block"><span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+
+<span class="kw">class</span> Classifier(nn.Module):
+    <span class="kw">def</span> __init__(self, n_class):
+        super().__init__()
+        self.fc = nn.Sequential(
+            nn.Linear(1024, 512),
+            nn.BatchNorm1d(512),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Linear(256, n_class)
+        )
+    <span class="kw">def</span> forward(self, x):
+        <span class="kw">return</span> self.fc(x)</div>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span class="alert-icon">ℹ️</span>
+          <span>目标准确率 ≥ 90%（项目需求文档要求）。如果用 D2 特征 + SVM 达不到，考虑换 PointNet 特征。使用混淆矩阵分析哪些类别容易混淆。</span>
+        </div>
+        <div class="tasks">
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>训练 SVM 分类器（快速基线验证）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>超参数调优（GridSearchCV）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>绘制混淆矩阵、分类报告（precision/recall/F1）</label><span class="tag tag-doc">文档</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>保存训练好的模型（joblib.dump）</label><span class="tag tag-must">必须</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fff3e0">🔵</div>
+        <div class="section-title">无监督学习 — 零件聚类</div>
+        <div class="section-badge">Task B</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> KMeans, DBSCAN
+<span class="kw">from</span> sklearn.decomposition <span class="kw">import</span> PCA
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+features = np.load(<span class="str">'features/pointnet_features.npy'</span>)
+
+<span class="comment"># PCA降维到50维加速聚类</span>
+pca = PCA(n_components=50)
+features_pca = pca.fit_transform(features)
+
+<span class="comment"># K-Means聚类</span>
+kmeans = KMeans(n_clusters=10, random_state=42, n_init=10)
+cluster_labels = kmeans.fit_predict(features_pca)
+
+<span class="comment"># t-SNE降维到2D可视化</span>
+<span class="kw">from</span> sklearn.manifold <span class="kw">import</span> TSNE
+tsne = TSNE(n_components=2, perplexity=30)
+features_2d = tsne.fit_transform(features_pca)
+plt.scatter(features_2d[:,0], features_2d[:,1], c=cluster_labels, cmap=<span class="str">'tab10'</span>)
+plt.savefig(<span class="str">'cluster_visualization.png'</span>)</div>
+        <div class="tasks">
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>K-Means 聚类实现，手肘法确定最优K</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>t-SNE / UMAP 2D可视化聚类结果</label><span class="tag tag-doc">文档</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>（可选）DBSCAN 自动发现密度簇</label><span class="tag tag-opt">可选</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fce4ec">🔍</div>
+        <div class="section-title">相似性检索 — FAISS 向量数据库</div>
+        <div class="section-badge">Task C 核心</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="kw">import</span> faiss
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+features = np.load(<span class="str">'features/pointnet_features.npy'</span>).astype(<span class="str">'float32'</span>)
+<span class="comment"># 归一化（余弦相似度）</span>
+faiss.normalize_L2(features)
+
+<span class="comment"># 建立 FAISS 索引</span>
+dim = features.shape[1]  <span class="comment"># 1024</span>
+index = faiss.IndexFlatIP(dim)  <span class="comment"># 内积 = 余弦相似度（归一化后）</span>
+index.add(features)
+faiss.write_index(index, <span class="str">'models/faiss.index'</span>)
+
+<span class="comment"># 查询：找最相似的Top-10</span>
+<span class="kw">def</span> <span class="fn">search_similar</span>(query_feature, top_k=10):
+    q = query_feature.reshape(1, -1).astype(<span class="str">'float32'</span>)
+    faiss.normalize_L2(q)
+    scores, indices = index.search(q, top_k)
+    <span class="kw">return</span> indices[0], scores[0]</div>
+        <div class="tasks">
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>安装 faiss-cpu 并构建向量索引</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>将全库特征加入 FAISS 索引并持久化</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>实现相似查询接口（返回Top-K结果）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="3"><input type="checkbox" onchange="updateProgress()"><label>Recall@10 评估相似检索准确率</label><span class="tag tag-doc">文档</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 4: 后端开发 ===== -->
+  <div class="phase-panel" id="phase4">
+
+    <div class="alert alert-tip">
+      <span class="alert-icon">✅</span>
+      <span>后端推荐使用 <strong>FastAPI</strong>，原生支持异步、自动生成 OpenAPI 文档（/docs），与 Python ML 生态无缝集成，非常适合本项目。</span>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8eaf6">🌐</div>
+        <div class="section-title">FastAPI 后端核心接口</div>
+        <div class="section-badge">Step 1</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="comment"># src/api/main.py</span>
+<span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, UploadFile, File
+<span class="kw">from</span> fastapi.middleware.cors <span class="kw">import</span> CORSMiddleware
+<span class="kw">import</span> uvicorn
+
+app = FastAPI(title=<span class="str">"零件智能分类系统"</span>, version=<span class="str">"1.0"</span>)
+
+app.add_middleware(CORSMiddleware, allow_origins=[<span class="str">"*"</span>],
+    allow_methods=[<span class="str">"*"</span>], allow_headers=[<span class="str">"*"</span>])
+
+<span class="comment"># 接口1：零件上传并自动分类</span>
+@app.post(<span class="str">"/api/classify"</span>)
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">classify_part</span>(file: UploadFile = File(...)):
+    <span class="comment"># 1. 保存上传文件</span>
+    contents = <span class="kw">await</span> file.read()
+    <span class="comment"># 2. 预处理 → 特征提取 → SVM分类</span>
+    <span class="comment"># 3. 返回分类结果和置信度</span>
+    <span class="kw">return</span> {<span class="str">"category"</span>: <span class="str">"gear"</span>, <span class="str">"confidence"</span>: 0.92, <span class="str">"label_id"</span>: 3}
+
+<span class="comment"># 接口2：相似零件推荐</span>
+@app.post(<span class="str">"/api/recommend"</span>)
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">recommend_parts</span>(file: UploadFile = File(...), top_k: int = 10):
+    <span class="comment"># 提取特征 → FAISS检索 → 返回相似零件列表</span>
+    <span class="kw">return</span> {<span class="str">"results"</span>: [{<span class="str">"part_id"</span>: <span class="str">"P001"</span>, <span class="str">"score"</span>: 0.98}]}
+
+<span class="comment"># 接口3：聚类结果（t-SNE数据，用于前端散点图）</span>
+@app.get(<span class="str">"/api/cluster"</span>)
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">get_cluster_data</span>():
+    <span class="kw">return</span> {<span class="str">"points_2d"</span>: [...], <span class="str">"labels"</span>: [...]}
+
+<span class="comment"># 接口4：零件库列表</span>
+@app.get(<span class="str">"/api/parts"</span>)
+<span class="kw">async</span> <span class="kw">def</span> <span class="fn">list_parts</span>(page: int = 1, category: str = None):
+    <span class="kw">return</span> {<span class="str">"total"</span>: 1000, <span class="str">"items"</span>: [...]}
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    uvicorn.run(app, host=<span class="str">"0.0.0.0"</span>, port=8000)</div>
+
+        <h4>完整 API 接口清单</h4>
+        <table class="milestone-table">
+          <tr><th>接口路径</th><th>方法</th><th>功能说明</th><th>优先级</th></tr>
+          <tr><td>POST /api/classify</td><td>POST</td><td>上传零件文件，返回自动分类结果+置信度</td><td>🔴 P0</td></tr>
+          <tr><td>POST /api/recommend</td><td>POST</td><td>上传零件，返回Top-K相似零件列表</td><td>🔴 P0</td></tr>
+          <tr><td>GET /api/parts</td><td>GET</td><td>零件库列表（分页+按类别筛选）</td><td>🔴 P0</td></tr>
+          <tr><td>GET /api/cluster</td><td>GET</td><td>返回t-SNE降维的散点数据，供前端可视化</td><td>🟡 P1</td></tr>
+          <tr><td>GET /api/parts/{id}/preview</td><td>GET</td><td>返回零件3D预览数据（JSON格式）</td><td>🟡 P1</td></tr>
+          <tr><td>POST /api/batch-classify</td><td>POST</td><td>批量分类（Excel导入）</td><td>🟢 P2</td></tr>
+          <tr><td>GET /api/stats</td><td>GET</td><td>系统统计信息（总数/各类别数量/准确率）</td><td>🟢 P2</td></tr>
+        </table>
+
+        <div class="tasks">
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>初始化 FastAPI 项目结构</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>实现 /api/classify 分类接口</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>实现 /api/recommend 相似推荐接口</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>实现 /api/parts 零件库接口</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>配置 CORS，支持前端跨域请求</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>集成 SQLite/PostgreSQL 存储零件元数据</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>实现 /api/cluster 散点图数据接口</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="4"><input type="checkbox" onchange="updateProgress()"><label>用 pytest + httpx 编写接口单元测试</label><span class="tag tag-doc">测试</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 5: 前端开发 ===== -->
+  <div class="phase-panel" id="phase5">
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8f5e9">🎨</div>
+        <div class="section-title">Vue 3 前端框架初始化</div>
+        <div class="section-badge">Step 1</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="comment"># 创建 Vue3 + TypeScript + Vite 项目</span>
+npm create vue@latest frontend
+cd frontend
+npm install
+
+<span class="comment"># 安装UI组件库和3D可视化依赖</span>
+npm install element-plus @element-plus/icons-vue
+npm install three @types/three                  # Three.js 3D渲染
+npm install echarts vue-echarts                  # 散点图/可视化
+npm install axios                                # HTTP请求
+npm install vue-router pinia                     # 路由和状态管理</div>
+
+        <h4>页面路由规划</h4>
+        <table class="milestone-table">
+          <tr><th>路由</th><th>页面</th><th>核心功能</th></tr>
+          <tr><td>/</td><td>首页 / Dashboard</td><td>系统统计、快速上传入口</td></tr>
+          <tr><td>/classify</td><td>智能分类</td><td>上传零件→显示分类结果和置信度</td></tr>
+          <tr><td>/recommend</td><td>相似推荐</td><td>上传零件→3D对比→相似列表</td></tr>
+          <tr><td>/explore</td><td>零件空间探索</td><td>t-SNE散点图，点击查看零件</td></tr>
+          <tr><td>/library</td><td>零件库浏览</td><td>按类别筛选，列表/网格视图</td></tr>
+          <tr><td>/admin</td><td>管理后台</td><td>模型管理、批量导入、准确率监控</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fce4ec">🖼️</div>
+        <div class="section-title">3D 零件预览（Three.js）</div>
+        <div class="section-badge">视觉亮点</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <div class="code-block"><span class="comment">// frontend/src/components/PartViewer3D.vue</span>
+<span class="kw">import</span> * <span class="kw">as</span> THREE <span class="kw">from</span> <span class="str">'three'</span>
+<span class="kw">import</span> { STLLoader } <span class="kw">from</span> <span class="str">'three/examples/jsm/loaders/STLLoader'</span>
+<span class="kw">import</span> { OrbitControls } <span class="kw">from</span> <span class="str">'three/examples/jsm/controls/OrbitControls'</span>
+
+<span class="comment">// 创建场景</span>
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000)
+const renderer = new THREE.WebGLRenderer({ antialias: true })
+
+<span class="comment">// 加载 STL 文件</span>
+const loader = new STLLoader()
+loader.load(<span class="str">'/api/parts/P001/stl'</span>, (geometry) => {
+  const material = new THREE.MeshPhongMaterial({ color: 0x5b8dd9 })
+  const mesh = new THREE.Mesh(geometry, material)
+  scene.add(mesh)
+})
+
+<span class="comment">// 支持鼠标旋转/缩放</span>
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true</div>
+
+        <div class="tasks">
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>实现 3D 零件预览组件（Three.js + STL加载）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>实现零件上传+分类结果展示页面</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>实现相似零件推荐结果页（附3D对比）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>实现 t-SNE 散点图页面（ECharts散点图）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>零件库列表页（分页+筛选+搜索）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>Dashboard 首页（统计卡片+快捷入口）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="5"><input type="checkbox" onchange="updateProgress()"><label>响应式布局适配（PC/平板）</label><span class="tag tag-opt">可选</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PHASE 6: 测试交付 ===== -->
+  <div class="phase-panel" id="phase6">
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#e8f5e9">✅</div>
+        <div class="section-title">测试策略</div>
+        <div class="section-badge">必须完成</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <h4>需达到的验收指标（来自需求文档）</h4>
+        <table class="milestone-table">
+          <tr><th>指标</th><th>目标值</th><th>测试方法</th></tr>
+          <tr><td>分类准确率</td><td>≥ 90%</td><td>测试集混淆矩阵</td></tr>
+          <tr><td>推荐响应时间</td><td>≤ 5秒</td><td>Postman 压测</td></tr>
+          <tr><td>3D 预览帧率</td><td>≥ 30fps</td><td>浏览器 Performance 面板</td></tr>
+          <tr><td>支持最大零件库</td><td>10,000件</td><td>批量导入压力测试</td></tr>
+          <tr><td>批量分类速度</td><td>≥ 50件/分钟</td><td>脚本计时测试</td></tr>
+        </table>
+
+        <div class="tasks">
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>在测试集上评估分类准确率（确保≥90%）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>API 接口测试（Postman / pytest）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>前后端集成联调测试</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>性能测试（响应时间、3D帧率）</label><span class="tag tag-must">必须</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>撰写系统测试报告</label><span class="tag tag-doc">文档</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>更新/完善项目技术文档和README</label><span class="tag tag-doc">文档</span></div>
+          <div class="task" data-phase="6"><input type="checkbox" onchange="updateProgress()"><label>准备项目演示 Demo 和展示PPT</label><span class="tag tag-doc">文档</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-icon" style="background:#fff3e0">📅</div>
+        <div class="section-title">里程碑时间线（参考甘特图）</div>
+        <div class="section-badge">时间规划</div>
+        <div class="section-toggle">▾</div>
+      </div>
+      <div class="section-body">
+        <table class="milestone-table">
+          <tr><th>里程碑</th><th>建议完成时间</th><th>交付物</th><th>状态</th></tr>
+          <tr><td>M0 环境搭建完成</td><td>第1周</td><td>requirements.txt / 目录结构</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M1 数据集就绪</td><td>第2周</td><td>processed/points.npy + labels.npy</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M2 特征提取完成</td><td>第3周</td><td>features/features.npy + 可视化图</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M3 ML模型训练完成</td><td>第4-5周</td><td>models/*.pkl + FAISS索引 + 评估报告</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M4 后端接口联通</td><td>第6-7周</td><td>FastAPI运行 + Swagger文档</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M5 前端基本可用</td><td>第8-9周</td><td>上传/分类/推荐页面可运行</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M6 系统集成完成</td><td>第10周</td><td>前后端联调完成</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+          <tr><td>M7 测试和交付</td><td>第12周</td><td>测试报告 + Demo + 最终文档</td><td><span class="status-dot dot-todo"></span>待完成</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.phase-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.phase-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+function toggleSection(header) {
+  header.closest('.section').classList.toggle('collapsed');
+}
+
+function updateProgress() {
+  const phases = [0,1,2,3,4,5,6];
+  const phaseKeys = [0,1,2,3,4,5,6];
+  const totals = {};
+  const done = {};
+
+  document.querySelectorAll('.task[data-phase]').forEach(task => {
+    const p = task.getAttribute('data-phase');
+    totals[p] = (totals[p]||0)+1;
+    if (task.querySelector('input').checked) {
+      done[p] = (done[p]||0)+1;
+      task.classList.add('done');
+    } else {
+      task.classList.remove('done');
+    }
+  });
+
+  for (let p = 0; p <= 6; p++) {
+    const bar = document.getElementById('bar'+p);
+    const pct = document.getElementById('pct'+p);
+    if (!bar || !pct) continue;
+    const t = totals[p]||0;
+    const d = done[p]||0;
+    const perc = t > 0 ? Math.round(d/t*100) : 0;
+    bar.style.width = perc+'%';
+    pct.textContent = perc+'%';
+  }
+
+  // Save to localStorage
+  const state = {};
+  document.querySelectorAll('.task input[type=checkbox]').forEach((cb,i) => {
+    state['cb_'+i] = cb.checked;
+  });
+  localStorage.setItem('partclf_progress', JSON.stringify(state));
+}
+
+// Load saved state
+window.addEventListener('load', () => {
+  const saved = JSON.parse(localStorage.getItem('partclf_progress')||'{}');
+  document.querySelectorAll('.task input[type=checkbox]').forEach((cb,i) => {
+    if (saved['cb_'+i]) cb.checked = true;
+  });
+  updateProgress();
+});
+</script>
+</body>
+</html>
